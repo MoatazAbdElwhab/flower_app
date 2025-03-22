@@ -1,11 +1,16 @@
 abstract class ApiClient {
-  Future<dynamic> get(String path,
-      {Map<String, dynamic>? queryParameters, bool requiresToken = false});
+  Future<dynamic> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    bool requiresToken = false,
+  });
 
-  Future<dynamic> post(String path,
-      {dynamic data,
-      Map<String, dynamic>? queryParameters,
-      bool requiresToken = false});
+  Future<dynamic> post(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool requiresToken = false,
+  });
 
   Future<dynamic> put(
     String path, {
@@ -20,8 +25,10 @@ abstract class ApiClient {
     bool requiresToken = false,
   });
 
-  Future<dynamic> patch(String path,
-      {dynamic data,
-      Map<String, dynamic>? queryParameters,
-      bool requiresToken = false});
+  Future<dynamic> patch(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    bool requiresToken = false,
+  });
 }

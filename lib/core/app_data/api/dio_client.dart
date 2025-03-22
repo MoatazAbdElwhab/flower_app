@@ -20,7 +20,7 @@ class DioApiClient implements ApiClient {
 
   DioApiClient(this.localStorage, this.errorHandler, this._appNavigator)
       : _dio = Dio(BaseOptions(
-          baseUrl: 'https://exam.elevateegy.com/api/v1/',
+          baseUrl: 'https://flower.elevateegy.com/api/v1/',
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
           responseType: ResponseType.json,

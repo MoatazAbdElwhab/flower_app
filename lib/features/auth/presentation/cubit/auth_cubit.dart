@@ -1,5 +1,5 @@
+import 'package:dartz/dartz.dart';
 import 'package:flower_app/core/base/base_state.dart';
-import 'package:flower_app/features/auth/data/model/signup_response_model.dart';
 import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +21,10 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
-  String? selectedGender;
+
+  ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
+
+  String ? selectedGender;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Future<void> signup() async {
     if (selectedGender == null) {
@@ -40,7 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         phone: phoneController.text,
-        gender: selectedGender!,
+        gender: selectedGender?? '',
       ),
     );
 
@@ -52,20 +55,22 @@ class AuthCubit extends Cubit<AuthState> {
           ),
         );
       },
-      (data) {
+      (success) {
         emit(state.copyWith(
-            signUpState: BaseSuccessState<SignUpResponseModel>(data: data)));
+            signUpState: BaseSuccessState<Unit>(data: success)));
       },
     );
+
+
+
   }
+
+
 
   void selectGender(String gender) {
+    selectedGenderNotifier.value = gender;
     selectedGender = gender;
-    emit(state.copyWith(selectedGender: selectedGender ?? ''));
   }
 
-  void resetSignUpState() {
-  emit(state.copyWith(signUpState: BaseInitialState()));
-}
 
 }

@@ -56,8 +56,6 @@ class SignupPage extends StatelessWidget {
                     actions: [
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
-                          context.read<AuthCubit>().resetSignUpState();
                         },
                         child: const Text('OK'),
                       ),
@@ -203,47 +201,45 @@ class SignupPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        Text(
-                          "Gender",
-                          style: getMediumStyle(
-                              color: AppColors.grey, fontSize: 18.sp),
+                ValueListenableBuilder(valueListenable: authCubit.selectedGenderNotifier, builder:(context, genderValue, child) {
+                  return Row(
+                    children: [
+                      Text(
+                        "Gender",
+                        style: getMediumStyle(
+                            color: AppColors.grey, fontSize: 18.sp),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                              value: 'female',
+                              groupValue: genderValue,
+                              onChanged: (String? value) {
+                                authCubit.selectGender(value ?? '');
+                              },
+                            ),
+                            const Text('Female'),
+                          ],
                         ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: 'female',
-                                groupValue: authCubit.selectedGender,
-                                onChanged: (value) {
-                                  authCubit.selectGender(value ?? '');
-                                },
-                              ),
-                              const Text('Female'),
-                            ],
-                          ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                              value: 'male',
+                              onChanged: (String? value) {
+                                authCubit.selectGender(value?? '');
+                              },
+                              groupValue: genderValue,
+                            ),
+                            const Text('Male'),
+                          ],
                         ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: 'male',
-                                onChanged: (String? value) {
-                                  authCubit.selectGender(value ?? '');
-                                },
-                                groupValue: authCubit.selectedGender,
-                              ),
-                              const Text('Male'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                    ],
+                  );
+                },),
                 SizedBox(height: 16.h),
                 FittedBox(
                   child: Row(
@@ -286,13 +282,9 @@ class SignupPage extends StatelessWidget {
                         Navigator.pushNamedAndRemoveUntil(
                             context, Routes.login, (route) => false);
                       },
-                      child: const Text(
+                      child:  Text(
                         "Login",
-                        style: TextStyle(
-                            color: AppColors.primary,
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold,
-                            decorationColor: AppColors.primary),
+                        style: getTextUnderLine(color: AppColors.primary, fontSize: 14.sp),
                       ),
                     ),
                   ],

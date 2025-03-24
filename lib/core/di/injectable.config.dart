@@ -66,14 +66,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
         ));
-    gh.factory<_i561.AuthState>(() => _i561.AuthState(
-          signUpState: gh<_i584.BaseState>(),
-          selectedGender: gh<String>(),
-        ));
     gh.singleton<_i343.DioErrorHandler>(() => _i343.DioErrorHandler(
           gh<_i666.LocalStorageClient>(),
           gh<_i719.GlobalKey<_i719.NavigatorState>>(),
         ));
+    gh.factory<_i561.AuthState>(
+        () => _i561.AuthState(signUpState: gh<_i584.BaseState>()));
     gh.singleton<_i570.ApiClient>(() => _i199.DioApiClient(
           gh<_i666.LocalStorageClient>(),
           gh<_i343.DioErrorHandler>(),

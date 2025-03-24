@@ -5,19 +5,18 @@ import 'package:injectable/injectable.dart';
 @injectable
 class AuthState extends Equatable {
   final BaseState? signUpState;
-  final String? selectedGender;
 
-  const AuthState({this.signUpState, this.selectedGender});
+  const AuthState({this.signUpState});
 
-  AuthState copyWith({BaseState? signUpState, String? selectedGender}) {
+  AuthState copyWith({BaseState? signUpState}) {
     return AuthState(
       signUpState: signUpState ?? this.signUpState,
-      selectedGender: selectedGender ?? this.selectedGender,
+
     );
   }
 
   @override
-  List<Object?> get props => [signUpState, selectedGender];
+  List<Object?> get props => [signUpState];
 }
 
 

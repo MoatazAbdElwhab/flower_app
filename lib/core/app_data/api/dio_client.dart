@@ -1,4 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flower_app/core/app_data/api/api_constants.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
@@ -20,33 +22,31 @@ class DioApiClient implements ApiClient {
 
   DioApiClient(this.localStorage, this.errorHandler, this._appNavigator)
       : _dio = Dio(BaseOptions(
-          baseUrl: 'https://exam.elevateegy.com/api/v1/',
+          baseUrl: ApiConstants.baseUrl,
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
           responseType: ResponseType.json,
         ))
           ..interceptors.add(PrettyDioLogger());
-
   @override
-  Future<dynamic> get(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-    bool requiresToken = true,
-  }) async {
+  Future<Either<ApiException, T>> get<T>(String path,
+      {Map<String, dynamic>? queryParameters,
+      bool requiresToken = true}) async {
     try {
       await checkToken(requiresToken);
       final response = await _dio.get(
         path,
         queryParameters: queryParameters,
       );
-      return response.data;
+      return Right(response.data as T);
     } on DioException catch (e) {
-      throw errorHandler.handle(e);
+      return Left(errorHandler.handle(e));
     }
   }
 
+
   @override
-  Future<dynamic> post(String path,
+  Future<Either<ApiException, T>> post<T>(String path,
       {dynamic data,
       Map<String, dynamic>? queryParameters,
       bool requiresToken = true}) async {
@@ -57,14 +57,15 @@ class DioApiClient implements ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
-      return response.data;
+      return Right(response.data as T);
     } on DioException catch (e) {
-      throw errorHandler.handle(e);
+      return Left(errorHandler.handle(e));
     }
   }
 
+
   @override
-  Future<dynamic> put(String path,
+  Future<Either<ApiException, T>> put<T>(String path,
       {dynamic data,
       Map<String, dynamic>? queryParameters,
       bool requiresToken = true}) async {
@@ -75,14 +76,15 @@ class DioApiClient implements ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
-      return response.data;
+      return Right(response.data as T);
     } on DioException catch (e) {
-      throw errorHandler.handle(e);
+      return Left(errorHandler.handle(e));
     }
   }
 
+
   @override
-  Future<dynamic> patch(String path,
+  Future<Either<ApiException, T>> patch<T>(String path,
       {dynamic data,
       Map<String, dynamic>? queryParameters,
       bool requiresToken = true}) async {
@@ -93,11 +95,12 @@ class DioApiClient implements ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
-      return response.data;
+      return Right(response.data as T);
     } on DioException catch (e) {
-      throw errorHandler.handle(e);
+      return Left(errorHandler.handle(e));
     }
   }
+
 
   @override
   Future<dynamic> delete(String path,

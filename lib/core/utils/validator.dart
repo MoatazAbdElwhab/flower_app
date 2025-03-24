@@ -1,4 +1,5 @@
 class Validator {
+  Validator._();
   static String? userNameValidation(String? name) {
     final RegExp nameRegex = RegExp(
       r'^[a-zA-Z ]+$',
@@ -16,12 +17,12 @@ class Validator {
 
   static String? phoneNumberValidation(String? number) {
     final RegExp numberRegex = RegExp(
-      r"^01[0125][0-9]{8}$",
+      r"^(\+201|01|00201)[0-2,5]{1}[0-9]{8}$",
     );
     if (number == null || number.trim().isEmpty) {
       return 'please enter your phone number';
     } else if (numberRegex.hasMatch(number) == false) {
-      return 'Phone number must start with 01 and be 11 digits';
+      return 'number starts with 01 and has 11 digits';
     } else {
       return null;
     }

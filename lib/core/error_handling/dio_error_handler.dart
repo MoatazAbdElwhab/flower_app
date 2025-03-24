@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import '../app_data/local_storage/local_storage_client.dart';
@@ -12,18 +11,31 @@ import 'exceptions/api_exception.dart';
 class DioErrorHandler {
   final GlobalKey<NavigatorState> _navigatorKey;
   final LocalStorageClient _localStorage;
+
   DioErrorHandler(this._localStorage, this._navigatorKey);
+
   ApiException handle(DioException error) {
     Log.e('DioErrorHandler, handling dio error');
 
-    if (error.response?.data != null &&
-        error.response?.data['message'] != null) {
-      _checkTokenValidity(error.response?.data);
-      return ApiException(
-        message: error.response?.data['message'],
-        statusCode: error.response?.statusCode,
-        response: error.response?.data,
-      );
+    if (error.response?.data != null) {
+      final responseData = error.response?.data;
+
+     
+      String? errorMessage;
+      if (responseData is Map<String, dynamic>) {
+        errorMessage = responseData['error'] ?? responseData['message'];
+      } else if (responseData is String) {
+        errorMessage = responseData;
+      }
+
+      if (errorMessage != null) {
+        _checkTokenValidity(responseData);
+        return ApiException(
+          message: errorMessage,
+          statusCode: error.response?.statusCode,
+          response: responseData,
+        );
+      }
     }
 
     switch (error.type) {
@@ -48,7 +60,6 @@ class DioErrorHandler {
               statusCode: 401,
               response: error.response?.data,
             );
-
           case 403:
             return ApiException(
               message:
@@ -77,7 +88,6 @@ class DioErrorHandler {
               response: error.response?.data,
             );
         }
-
       case DioExceptionType.unknown:
         if (error.error != null &&
             error.error.toString().contains('SocketException')) {

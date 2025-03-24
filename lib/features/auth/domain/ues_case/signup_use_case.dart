@@ -1,0 +1,17 @@
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../core/error_handling/exceptions/api_exception.dart';
+import '../../data/model/signup_request_model.dart';
+import '../../data/model/signup_response_model.dart';
+import '../repo/auth_repo.dart';
+
+@injectable
+class SignupUseCase {
+  final AuthRepo _authRepo;
+
+  SignupUseCase(this._authRepo);
+
+  Future<Either<ApiException, SignUpResponseModel>> call(
+          SignUpRequestModel request) async =>
+      await _authRepo.signup(request);
+}

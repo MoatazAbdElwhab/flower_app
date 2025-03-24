@@ -17,7 +17,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<ApiException, SignUpResponseModel>> signup(
       SignUpRequestModel request) async {
     Either<ApiException, Map<String, dynamic>> response =
-        await _apiClient.post<Map<String, dynamic>>(
+        await _apiClient.post(
       ApiConstants.sinUpEndPoint,
       data: request.toJson(),
       requiresToken: false,

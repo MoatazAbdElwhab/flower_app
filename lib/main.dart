@@ -1,3 +1,4 @@
+// main.dart
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/navigator_observer.dart';
@@ -10,7 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/theme/theme_data/theme_data_light.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
@@ -23,13 +26,16 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (con, _) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: Routes.login,
-        onGenerateRoute: generateRoute,
-        theme: getLightTheme(),
-        darkTheme: ThemeData(),
-        themeMode: ThemeMode.light,
+      builder: (con, _) => BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: Routes.login,
+          onGenerateRoute: generateRoute,
+          theme: getLightTheme(),
+          darkTheme: ThemeData(),
+          themeMode: ThemeMode.light,
+        ),
       ),
     );
   }

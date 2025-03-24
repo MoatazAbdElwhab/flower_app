@@ -15,6 +15,22 @@ import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart
 import 'package:flower_app/core/di/modules.dart' as _i39;
 import 'package:flower_app/core/error_handling/dio_error_handler.dart' as _i343;
 import 'package:flower_app/core/routes/navigator_observer.dart' as _i210;
+import 'package:flower_app/core/widget/dialog_utils.dart' as _i271;
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart'
+    as _i1053;
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_impl.dart'
+    as _i851;
+import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth_remote_data_source_contract.dart'
+    as _i851;
+import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth_remote_data_source_impl.dart'
+    as _i374;
+import 'package:flower_app/features/auth/data/repo/auth_repo_impl.dart'
+    as _i1012;
+import 'package:flower_app/features/auth/domain/repo/auth_repo.dart' as _i514;
+import 'package:flower_app/features/auth/domain/use_case/sign_in_use_case.dart'
+    as _i735;
+import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart'
+    as _i315;
 import 'package:flutter/cupertino.dart' as _i719;
 import 'package:flutter/material.dart' as _i409;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -48,6 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => getItRegisterModule.secureStorage);
     gh.singleton<_i210.AppNavigatorObserver>(
         () => _i210.AppNavigatorObserver());
+    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i666.LocalStorageClient>(() => _i666.LocalStorageClient(
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
@@ -60,6 +77,20 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i666.LocalStorageClient>(),
           gh<_i343.DioErrorHandler>(),
           gh<_i719.GlobalKey<_i719.NavigatorState>>(),
+        ));
+    gh.factory<_i1053.AuthLocalDataSourceContract>(
+        () => _i851.AuthLocalDataSourceImpl(gh<_i666.LocalStorageClient>()));
+    gh.factory<_i851.AuthRemoteDataSourceContract>(
+        () => _i374.AuthRemoteDataSourceImpl(gh<_i570.ApiClient>()));
+    gh.factory<_i514.AuthRepo>(() => _i1012.AuthRepoImpl(
+          gh<_i1053.AuthLocalDataSourceContract>(),
+          gh<_i851.AuthRemoteDataSourceContract>(),
+        ));
+    gh.factory<_i735.SignInUseCase>(
+        () => _i735.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
+          signInUseCase: gh<_i735.SignInUseCase>(),
+          localStorageClient: gh<_i666.LocalStorageClient>(),
         ));
     return this;
   }

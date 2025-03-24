@@ -1,28 +1,13 @@
 class Validator {
   Validator._();
-  static String? userNameValidation(String? name) {
-    final RegExp nameRegex = RegExp(
-      r'^[a-zA-Z ]+$',
-    );
-    if (name == null || name.trim().isEmpty) {
-      return 'Please enter your user name';
-    } else if (nameRegex.hasMatch(name) == false) {
-      return 'Enter valid user name';
-    } else if (name.length < 8) {
-      return 'Username must be at least 8 characters';
-    } else {
-      return null;
-    }
-  }
-
   static String? phoneNumberValidation(String? number) {
     final RegExp numberRegex = RegExp(
       r"^(\+201|01|00201)[0-2,5]{1}[0-9]{8}$",
     );
-    if (number == null || number.trim().isEmpty) {
+    if (number == null || number.trim().isEmpty|| number == "+2") {
       return 'please enter your phone number';
     } else if (numberRegex.hasMatch(number) == false) {
-      return 'number starts with 01 and has 11 digits';
+      return 'Egyptian numbers only';
     } else {
       return null;
     }
@@ -92,4 +77,15 @@ class Validator {
 
     return null;
   }
+
+  static String? confirmPasswordValidation(String? confirmPassword, String? originalPassword) {
+    if (confirmPassword == null || confirmPassword.trim().isEmpty) {
+      return 'confirm your password';
+    }
+    if (confirmPassword != originalPassword) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
 }

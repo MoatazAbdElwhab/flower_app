@@ -21,10 +21,9 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
-
   ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
 
-  String ? selectedGender;
+  String? selectedGender;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Future<void> signup() async {
     if (selectedGender == null) {
@@ -43,7 +42,7 @@ class AuthCubit extends Cubit<AuthState> {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         phone: phoneController.text,
-        gender: selectedGender?? '',
+        gender: selectedGender ?? '',
       ),
     );
 
@@ -56,21 +55,25 @@ class AuthCubit extends Cubit<AuthState> {
         );
       },
       (success) {
-        emit(state.copyWith(
-            signUpState: BaseSuccessState<Unit>(data: success)));
+        emit(
+            state.copyWith(signUpState: BaseSuccessState<Unit>(data: success)));
       },
     );
-
-
-
   }
 
 
+  // this function is to enforce the egyptian prefix {+2} on the phone number
+  void enforceEgyptianPrefix(TextEditingController controller) {
+    if (!controller.text.startsWith("+2")) {
+      controller.text = "+2"; // Reset if deleted
+      controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length),
+      );
+    }
+  }
 
   void selectGender(String gender) {
     selectedGenderNotifier.value = gender;
     selectedGender = gender;
   }
-
-
 }

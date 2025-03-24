@@ -158,8 +158,7 @@ class SignupPage extends StatelessWidget {
                               decoration: const InputDecoration(
                                   hintText: 'Enter Password',
                                   labelText: 'Password',
-                                  errorStyle:
-                                      TextStyle(overflow: TextOverflow.fade)),
+                                 ),
                             ),
                           ),
                           SizedBox(
@@ -167,14 +166,7 @@ class SignupPage extends StatelessWidget {
                           ),
                           Expanded(
                             child: TextFormField(
-                              validator: (value) {
-                                if (value !=
-                                    authCubit.passwordController.text) {
-                                  return 'Password does not match';
-                                } else {
-                                  return null;
-                                }
-                              },
+                              validator: (value) => Validator.confirmPasswordValidation(value, authCubit.passwordController.text),
                               controller: authCubit.confirmPasswordController,
                               decoration: const InputDecoration(
                                   hintText: 'Confirm Password',
@@ -191,6 +183,7 @@ class SignupPage extends StatelessWidget {
                           return Validator.phoneNumberValidation(value);
                         },
                         controller: authCubit.phoneController,
+                        onChanged: (value) => authCubit.enforceEgyptianPrefix(authCubit.phoneController),
                         decoration: const InputDecoration(
                             hintText: 'Enter Phone Number',
                             labelText: 'Phone Number'),

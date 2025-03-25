@@ -23,10 +23,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
 
-  String? selectedGender;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Future<void> signup() async {
-    if (selectedGender == null) {
+    if (selectedGenderNotifier.value.isEmpty) {
       emit(state.copyWith(
           signUpState: BaseErrorState("Please select a gender")));
       return;
@@ -42,7 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         phone: phoneController.text,
-        gender: selectedGender ?? '',
+        gender: selectedGenderNotifier.value,
       ),
     );
 
@@ -74,6 +73,5 @@ class AuthCubit extends Cubit<AuthState> {
 
   void selectGender(String gender) {
     selectedGenderNotifier.value = gender;
-    selectedGender = gender;
   }
 }

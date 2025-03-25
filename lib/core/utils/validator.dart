@@ -1,13 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class Validator {
   Validator._();
+  
   static String? phoneNumberValidation(String? number) {
     final RegExp numberRegex = RegExp(
       r"^(\+201|01|00201)[0-2,5]{1}[0-9]{8}$",
     );
-    if (number == null || number.trim().isEmpty|| number == "+2") {
-      return 'please enter your phone number';
+    if (number == null || number.trim().isEmpty || number == "+2") {
+      return 'phone.error.empty'.tr();
     } else if (numberRegex.hasMatch(number) == false) {
-      return 'Egyptian numbers only';
+      return 'phone.error.invalid'.tr();
     } else {
       return null;
     }
@@ -18,9 +21,9 @@ class Validator {
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
     );
     if (password == null || password.trim().isEmpty) {
-      return 'Please enter your password';
+      return 'password.error.empty'.tr();
     } else if (passwordRegex.hasMatch(password) == false) {
-      return 'The password is not valid';
+      return 'password.error.invalid'.tr();
     } else {
       return null;
     }
@@ -31,9 +34,9 @@ class Validator {
       r"^[a-zA-Z]{2,30}$",
     );
     if (name == null || name.trim().isEmpty) {
-      return 'please enter your last name';
+      return 'lastName.error.empty'.tr();
     } else if (nameRegex.hasMatch(name) == false) {
-      return 'enter valid last name';
+      return 'lastName.error.invalid'.tr();
     } else {
       return null;
     }
@@ -44,9 +47,9 @@ class Validator {
       r"^[a-zA-Z]{2,30}$",
     );
     if (name == null || name.trim().isEmpty) {
-      return 'please enter your first name';
+      return 'firstName.error.empty'.tr();
     } else if (nameRegex.hasMatch(name) == false) {
-      return 'enter valid first name';
+      return 'firstName.error.invalid'.tr();
     } else {
       return null;
     }
@@ -58,9 +61,9 @@ class Validator {
     );
 
     if (email == null || email.trim().isEmpty) {
-      return 'please enter your email';
+      return 'email.error.empty'.tr();
     } else if (emailRegex.hasMatch(email) == false) {
-      return 'Please enter a valid email address';
+      return 'email.error.invalid'.tr();
     } else {
       return null;
     }
@@ -72,7 +75,7 @@ class Validator {
     }
 
     if (value.length == 4) {
-      return 'Invalid PIN code';
+      return 'otp.invalid'.tr();
     }
 
     return null;
@@ -80,12 +83,11 @@ class Validator {
 
   static String? confirmPasswordValidation(String? confirmPassword, String? originalPassword) {
     if (confirmPassword == null || confirmPassword.trim().isEmpty) {
-      return 'confirm your password';
+      return 'confirmPassword.error.empty'.tr();
     }
     if (confirmPassword != originalPassword) {
-      return 'Passwords do not match';
+      return 'confirmPassword.error.mismatch'.tr();
     }
     return null;
   }
-
 }

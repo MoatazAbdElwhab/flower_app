@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/routes.dart';
@@ -18,14 +19,11 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
-        leading: GestureDetector(
-          child: const Icon(
-            Icons.arrow_back_ios_rounded,
-          ),
-          onTap: () {
-            Navigator.pop(context);
-          },
+        title: Text('signUp'.tr()),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () => Navigator.pop(context),
+          tooltip: 'back'.tr(),
         ),
       ),
       body: BlocProvider(
@@ -50,14 +48,13 @@ class SignupPage extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Center(child: Text('Error')),
+                    title: Center(child: Text('dialogs.error.title'.tr())),
                     content: Text(
                         (state.signUpState as BaseErrorState).errorMessage),
                     actions: [
                       ElevatedButton(
-                        onPressed: () {
-                        },
-                        child: const Text('OK'),
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('dialogs.error.ok'.tr()),
                       ),
                     ],
                   );
@@ -67,24 +64,24 @@ class SignupPage extends StatelessWidget {
 
             if (state.signUpState is BaseSuccessState) {
               Navigator.pop(context);
+
               showDialog(
                 context: context,
+                barrierDismissible: false,
                 builder: (context) {
+                  // This prevents accessing an invalid `BuildContext` if the widget has been removed.
+                  Future.delayed(const Duration(milliseconds: 600 ), () {
+                    if (context.mounted) {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                      Navigator.pushReplacementNamed(context, Routes.login);
+                    }
+                  });
                   return AlertDialog(
-                    title: const Center(child: Text('Created Successfully')),
-                    content: const Text(
-                      'Account created successfully \n Click OK to login.',
+                    title: Center(child: Text('dialogs.success.title'.tr())),
+                    content: Text(
+                      'dialogs.success.message'.tr(),
                       textAlign: TextAlign.center,
                     ),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                          Navigator.pushReplacementNamed(context, Routes.login);
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
                   );
                 },
               );
@@ -108,145 +105,142 @@ class SignupPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              validator: (value) {
-                                return Validator.firstNameValidation(value);
-                              },
+                              validator: (value) =>
+                                  Validator.firstNameValidation(value),
                               controller: authCubit.firstNameController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Enter First Name',
-                                  labelText: 'First Name'),
+                              decoration: InputDecoration(
+                                hintText: 'firstName.hint'.tr(),
+                                labelText: 'firstName.label'.tr(),
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            width: 17.w,
-                          ),
+                          SizedBox(width: 17.w),
                           Expanded(
                             child: TextFormField(
-                              validator: (value) {
-                                return Validator.lastNameValidation(value);
-                              },
+                              validator: (value) =>
+                                  Validator.lastNameValidation(value),
                               controller: authCubit.lastNameController,
-                              decoration: const InputDecoration(
-                                hintText: 'Enter Last Name',
-                                labelText: 'Last Name',
+                              decoration: InputDecoration(
+                                hintText: 'lastName.hint'.tr(),
+                                labelText: 'lastName.label'.tr(),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
+                      SizedBox(height: 16.h),
                       TextFormField(
-                          validator: (value) {
-                            return Validator.emailValidate(value);
-                          },
-                          controller: authCubit.emailController,
-                          decoration: const InputDecoration(
-                              hintText: 'Enter Email', labelText: 'Email')),
-                      SizedBox(
-                        height: 16.h,
+                        validator: (value) => Validator.emailValidate(value),
+                        controller: authCubit.emailController,
+                        decoration: InputDecoration(
+                          hintText: 'email.hint'.tr(),
+                          labelText: 'email.label'.tr(),
+                        ),
                       ),
+                      SizedBox(height: 16.h),
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
-                              validator: (value) {
-                                return Validator.passwordValidation(value);
-                              },
+                              validator: (value) =>
+                                  Validator.passwordValidation(value),
                               controller: authCubit.passwordController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Enter Password',
-                                  labelText: 'Password',
-                                 ),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'password.hint'.tr(),
+                                labelText: 'password.label'.tr(),
+                              ),
                             ),
                           ),
-                          SizedBox(
-                            width: 17.w,
-                          ),
+                          SizedBox(width: 17.w),
                           Expanded(
                             child: TextFormField(
-                              validator: (value) => Validator.confirmPasswordValidation(value, authCubit.passwordController.text),
+                              validator: (value) =>
+                                  Validator.confirmPasswordValidation(
+                                      value, authCubit.passwordController.text),
                               controller: authCubit.confirmPasswordController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Confirm Password',
-                                  labelText: 'Confirm Password'),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'confirmPassword.hint'.tr(),
+                                labelText: 'confirmPassword.label'.tr(),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
+                      SizedBox(height: 16.h),
                       TextFormField(
-                        validator: (value) {
-                          return Validator.phoneNumberValidation(value);
-                        },
+                        validator: (value) =>
+                            Validator.phoneNumberValidation(value),
                         controller: authCubit.phoneController,
-                        onChanged: (value) => authCubit.enforceEgyptianPrefix(authCubit.phoneController),
-                        decoration: const InputDecoration(
-                            hintText: 'Enter Phone Number',
-                            labelText: 'Phone Number'),
+                        onChanged: (value) => authCubit
+                            .enforceEgyptianPrefix(authCubit.phoneController),
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          hintText: 'phone.hint'.tr(),
+                          labelText: 'phone.label'.tr(),
+                        ),
                       ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
+                      SizedBox(height: 16.h),
                     ],
                   ),
                 ),
-                ValueListenableBuilder(valueListenable: authCubit.selectedGenderNotifier, builder:(context, genderValue, child) {
-                  return Row(
-                    children: [
-                      Text(
-                        "Gender",
-                        style: getMediumStyle(
-                            color: AppColors.grey, fontSize: 18.sp),
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Radio(
-                              value: 'female',
-                              groupValue: genderValue,
-                              onChanged: (String? value) {
-                                authCubit.selectGender(value ?? '');
-                              },
-                            ),
-                            const Text('Female'),
-                          ],
+                ValueListenableBuilder(
+                  valueListenable: authCubit.selectedGenderNotifier,
+                  builder: (context, genderValue, child) {
+                    return Row(
+                      children: [
+                        Text(
+                          "gender.label".tr(),
+                          style: getMediumStyle(
+                            color: AppColors.grey,
+                            fontSize: 18.sp,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Radio(
-                              value: 'male',
-                              onChanged: (String? value) {
-                                authCubit.selectGender(value?? '');
-                              },
-                              groupValue: genderValue,
-                            ),
-                            const Text('Male'),
-                          ],
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 'female',
+                                groupValue: genderValue,
+                                onChanged: (String? value) {
+                                  authCubit.selectGender(value ?? '');
+                                },
+                              ),
+                              Text('gender.female'.tr()),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                },),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 'male',
+                                onChanged: (String? value) {
+                                  authCubit.selectGender(value ?? '');
+                                },
+                                groupValue: genderValue,
+                              ),
+                              Text('gender.male'.tr()),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
                 SizedBox(height: 16.h),
                 FittedBox(
                   child: Row(
                     children: [
                       Text(
-                        'Creating an account, you agree to our',
-                        style: getRegularStyle(
-                          color: AppColors.black,
-                        ),
+                        'terms.prefix'.tr(),
+                        style: getRegularStyle(color: AppColors.black),
                       ),
                       GestureDetector(
                         onTap: () {},
                         child: Text(
-                          "Terms & Conditions",
+                          "terms.conditions".tr(),
                           style:
                               getMediumStyle(color: AppColors.black).copyWith(
                             decoration: TextDecoration.underline,
@@ -263,21 +257,27 @@ class SignupPage extends StatelessWidget {
                       authCubit.signup();
                     }
                   },
-                  child: const Text('Sign Up'),
+                  child: Text('signUpButton'.tr()),
                 ),
                 SizedBox(height: 16.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Already have an account? '),
+                    Text('loginPrompt.prefix'.tr()),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamedAndRemoveUntil(
-                            context, Routes.login, (route) => false);
+                          context,
+                          Routes.login,
+                          (route) => false,
+                        );
                       },
-                      child:  Text(
-                        "Login",
-                        style: getTextUnderLine(color: AppColors.primary, fontSize: 14.sp),
+                      child: Text(
+                        "loginPrompt.action".tr(),
+                        style: getTextUnderLine(
+                          color: AppColors.primary,
+                          fontSize: 14.sp,
+                        ),
                       ),
                     ),
                   ],

@@ -2,18 +2,24 @@
 part of 'auth_cubit.dart';
 
 class AuthState extends Equatable {
-  BaseState? signInState;
+  final BaseState? signInState;
+  final AuthResponseEntity? authResponse;
 
-  AuthState({
+  const AuthState({
     required this.signInState,
+    this.authResponse,
   });
 
-  AuthState copyWith({BaseState? signInState}) {
+  AuthState copyWith({
+    BaseState? signInState,
+    AuthResponseEntity? authResponse,
+  }) {
     return AuthState(
       signInState: signInState ?? this.signInState,
+      authResponse: authResponse ?? this.authResponse,
     );
   }
 
   @override
-  List<Object?> get props => [signInState];
+  List<Object?> get props => [signInState, authResponse];
 }

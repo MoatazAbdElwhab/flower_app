@@ -7,6 +7,7 @@ import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
 import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth_remote_data_source_contract.dart';
 import 'package:flower_app/features/auth/data/model/response/sign_in_response/sign_in_response.dart';
+import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart';
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -19,14 +20,14 @@ class AuthRepoImpl implements AuthRepo {
 
 //---------------------------------signIn-----------------------------------
   @override
-  Future<Either<Exception, SignInResponse>> signIn(
+  Future<Either<Exception, AuthResponseEntity>> signIn(
       String email, String password, bool rememberMe) async {
     try {
       final apiResponse =
           await authRemoteDataSource.signIn(email, password);
       if (apiResponse.isRight) {
         await _cachUserSiginInData(apiResponse.right, rememberMe);
-        return Right(apiResponse.right);
+        return Right(AuthResponseEntity.toEntity(apiResponse.right));
       }
       return Left(apiResponse.left);
     } catch (e) {
@@ -39,9 +40,9 @@ class AuthRepoImpl implements AuthRepo {
     try {
       await authLocalDataSource.cacheRememberMe(rememberMe);
       if (response.token != null) {
-        Log.i('Caching user sign in data');
+      //  Log.i('Caching user sign in data');
         await authLocalDataSource.cacheToken(response.token!);
-        Log.i('token cached successfully');
+        //Log.i('token cached successfully');
       }
     } catch (e) {
       Log.e('Error while caching user sign in data: ${e.toString()}');

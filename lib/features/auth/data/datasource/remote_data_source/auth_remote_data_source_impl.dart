@@ -2,6 +2,7 @@
 
 import 'package:either_dart/src/either.dart';
 import 'package:flower_app/core/app_data/api/api_client.dart';
+import 'package:flower_app/core/app_data/api/api_constants.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth_remote_data_source_contract.dart';
@@ -20,7 +21,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       String email, String password) async {
     try {
       final response = await _apiClient.post(
-        'auth/signin',
+       // 'auth/signin',
+       ApiConstants.logInEndPoint,
         data: {
           'email': email,
           'password': password,

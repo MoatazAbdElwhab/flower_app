@@ -1,15 +1,12 @@
 // features/auth/presentation/pages/login_page.dart
 
-// features/auth/presentation/pages/login_page.dart
 import 'package:flower_app/core/base/base_state.dart';
-import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
-import 'package:flower_app/features/auth/data/model/response/sign_in_response/sign_in_response.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/auth/presentation/widget/remember_me.dart';
 import 'package:flutter/material.dart';
@@ -40,46 +37,35 @@ class _LoginPageState extends State<LoginPage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        ////-----------------------------------appBar
+        //----------------------------------------appBar
         appBar: AppBar(
           title: const Text('Login'),
           automaticallyImplyLeading: false,
         ),
-
-        //---------------------------------------body
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-            //---------------------------------------block consumer
-            child: BlocConsumer<AuthCubit, AuthState>(
-
-              ///listener
-              listener: (context, state) {
-                if (state.signInState is BaseSuccessState) {
-                  //navigate to home page
-                  Navigator.pushReplacementNamed(
-                    context,
-                    Routes.home,
-                  );
-                } else if (state.signInState is BaseErrorState) {
-                  //show error message
-                  final errorState = state.signInState as BaseErrorState;
-                  Log.e('Error during sign in: ${errorState.errorMessage}');
-                  GetIt.I<DialogUtils>().showSnackBar(
-                    message: "username or password is incorrect",
-                    textColor: AppColors.error,
-                    context: context,
-                  );
-                }
-              },
-              ///builder
-              builder: (context, state) {
-                if (state.signInState is BaseLoadingState) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return Form(
+        //----------------------------------------body
+        body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state.signInState is BaseSuccessState) {
+              Navigator.pushReplacementNamed(context, Routes.home);
+            } else if (state.signInState is BaseErrorState) {
+              final errorState = state.signInState as BaseErrorState;
+              Log.e('Error during sign in: ${errorState.errorMessage}');
+              GetIt.I<DialogUtils>().showSnackBar(
+                message: "username or password is incorrect",
+                textColor: AppColors.error,
+                context: context,
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state.signInState is BaseLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 24),
+                  child: Form(
                     key: formKey,
                     child: Column(
                       children: [
@@ -146,13 +132,13 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 16.h),
 
-                        ///signin as guest
+                        ///login as guest
                         OutlinedButton(
                           child: const Text('Continue as guest'),
                           onPressed: () {
                             cubit.signInAsGuest();
                             Navigator.pushReplacementNamed(
-                                context, Routes.home);
+                                context, Routes.login);
                           },
                         ),
                         SizedBox(height: 16.h),
@@ -180,11 +166,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                  );
-                }
-              },
-            ),
-          ),
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

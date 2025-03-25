@@ -1,10 +1,10 @@
 // features/auth/domain/repo/auth_repo.dart
 
 import 'package:either_dart/either.dart';
-import 'package:flower_app/features/auth/data/model/response/sign_in_response/sign_in_response.dart';
+import '../entities/auth_response_entity.dart';
 
 abstract class AuthRepo {
   //-----------------------------signIn-----------------------------------
-  Future<Either<Exception, SignInResponse>> signIn(
+  Future<Either<Exception, AuthResponseEntity>> signIn(
       String email, String password, bool rememberMe);
 }

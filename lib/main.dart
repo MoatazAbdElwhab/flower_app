@@ -1,4 +1,5 @@
 // main.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/routes.dart';
@@ -10,8 +11,15 @@ import 'core/theme/theme_data/theme_data_light.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await configureDependencies();
-  runApp(const MyApp());
+  runApp(EasyLocalization(
+      supportedLocales: const [
+        Locale('en', 'US'),
+      ],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en','US' ),
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,6 +40,10 @@ class MyApp extends StatelessWidget {
           theme: getLightTheme(),
           darkTheme: ThemeData(),
           themeMode: ThemeMode.light,
+          //easy localization
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
         ),
       ),
     );

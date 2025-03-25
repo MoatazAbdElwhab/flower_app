@@ -1,4 +1,5 @@
 // features/auth/presentation/widget/remember_me.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
@@ -38,7 +39,7 @@ class _RememberMeState extends State<RememberMe> {
           },
         ),
         Text(
-          'Remember me',
+          'auth.login.remember_me'.tr(),
           style: getRegularStyle(color: AppColors.black),
         ),
       ],

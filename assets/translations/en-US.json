@@ -1,0 +1,38 @@
+{
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": {
+        "label": "Email",
+        "hint": "Enter your email",
+        "validation": {
+          "required": "Email is required",
+          "invalid": "Please enter a valid email"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "hint": "Enter your password",
+        "validation": {
+          "required": "Password is required",
+          "invalid": "Password must be at least 6 characters"
+        }
+      },
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "login_button": "Login",
+      "guest_button": "Continue as guest",
+      "no_account": "Don't have an account?",
+      "sign_up": "Sign up",
+      "guest_message": "Signed in as guest"
+    },
+    "errors": {
+      "invalid_credentials": "Username or password is incorrect",
+      "sign_in_error": "Error during sign in: {error}",
+      "navigation": {
+        "forgot_password": "Navigate to forgot password page",
+        "sign_up": "Navigate to sign up page"
+      }
+    }
+  }
+}

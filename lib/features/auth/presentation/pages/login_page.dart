@@ -1,5 +1,6 @@
 // features/auth/presentation/pages/login_page.dart
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/core/routes/routes.dart';
@@ -39,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         //----------------------------------------appBar
         appBar: AppBar(
-          title: const Text('Login'),
+          title: Text('auth.login.title'.tr()),
           automaticallyImplyLeading: false,
         ),
         //----------------------------------------body
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
               final errorState = state.signInState as BaseErrorState;
               Log.e('Error during sign in: ${errorState.errorMessage}');
               GetIt.I<DialogUtils>().showSnackBar(
-                message: "username or password is incorrect",
+                message: 'auth.errors.invalid_credentials'.tr(),
                 textColor: AppColors.error,
                 context: context,
               );
@@ -75,10 +76,10 @@ class _LoginPageState extends State<LoginPage> {
                           validator: Validator.emailValidate,
                           autofillHints: const [AutofillHints.email],
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
+                          decoration: InputDecoration(
+                            labelText: 'auth.login.email.label'.tr(),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: 'Enter you email',
+                            hintText: 'auth.login.email.hint'.tr(),
                           ),
                         ),
                         SizedBox(height: 24.h),
@@ -89,10 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: true,
                           validator: Validator.passwordValidation,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
+                          decoration: InputDecoration(
+                            labelText: 'auth.login.password.label'.tr(),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: 'Enter you password ',
+                            hintText: 'auth.login.password.hint'.tr(),
                           ),
                         ),
                         SizedBox(height: 24.h),
@@ -111,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                 debugPrint('navigate to forgot password page');
                               },
                               child: Text(
-                                'Forgot password?',
+                                'auth.login.forgot_password'.tr(),
                                 style: getTextUnderLine(
                                   color: AppColors.grey,
                                 ),
@@ -128,13 +129,13 @@ class _LoginPageState extends State<LoginPage> {
                               cubit.signIn();
                             }
                           },
-                          child: const Text('Login'),
+                          child: Text('auth.login.login_button'.tr()),
                         ),
                         SizedBox(height: 16.h),
 
                         ///login as guest
                         OutlinedButton(
-                          child: const Text('Continue as guest'),
+                          child: Text('auth.login.guest_button'.tr()),
                           onPressed: () {
                             cubit.signInAsGuest();
                             Navigator.pushReplacementNamed(
@@ -149,10 +150,9 @@ class _LoginPageState extends State<LoginPage> {
                               style: getRegularStyle(
                                   color: AppColors.black, fontSize: 14.sp),
                               children: [
-                                const TextSpan(
-                                    text: 'Don\'t have an account? '),
+                                TextSpan(text: 'auth.login.no_account'.tr()),
                                 TextSpan(
-                                  text: 'Sign up',
+                                  text: 'auth.login.sign_up'.tr(),
                                   style: getTextUnderLine(
                                       color: AppColors.primary,
                                       fontSize: 14.sp),

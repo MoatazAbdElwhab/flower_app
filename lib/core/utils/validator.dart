@@ -18,7 +18,7 @@ class Validator {
 
   static String? passwordValidation(String? password) {
     final RegExp passwordRegex = RegExp(
-      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
+      r'^(?=.?[A-Z])(?=.?[a-z])(?=.*?[0-9]).{6,}$',
     );
     if (password == null || password.trim().isEmpty) {
       return 'password.error.empty'.tr();

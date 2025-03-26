@@ -1,4 +1,3 @@
-// core/error_handling/exceptions/storage/local_storage_exception.dart
 abstract class LocalStorageException implements Exception {
   final String message;
 

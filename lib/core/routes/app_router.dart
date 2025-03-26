@@ -1,8 +1,11 @@
 // core/routes/app_router.dart
 
 import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/features/auth/presentation/pages/email_verification.dart';
+import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:flower_app/features/auth/presentation/pages/reset_password.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -17,6 +20,25 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) =>  const SignupPage(),
     );
+
+    case Routes.forgetPassword:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const ForgetPasswordPage(),
+      );
+
+    case Routes.pinCode:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const EmailVerification(),
+      );
+
+    case Routes.resetPassword:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const ResetPassword(),
+      );
+
     default:
       return MaterialPageRoute(
         settings: settings,

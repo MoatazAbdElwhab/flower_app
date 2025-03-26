@@ -3,6 +3,8 @@ import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -20,6 +22,12 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  final TextEditingController forgetPasswordEmailController =
+      TextEditingController();
+  final TextEditingController pinController = TextEditingController();
+
+  final GlobalKey<FormState> forgetPasswordEmailFormKey =
+      GlobalKey<FormState>();
 
   ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
 
@@ -60,7 +68,6 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-
   // this function is to enforce the egyptian prefix {+2} on the phone number
   void enforceEgyptianPrefix(TextEditingController controller) {
     if (!controller.text.startsWith("+2")) {
@@ -73,5 +80,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   void selectGender(String gender) {
     selectedGenderNotifier.value = gender;
+  }
+
+  Future<void> verifyResetCode(String resetCode) async {
+    // emit(ForgetPasswordLoading());
+    // final result = await _verfiyResetCode(resetCode);
+    // if (result is SuccessApiResult) {
+    //   emit(ForgetPasswordSuccess());
+    // } else if (result is ErrorApiResult) {
+    //   emit(ForgetPasswordError(result.exception.toString()));
+    // }
   }
 }

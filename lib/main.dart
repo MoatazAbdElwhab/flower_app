@@ -14,11 +14,9 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await configureDependencies();
   runApp(EasyLocalization(
-      supportedLocales: const [
-        Locale('en', 'US'),
-      ],
+      supportedLocales: const [Locale('en', 'US')],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en','US' ),
+      fallbackLocale: const Locale('en', 'US'),
       child: const MyApp()));
 }
 
@@ -31,19 +29,22 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (con, _) => BlocProvider(
+      builder: (context, child) => BlocProvider(
         create: (context) => getIt<AuthCubit>(),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: Routes.login,
-          onGenerateRoute: generateRoute,
-          theme: getLightTheme(),
-          darkTheme: ThemeData(),
-          themeMode: ThemeMode.light,
-          //easy localization
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
+        child: Builder(
+          builder: (context) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: Routes.login,
+            onGenerateRoute: generateRoute,
+            theme: getLightTheme(),
+            darkTheme: ThemeData(),
+            themeMode: ThemeMode.light,
+
+            // Localization
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_impl.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart';
 import 'package:flower_app/features/auth/domain/use_case/sign_in_use_case.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,12 @@ class AuthCubit extends Cubit<AuthState> {
         return;
       }
 
+      // Create an instance of AuthLocalDataSourceImpl for token handling
+      final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
+      if (_rememberMe && response.right.token != null) {
+        await authLocalDataSource.cacheToken(response.right.token!);
+      }
+
       emit(AuthState(
         signInState: BaseSuccessState(),
         authResponse: response.right,
@@ -81,7 +88,10 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthState(signInState: BaseLoadingState()));
 
-      final token = await localStorageClient.getSecuredData('token');
+      // Create an instance of AuthLocalDataSourceImpl
+      final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
+
+      final token = await authLocalDataSource.checkSavedToken();
       if (token != null) {
         emit(AuthState(
           signInState: BaseSuccessState(),

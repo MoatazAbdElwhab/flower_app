@@ -62,10 +62,11 @@ class _LoginPageState extends State<LoginPage> {
             if (state.signInState is BaseLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 24),
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Form(
                     key: formKey,
                     child: Column(

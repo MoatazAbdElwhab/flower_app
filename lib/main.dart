@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (con, _) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.login,
+        initialRoute: Routes.navbar,
         onGenerateRoute: generateRoute,
         theme: getLightTheme(),
         darkTheme: ThemeData(),

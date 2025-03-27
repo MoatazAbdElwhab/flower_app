@@ -1,30 +1,111 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// test/widget_test.dart
 
-import 'package:flutter/material.dart';
+import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart';
+import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:either_dart/either.dart';
+import 'helpers/mock_data/auth_mock_data.dart';
+import 'helpers/mocks/auth_mocks.dart';
+import 'helpers/mocks/auth_mocks.mocks.dart';
 
-import 'package:flower_app/main.dart';
-
+/// Main test suite for Authentication features
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  TestWidgetsFlutterBinding.ensureInitialized();
+  
+  group('Authentication Service Tests', () {
+    late MockSignInUseCase signInUseCase;
+    late MockLocalStorageClient localStorageClient;
+    late AuthCubit authCubit;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    /// Setup before each test
+    setUp(() {
+      signInUseCase = MockSignInUseCase();
+      localStorageClient = MockLocalStorageClient();
+      
+      // Setup default mock behavior
+      when(localStorageClient.getData(any)).thenReturn('false');
+      when(localStorageClient.saveData(any, any)).thenAnswer((_) async => true);
+      
+      authCubit = AuthCubit(
+        signInUseCase: signInUseCase,
+        localStorageClient: localStorageClient,
+      );
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    /// Cleanup after each test
+    tearDown(() {
+      authCubit.close();
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    group('Login Functionality', () {
+      test('successful login updates auth state with token', () async {
+        // Arrange
+        authCubit.loginemailController.text = AuthMockData.validEmail;
+        authCubit.loginpasswordController.text = AuthMockData.validPassword;
+        
+        signInUseCase.setupSuccessResponse(
+          email: AuthMockData.validEmail, 
+          password: AuthMockData.validPassword
+        );
+        
+        // Act
+        await authCubit.signIn();
+        
+        // Assert
+        expect(authCubit.state.signInState, isA<BaseSuccessState>());
+        expect(authCubit.state.authResponse?.token, isNotNull);
+      });
+
+      test('failed login produces appropriate error state', () async {
+        // Arrange
+        authCubit.loginemailController.text = AuthMockData.validEmail;
+        authCubit.loginpasswordController.text = AuthMockData.invalidPassword;
+        
+        signInUseCase.setupErrorResponse(
+          email: AuthMockData.validEmail,
+          password: AuthMockData.invalidPassword
+        );
+        
+        // Act
+        await authCubit.signIn();
+        
+        // Assert
+        expect(authCubit.state.signInState, isA<BaseErrorState>());
+      });
+    });
+
+    group('Remember Me Functionality', () {
+      test('setting remember me persists preference', () async {
+        // Act
+        authCubit.setRememberMe(true);
+        await Future.delayed(const Duration(milliseconds: 50));
+        
+        // Assert
+        expect(authCubit.rememberMe, isTrue);
+        verify(localStorageClient.saveData('rememberMe', 'true')).called(1);
+      });
+    });
+    
+    group('Token Management', () {
+      test('auth response is properly stored after login', () async {
+        // Arrange
+        authCubit.loginemailController.text = AuthMockData.validEmail;
+        authCubit.loginpasswordController.text = AuthMockData.validPassword;
+        
+        signInUseCase.setupSuccessResponse(
+          email: AuthMockData.validEmail, 
+          password: AuthMockData.validPassword,
+          token: 'test_token_123'
+        );
+        
+        // Act
+        await authCubit.signIn();
+        
+        // Assert
+        expect(authCubit.state.authResponse?.token, equals('test_token_123'));
+      });
+    });
   });
 }

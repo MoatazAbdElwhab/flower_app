@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state.signInState is BaseSuccessState) {
-              Navigator.pushReplacementNamed(context, Routes.home);
+              Navigator.pushReplacementNamed(context, Routes.navbar);
             } else if (state.signInState is BaseErrorState) {
               final errorState = state.signInState as BaseErrorState;
               Log.e('Error during sign in: ${errorState.errorMessage}');

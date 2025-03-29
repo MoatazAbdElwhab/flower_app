@@ -8,4 +8,5 @@ class Routes {
   static const String profileResetPassword = '/profile-reset-password';
   static const String navbar = '/navbar';
   static const String splash = '/splash';
+  static const String ProductDetailsView = '/ProductDetailsView';
 }

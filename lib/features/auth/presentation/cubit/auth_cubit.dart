@@ -125,7 +125,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> verifyResetCode(String resetCode) async {
     emit(state.copyWith(verifyResetCodeState: BaseLoadingState()));
+
     final response = await _verifyResetCodeUseCase.call(resetCode);
+
     response.fold(
       (error) async {
         emit(

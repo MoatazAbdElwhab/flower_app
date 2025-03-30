@@ -7,7 +7,9 @@ import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart';
 import 'package:flower_app/features/auth/domain/ues_case/verify_reset_code_use_case.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -40,6 +42,7 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+
   final TextEditingController forgetEmailController = TextEditingController();
   final TextEditingController pinController = TextEditingController();
   TextEditingController forgetPasswordController = TextEditingController();
@@ -47,6 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
       TextEditingController();
   final GlobalKey<FormState> forgetEmailFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> resetPasswordFormKey = GlobalKey<FormState>();
+
 
   ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
 
@@ -109,6 +113,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+
   // this function is to enforce the egyptian prefix {+2} on the phone number
   void enforceEgyptianPrefix(TextEditingController controller) {
     if (!controller.text.startsWith("+2")) {
@@ -123,8 +128,13 @@ class AuthCubit extends Cubit<AuthState> {
     selectedGenderNotifier.value = gender;
   }
 
+
   Future<void> verifyResetCode(String resetCode) async {
     emit(state.copyWith(verifyResetCodeState: BaseLoadingState()));
+
+
+
+
 
     final response = await _verifyResetCodeUseCase.call(resetCode);
 
@@ -144,6 +154,27 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> resendOtp() async {
     await _resendOtpUseCase.call(forgetEmailController.text);
+
+  }
+
+  Future<void> resetPassword(String email, String newPassword) async {
+    emit(state.copyWith(resetPasswordState: BaseLoadingState()));
+    final response = await _resetPasswordUseCase.call(email, newPassword);
+    response.fold(
+      (error) async {
+        emit(
+          state.copyWith(
+            resetPasswordState: BaseErrorState(error.message),
+          ),
+        );
+      },
+      (success) {
+        emit(state.copyWith(
+            resetPasswordState: BaseSuccessState<Unit>(data: success)));
+      },
+    );
+
+
   }
 
   Future<void> resetPassword(String email, String newPassword) async {
@@ -163,4 +194,5 @@ class AuthCubit extends Cubit<AuthState> {
       },
     );
   }
+
 }

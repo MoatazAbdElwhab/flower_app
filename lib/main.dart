@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flower_app/core/app_bloc_observer.dart';
 import 'package:flower_app/core/di/injectable.dart';
-
 import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
@@ -41,7 +39,11 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        initialRoute: Routes.forgetPassword,
+
+
+
+        initialRoute: Routes.signup,
+
         onGenerateRoute: generateRoute,
         theme: getLightTheme(),
         darkTheme: ThemeData(),

@@ -73,5 +73,25 @@
         "message": "Account created successfully \n Click OK to login.",
         "ok": "OK"
       }
+    },
+    "forgetPassword": {
+      "title": "Forget Password",
+      "description": "Please enter your email associated to your account",
+      "continueButton": "Continue"
+    },
+
+    "pinCode": {
+       "title": "Email Verification",
+      "description": "Please enter your code that send to your email address",
+      "ErrorMessage": "Invalid Code",
+      "ReadyMessage": "Didn't receive code?",
+      "ResendMessage": "Resend"
+    },
+
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
+      "resetButton": "Reset"
     }
+
   }

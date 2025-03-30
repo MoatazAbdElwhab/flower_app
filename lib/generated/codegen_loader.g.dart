@@ -1,0 +1,112 @@
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
+// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters, constant_identifier_names
+
+import 'dart:ui';
+
+import 'package:easy_localization/easy_localization.dart' show AssetLoader;
+
+class CodegenLoader extends AssetLoader{
+  const CodegenLoader();
+
+  @override
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {
+    return Future.value(mapLocales[locale.toString()]);
+  }
+
+  static const Map<String,dynamic> _en_US = {
+  "signUp": "Sign Up",
+  "back": "Back",
+  "firstName": {
+    "hint": "Enter First Name",
+    "label": "First Name",
+    "error": {
+      "empty": "Please enter your first name",
+      "invalid": "Enter valid first name"
+    }
+  },
+  "lastName": {
+    "hint": "Enter Last Name",
+    "label": "Last Name",
+    "error": {
+      "empty": "Please enter your last name",
+      "invalid": "Enter valid last name"
+    }
+  },
+  "email": {
+    "hint": "Enter Email",
+    "label": "Email",
+    "error": {
+      "empty": "Please enter your email",
+      "invalid": "Please enter a valid email address"
+    }
+  },
+  "password": {
+    "hint": "Enter Password",
+    "label": "Password",
+    "error": {
+      "empty": "Please enter your password",
+      "invalid": "The password is not valid"
+    }
+  },
+  "confirmPassword": {
+    "hint": "Confirm Password",
+    "label": "Confirm Password",
+    "error": {
+      "empty": "Confirm your password",
+      "mismatch": "Passwords do not match"
+    }
+  },
+  "phone": {
+    "hint": "Enter Phone Number",
+    "label": "Phone Number",
+    "error": {
+      "empty": "Please enter your phone number",
+      "invalid": "Egyptian numbers only"
+    }
+  },
+  "gender": {
+    "label": "Gender",
+    "female": "Female",
+    "male": "Male"
+  },
+  "terms": {
+    "prefix": "Creating an account, you agree to our",
+    "conditions": "Terms & Conditions"
+  },
+  "signUpButton": "Sign Up",
+  "loginPrompt": {
+    "prefix": "Already have an account? ",
+    "action": "Login"
+  },
+  "dialogs": {
+    "error": {
+      "title": "Error",
+      "ok": "OK"
+    },
+    "success": {
+      "title": "Created Successfully",
+      "message": "Account created successfully \n Click OK to login.",
+      "ok": "OK"
+    }
+  },
+  "forgetPassword": {
+    "title": "Forget Password",
+    "description": "Please enter your email associated to your account",
+    "continueButton": "Continue"
+  },
+  "pinCode": {
+    "title": "Email Verification",
+    "description": "Please enter your code that send to your email address",
+    "ErrorMessage": "Invalid Code",
+    "ReadyMessage": "Didn't receive code?",
+    "ResendMessage": "Resend"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
+    "resetButton": "Reset"
+  }
+};
+static const Map<String, Map<String,dynamic>> mapLocales = {"en_US": _en_US};
+}

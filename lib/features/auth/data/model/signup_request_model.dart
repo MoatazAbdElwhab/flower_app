@@ -19,7 +19,7 @@ class SignUpRequestModel {
   @JsonKey(name: "gender")
   final String? gender;
 
-  SignUpRequestModel ({
+  SignUpRequestModel({
     this.firstName,
     this.lastName,
     this.email,
@@ -37,5 +37,3 @@ class SignUpRequestModel {
     return _$SignUpRequestModelToJson(this);
   }
 }
-
-

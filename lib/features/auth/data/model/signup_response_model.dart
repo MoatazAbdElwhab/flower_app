@@ -11,7 +11,7 @@ class SignUpResponseModel {
   @JsonKey(name: "token")
   final String? token;
 
-  SignUpResponseModel ({
+  SignUpResponseModel({
     this.message,
     this.user,
     this.token,
@@ -51,7 +51,7 @@ class User {
   @JsonKey(name: "createdAt")
   final String? createdAt;
 
-  User ({
+  User({
     this.firstName,
     this.lastName,
     this.email,
@@ -73,5 +73,3 @@ class User {
     return _$UserToJson(this);
   }
 }
-
-

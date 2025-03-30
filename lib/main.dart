@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flower_app/core/app_bloc_observer.dart';
@@ -6,23 +5,26 @@ import 'package:flower_app/core/di/injectable.dart';
 
 import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/di/injectable.dart';
 import 'core/theme/theme_data/theme_data_light.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   await EasyLocalization.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
   runApp(EasyLocalization(
       supportedLocales: const [
         Locale('en', 'US'),
       ],
       fallbackLocale: const Locale('en', 'US'),
       path: 'assets/translations',
-      child: const MyApp()));
+      child: MultiBlocProvider(providers: [
+        BlocProvider(create: (context) => getIt<AuthCubit>()),
+      ], child: const MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -36,12 +38,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (con, _) => MaterialApp(
         debugShowCheckedModeBanner: false,
-
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        initialRoute: Routes.signup,
-
+        initialRoute: Routes.forgetPassword,
         onGenerateRoute: generateRoute,
         theme: getLightTheme(),
         darkTheme: ThemeData(),

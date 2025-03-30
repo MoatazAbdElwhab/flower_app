@@ -14,13 +14,43 @@ class AuthRepoImpl implements AuthRepo {
   // Unit is from Either package and it represents void
 
   @override
-  Future<Either<ApiException, Unit>> signup(SignUpRequestModel request) async{
-    try{
+  Future<Either<ApiException, Unit>> signup(SignUpRequestModel request) async {
+    try {
       await _authRemoteDataSource.signup(request);
       return const Right(unit);
-    }catch(e){
+    } catch (e) {
       return Left(ApiException(message: e.toString()));
     }
   }
 
+  @override
+  Future<Either<ApiException, Unit>> forgetPassword(String email) async {
+    try {
+      await _authRemoteDataSource.forgetPassword(email);
+      return const Right(unit);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, Unit>> verifyResetCode(String resetCode) async {
+    try {
+      await _authRemoteDataSource.verifyResetCode(resetCode);
+      return const Right(unit);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, Unit>> resetPassword(
+      String email, String newPassword) async {
+    try {
+      await _authRemoteDataSource.resetPassword(email, newPassword);
+      return const Right(unit);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
 }

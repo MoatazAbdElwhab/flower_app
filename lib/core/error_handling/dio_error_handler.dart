@@ -20,7 +20,6 @@ class DioErrorHandler {
     if (error.response?.data != null) {
       final responseData = error.response?.data;
 
-     
       String? errorMessage;
       if (responseData is Map<String, dynamic>) {
         errorMessage = responseData['error'] ?? responseData['message'];

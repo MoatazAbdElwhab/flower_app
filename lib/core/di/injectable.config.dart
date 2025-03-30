@@ -25,6 +25,16 @@ import 'package:flower_app/features/auth/data/repo/auth_repo_impl.dart'
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart' as _i514;
 import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart'
     as _i366;
+import 'package:flower_app/features/auth/domain/ues_case/forget_password_use_case.dart'
+    as _i235;
+import 'package:flower_app/features/auth/domain/ues_case/resend_otp_use_case.dart'
+    as _i419;
+import 'package:flower_app/features/auth/domain/ues_case/reset_password_use_case.dart'
+    as _i696;
+import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart'
+    as _i366;
+import 'package:flower_app/features/auth/domain/ues_case/verify_reset_code_use_case.dart'
+    as _i242;
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart'
     as _i315;
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart'
@@ -66,12 +76,16 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
         ));
+    gh.factory<_i561.AuthState>(() => _i561.AuthState(
+          signUpState: gh<_i584.BaseState>(),
+          forgetPasswordState: gh<_i584.BaseState>(),
+          verifyResetCodeState: gh<_i584.BaseState>(),
+          resetPasswordState: gh<_i584.BaseState>(),
+        ));
     gh.singleton<_i343.DioErrorHandler>(() => _i343.DioErrorHandler(
           gh<_i666.LocalStorageClient>(),
           gh<_i719.GlobalKey<_i719.NavigatorState>>(),
         ));
-    gh.factory<_i561.AuthState>(
-        () => _i561.AuthState(signUpState: gh<_i584.BaseState>()));
     gh.singleton<_i570.ApiClient>(() => _i199.DioApiClient(
           gh<_i666.LocalStorageClient>(),
           gh<_i343.DioErrorHandler>(),
@@ -81,10 +95,23 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i843.AuthRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i514.AuthRepo>(
         () => _i1012.AuthRepoImpl(gh<_i1019.AuthRemoteDataSource>()));
+    gh.factory<_i242.VerifyResetCodeUseCase>(
+        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i235.ForgetPasswordUseCase>(
+        () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i366.SignupUseCase>(
         () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i315.AuthCubit>(
-        () => _i315.AuthCubit(gh<_i366.SignupUseCase>()));
+    gh.factory<_i696.ResetPasswordUseCase>(
+        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i419.ResendOtpUseCase>(
+        () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
+          gh<_i366.SignupUseCase>(),
+          gh<_i235.ForgetPasswordUseCase>(),
+          gh<_i242.VerifyResetCodeUseCase>(),
+          gh<_i696.ResetPasswordUseCase>(),
+          gh<_i419.ResendOtpUseCase>(),
+        ));
     return this;
   }
 }

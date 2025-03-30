@@ -5,20 +5,38 @@ import 'package:injectable/injectable.dart';
 @injectable
 class AuthState extends Equatable {
   final BaseState? signUpState;
+  final BaseState? forgetPasswordState;
+  final BaseState? verifyResetCodeState;
+  final BaseState? resetPasswordState;
+  const AuthState({
+    this.signUpState,
+    this.forgetPasswordState,
+    this.verifyResetCodeState,
+    this.resetPasswordState,
+  });
 
-  const AuthState({this.signUpState});
-
-  AuthState copyWith({BaseState? signUpState}) {
+  AuthState copyWith({
+    BaseState? signUpState,
+    BaseState? forgetPasswordState,
+    BaseState? verifyResetCodeState,
+    BaseState? resetPasswordState,
+  }) {
     return AuthState(
       signUpState: signUpState ?? this.signUpState,
-
+      forgetPasswordState: forgetPasswordState ?? this.forgetPasswordState,
+      verifyResetCodeState: verifyResetCodeState ?? this.verifyResetCodeState,
+      resetPasswordState: resetPasswordState ?? this.resetPasswordState,
     );
   }
 
   @override
-  List<Object?> get props => [signUpState];
+  List<Object?> get props => [
+        signUpState,
+        forgetPasswordState,
+        verifyResetCodeState,
+        resetPasswordState
+      ];
 }
-
 
 // class AuthInitial extends AuthState {}
 

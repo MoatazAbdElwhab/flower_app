@@ -10,7 +10,6 @@ class SignupUseCase {
 
   SignupUseCase(this._authRepo);
 
-  Future<Either<ApiException, Unit>> call(
-          SignUpRequestModel request) async =>
+  Future<Either<ApiException, Unit>> call(SignUpRequestModel request) async =>
       await _authRepo.signup(request);
 }

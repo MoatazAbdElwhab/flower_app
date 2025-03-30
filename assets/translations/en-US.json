@@ -40,38 +40,33 @@
         "empty": "Confirm your password",
         "mismatch": "Passwords do not match"
       }
-    },
-    "phone": {
-      "hint": "Enter Phone Number",
-      "label": "Phone Number",
-      "error": {
-        "empty": "Please enter your phone number",
-        "invalid": "Egyptian numbers only"
-      }
-    },
-    "gender": {
-      "label": "Gender",
-      "female": "Female",
-      "male": "Male"
-    },
-    "terms": {
-      "prefix": "Creating an account, you agree to our",
-      "conditions": "Terms & Conditions"
-    },
-    "signUpButton": "Sign Up",
-    "loginPrompt": {
-      "prefix": "Already have an account? ",
-      "action": "Login"
-    },
-    "dialogs": {
-      "error": {
-        "title": "Error",
-        "ok": "OK"
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": {
+        "label": "Email",
+        "hint": "Enter your email",
+        "validation": {
+          "required": "Email is required",
+          "invalid": "Please enter a valid email"
+        }
       },
-      "success": {
-        "title": "Created Successfully",
-        "message": "Account created successfully \n Click OK to login.",
-        "ok": "OK"
+      "password": {
+        "label": "Password",
+        "hint": "Enter your password",
+        "validation": {
+          "required": "Password is required",
+          "invalid": "Password must be at least 6 characters"
+        }
+      },
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "login_button": "Login",
+      "guest_button": "Continue as guest",
+      "no_account": "Don't have an account?",
+      "sign_up": "Sign up",
+      "guest_message": "Signed in as guest"
+    }
       }
     }
-  }
+    }

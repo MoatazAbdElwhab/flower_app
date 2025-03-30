@@ -3,6 +3,15 @@ import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter/cupertino.dart';
+// features/auth/presentation/cubit/auth_cubit.dart
+import 'package:equatable/equatable.dart';
+import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
+import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/logger/app_logger.dart';
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_impl.dart';
+import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart';
+import 'package:flower_app/features/auth/domain/use_case/sign_in_use_case.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,9 +19,19 @@ import '../../data/model/signup_request_model.dart';
 
 @injectable
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._signupUseCase) : super(const AuthState());
+  AuthCubit(this._signupUseCase, this.localStorageClient, this.signInUseCase) : super(const AuthState()){
+    _rememberMe =
+        localStorageClient.getData('rememberMe')?.toLowerCase() == 'true';
+    if (_rememberMe) {
+      checkSavedToken();
+    } else {
+      emit(AuthState(signInState: BaseInitialState()));
+    }
+  }
   final SignupUseCase _signupUseCase;
-
+  final SignInUseCase signInUseCase;
+  final LocalStorageClient localStorageClient;
+  bool _rememberMe = false;
   // text controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -20,6 +39,9 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  /// Login Controllers
+  final TextEditingController loginemailController = TextEditingController();
+  final TextEditingController loginpasswordController = TextEditingController();
 
   ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
 
@@ -74,4 +96,77 @@ class AuthCubit extends Cubit<AuthState> {
   void selectGender(String gender) {
     selectedGenderNotifier.value = gender;
   }
+
+  // login
+  void setRememberMe(bool value) {
+    _rememberMe = value;
+    localStorageClient.saveData('rememberMe', value.toString());
+  }
+
+  bool get rememberMe => _rememberMe;
+
+  Future<void> signIn() async {
+    try {
+      emit(AuthState(signInState: BaseLoadingState()));
+
+      final response = await signInUseCase.call(
+        loginemailController.text.trim(),
+        loginpasswordController.text.trim(),
+        _rememberMe,
+      );
+
+      if (response.isLeft) {
+        emit(AuthState(signInState: BaseErrorState(response.left.toString())));
+        return;
+      }
+
+      // Create an instance of AuthLocalDataSourceImpl for token handling
+      final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
+      if (_rememberMe && response.right.token != null) {
+        await authLocalDataSource.cacheToken(response.right.token!);
+      }
+
+      emit(AuthState(
+        signInState: BaseSuccessState(),
+        authResponse: response.right,
+      ));
+    } catch (e) {
+      Log.e('SignIn Error: ${e.toString()}');
+      emit(AuthState(signInState: BaseErrorState(e.toString())));
+    }
+  }
+
+  void signInAsGuest() {
+    emit(AuthState(
+      signInState: BaseSuccessState(),
+      authResponse: const AuthResponseEntity(
+        message: 'Signed in as guest',
+        token: null,
+        user: null,
+      ),
+    ));
+  }
+
+  Future<void> checkSavedToken() async {
+    try {
+      emit(AuthState(signInState: BaseLoadingState()));
+
+      // Create an instance of AuthLocalDataSourceImpl
+      final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
+
+      final token = await authLocalDataSource.checkSavedToken();
+      if (token != null) {
+        emit(AuthState(
+          signInState: BaseSuccessState(),
+          authResponse: AuthResponseEntity(token: token),
+        ));
+      } else {
+        emit(AuthState(signInState: BaseInitialState()));
+      }
+    } catch (e) {
+      Log.e('Token check error: ${e.toString()}');
+      emit(AuthState(signInState: BaseErrorState(e.toString())));
+    }
+  }
+
 }

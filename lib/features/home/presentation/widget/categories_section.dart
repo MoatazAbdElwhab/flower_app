@@ -1,12 +1,18 @@
 // features/home/presentation/widget/categories_section.dart
 
+import 'package:flower_app/features/home/domain/entities/category_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/category_item.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoriesSection extends StatelessWidget {
-  const CategoriesSection({super.key});
+  final List<CategoryEntity> categories;
+
+  const CategoriesSection({
+    super.key,
+    required this.categories,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,22 +20,23 @@ class CategoriesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        //section header
+        //////////////////////////////////////////////////Categories section header
         const SectionHeader(title: 'Categories'),
         SizedBox(height: 12.h),
 
-        //categories list view
+        //////////////////////////////////////////////////categories list view
         Expanded(
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: const [
-              CategoryItem(name: 'Flowers', icon: Icons.local_florist),
-              CategoryItem(name: 'Gift', icon: Icons.card_giftcard),
-              CategoryItem(name: 'Card', icon: Icons.credit_card),
-              CategoryItem(name: 'Jewellery', icon: Icons.diamond),
-              CategoryItem(name: 'Flowers', icon: Icons.local_florist),
-            ],
-          ),
+          child: categories.isEmpty
+              ? const Center(child: Text('No categories available'))
+              : ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return CategoryItem(
+                      category: categories[index],
+                    );
+                  },
+                ),
         ),
       ],
     );

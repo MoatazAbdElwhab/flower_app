@@ -1,12 +1,18 @@
 // features/home/presentation/widget/best_seller_section.dart
 
+import 'package:flower_app/features/home/domain/entities/best_seller_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BestSellerSection extends StatelessWidget {
-  const BestSellerSection({super.key});
+  final List<BestSellerEntity> bestSellers;
+
+  const BestSellerSection({
+    super.key,
+    required this.bestSellers,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +20,29 @@ class BestSellerSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        //section header
+        //////////////////////////////////////////////////Best seller section header
         const SectionHeader(title: 'Best seller'),
         SizedBox(height: 12.h),
 
-        //best seller list view
+        //////////////////////////////////////////////////best seller list view
         Expanded(
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: const [
-              ItemCard(name: 'Sunny', price: '600 EGP'),
-              ItemCard(name: 'Red roses', price: '600 EGP'),
-              ItemCard(name: 'Spring vase', price: '600 EGP'),
-            ],
-          ),
+          child: bestSellers.isEmpty
+              ? const Center(child: Text('No best sellers available'))
+              : ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: bestSellers.length,
+                  itemBuilder: (context, index) {
+                    final bestSeller = bestSellers[index];
+                    return ItemCard(
+                      id: bestSeller.id,
+                      title: bestSeller.title,
+                      imageUrl: bestSeller.imgCover,
+                      showPrice: true,
+                      price: bestSeller.price?.toString(),
+                      discountPrice: bestSeller.priceAfterDiscount?.toString(),
+                    );
+                  },
+                ),
         ),
       ],
     );

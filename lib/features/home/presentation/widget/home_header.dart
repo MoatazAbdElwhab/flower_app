@@ -16,7 +16,7 @@ class HomeHeader extends StatelessWidget {
       padding: EdgeInsets.only(top: 16.h),
       child: Row(
         children: [
-          // Logo section
+          ////////////////////////////////////////////////// Logo section
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -45,7 +45,7 @@ class HomeHeader extends StatelessWidget {
 
           SizedBox(width: 12.w),
 
-          //textform Search field
+          //////////////////////////////////////////////////textform Search field
           Expanded(
             child: Container(
               height: 40.h,

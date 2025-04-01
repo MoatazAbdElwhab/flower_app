@@ -21,8 +21,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       String email, String password) async {
     try {
       final response = await _apiClient.post(
-       // 'auth/signin',
-       ApiConstants.logInEndPoint,
+        // 'auth/signin',
+        ApiConstants.logInEndPoint,
         data: {
           'email': email,
           'password': password,

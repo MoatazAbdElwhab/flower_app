@@ -1,13 +1,14 @@
 // features/home/presentation/widget/best_seller_section.dart
 
-import 'package:flower_app/features/home/domain/entities/best_seller_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BestSellerSection extends StatelessWidget {
-  final List<BestSellerEntity> bestSellers;
+  final List<ProductEntity> bestSellers;
 
   const BestSellerSection({
     super.key,
@@ -21,13 +22,13 @@ class BestSellerSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Best seller section header
-        const SectionHeader(title: 'Best seller'),
+        SectionHeader(title: 'home.sections.best_seller'.tr()),
         SizedBox(height: 12.h),
 
         //////////////////////////////////////////////////best seller list view
         Expanded(
           child: bestSellers.isEmpty
-              ? const Center(child: Text('No best sellers available'))
+              ? Center(child: Text('home.empty_states.best_sellers'.tr()))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: bestSellers.length,

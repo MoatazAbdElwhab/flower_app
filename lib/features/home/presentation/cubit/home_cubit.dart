@@ -1,6 +1,7 @@
 // features/home/presentation/cubit/home_cubit.dart
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/error_handling/exceptions/app_exception.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/core/services/location_service.dart';
 import 'package:flower_app/features/home/domain/entities/home_entity.dart';
@@ -15,57 +16,60 @@ class HomeCubit extends Cubit<HomeState> {
   final GetHomeDataUseCase getHomeDataUseCase;
   final LocationService locationService;
 
+  HomeEntity? _homeData;
+  String? _locationAddress = "...................";
+
+  HomeEntity? get homeData => _homeData;
+  String? get locationAddress => _locationAddress;
+
   HomeCubit({
     required this.getHomeDataUseCase,
     required this.locationService,
   }) : super(HomeState(
           homeDataState: BaseInitialState(),
           locationState: BaseSuccessState(),
-          locationAddress: "...................",
         ));
 
 //-----------------------------------------------------home
   Future<void> getHomeData() async {
-    try {
-      emit(state.copyWith(homeDataState: BaseLoadingState()));
+    emit(state.copyWith(homeDataState: BaseLoadingState()));
 
-      final response = await getHomeDataUseCase.call();
+    final response = await getHomeDataUseCase.call();
 
-      if (response.isLeft) {
-        emit(state.copyWith(
-            homeDataState: BaseErrorState(response.left.toString())));
-        return;
-      }
-
+    if (response.isLeft) {
+      Log.e('Get Home Data Error: ${response.left}');
       emit(state.copyWith(
-        homeDataState: BaseSuccessState(),
-        homeData: response.right,
-      ));
-    } catch (e) {
-      Log.e('Get Home Data Error: ${e.toString()}');
-      emit(state.copyWith(homeDataState: BaseErrorState(e.toString())));
+          homeDataState: BaseErrorState(response.left.toString())));
+      return;
     }
+    _homeData = response.right;
+
+    emit(state.copyWith(
+      homeDataState: BaseSuccessState(),
+    ));
   }
 
   //-----------------------------------------------------location
   Future<void> getUserLocation() async {
-    try {
-      emit(state.copyWith(locationState: BaseLoadingState()));
+    emit(state.copyWith(locationState: BaseLoadingState()));
 
+    try {
       final position = await locationService.getCurrentPosition();
       final address = await locationService.getAddressFromCoordinates(
           position.latitude, position.longitude);
 
-      emit(state.copyWith(
-        locationState: BaseSuccessState(),
-        locationAddress: address,
-      ));
+      _locationAddress = address;
+
+      emit(state.copyWith(locationState: BaseSuccessState()));
     } catch (error) {
-      Log.e('Get Location Error: ${error.toString()}');
-      emit(state.copyWith(
-        locationState: BaseSuccessState(),
-        locationAddress: "...................",
-      ));
+      Log.e('Location Error: ${error.toString()}');
+
+      _locationAddress = "...................";
+
+      final errorMessage =
+          error is AppException ? error.message : error.toString();
+
+      emit(state.copyWith(locationState: BaseErrorState(errorMessage)));
     }
   }
 }

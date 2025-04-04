@@ -1,13 +1,15 @@
 // features/home/presentation/widget/category_item.dart
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/home/domain/entities/category_entity.dart';
+import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryItem extends StatelessWidget {
-  final CategoryEntity category;
+  final CategoryOccasionEntity category;
 
   const CategoryItem({
     super.key,
@@ -33,28 +35,26 @@ class CategoryItem extends StatelessWidget {
                 ? SizedBox(
                     width: 20.w,
                     height: 25.h,
-                    child: Image.network(
-                      category.image!,
+                    child: CachedNetworkImage(
+                      imageUrl: category.image!,
                       width: 20.w,
                       height: 25.h,
                       fit: BoxFit.fill,
-                      errorBuilder: (context, error, stackTrace) => Icon(
+                      placeholder: (context, url) => SizedBox(
+                        width: 15.w,
+                        height: 15.h,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.w,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Icon(
                         Icons.local_florist,
                         color: AppColors.primary,
                         size: 20.sp,
                       ),
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: SizedBox(
-                            width: 15.w,
-                            height: 15.h,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.w,
-                            ),
-                          ),
-                        );
-                      },
+                      memCacheWidth: 20,
+                      memCacheHeight: 25,
                     ),
                   )
                 : Icon(
@@ -65,7 +65,7 @@ class CategoryItem extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            category.name ?? 'Unknown',
+            category.name ?? 'home.items.unknown'.tr(),
             style: getRegularStyle(
               color: AppColors.black,
               fontSize: 13.sp,

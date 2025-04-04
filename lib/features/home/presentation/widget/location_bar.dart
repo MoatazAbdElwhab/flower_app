@@ -1,5 +1,6 @@
 // features/home/presentation/widget/location_bar.dart
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -15,18 +16,21 @@ class LocationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (previous, current) =>
-          previous.locationState != current.locationState ||
-          previous.locationAddress != current.locationAddress,
+          previous.locationState != current.locationState,
       builder: (context, state) {
-        String locationText = "Select location";
+        String locationText = 'home.location.select'.tr();
+        Color textColor = AppColors.black;
+        
+        final HomeCubit cubit = context.read<HomeCubit>();
 
         if (state.locationState is BaseLoadingState) {
-          locationText = "Finding your location...";
+          locationText = 'home.location.finding'.tr();
         } else if (state.locationState is BaseSuccessState &&
-            state.locationAddress != null) {
-          locationText = "Deliver to ${state.locationAddress}";
+            cubit.locationAddress != null) {
+          locationText = '${'home.location.deliver_to'.tr()} ${cubit.locationAddress}';
         } else if (state.locationState is BaseErrorState) {
-          locationText = "Location unavailable";
+          locationText = 'home.location.error'.tr();
+          textColor = AppColors.error;
         }
 
         return GestureDetector(
@@ -39,7 +43,7 @@ class LocationBar extends StatelessWidget {
               Icon(
                 Icons.location_on_outlined,
                 size: 20.sp,
-                color: Colors.black87,
+                color: textColor,
               ),
               SizedBox(width: 4.w),
               Row(
@@ -48,7 +52,7 @@ class LocationBar extends StatelessWidget {
                   Text(
                     locationText,
                     style: getRegularStyle(
-                      color: AppColors.black,
+                      color: textColor,
                       fontSize: 14.sp,
                     ),
                     overflow: TextOverflow.ellipsis,

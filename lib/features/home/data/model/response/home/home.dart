@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import 'best_seller.dart';
 import 'category.dart';
 import 'occasion.dart';
 import 'product.dart';
@@ -9,7 +8,7 @@ class Home extends Equatable {
   final String? message;
   final List<Product>? products;
   final List<Category>? categories;
-  final List<BestSeller>? bestSeller;
+  final List<Product>? bestSeller;
   final List<Occasion>? occasions;
 
   const Home({
@@ -29,7 +28,7 @@ class Home extends Equatable {
             ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
             .toList(),
         bestSeller: (json['bestSeller'] as List<dynamic>?)
-            ?.map((e) => BestSeller.fromJson(e as Map<String, dynamic>))
+            ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
             .toList(),
         occasions: (json['occasions'] as List<dynamic>?)
             ?.map((e) => Occasion.fromJson(e as Map<String, dynamic>))
@@ -48,7 +47,7 @@ class Home extends Equatable {
     String? message,
     List<Product>? products,
     List<Category>? categories,
-    List<BestSeller>? bestSeller,
+    List<Product>? bestSeller,
     List<Occasion>? occasions,
   }) {
     return Home(

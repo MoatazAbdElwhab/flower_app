@@ -1,5 +1,6 @@
 // features/home/presentation/widget/home_header.dart
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -34,7 +35,7 @@ class HomeHeader extends StatelessWidget {
               ),
               SizedBox(width: 4.w),
               Text(
-                "Flowery",
+                'home.sections.flowery'.tr(),
                 style: getRegularStyle(
                   color: AppColors.primary,
                   fontSize: 23.sp,
@@ -65,7 +66,7 @@ class HomeHeader extends StatelessWidget {
                     color: AppColors.white[70]!,
                     size: 20.sp,
                   ),
-                  hintText: 'Search',
+                  hintText: 'home.sections.search'.tr(),
                 ),
               ),
             ),

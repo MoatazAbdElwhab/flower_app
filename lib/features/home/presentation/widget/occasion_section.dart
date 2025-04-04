@@ -1,13 +1,14 @@
 // features/home/presentation/widget/occasion_section.dart
 
-import 'package:flower_app/features/home/domain/entities/occasion_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OccasionSection extends StatelessWidget {
-  final List<OccasionEntity> occasions;
+  final List<CategoryOccasionEntity> occasions;
 
   const OccasionSection({
     super.key,
@@ -21,13 +22,13 @@ class OccasionSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Occasion section header
-        const SectionHeader(title: 'Occasion'),
+        SectionHeader(title: 'home.sections.occasion'.tr()),
         SizedBox(height: 12.h),
 
         //////////////////////////////////////////////////occasion list view
         Expanded(
           child: occasions.isEmpty
-              ? const Center(child: Text('No occasions available'))
+              ? Center(child: Text('home.empty_states.occasions'.tr()))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: occasions.length,

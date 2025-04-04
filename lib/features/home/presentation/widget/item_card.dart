@@ -1,6 +1,7 @@
 // features/home/presentation/widget/item_card.dart
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -47,20 +48,50 @@ class ItemCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl: imageUrl!,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
+                      memCacheWidth: 240,
+                      memCacheHeight: 240,
+                      maxWidthDiskCache: 480,
+                      maxHeightDiskCache: 480,
+                      fadeInDuration: const Duration(milliseconds: 300),
+                      fadeOutDuration: const Duration(milliseconds: 300),
+                      placeholder: (context, url) => Center(
+                        child: SizedBox(
+                          width: 24.w,
+                          height: 24.w,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.w,
+                            color: AppColors.primary,
+                          ),
+                        ),
                       ),
-                      errorWidget: (context, url, error) => SvgPicture.asset(
-                        AppIcons.flower,
-                        fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => Container(
+                        color: AppColors.grey.withOpacity(0.1),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            AppIcons.flower,
+                            width: 40.w,
+                            height: 40.w,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       ),
                     ),
                   )
-                : SvgPicture.asset(AppIcons.flower),
+                : Container(
+                    color: AppColors.grey.withOpacity(0.1),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        AppIcons.flower,
+                        width: 40.w,
+                        height: 40.w,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 6.h),
           Text(
-            title ?? 'Unknown',
+            title ?? 'home.items.unknown'.tr(),
             style: getMediumStyle(
               color: AppColors.black,
               fontSize: 14.sp,
@@ -70,15 +101,18 @@ class ItemCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (showPrice && price != null) ...[
-            SizedBox(height: 4.h),
+            SizedBox(height: 2.h),
             Text(
-              discountPrice != null ? '$discountPrice EGP' : '$price EGP',
+              discountPrice != null 
+                  ? '${discountPrice} ${'common.currency'.tr()}'
+                  : '${price} ${'common.currency'.tr()}',
               style: getRegularStyle(
                 color: AppColors.black,
                 fontSize: 12.sp,
               ),
             ),
           ],
+          SizedBox(height: 2.h),
         ],
       ),
     );

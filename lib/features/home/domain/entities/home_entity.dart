@@ -2,16 +2,14 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/features/home/data/model/response/home/home.dart';
-import 'package:flower_app/features/home/domain/entities/best_seller_entity.dart';
-import 'package:flower_app/features/home/domain/entities/category_entity.dart';
-import 'package:flower_app/features/home/domain/entities/occasion_entity.dart';
+import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 
 class HomeEntity extends Equatable {
   final List<ProductEntity>? products;
-  final List<CategoryEntity>? categories;
-  final List<BestSellerEntity>? bestSeller;
-  final List<OccasionEntity>? occasions;
+  final List<CategoryOccasionEntity>? categories;
+  final List<ProductEntity>? bestSeller;
+  final List<CategoryOccasionEntity>? occasions;
 
   const HomeEntity({
     this.products,
@@ -31,9 +29,9 @@ class HomeEntity extends Equatable {
   static HomeEntity fromModel(Home model) {
     return HomeEntity(
       products: model.products?.map((e) => ProductEntity.mapProductToEntity(e)).toList(),
-      categories: model.categories?.map((e) => CategoryEntity.mapCategoryToEntity(e)).toList(),
-      bestSeller: model.bestSeller?.map((e) => BestSellerEntity.mapBestSellerToEntity(e)).toList(),
-      occasions: model.occasions?.map((e) => OccasionEntity.mapOccasionToEntity(e)).toList(),
+      categories: model.categories?.map((e) => CategoryOccasionEntity.mapCategoryToEntity(e)).toList(),
+      bestSeller: model.bestSeller?.map((e) => ProductEntity.mapProductToEntity(e)).toList(),
+      occasions: model.occasions?.map((e) => CategoryOccasionEntity.mapOccasionToEntity(e)).toList(),
     );
   }
 }

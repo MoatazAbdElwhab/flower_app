@@ -1,5 +1,6 @@
 // features/home/presentation/widget/section_header.dart
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class SectionHeader extends StatelessWidget {
           ),
         ),
         Text(
-          'View All',
+          'home.sections.view_all'.tr(),
           style: getTextUnderLine(
             color: AppColors.primary,
             fontSize: 14.sp,

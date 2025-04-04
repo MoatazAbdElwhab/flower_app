@@ -53,7 +53,8 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
-              final homeData = state.homeData;
+              final HomeCubit cubit = context.read<HomeCubit>();
+              final homeData = cubit.homeData;
 
               if (state.homeDataState is BaseSuccessState && homeData != null) {
                 return _buildHomeContent(context, homeData);
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //---------------------------flowery logo && search
-          SizedBox(height: 16.h),
+          // SizedBox(height: 8.h),
           const HomeHeader(),
           SizedBox(height: 20.h),
 

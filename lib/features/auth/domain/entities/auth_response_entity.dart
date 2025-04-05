@@ -14,10 +14,10 @@ class AuthResponseEntity {
     this.token,
   });
 
-    static AuthResponseEntity toEntity(SignInResponse model) {
+  static AuthResponseEntity toEntity(SignInResponse model) {
     return AuthResponseEntity(
       message: model.message,
-     user: model.user != null ? UserEntity.toEntity(model.user!) : null,
+      user: model.user != null ? UserEntity.toEntity(model.user!) : null,
       token: model.token,
     );
   }

@@ -34,5 +34,35 @@
         "sign_up": "Navigate to sign up page"
       }
     }
+  },
+  "home": {
+    "sections": {
+      "best_seller": "Best seller",
+      "categories": "Categories",
+      "occasion": "Occasion",
+      "view_all": "View All",
+      "search": "Search",
+      "flowery": "Flowery"
+    },
+    "empty_states": {
+      "best_sellers": "No best sellers available",
+      "categories": "No categories available",
+      "occasions": "No occasions available",
+      "no_data": "No data available. Pull to refresh."
+    },
+    "location": {
+      "select": "Select location",
+      "finding": "Finding your location...",
+      "deliver_to": "Deliver to",
+      "error": "Location error",
+      "placeholder": "..................."
+    },
+    "items": {
+      "unknown": "Unknown"
+    }
+  },
+  "common": {
+    "currency": "EGP",
+    "unknown": "Unknown"
   }
 }

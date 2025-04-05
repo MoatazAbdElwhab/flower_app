@@ -23,8 +23,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<Exception, AuthResponseEntity>> signIn(
       String email, String password, bool rememberMe) async {
     try {
-      final apiResponse =
-          await authRemoteDataSource.signIn(email, password);
+      final apiResponse = await authRemoteDataSource.signIn(email, password);
       if (apiResponse.isRight) {
         await _cachUserSiginInData(apiResponse.right, rememberMe);
         return Right(AuthResponseEntity.toEntity(apiResponse.right));
@@ -40,7 +39,7 @@ class AuthRepoImpl implements AuthRepo {
     try {
       await authLocalDataSource.cacheRememberMe(rememberMe);
       if (response.token != null) {
-      //  Log.i('Caching user sign in data');
+        //  Log.i('Caching user sign in data');
         await authLocalDataSource.cacheToken(response.token!);
         //Log.i('token cached successfully');
       }

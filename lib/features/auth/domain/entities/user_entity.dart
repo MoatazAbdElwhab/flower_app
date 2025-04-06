@@ -28,7 +28,7 @@ class UserEntity {
     this.createdAt,
   });
 
-    static UserEntity toEntity(User model) {
+  static UserEntity toEntity(User model) {
     return UserEntity(
       id: model.id,
       firstName: model.firstName,

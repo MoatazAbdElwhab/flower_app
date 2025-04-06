@@ -1,5 +1,5 @@
 // features/nav/nav_bar.dart
-import 'package:flower_app/features/home/presentation/pages/home_page.dart';
+import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavbarPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _NavbarPageState extends State<NavbarPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _pages = const [
-      HomePage(),
+      HomeScreen(),
       Center(child: Text('Categories')),
       Center(child: Text('Cart')),
       Center(child: Text('Profile')),

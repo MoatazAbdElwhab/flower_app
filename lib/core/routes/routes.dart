@@ -1,3 +1,4 @@
+// core/routes/routes.dart
 class Routes {
   static const String login = '/login';
   static const String signup = '/signup';
@@ -8,4 +9,5 @@ class Routes {
   static const String profileResetPassword = '/profile-reset-password';
   static const String navbar = '/navbar';
   static const String splash = '/splash';
+  static const String home = '/home';
 }

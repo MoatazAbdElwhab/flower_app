@@ -5,6 +5,8 @@ import 'package:injectable/injectable.dart';
 @injectable
 class AuthState extends Equatable {
   final BaseState? signUpState;
+// features/auth/presentation/cubit/auth_state.dart
+part of 'auth_cubit.dart';
 
   const AuthState({this.signUpState});
 
@@ -14,9 +16,28 @@ class AuthState extends Equatable {
 
     );
   }
+class AuthState extends Equatable {
+  final BaseState? signInState;
+  final AuthResponseEntity? authResponse;
+
+  const AuthState({
+    required this.signInState,
+    this.authResponse,
+  });
+
+  AuthState copyWith({
+    BaseState? signInState,
+    AuthResponseEntity? authResponse,
+  }) {
+    return AuthState(
+      signInState: signInState ?? this.signInState,
+      authResponse: authResponse ?? this.authResponse,
+    );
+  }
 
   @override
   List<Object?> get props => [signUpState];
+  List<Object?> get props => [signInState, authResponse];
 }
 
 

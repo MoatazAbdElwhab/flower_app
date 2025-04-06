@@ -1,3 +1,4 @@
+// core/theme/theme_data/theme_data_light.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,6 +30,20 @@ ThemeData getLightTheme() => ThemeData(
           disabledBackgroundColor: AppColors.disableButton,
           disabledForegroundColor: AppColors.scaffoldBackground,
           // elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          minimumSize: Size(double.infinity, 48.h),
+        ),
+      ),
+      //outlined button theme
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.white[90]!,
+          backgroundColor: AppColors.scaffoldBackground,
+          side: BorderSide(
+            color: AppColors.primary,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
           ),

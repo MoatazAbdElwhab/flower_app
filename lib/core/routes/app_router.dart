@@ -3,6 +3,8 @@
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
+import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -17,6 +19,19 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) =>  const SignupPage(),
     );
+
+    case Routes.home:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const HomeScreen(),
+      );
+
+    case Routes.navbar:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const NavbarPage(),
+      );
+
     default:
       return MaterialPageRoute(
         settings: settings,

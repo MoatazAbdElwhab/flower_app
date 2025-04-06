@@ -40,6 +40,32 @@
         "empty": "Confirm your password",
         "mismatch": "Passwords do not match"
       }
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": {
+        "label": "Email",
+        "hint": "Enter your email",
+        "validation": {
+          "required": "Email is required",
+          "invalid": "Please enter a valid email"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "hint": "Enter your password",
+        "validation": {
+          "required": "Password is required",
+          "invalid": "Password must be at least 6 characters"
+        }
+      },
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "login_button": "Login",
+      "guest_button": "Continue as guest",
+      "no_account": "Don't have an account?",
+      "sign_up": "Sign up",
+      "guest_message": "Signed in as guest"
     },
     "phone": {
       "hint": "Enter Phone Number",
@@ -47,16 +73,37 @@
       "error": {
         "empty": "Please enter your phone number",
         "invalid": "Egyptian numbers only"
+    "errors": {
+      "invalid_credentials": "Username or password is incorrect",
+      "sign_in_error": "Error during sign in: {error}",
+      "navigation": {
+        "forgot_password": "Navigate to forgot password page",
+        "sign_up": "Navigate to sign up page"
       }
     },
     "gender": {
       "label": "Gender",
       "female": "Female",
       "male": "Male"
+    }
+  },
+  "home": {
+    "sections": {
+      "best_seller": "Best seller",
+      "categories": "Categories",
+      "occasion": "Occasion",
+      "view_all": "View All",
+      "search": "Search",
+      "flowery": "Flowery"
     },
     "terms": {
       "prefix": "Creating an account, you agree to our",
       "conditions": "Terms & Conditions"
+    "empty_states": {
+      "best_sellers": "No best sellers available",
+      "categories": "No categories available",
+      "occasions": "No occasions available",
+      "no_data": "No data available. Pull to refresh."
     },
     "signUpButton": "Sign Up",
     "loginPrompt": {
@@ -75,3 +122,19 @@
       }
     }
   }
+    "location": {
+      "select": "Select location",
+      "finding": "Finding your location...",
+      "deliver_to": "Deliver to",
+      "error": "Location error",
+      "placeholder": "..................."
+    },
+    "items": {
+      "unknown": "Unknown"
+    }
+  },
+  "common": {
+    "currency": "EGP",
+    "unknown": "Unknown"
+  }
+}

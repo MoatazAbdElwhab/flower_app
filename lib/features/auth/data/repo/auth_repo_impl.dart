@@ -1,7 +1,4 @@
-// features/auth/data/repo/auth_repo_impl.dart
-
 import 'package:either_dart/src/either.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/auth/data/datasource/auth_remote_data_source.dart';
 import 'package:flower_app/features/auth/data/model/signup_request_model.dart';
@@ -14,17 +11,14 @@ import 'package:flower_app/features/auth/domain/entities/auth_response_entity.da
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 import '../../domain/repo/auth_repo.dart';
+import '../model/signup_response_model.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
   final AuthLocalDataSourceContract authLocalDataSource;
   final AuthRemoteDataSourceContract authRemoteDataSource;
-  final AuthRemoteDataSource _authRemoteDataSource;
 
   AuthRepoImpl(this.authLocalDataSource, this.authRemoteDataSource);
-  AuthRepoImpl(this._authRemoteDataSource);
-
-  // Unit is from Either package and it represents void
 
 //---------------------------------signIn-----------------------------------
   @override
@@ -55,10 +49,13 @@ class AuthRepoImpl implements AuthRepo {
       Log.e('Error while caching user sign in data: ${e.toString()}');
       throw LocalStorageException(
           'failed to cache user sign Token ${e.toString()}');
-  Future<Either<ApiException, Unit>> signup(SignUpRequestModel request) async{
+    }
+  }
+  @override
+  Future<Either<ApiException, SignUpResponseModel>> signup(SignUpRequestModel request) async{
     try{
-      await _authRemoteDataSource.signup(request);
-      return const Right(unit);
+      final response = await authRemoteDataSource.signup(request);
+      return Right(response);
     }catch(e){
       return Left(ApiException(message: e.toString()));
     }

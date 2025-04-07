@@ -15,19 +15,6 @@ import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart
 import 'package:flower_app/core/di/modules.dart' as _i39;
 import 'package:flower_app/core/error_handling/dio_error_handler.dart' as _i343;
 import 'package:flower_app/core/routes/navigator_observer.dart' as _i210;
-import 'package:flower_app/features/auth/data/datasource/auth_remote_data_source.dart'
-    as _i1019;
-import 'package:flower_app/features/auth/data/datasource/auth_remote_data_source_impl.dart'
-    as _i843;
-import 'package:flower_app/features/auth/data/repo/auth_repo_impl.dart'
-    as _i1012;
-import 'package:flower_app/features/auth/domain/repo/auth_repo.dart' as _i514;
-import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart'
-    as _i366;
-import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart'
-    as _i315;
-import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart'
-    as _i561;
 import 'package:flower_app/core/services/location_service.dart' as _i754;
 import 'package:flower_app/core/widget/dialog_utils.dart' as _i271;
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart'
@@ -41,8 +28,10 @@ import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth
 import 'package:flower_app/features/auth/data/repo/auth_repo_impl.dart'
     as _i1012;
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart' as _i514;
-import 'package:flower_app/features/auth/domain/use_case/sign_in_use_case.dart'
-    as _i735;
+import 'package:flower_app/features/auth/domain/ues_case/sign_in_use_case.dart'
+    as _i621;
+import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart'
+    as _i366;
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart'
     as _i315;
 import 'package:flower_app/features/home/data/datasource/home_data_source_contract.dart'
@@ -100,8 +89,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i666.LocalStorageClient>(),
           gh<_i719.GlobalKey<_i719.NavigatorState>>(),
         ));
-    gh.factory<_i561.AuthState>(
-        () => _i561.AuthState(signUpState: gh<_i584.BaseState>()));
     gh.singleton<_i570.ApiClient>(() => _i199.DioApiClient(
           gh<_i666.LocalStorageClient>(),
           gh<_i343.DioErrorHandler>(),
@@ -119,26 +106,21 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
         ));
-    gh.factory<_i735.SignInUseCase>(
-        () => _i735.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i366.SignupUseCase>(
+        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
     gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
-          signInUseCase: gh<_i735.SignInUseCase>(),
+          gh<_i366.SignupUseCase>(),
+          signInUseCase: gh<_i621.SignInUseCase>(),
           localStorageClient: gh<_i666.LocalStorageClient>(),
         ));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),
           locationService: gh<_i754.LocationService>(),
         ));
-    gh.factory<_i1019.AuthRemoteDataSource>(
-        () => _i843.AuthRemoteDataSourceImpl(gh<_i570.ApiClient>()));
-    gh.factory<_i514.AuthRepo>(
-        () => _i1012.AuthRepoImpl(gh<_i1019.AuthRemoteDataSource>()));
-    gh.factory<_i366.SignupUseCase>(
-        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i315.AuthCubit>(
-        () => _i315.AuthCubit(gh<_i366.SignupUseCase>()));
     return this;
   }
 }

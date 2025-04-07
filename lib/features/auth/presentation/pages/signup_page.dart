@@ -257,7 +257,7 @@ class SignupPage extends StatelessWidget {
                       authCubit.signup();
                     }
                   },
-                  child: Text('signUpButton'.tr()),
+                  child: Text('signUp'.tr()),
                 ),
                 SizedBox(height: 16.h),
                 Row(

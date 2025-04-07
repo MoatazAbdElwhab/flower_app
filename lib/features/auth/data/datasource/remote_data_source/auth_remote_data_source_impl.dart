@@ -1,5 +1,3 @@
-// features/auth/data/datasource/remote_data_source/auth_remote_data_source_impl.dart
-
 import 'package:either_dart/src/either.dart';
 import 'package:flower_app/core/app_data/api/api_client.dart';
 import 'package:flower_app/core/app_data/api/api_constants.dart';
@@ -8,6 +6,9 @@ import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth_remote_data_source_contract.dart';
 import 'package:flower_app/features/auth/data/model/response/sign_in_response/sign_in_response.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../model/signup_request_model.dart';
+import '../../model/signup_response_model.dart';
 
 @Injectable(as: AuthRemoteDataSourceContract)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
@@ -37,5 +38,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       Log.e('Error during sign in: $e');
       return Left(ApiException(message: 'Failed to sign in: $e'));
     }
+  }
+  @override
+  Future<SignUpResponseModel> signup(SignUpRequestModel request) async {
+    var response = await _apiClient.post(
+      ApiConstants.sinUpEndPoint,
+      data: request.toJson(),
+      requiresToken: false,
+    );
+    var responseModel = SignUpResponseModel.fromJson(response);
+    return responseModel;
   }
 }

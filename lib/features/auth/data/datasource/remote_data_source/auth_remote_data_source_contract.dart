@@ -4,7 +4,11 @@ import 'package:either_dart/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/auth/data/model/response/sign_in_response/sign_in_response.dart';
 
+import '../../model/signup_request_model.dart';
+import '../../model/signup_response_model.dart';
+
 abstract class AuthRemoteDataSourceContract {
   Future<Either<ApiException, SignInResponse>> signIn(
       String email, String password);
+  Future<SignUpResponseModel> signup(SignUpRequestModel request);
 }

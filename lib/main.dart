@@ -5,9 +5,11 @@ import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/di/injectable.dart';
 import 'core/theme/theme_data/theme_data_light.dart';
+import 'features/auth/presentation/cubit/auth_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

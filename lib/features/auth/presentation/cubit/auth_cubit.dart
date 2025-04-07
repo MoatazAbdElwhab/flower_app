@@ -93,7 +93,6 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-
   // forget password
   Future<void> forgetPassword() async {
     emit(state.copyWith(forgetPasswordState: BaseLoadingState()));
@@ -132,7 +131,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> verifyResetCode(String resetCode) async {
     emit(state.copyWith(verifyResetCodeState: BaseLoadingState()));
+
+
+
+
+
     final response = await _verifyResetCodeUseCase.call(resetCode);
+
     response.fold(
       (error) async {
         emit(
@@ -149,6 +154,27 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> resendOtp() async {
     await _resendOtpUseCase.call(forgetEmailController.text);
+
+  }
+
+  Future<void> resetPassword(String email, String newPassword) async {
+    emit(state.copyWith(resetPasswordState: BaseLoadingState()));
+    final response = await _resetPasswordUseCase.call(email, newPassword);
+    response.fold(
+      (error) async {
+        emit(
+          state.copyWith(
+            resetPasswordState: BaseErrorState(error.message),
+          ),
+        );
+      },
+      (success) {
+        emit(state.copyWith(
+            resetPasswordState: BaseSuccessState<Unit>(data: success)));
+      },
+    );
+
+
   }
 
   Future<void> resetPassword(String email, String newPassword) async {

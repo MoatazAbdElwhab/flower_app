@@ -1,6 +1,7 @@
+import 'dart:ffi';
+
 import 'package:either_dart/src/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
-import 'package:flower_app/features/auth/data/datasource/auth_remote_data_source.dart';
 import 'package:flower_app/features/auth/data/model/signup_request_model.dart';
 import 'package:flower_app/core/error_handling/exceptions/local_storage_exception.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
@@ -10,8 +11,6 @@ import 'package:flower_app/features/auth/data/model/response/sign_in_response/si
 import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart';
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
-import '../../domain/repo/auth_repo.dart';
-import '../model/signup_response_model.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
@@ -51,12 +50,44 @@ class AuthRepoImpl implements AuthRepo {
           'failed to cache user sign Token ${e.toString()}');
     }
   }
+
   @override
-  Future<Either<ApiException, SignUpResponseModel>> signup(SignUpRequestModel request) async{
-    try{
-      final response = await authRemoteDataSource.signup(request);
-      return Right(response);
-    }catch(e){
+  Future<Either<ApiException, void>> signup(SignUpRequestModel request) async {
+    try {
+      await authRemoteDataSource.signup(request);
+      return const Right(null);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, void>> forgetPassword(String email) async {
+    try {
+      await authRemoteDataSource.forgetPassword(email);
+      return const Right(null);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, void>> verifyResetCode(String resetCode) async {
+    try {
+      await authRemoteDataSource.verifyResetCode(resetCode);
+      return const Right(null);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, void>> resetPassword(
+      String email, String newPassword) async {
+    try {
+      await authRemoteDataSource.resetPassword(email, newPassword);
+      return const Right(null);
+    } catch (e) {
       return Left(ApiException(message: e.toString()));
     }
   }

@@ -70,7 +70,7 @@ class SignupPage extends StatelessWidget {
                 barrierDismissible: false,
                 builder: (context) {
                   // This prevents accessing an invalid `BuildContext` if the widget has been removed.
-                  Future.delayed(const Duration(milliseconds: 600 ), () {
+                  Future.delayed(const Duration(milliseconds: 600), () {
                     if (context.mounted) {
                       Navigator.popUntil(context, (route) => route.isFirst);
                       Navigator.pushReplacementNamed(context, Routes.login);

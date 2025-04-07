@@ -1,45 +1,46 @@
 {
-    "signUp": "Sign Up",
-    "back": "Back",
-    "firstName": {
-      "hint": "Enter First Name",
-      "label": "First Name",
-      "error": {
-        "empty": "Please enter your first name",
-        "invalid": "Enter valid first name"
-      }
-    },
-    "lastName": {
-      "hint": "Enter Last Name",
-      "label": "Last Name",
-      "error": {
-        "empty": "Please enter your last name",
-        "invalid": "Enter valid last name"
-      }
-    },
-    "email": {
-      "hint": "Enter Email",
-      "label": "Email",
-      "error": {
-        "empty": "Please enter your email",
-        "invalid": "Please enter a valid email address"
-      }
-    },
-    "password": {
-      "hint": "Enter Password",
-      "label": "Password",
-      "error": {
-        "empty": "Please enter your password",
-        "invalid": "The password is not valid"
-      }
-    },
-    "confirmPassword": {
-      "hint": "Confirm Password",
-      "label": "Confirm Password",
-      "error": {
-        "empty": "Confirm your password",
-        "mismatch": "Passwords do not match"
-      }},
+  "signUp": "Sign Up",
+  "back": "Back",
+  "firstName": {
+    "hint": "Enter First Name",
+    "label": "First Name",
+    "error": {
+      "empty": "Please enter your first name",
+      "invalid": "Enter valid first name"
+    }
+  },
+  "lastName": {
+    "hint": "Enter Last Name",
+    "label": "Last Name",
+    "error": {
+      "empty": "Please enter your last name",
+      "invalid": "Enter valid last name"
+    }
+  },
+  "email": {
+    "hint": "Enter Email",
+    "label": "Email",
+    "error": {
+      "empty": "Please enter your email",
+      "invalid": "Please enter a valid email address"
+    }
+  },
+  "password": {
+    "hint": "Enter Password",
+    "label": "Password",
+    "error": {
+      "empty": "Please enter your password",
+      "invalid": "The password is not valid"
+    }
+  },
+  "confirmPassword": {
+    "hint": "Confirm Password",
+    "label": "Confirm Password",
+    "error": {
+      "empty": "Confirm your password",
+      "mismatch": "Passwords do not match"
+    }
+  },
   "auth": {
     "errors": {
       "invalid_credentials": "Username or password is incorrect",
@@ -49,7 +50,6 @@
         "sign_up": "Navigate to sign up page"
       }
     },
-
     "login": {
       "title": "Login",
       "email": {
@@ -75,8 +75,8 @@
       "no_account": "Don't have an account?",
       "sign_up": "Sign up",
       "guest_message": "Signed in as guest"
-    }},
-
+    }
+  },
   "home": {
     "sections": {
       "best_seller": "Best seller",
@@ -92,8 +92,6 @@
       "occasions": "No occasions available",
       "no_data": "No data available. Pull to refresh."
     },
-
-
     "location": {
       "select": "Select location",
       "finding": "Finding your location...",
@@ -109,37 +107,58 @@
     "currency": "EGP",
     "unknown": "Unknown"
   },
-      "gender": {
-        "label": "Gender",
-        "female": "Female",
-        "male": "Male"
-      },
+  "gender": {
+    "label": "Gender",
+    "female": "Female",
+    "male": "Male"
+  },
   "phone": {
     "hint": "Enter Phone Number",
     "label": "Phone Number",
     "error": {
       "empty": "Please enter your phone number",
       "invalid": "Egyptian numbers only"
-
-
-    }},
-"terms": {
-"prefix": "Creating an account, you agree to our",
-"conditions": "Terms & Conditions"
-},
-"dialogs": {
-"error": {
-"title": "Error",
-"ok": "OK"
-},
-"success": {
-"title": "Created Successfully",
-"message": "Account created successfully \n Click OK to login.",
-"ok": "OK"
-}
-},
+    }
+  },
+  "terms": {
+    "prefix": "Creating an account, you agree to our",
+    "conditions": "Terms & Conditions"
+  },
+  "dialogs": {
+    "error": {
+      "title": "Error",
+      "ok": "OK"
+    },
+    "success": {
+      "title": "Created Successfully",
+      "message": "Account created successfully \n Click OK to login.",
+      "ok": "OK"
+    }
+  },
   "loginPrompt": {
     "prefix": "Already have an account? ",
     "action": "Login"
+  },
+  "success": {
+    "title": "Created Successfully",
+    "message": "Account created successfully \n Click OK to login.",
+    "ok": "OK"
+  },
+  "forgetPassword": {
+    "title": "Forget Password",
+    "description": "Please enter your email associated to your account",
+    "continueButton": "Continue"
+  },
+  "pinCode": {
+    "title": "Email Verification",
+    "description": "Please enter your code that send to your email address",
+    "ErrorMessage": "Invalid Code",
+    "ReadyMessage": "Didn't receive code?",
+    "ResendMessage": "Resend"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
+    "resetButton": "Reset"
   }
 }

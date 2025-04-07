@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 class Validator {
   Validator._();
-  
+
   static String? phoneNumberValidation(String? number) {
     final RegExp numberRegex = RegExp(
       r"^(\+201|01|00201)[0-2,5]{1}[0-9]{8}$",
@@ -81,7 +81,8 @@ class Validator {
     return null;
   }
 
-  static String? confirmPasswordValidation(String? confirmPassword, String? originalPassword) {
+  static String? confirmPasswordValidation(
+      String? confirmPassword, String? originalPassword) {
     if (confirmPassword == null || confirmPassword.trim().isEmpty) {
       return 'confirmPassword.error.empty'.tr();
     }

@@ -14,9 +14,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  await configureDependencies();
-
   Bloc.observer = AppBlocObserver();
+  await configureDependencies();
 
   runApp(
     EasyLocalization(
@@ -25,15 +24,6 @@ Future<void> main() async {
       fallbackLocale: const Locale('en', 'US'),
       child: const MyApp(),
     ),
-  );
-
-  MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => getIt<AuthCubit>(),
-      ),
-    ],
-    child: const MyApp(),
   );
 }
 
@@ -46,16 +36,19 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: Routes.login,
-        onGenerateRoute: generateRoute,
-        theme: getLightTheme(),
-        darkTheme: ThemeData(),
-        themeMode: ThemeMode.light,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
+      builder: (context, child) => BlocProvider(
+        create: (context) => getIt<AuthCubit>(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: Routes.login,
+          onGenerateRoute: generateRoute,
+          theme: getLightTheme(),
+          darkTheme: ThemeData(),
+          themeMode: ThemeMode.light,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+        ),
       ),
     );
   }

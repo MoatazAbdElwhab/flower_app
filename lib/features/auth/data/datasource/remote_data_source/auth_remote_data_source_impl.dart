@@ -4,6 +4,7 @@ import 'package:flower_app/core/app_data/api/api_constants.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/features/auth/data/datasource/remote_data_source/auth_remote_data_source_contract.dart';
+import 'package:flower_app/features/auth/data/model/reset_password_response_model.dart';
 import 'package:flower_app/features/auth/data/model/response/sign_in_response/sign_in_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -39,6 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       return Left(ApiException(message: 'Failed to sign in: $e'));
     }
   }
+
   @override
   Future<SignUpResponseModel> signup(SignUpRequestModel request) async {
     var response = await _apiClient.post(
@@ -47,6 +49,36 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       requiresToken: false,
     );
     var responseModel = SignUpResponseModel.fromJson(response);
+    return responseModel;
+  }
+
+  @override
+  Future<void> forgetPassword(String email) async {
+    await _apiClient.post(
+      ApiConstants.forgetPasswordEndPoint,
+      data: {"email": email},
+      requiresToken: false,
+    );
+  }
+
+  @override
+  Future<void> verifyResetCode(String resetCode) async {
+    await _apiClient.post(
+      ApiConstants.verifyResetCodeEndPoint,
+      data: {"resetCode": resetCode},
+      requiresToken: false,
+    );
+  }
+
+  @override
+  Future<ResetPasswordResponseModel> resetPassword(
+      String email, String newPassword) async {
+    var response = await _apiClient.put(
+      ApiConstants.resetPasswordEndPoint,
+      data: {"email": email, "newPassword": newPassword},
+      requiresToken: false,
+    );
+    var responseModel = ResetPasswordResponseModel.fromJson(response);
     return responseModel;
   }
 }

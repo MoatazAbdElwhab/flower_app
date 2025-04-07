@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:either_dart/src/either.dart';
+import 'package:either_dart/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/auth/data/model/signup_request_model.dart';
 import 'package:flower_app/core/error_handling/exceptions/local_storage_exception.dart';

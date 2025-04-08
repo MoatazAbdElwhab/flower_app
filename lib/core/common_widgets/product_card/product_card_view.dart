@@ -1,4 +1,3 @@
-import 'package:flower_app/core/common_widgets/product_card/product_dm.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,9 +15,9 @@ class ProductCard extends StatefulWidget {
 
   const ProductCard(
       {super.key,
-        required this.product,
-        required this.onAddToCartTap,
-        required this.isInCart});
+      required this.product,
+      required this.onAddToCartTap,
+      required this.isInCart});
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -39,7 +38,7 @@ class _ProductCardState extends State<ProductCard>
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.grey.withValues(alpha: 0.5),
+            color: AppColors.grey.withOpacity(0.5),
             width: 1.w,
           ),
           borderRadius: BorderRadius.circular(8.r),
@@ -118,17 +117,17 @@ class _ProductCardState extends State<ProductCard>
 
   void _navigateToProductDetails(BuildContext context, Product arguments) {
     final RenderBox renderBox =
-    _buttonKey.currentContext!.findRenderObject() as RenderBox;
+        _buttonKey.currentContext!.findRenderObject() as RenderBox;
     final Offset buttonPosition = renderBox.localToGlobal(Offset.zero);
     final Size buttonSize = renderBox.size;
     final alignment = Alignment(
       (buttonPosition.dx + buttonSize.width / 2) /
-          MediaQuery.sizeOf(context).width *
-          2 -
+              MediaQuery.sizeOf(context).width *
+              2 -
           1,
       (buttonPosition.dy + buttonSize.height / 2) /
-          MediaQuery.of(context).size.height *
-          2 -
+              MediaQuery.of(context).size.height *
+              2 -
           1,
     );
     Navigator.of(context).push(
@@ -138,18 +137,18 @@ class _ProductCardState extends State<ProductCard>
           arguments: arguments,
         ),
         pageBuilder: (context, animation, secondaryAnimation) =>
-        const ProductDetailsPage(),
+            const ProductDetailsPage(),
         transitionDuration: const Duration(milliseconds: 400),
         reverseTransitionDuration: const Duration(milliseconds: 400),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           Animation<Offset> verticalTween =
-          Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
-              .animate(
-              CurvedAnimation(parent: animation, curve: Curves.easeIn));
+              Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
+                  .animate(
+                      CurvedAnimation(parent: animation, curve: Curves.easeIn));
           Animation<Offset> horizontalTween2 =
-          Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
-              .animate(
-              CurvedAnimation(parent: animation, curve: Curves.easeIn));
+              Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
+                  .animate(
+                      CurvedAnimation(parent: animation, curve: Curves.easeIn));
           return ScaleTransition(
             scale: animation,
             alignment: alignment,

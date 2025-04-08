@@ -406,4 +406,22 @@ class MockDialogUtils extends _i1.Mock implements _i13.DialogUtils {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  void showErrorDialog(
+    _i15.BuildContext? context,
+    String? title,
+    String? content,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #showErrorDialog,
+          [
+            context,
+            title,
+            content,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

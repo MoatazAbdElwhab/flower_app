@@ -1,18 +1,22 @@
 // features/home/presentation/widget/section_header.dart
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //////its for name of the section and the viewAll ubderline text
 class SectionHeader extends StatelessWidget {
   final String title;
+  final List<ProductEntity>? bestSeller;
 
   const SectionHeader({
     super.key,
     required this.title,
+    this.bestSeller,
   });
 
   @override
@@ -27,13 +31,19 @@ class SectionHeader extends StatelessWidget {
             fontSize: 18.sp,
           ),
         ),
-        Text(
-          'home.sections.view_all'.tr(),
-          style: getTextUnderLine(
-            color: AppColors.primary,
-            fontSize: 14.sp,
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.bestSeller,
+                arguments: bestSeller);
+          },
+          child: Text(
+            'home.sections.view_all'.tr(),
+            style: getTextUnderLine(
+              color: AppColors.primary,
+              fontSize: 14.sp,
+            ),
           ),
-        ),
+        )
       ],
     );
   }

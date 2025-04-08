@@ -88,7 +88,7 @@ class CodegenLoader extends AssetLoader{
       "forgot_password": "Forgot password?",
       "login_button": "Login",
       "guest_button": "Continue as guest",
-      "no_account": "Don't have an account?",
+      "no_account": "Don't have an account? ",
       "sign_up": "Sign up",
       "guest_message": "Signed in as guest"
     }
@@ -176,6 +176,10 @@ class CodegenLoader extends AssetLoader{
     "title": "Reset Password",
     "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
     "resetButton": "Reset"
+  },
+  "bestSeller": {
+    "title": "Best seller",
+    "description": "Bloom with our exquisite best sellers"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en_US": _en_US};

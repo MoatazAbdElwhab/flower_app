@@ -127,5 +127,8 @@ abstract class  LocaleKeys {
   static const resetPassword_description = 'resetPassword.description';
   static const resetPassword_resetButton = 'resetPassword.resetButton';
   static const resetPassword = 'resetPassword';
+  static const bestSeller_title = 'bestSeller.title';
+  static const bestSeller_description = 'bestSeller.description';
+  static const bestSeller = 'bestSeller';
 
 }

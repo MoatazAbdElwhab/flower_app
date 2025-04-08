@@ -5,7 +5,7 @@ import 'package:flower_app/features/home/domain/entities/category_occasion_entit
 import 'package:flower_app/features/home/presentation/widget/category_item.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class CategoriesSection extends StatelessWidget {
   final List<CategoryOccasionEntity> categories;

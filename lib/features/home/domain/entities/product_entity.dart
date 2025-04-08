@@ -27,7 +27,6 @@ class ProductEntity extends Equatable {
         priceAfterDiscount,
       ];
 
-
   static ProductEntity mapProductToEntity(Product model) {
     return ProductEntity(
       id: model.id,
@@ -35,6 +34,16 @@ class ProductEntity extends Equatable {
       imgCover: model.imgCover,
       price: model.price,
       priceAfterDiscount: model.priceAfterDiscount,
+    );
+  }
+
+  Product formEntityToModel(ProductEntity entity) {
+    return Product(
+      id: entity.id,
+      title: entity.title,
+      imgCover: entity.imgCover,
+      price: entity.price,
+      priceAfterDiscount: entity.priceAfterDiscount,
     );
   }
 }

@@ -30,14 +30,14 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    
+
     // Make item cards smaller to prevent overflow
-    final cardWidth = size.width * 0.25; 
-    final imageSize = cardWidth;
-    final iconSize = size.width * 0.07; 
+    final cardWidth = size.width * 0.3;
+    final imageSize = cardWidth * .9;
+    final iconSize = size.width * 0.07;
     final loaderSize = size.width * 0.05;
-    final marginRight = size.width * 0.02; 
-    
+    final marginRight = size.width * 0.02;
+
     return Container(
       width: cardWidth,
       margin: EdgeInsets.only(right: marginRight),
@@ -95,7 +95,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
           ),
-          SizedBox(height: size.height * 0.005), 
+          SizedBox(height: size.height * 0.005),
           SizedBox(
             width: cardWidth,
             child: Text(
@@ -110,23 +110,23 @@ class ItemCard extends StatelessWidget {
             ),
           ),
           if (showPrice && price != null) ...[
-            SizedBox(height: size.height * 0.002), 
+            SizedBox(height: size.height * 0.002),
             SizedBox(
               width: cardWidth,
               child: Text(
-                discountPrice != null 
+                discountPrice != null
                     ? '$discountPrice ${'common.currency'.tr()}'
                     : '$price ${'common.currency'.tr()}',
                 style: getRegularStyle(
                   color: AppColors.black,
-                  fontSize: 10.sp, 
+                  fontSize: 10.sp,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
-          SizedBox(height: size.height * 0.002), 
+          SizedBox(height: size.height * 0.002),
         ],
       ),
     );

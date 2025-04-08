@@ -4,7 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter/material.dart';
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
-import 'package:flower_app/features/auth/domain/use_case/sign_in_use_case.dart';
+import 'package:flower_app/features/auth/domain/ues_case/sign_in_use_case.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';

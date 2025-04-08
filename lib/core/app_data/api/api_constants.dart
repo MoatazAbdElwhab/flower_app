@@ -1,3 +1,4 @@
+// core/app_data/api/api_constants.dart
 class ApiConstants {
   ApiConstants._();
   static const String baseUrl = 'https://flower.elevateegy.com/api/v1/';
@@ -5,4 +6,7 @@ class ApiConstants {
   static const String logInEndPoint = 'auth/signin';
   static const String homeEndPoint = 'home';
   static const String getProudctByCategoryEndPoint = 'products';
+  static const String forgetPasswordEndPoint = 'auth/forgotPassword';
+  static const String verifyResetCodeEndPoint = 'auth/verifyResetCode';
+  static const String resetPasswordEndPoint = 'auth/resetPassword';
 }

@@ -4,18 +4,22 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
-import 'dart:ui' as _i12;
+import 'dart:ui' as _i14;
 
 import 'package:either_dart/either.dart' as _i7;
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart'
     as _i4;
-import 'package:flower_app/core/widget/dialog_utils.dart' as _i11;
-import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart'
+import 'package:flower_app/core/error_handling/exceptions/api_exception.dart'
     as _i10;
+import 'package:flower_app/core/widget/dialog_utils.dart' as _i13;
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart'
+    as _i12;
+import 'package:flower_app/features/auth/data/model/signup_request_model.dart'
+    as _i11;
 import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart'
     as _i8;
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart' as _i6;
-import 'package:flutter/material.dart' as _i13;
+import 'package:flutter/material.dart' as _i15;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i9;
@@ -215,13 +219,93 @@ class MockAuthRepo extends _i1.Mock implements _i6.AuthRepo {
           ),
         )),
       ) as _i5.Future<_i7.Either<Exception, _i8.AuthResponseEntity>>);
+
+  @override
+  _i5.Future<_i7.Either<_i10.ApiException, void>> signup(
+          _i11.SignUpRequestModel? request) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signup,
+          [request],
+        ),
+        returnValue: _i5.Future<_i7.Either<_i10.ApiException, void>>.value(
+            _i9.dummyValue<_i7.Either<_i10.ApiException, void>>(
+          this,
+          Invocation.method(
+            #signup,
+            [request],
+          ),
+        )),
+      ) as _i5.Future<_i7.Either<_i10.ApiException, void>>);
+
+  @override
+  _i5.Future<_i7.Either<_i10.ApiException, void>> forgetPassword(
+          String? email) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #forgetPassword,
+          [email],
+        ),
+        returnValue: _i5.Future<_i7.Either<_i10.ApiException, void>>.value(
+            _i9.dummyValue<_i7.Either<_i10.ApiException, void>>(
+          this,
+          Invocation.method(
+            #forgetPassword,
+            [email],
+          ),
+        )),
+      ) as _i5.Future<_i7.Either<_i10.ApiException, void>>);
+
+  @override
+  _i5.Future<_i7.Either<_i10.ApiException, void>> verifyResetCode(
+          String? resetCode) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #verifyResetCode,
+          [resetCode],
+        ),
+        returnValue: _i5.Future<_i7.Either<_i10.ApiException, void>>.value(
+            _i9.dummyValue<_i7.Either<_i10.ApiException, void>>(
+          this,
+          Invocation.method(
+            #verifyResetCode,
+            [resetCode],
+          ),
+        )),
+      ) as _i5.Future<_i7.Either<_i10.ApiException, void>>);
+
+  @override
+  _i5.Future<_i7.Either<_i10.ApiException, void>> resetPassword(
+    String? email,
+    String? newPassword,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #resetPassword,
+          [
+            email,
+            newPassword,
+          ],
+        ),
+        returnValue: _i5.Future<_i7.Either<_i10.ApiException, void>>.value(
+            _i9.dummyValue<_i7.Either<_i10.ApiException, void>>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [
+              email,
+              newPassword,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i7.Either<_i10.ApiException, void>>);
 }
 
 /// A class which mocks [AuthLocalDataSourceContract].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthLocalDataSourceContract extends _i1.Mock
-    implements _i10.AuthLocalDataSourceContract {
+    implements _i12.AuthLocalDataSourceContract {
   MockAuthLocalDataSourceContract() {
     _i1.throwOnMissingStub(this);
   }
@@ -297,16 +381,16 @@ class MockAuthLocalDataSourceContract extends _i1.Mock
 /// A class which mocks [DialogUtils].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDialogUtils extends _i1.Mock implements _i11.DialogUtils {
+class MockDialogUtils extends _i1.Mock implements _i13.DialogUtils {
   MockDialogUtils() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
   void showSnackBar({
-    required _i12.Color? textColor,
+    required _i14.Color? textColor,
     required String? message,
-    required _i13.BuildContext? context,
+    required _i15.BuildContext? context,
     Duration? duration = const Duration(seconds: 5),
   }) =>
       super.noSuchMethod(

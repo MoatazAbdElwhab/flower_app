@@ -1,4 +1,20 @@
-{
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
+// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters, constant_identifier_names
+
+import 'dart:ui';
+
+import 'package:easy_localization/easy_localization.dart' show AssetLoader;
+
+class CodegenLoader extends AssetLoader{
+  const CodegenLoader();
+
+  @override
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {
+    return Future.value(mapLocales[locale.toString()]);
+  }
+
+  static const Map<String,dynamic> _en_US = {
   "signUp": "Sign Up",
   "back": "Back",
   "firstName": {
@@ -72,7 +88,7 @@
       "forgot_password": "Forgot password?",
       "login_button": "Login",
       "guest_button": "Continue as guest",
-      "no_account": "Don't have an account? ",
+      "no_account": "Don't have an account?",
       "sign_up": "Sign up",
       "guest_message": "Signed in as guest"
     }
@@ -161,4 +177,6 @@
     "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
     "resetButton": "Reset"
   }
+};
+static const Map<String, Map<String,dynamic>> mapLocales = {"en_US": _en_US};
 }

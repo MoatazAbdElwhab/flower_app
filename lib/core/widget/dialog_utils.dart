@@ -1,4 +1,5 @@
 // core/widget/dialog_utils.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:injectable/injectable.dart';
@@ -48,5 +49,23 @@ class DialogUtils {
           ),
         ),
       );
+  }
+
+  void showErrorDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(child: Text(title)),
+          content: Text(content),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('dialogs.error.ok'.tr()),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

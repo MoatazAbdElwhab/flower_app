@@ -16,6 +16,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get_it/get_it.dart';
 
+import '../cubit/auth_state.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -110,7 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                             TextButton(
                               onPressed: () {
                                 //navigate to forgot password page
-                                debugPrint('navigate to forgot password page');
+                                Navigator.pushNamed(
+                                    context, Routes.forgetPassword);
                               },
                               child: Text(
                                 'auth.login.forgot_password'.tr(),
@@ -159,6 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                                       fontSize: 14.sp),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
+                                      Navigator.pushNamed(
+                                          context, Routes.signup);
                                       //navigate to sign up page
                                       debugPrint('navigate to sign up page');
                                     },

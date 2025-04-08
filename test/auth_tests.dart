@@ -3,6 +3,7 @@
 
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_impl.dart';
+import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,8 +32,13 @@ void main() {
 
       // Create cubit
       authCubit = AuthCubit(
-        signInUseCase: signInUseCase,
-        localStorageClient: localStorageClient,
+        // _signupUseCase
+        // _forgetPasswordUseCase
+        // _verifyResetCodeUseCase
+        // _resetPasswordUseCase
+        signInUseCase, 
+        localStorageClient, 
+        // _resendOtpUseCase
       );
 
       debugPrint('\n== Starting Authentication Tests ==');

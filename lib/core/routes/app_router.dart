@@ -6,12 +6,21 @@ import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
+import 'package:flower_app/features/splash/splash_screen.dart';
+
+import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../features/auth/presentation/pages/signup_page.dart';
 
 Route<dynamic>? generateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case Routes.splash:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const SplashScreen(),
+      );
     case Routes.login:
       return MaterialPageRoute(
         settings: settings,
@@ -22,15 +31,34 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
      settings: settings,
       builder: (_) =>  const SignupPage(),
       );
-    case Routes.navbar :
+
+    case Routes.home:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const HomeScreen(),
+      );
+
+    case Routes.navbar:
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const NavbarPage(),
       );
-    case Routes.home:
+    case Routes.forgetPassword:
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => const HomePage(),
+        builder: (_) => const ForgetPasswordPage(),
+      );
+
+    case Routes.pinCode:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const PinCodePage(),
+      );
+
+    case Routes.resetPassword:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const ResetPasswordPage(),
       );
 
     default:

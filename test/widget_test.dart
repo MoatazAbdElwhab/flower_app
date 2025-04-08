@@ -29,8 +29,8 @@ void main() {
       when(localStorageClient.saveData(any, any)).thenAnswer((_) async => true);
       
       authCubit = AuthCubit(
-        signInUseCase: signInUseCase,
-        localStorageClient: localStorageClient,
+         signInUseCase,
+        localStorageClient,
       );
     });
 

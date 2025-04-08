@@ -2,14 +2,17 @@
 import 'dart:async';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
+import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
+import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,46 +22,56 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
-  late Timer _timer;
+
+
+  late Animation<double> _2opacityAnimation;
+  late AnimationController _2controller;
 
   @override
   void initState() {
     super.initState();
-
-    _animationController = AnimationController(
+    _2controller= AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 1500),
+    );
+    _2opacityAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _2controller,
+        curve: Curves.easeIn,
+      ),
+    );    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.2, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Curves.elasticOut,
+        curve: Curves.easeInOut,
       ),
     );
 
     _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.4, 1.0, curve: Curves.easeIn),
+        curve: Curves.easeIn,
       ),
     );
-    _animationController.forward();
-
-    _timer = Timer(const Duration(milliseconds: 2500), () {
+    _2controller.forward();
+    _animationController.forward().then((_) {
       context.read<AuthCubit>().checkSavedToken();
-    });
+
+    },);
+
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
-    _timer.cancel();
-    super.dispose();
+    _animationController.dispose();super.dispose();
   }
 
   @override
@@ -66,12 +79,14 @@ class _SplashScreenState extends State<SplashScreen>
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state.signInState is BaseSuccessState) {
-          Navigator.pushReplacementNamed(context, Routes.home);
+          _animateTo(context,toLogin: false);
         } else if (state.signInState is BaseErrorState) {
+          _animateTo(context,toLogin: true);
+
           Navigator.pushReplacementNamed(context, Routes.login);
-        } else if (state.signInState is BaseInitialState &&
-            !_animationController.isAnimating) {
-          Navigator.pushReplacementNamed(context, Routes.login);
+        } else if (state.signInState is BaseInitialState ) {
+          _animateTo(context, toLogin: true);
+
         }
       },
       child: Scaffold(
@@ -115,24 +130,28 @@ class _SplashScreenState extends State<SplashScreen>
                       // Logo
                       Transform.scale(
                         scale: _scaleAnimation.value,
-                        child: Container(
-                          padding: EdgeInsets.all(20.r),
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withOpacity(0.15),
-                                blurRadius: 30,
-                                spreadRadius: 5,
-                              ),
-                            ],
-                          ),
-                          child: SvgPicture.asset(
-                            AppIcons.flower,
-                            height: 100.h,
-                            width: 100.w,
-                            color: AppColors.primary,
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 1000),
+                          opacity: _2opacityAnimation.value,
+                          child: Container(
+                            padding: EdgeInsets.all(20.r),
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primary.withOpacity(0.15),
+                                  blurRadius: 30,
+                                  spreadRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: SvgPicture.asset(
+                              AppIcons.flower,
+                              height: 100.h,
+                              width: 100.w,
+                              color: AppColors.primary,
+                            ),
                           ),
                         ),
                       ),
@@ -188,6 +207,36 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ],
         ),
+      ),
+    );
+  }
+  void _animateTo(BuildContext context, {required bool toLogin}) {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          // Return the appropriate widget based on routeName
+         return toLogin ? 
+           LoginPage() : HomeScreen();
+        
+        },
+        transitionDuration: const Duration(milliseconds: 1500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          // Define beautiful slide up + fade transition
+          const begin = Offset(0.0, 0.5);
+          const end = Offset.zero;
+          const curve = Curves.easeOutCubic;
+
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
+
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            ),
+          );
+        },
       ),
     );
   }

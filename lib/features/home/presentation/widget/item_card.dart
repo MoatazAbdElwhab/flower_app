@@ -32,11 +32,11 @@ class ItemCard extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     
     // Make item cards smaller to prevent overflow
-    final cardWidth = size.width * 0.25; // 25% of screen width
+    final cardWidth = size.width * 0.25; 
     final imageSize = cardWidth;
-    final iconSize = size.width * 0.07; // 7% of screen width
-    final loaderSize = size.width * 0.05; // 5% of screen width
-    final marginRight = size.width * 0.02; // 2% of screen width
+    final iconSize = size.width * 0.07; 
+    final loaderSize = size.width * 0.05;
+    final marginRight = size.width * 0.02; 
     
     return Container(
       width: cardWidth,
@@ -95,7 +95,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
           ),
-          SizedBox(height: size.height * 0.005), // 0.5% of screen height
+          SizedBox(height: size.height * 0.005), 
           SizedBox(
             width: cardWidth,
             child: Text(
@@ -110,7 +110,7 @@ class ItemCard extends StatelessWidget {
             ),
           ),
           if (showPrice && price != null) ...[
-            SizedBox(height: size.height * 0.002), // 0.2% of screen height
+            SizedBox(height: size.height * 0.002), 
             SizedBox(
               width: cardWidth,
               child: Text(
@@ -119,14 +119,14 @@ class ItemCard extends StatelessWidget {
                     : '${price} ${'common.currency'.tr()}',
                 style: getRegularStyle(
                   color: AppColors.black,
-                  fontSize: 10.sp, // Smaller font
+                  fontSize: 10.sp, 
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
-          SizedBox(height: size.height * 0.002), // 0.2% of screen height
+          SizedBox(height: size.height * 0.002), 
         ],
       ),
     );

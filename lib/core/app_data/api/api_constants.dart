@@ -4,4 +4,5 @@ class ApiConstants {
   static const String sinUpEndPoint = 'auth/signup';
   static const String logInEndPoint = 'auth/signin';
   static const String homeEndPoint = 'home';
+  static const String getProudctByCategoryEndPoint = 'products';
 }

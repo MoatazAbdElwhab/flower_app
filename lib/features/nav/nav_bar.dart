@@ -1,4 +1,5 @@
 // features/nav/nav_bar.dart
+import 'package:flower_app/features/categories/presentation/pages/categories_screen.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class _NavbarPageState extends State<NavbarPage> {
     super.didChangeDependencies();
     _pages = const [
       HomeScreen(),
-      Center(child: Text('Categories')),
+      CategoriesScreen(),
       Center(child: Text('Cart')),
       Center(child: Text('Profile')),
     ];

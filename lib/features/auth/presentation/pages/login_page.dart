@@ -111,8 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                             ///forgotPassword
                             TextButton(
                               onPressed: () {
-                                //navigate to forgot password page
-                                // debugPrint('navigate to forgot password page');
                                 Navigator.pushNamed(
                                   context,
                                   Routes.forgetPassword,

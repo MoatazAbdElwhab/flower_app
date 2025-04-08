@@ -17,13 +17,16 @@ class BestSellerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final headerSpacing = size.height * 0.01; 
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Best seller section header
         SectionHeader(title: 'home.sections.best_seller'.tr()),
-        SizedBox(height: 12.h),
+        SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////best seller list view
         Expanded(
@@ -31,6 +34,8 @@ class BestSellerSection extends StatelessWidget {
               ? Center(child: Text('home.empty_states.best_sellers'.tr()))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   itemCount: bestSellers.length,
                   itemBuilder: (context, index) {
                     final bestSeller = bestSellers[index];

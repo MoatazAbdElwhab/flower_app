@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/common_widgets/app_network_image/app_network_image.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
@@ -18,14 +19,22 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    final containerSize = size.width * 0.16;
+    final imageSize = size.width * 0.06;
+    final loaderSize = size.width * 0.04;
+    final marginRight = size.width * 0.02;
+
     return Container(
-      width: 65.w,
-      margin: EdgeInsets.only(right: 16.w),
+      width: containerSize,
+      margin: EdgeInsets.only(right: marginRight),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 70.w,
-            height: 70.w,
+            width: containerSize,
+            height: containerSize,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.primary[10],
@@ -33,42 +42,52 @@ class CategoryItem extends StatelessWidget {
             ),
             child: category.image != null
                 ? SizedBox(
-                    width: 20.w,
-                    height: 25.h,
-                    child: CachedNetworkImage(
-                      imageUrl: category.image!,
-                      width: 20.w,
-                      height: 25.h,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) => SizedBox(
-                        width: 15.w,
-                        height: 15.h,
+                    width: imageSize,
+                    height: imageSize,
+                    child: AppNetworkImage(networkImage: category.image!,
+                    fit: BoxFit.contain,placeHolder:
+                      SizedBox(
+                        width: loaderSize,
+                        height: loaderSize,
                         child: CircularProgressIndicator(
                           strokeWidth: 2.w,
                           color: AppColors.primary,
                         ),
-                      ),
-                      errorWidget: (context, url, error) => Icon(
+                      ),errorBuilder: Icon(
                         Icons.local_florist,
                         color: AppColors.primary,
-                        size: 20.sp,
-                      ),
-                      memCacheWidth: 20,
-                      memCacheHeight: 25,
-                    ),
+                        size: imageSize,
+                      ),),
+                    // child: CachedNetworkImage(
+                    //   imageUrl: category.image!,
+                    //   fit: BoxFit.contain,
+                    //   placeholder: (context, url) => SizedBox(
+                    //     width: loaderSize,
+                    //     height: loaderSize,
+                    //     child: CircularProgressIndicator(
+                    //       strokeWidth: 2.w,
+                    //       color: AppColors.primary,
+                    //     ),
+                    //   ),
+                    //   errorWidget: (context, url, error) => Icon(
+                    //     Icons.local_florist,
+                    //     color: AppColors.primary,
+                    //     size: imageSize,
+                    //   ),
+                    // ),
                   )
                 : Icon(
                     Icons.local_florist,
                     color: AppColors.primary,
-                    size: 20.sp,
+                    size: imageSize,
                   ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: size.height * 0.005),
           Text(
             category.name ?? 'home.items.unknown'.tr(),
             style: getRegularStyle(
               color: AppColors.black,
-              fontSize: 13.sp,
+              fontSize: 11.sp,
             ),
             textAlign: TextAlign.center,
             maxLines: 1,

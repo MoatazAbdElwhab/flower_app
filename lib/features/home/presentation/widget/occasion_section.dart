@@ -5,7 +5,6 @@ import 'package:flower_app/features/home/domain/entities/category_occasion_entit
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OccasionSection extends StatelessWidget {
   final List<CategoryOccasionEntity> occasions;
@@ -17,13 +16,16 @@ class OccasionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final headerSpacing = size.height * 0.01; 
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Occasion section header
         SectionHeader(title: 'home.sections.occasion'.tr()),
-        SizedBox(height: 12.h),
+        SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////occasion list view
         Expanded(
@@ -31,6 +33,8 @@ class OccasionSection extends StatelessWidget {
               ? Center(child: Text('home.empty_states.occasions'.tr()))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   itemCount: occasions.length,
                   itemBuilder: (context, index) {
                     final occasion = occasions[index];

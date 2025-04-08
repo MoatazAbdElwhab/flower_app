@@ -7,6 +7,7 @@ import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
+import 'package:flower_app/features/splash/splash_screen.dart';
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 
@@ -14,6 +15,11 @@ import 'package:flutter/material.dart';
 
 Route<dynamic>? generateRoute(RouteSettings settings) {
   switch (settings.name) {
+    case Routes.splash:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const SplashScreen(),
+      );
     case Routes.login:
       return MaterialPageRoute(
         settings: settings,

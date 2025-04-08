@@ -1,3 +1,4 @@
+// features/auth/presentation/pages/reset_password_page.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/routes/routes.dart';
@@ -6,7 +7,7 @@ import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
-import 'package:flower_app/generated/locale_keys.g.dart';
+//import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,13 +33,15 @@ class ResetPasswordPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      LocaleKeys.resetPassword_title.tr(),
+                     // LocaleKeys.resetPassword_title.tr(),
+                      'resetPassword.title'.tr(),
                       style: getMediumStyle(
                           color: AppColors.black, fontSize: 18.sp),
                     ),
                     SizedBox(height: 16.h),
                     Text(
-                      LocaleKeys.resetPassword_description.tr(),
+                     // LocaleKeys.resetPassword_description.tr(),
+                      'resetPassword.description'.tr(),
                       textAlign: TextAlign.center,
                       style:
                           getLightStyle(color: AppColors.grey, fontSize: 14.sp),
@@ -59,8 +62,10 @@ class ResetPasswordPage extends StatelessWidget {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           obscureText: true,
                           decoration: InputDecoration(
-                            labelText: LocaleKeys.password_label.tr(),
-                            hintText: LocaleKeys.password_hint.tr(),
+                            //labelText: LocaleKeys.password_label.tr(),
+                            //hintText: LocaleKeys.password_hint.tr(),
+                            labelText: 'resetPassword.password.label'.tr(),
+                            hintText: 'resetPassword.password.hint'.tr(),
                           ),
                           keyboardType: TextInputType.visiblePassword,
                         ),
@@ -73,8 +78,10 @@ class ResetPasswordPage extends StatelessWidget {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           obscureText: true,
                           decoration: InputDecoration(
-                            labelText: LocaleKeys.confirmPassword_label.tr(),
-                            hintText: LocaleKeys.confirmPassword_hint.tr(),
+                           // labelText: LocaleKeys.confirmPassword_label.tr(),
+                           // hintText: LocaleKeys.confirmPassword_hint.tr(),
+                            labelText: 'resetPassword.confirmPassword.label'.tr(),
+                            hintText: 'resetPassword.confirmPassword.hint'.tr(),
                           ),
                           keyboardType: TextInputType.visiblePassword,
                         ),
@@ -119,7 +126,11 @@ class ResetPasswordPage extends StatelessWidget {
                         child: state.resetPasswordState is BaseLoadingState
                             ? const CircularProgressIndicator(
                                 color: AppColors.white)
-                            : Text(LocaleKeys.resetPassword_resetButton.tr()),
+                         //   : Text(LocaleKeys.resetPassword_resetButton.tr()),
+                            : Text(
+                                'resetPassword.resetButton'.tr(),
+                               
+                              ),
                       );
                     },
                   ),

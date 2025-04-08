@@ -18,14 +18,22 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    
+    final containerSize = size.width * 0.16;
+    final imageSize = size.width * 0.06;
+    final loaderSize = size.width * 0.04;
+    final marginRight = size.width * 0.02;
+    
     return Container(
-      width: 65.w,
-      margin: EdgeInsets.only(right: 16.w),
+      width: containerSize,
+      margin: EdgeInsets.only(right: marginRight),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 70.w,
-            height: 70.w,
+            width: containerSize,
+            height: containerSize,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.primary[10],
@@ -33,16 +41,14 @@ class CategoryItem extends StatelessWidget {
             ),
             child: category.image != null
                 ? SizedBox(
-                    width: 20.w,
-                    height: 25.h,
+                    width: imageSize,
+                    height: imageSize,
                     child: CachedNetworkImage(
                       imageUrl: category.image!,
-                      width: 20.w,
-                      height: 25.h,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                       placeholder: (context, url) => SizedBox(
-                        width: 15.w,
-                        height: 15.h,
+                        width: loaderSize,
+                        height: loaderSize,
                         child: CircularProgressIndicator(
                           strokeWidth: 2.w,
                           color: AppColors.primary,
@@ -51,24 +57,22 @@ class CategoryItem extends StatelessWidget {
                       errorWidget: (context, url, error) => Icon(
                         Icons.local_florist,
                         color: AppColors.primary,
-                        size: 20.sp,
+                        size: imageSize,
                       ),
-                      memCacheWidth: 20,
-                      memCacheHeight: 25,
                     ),
                   )
                 : Icon(
                     Icons.local_florist,
                     color: AppColors.primary,
-                    size: 20.sp,
+                    size: imageSize,
                   ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: size.height * 0.005),
           Text(
             category.name ?? 'home.items.unknown'.tr(),
             style: getRegularStyle(
               color: AppColors.black,
-              fontSize: 13.sp,
+              fontSize: 11.sp,
             ),
             textAlign: TextAlign.center,
             maxLines: 1,

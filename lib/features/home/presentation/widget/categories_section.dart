@@ -17,13 +17,16 @@ class CategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final headerSpacing = size.height * 0.008; 
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Categories section header
         SectionHeader(title: 'home.sections.categories'.tr()),
-        SizedBox(height: 12.h),
+        SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////categories list view
         Expanded(
@@ -31,6 +34,8 @@ class CategoriesSection extends StatelessWidget {
               ? Center(child: Text('home.empty_states.categories'.tr()))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     return CategoryItem(

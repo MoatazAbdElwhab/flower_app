@@ -71,46 +71,55 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHomeContent(BuildContext context, HomeEntity homeData) {
+    final size = MediaQuery.of(context).size;
+    
+    final topSpacing = size.height * 0.01;
+    final headerSpacing = size.height * 0.02; 
+    final locationSpacing = size.height * 0.015; 
+    final sectionSpacing = size.height * 0.012; 
+    final bottomSpacing = size.height * 0.008; 
+    final horizontalPadding = size.width * 0.04; 
+    
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //---------------------------flowery logo && search
-          // SizedBox(height: 8.h),
+          SizedBox(height: topSpacing),
           const HomeHeader(),
-          SizedBox(height: 20.h),
+          SizedBox(height: headerSpacing),
 
           //---------------------------location bar
           const LocationBar(),
-          SizedBox(height: 20.h),
+          SizedBox(height: locationSpacing),
 
           //---------------------------categories section
-          Expanded(
+          Flexible(
             flex: 2,
             child: CategoriesSection(
               categories: homeData.categories ?? [],
             ),
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: sectionSpacing),
 
           //---------------------------best seller section
-          Expanded(
+          Flexible(
             flex: 3,
             child: BestSellerSection(
               bestSellers: homeData.bestSeller ?? [],
             ),
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: sectionSpacing),
 
           //---------------------------occasion section
-          Expanded(
+          Flexible(
             flex: 3,
             child: OccasionSection(
               occasions: homeData.occasions ?? [],
             ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: bottomSpacing),
         ],
       ),
     );

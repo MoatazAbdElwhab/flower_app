@@ -42,6 +42,7 @@ dependencies:
   freezed_annotation: ^2.4.4
   intl: any
   otp_resend_timer: ^1.0.0
+  device_preview: ^1.2.0
 
 
 dev_dependencies:

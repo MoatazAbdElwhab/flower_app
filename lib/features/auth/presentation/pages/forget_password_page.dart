@@ -1,3 +1,4 @@
+// features/auth/presentation/pages/forget_password_page.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/routes/routes.dart';
@@ -6,10 +7,10 @@ import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
-import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+//import 'package:flower_app/generated/locale_keys.g.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
   const ForgetPasswordPage({super.key});
@@ -31,13 +32,15 @@ class ForgetPasswordPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      LocaleKeys.forgetPassword_title.tr(),
+                      'forgetPassword.title'.tr(),
+                      //LocaleKeys.forgetPassword_title.tr(),
+
                       style: getMediumStyle(
                           color: AppColors.black, fontSize: 18.sp),
                     ),
                     SizedBox(height: 16.h),
                     Text(
-                      LocaleKeys.forgetPassword_description.tr(),
+                      'forgetPassword.description'.tr(),
                       textAlign: TextAlign.center,
                       style:
                           getLightStyle(color: AppColors.grey, fontSize: 14.sp),
@@ -56,8 +59,10 @@ class ForgetPasswordPage extends StatelessWidget {
                       validator: Validator.emailValidate,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        labelText: LocaleKeys.email_label.tr(),
-                        hintText: LocaleKeys.email_hint.tr(),
+                        //labelText: LocaleKeys.email_label.tr(),
+                        //hintText: LocaleKeys.email_hint.tr(),
+                        labelText: 'Email',
+                        hintText: 'E-mail',
                       ),
                     ),
                   ),
@@ -111,7 +116,9 @@ class ForgetPasswordPage extends StatelessWidget {
                             ? const CircularProgressIndicator(
                                 color: AppColors.white)
                             : Text(
-                                LocaleKeys.forgetPassword_continueButton.tr()),
+                                // LocaleKeys.forgetPassword_continueButton.tr()),
+                                'forgetPassword.continueButton'.tr(),
+                              ),
                       );
                     },
                   ),

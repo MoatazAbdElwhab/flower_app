@@ -58,8 +58,6 @@ class ItemCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       imageUrl: imageUrl!,
                       fit: BoxFit.cover,
-                      fadeInDuration: const Duration(milliseconds: 300),
-                      fadeOutDuration: const Duration(milliseconds: 300),
                       placeholder: (context, url) => Center(
                         child: SizedBox(
                           width: loaderSize,
@@ -84,7 +82,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   )
                 : Container(
-                    color: AppColors.grey.withOpacity(0.1),
+                    color: AppColors.grey,
                     child: Center(
                       child: SvgPicture.asset(
                         AppIcons.flower,

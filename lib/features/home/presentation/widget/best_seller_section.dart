@@ -1,6 +1,7 @@
 // features/home/presentation/widget/best_seller_section.dart
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
@@ -17,14 +18,23 @@ class BestSellerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.01; 
-    
+    final headerSpacing = size.height * 0.01;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Best seller section header
-        SectionHeader(title: 'home.sections.best_seller'.tr(), bestSeller: bestSellers),
+        SectionHeader(
+          title: 'home.sections.best_seller'.tr(),
+          onViewAllTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.bestSeller,
+              arguments: bestSellers,
+            );
+          },
+        ),
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////best seller list view

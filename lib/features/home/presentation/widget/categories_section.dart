@@ -6,7 +6,6 @@ import 'package:flower_app/features/home/presentation/widget/category_item.dart'
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
 
-
 class CategoriesSection extends StatelessWidget {
   final List<CategoryOccasionEntity> categories;
 
@@ -18,14 +17,17 @@ class CategoriesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.008; 
-    
+    final headerSpacing = size.height * 0.008;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Categories section header
-        SectionHeader(title: 'home.sections.categories'.tr()),
+        SectionHeader(
+          title: 'home.sections.categories'.tr(),
+          onViewAllTap: () {},
+        ),
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////categories list view

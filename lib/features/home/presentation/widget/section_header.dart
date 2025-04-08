@@ -11,12 +11,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 //////its for name of the section and the viewAll ubderline text
 class SectionHeader extends StatelessWidget {
   final String title;
-  final List<ProductEntity>? bestSeller;
+
+  final void Function()? onViewAllTap;
 
   const SectionHeader({
     super.key,
     required this.title,
-    this.bestSeller,
+    required this.onViewAllTap,
   });
 
   @override
@@ -32,10 +33,7 @@ class SectionHeader extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.bestSeller,
-                arguments: bestSeller);
-          },
+          onPressed: onViewAllTap,
           child: Text(
             'home.sections.view_all'.tr(),
             style: getTextUnderLine(

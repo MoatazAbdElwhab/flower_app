@@ -72,7 +72,7 @@
       "forgot_password": "Forgot password?",
       "login_button": "Login",
       "guest_button": "Continue as guest",
-      "no_account": "Don't have an account?",
+      "no_account": "Don't have an account? ",
       "sign_up": "Sign up",
       "guest_message": "Signed in as guest"
     }

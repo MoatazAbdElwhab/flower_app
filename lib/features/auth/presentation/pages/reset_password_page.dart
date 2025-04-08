@@ -1,10 +1,12 @@
 // features/auth/presentation/pages/reset_password_page.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/core/utils/validator.dart';
+import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 //import 'package:flower_app/generated/locale_keys.g.dart';
@@ -98,12 +100,8 @@ class ResetPasswordPage extends StatelessWidget {
                         final errorMessage =
                             (state.resetPasswordState as BaseErrorState)
                                 .errorMessage;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(errorMessage),
-                            backgroundColor: AppColors.error,
-                          ),
-                        );
+                        getIt<DialogUtils>().showSnackBar(textColor: AppColors.error,
+                            message: errorMessage, context: context);
                       }
                     },
                     builder: (context, state) {

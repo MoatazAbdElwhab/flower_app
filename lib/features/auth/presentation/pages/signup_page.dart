@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/validator.dart';
+import '../../../../core/widget/dialog_utils.dart';
 import '../cubit/auth_cubit.dart';
 
 class SignupPage extends StatelessWidget {
@@ -43,22 +44,26 @@ class SignupPage extends StatelessWidget {
 
               if (state.signUpState is BaseErrorState) {
                 Navigator.pop(context);
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Center(child: Text('dialogs.error.title'.tr())),
-                      content: Text(
-                          (state.signUpState as BaseErrorState).errorMessage),
-                      actions: [
-                        ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('dialogs.error.ok'.tr()),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                /// use
+                getIt<DialogUtils>().showErrorDialog(context,
+                    'dialogs.error.title'.tr(),
+                    (state.signUpState as BaseErrorState).errorMessage);
+                /// don't use
+                // showDialog(
+                //   builder: (context) {
+                //     return AlertDialog(
+                //       title: Center(child: Text('dialogs.error.title'.tr())),
+                //       content: Text(
+                //           (state.signUpState as BaseErrorState).errorMessage),
+                //       actions: [
+                //         ElevatedButton(
+                //           onPressed: () => Navigator.pop(context),
+                //           child: Text('dialogs.error.ok'.tr()),
+                //         ),
+                //       ],
+                //     );
+                //   },
+                // );
               }
 
               if (state.signUpState is BaseSuccessState) {

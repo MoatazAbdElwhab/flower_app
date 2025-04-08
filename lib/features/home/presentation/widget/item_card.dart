@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/common_widgets/app_network_image/app_network_image.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -35,7 +36,7 @@ class ItemCard extends StatelessWidget {
     final cardWidth = size.width * 0.3;
     final imageSize = cardWidth * .9;
     final iconSize = size.width * 0.07;
-    final loaderSize = size.width * 0.05;
+    // final loaderSize = size.width * 0.05;
     final marginRight = size.width * 0.02;
 
     return Container(
@@ -53,34 +54,9 @@ class ItemCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(4.r),
             ),
             child: imageUrl != null && imageUrl!.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(4.r),
-                    child: CachedNetworkImage(
-                      imageUrl: imageUrl!,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Center(
-                        child: SizedBox(
-                          width: loaderSize,
-                          height: loaderSize,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.w,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Container(
-                        color: AppColors.grey.withOpacity(0.1),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            AppIcons.flower,
-                            width: iconSize,
-                            height: iconSize,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                ? AppNetworkImage(
+                    networkImage: imageUrl!,
+                    borderRadius: BorderRadius.circular(4.r))
                 : Container(
                     color: AppColors.grey,
                     child: Center(

@@ -112,7 +112,11 @@ class _LoginPageState extends State<LoginPage> {
                             TextButton(
                               onPressed: () {
                                 //navigate to forgot password page
-                                debugPrint('navigate to forgot password page');
+                                // debugPrint('navigate to forgot password page');
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.forgetPassword,
+                                );
                               },
                               child: Text(
                                 'auth.login.forgot_password'.tr(),
@@ -161,7 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                                       fontSize: 14.sp),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                    Navigator.pushNamed(context, Routes.signup);
+                                      Navigator.pushNamed(
+                                          context, Routes.signup);
                                       //navigate to sign up page
                                       debugPrint('navigate to sign up page');
                                     },

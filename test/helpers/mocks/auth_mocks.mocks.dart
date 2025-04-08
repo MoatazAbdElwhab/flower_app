@@ -4,7 +4,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
-import 'dart:ui' as _i12;
 
 import 'package:either_dart/either.dart' as _i7;
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart'
@@ -15,7 +14,7 @@ import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_
 import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart'
     as _i8;
 import 'package:flower_app/features/auth/domain/repo/auth_repo.dart' as _i6;
-import 'package:flutter/material.dart' as _i13;
+import 'package:flutter/material.dart' as _i12;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i9;
@@ -304,9 +303,9 @@ class MockDialogUtils extends _i1.Mock implements _i11.DialogUtils {
 
   @override
   void showSnackBar({
-    required _i12.Color? textColor,
+    required dynamic textColor,
     required String? message,
-    required _i13.BuildContext? context,
+    required _i12.BuildContext? context,
     Duration? duration = const Duration(seconds: 5),
   }) =>
       super.noSuchMethod(

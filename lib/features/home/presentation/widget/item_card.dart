@@ -115,8 +115,8 @@ class ItemCard extends StatelessWidget {
               width: cardWidth,
               child: Text(
                 discountPrice != null 
-                    ? '${discountPrice} ${'common.currency'.tr()}'
-                    : '${price} ${'common.currency'.tr()}',
+                    ? '$discountPrice ${'common.currency'.tr()}'
+                    : '$price ${'common.currency'.tr()}',
                 style: getRegularStyle(
                   color: AppColors.black,
                   fontSize: 10.sp, 

@@ -22,10 +22,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isFirstLoad = true;
+
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>().getHomeData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isFirstLoad) {
+      _isFirstLoad = false;
+      Future.microtask(() => context.read<HomeCubit>().getHomeData());
+    }
   }
 
   @override
@@ -72,14 +82,14 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildHomeContent(BuildContext context, HomeEntity homeData) {
     final size = MediaQuery.of(context).size;
-    
+
     final topSpacing = size.height * 0.01;
-    final headerSpacing = size.height * 0.02; 
-    final locationSpacing = size.height * 0.015; 
-    final sectionSpacing = size.height * 0.012; 
-    final bottomSpacing = size.height * 0.008; 
-    final horizontalPadding = size.width * 0.04; 
-    
+    final headerSpacing = size.height * 0.02;
+    final locationSpacing = size.height * 0.015;
+    final sectionSpacing = size.height * 0.012;
+    final bottomSpacing = size.height * 0.008;
+    final horizontalPadding = size.width * 0.04;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(

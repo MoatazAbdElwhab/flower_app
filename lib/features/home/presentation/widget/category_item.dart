@@ -44,20 +44,23 @@ class CategoryItem extends StatelessWidget {
                 ? SizedBox(
                     width: imageSize,
                     height: imageSize,
-                    child: AppNetworkImage(networkImage: category.image!,
-                    fit: BoxFit.contain,placeHolder:
-                      SizedBox(
+                    child: AppNetworkImage(
+                      networkImage: category.image!,
+                      fit: BoxFit.contain,
+                      placeHolder: SizedBox(
                         width: loaderSize,
                         height: loaderSize,
                         child: CircularProgressIndicator(
                           strokeWidth: 2.w,
                           color: AppColors.primary,
                         ),
-                      ),errorBuilder: Icon(
+                      ),
+                      errorBuilder: Icon(
                         Icons.local_florist,
                         color: AppColors.primary,
                         size: imageSize,
-                      ),),
+                      ),
+                    ),
                     // child: CachedNetworkImage(
                     //   imageUrl: category.image!,
                     //   fit: BoxFit.contain,

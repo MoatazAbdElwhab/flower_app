@@ -54,6 +54,18 @@ import 'package:flower_app/features/home/domain/use_case/home_use_case.dart'
     as _i169;
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart'
     as _i260;
+import 'package:flower_app/features/occasion/data/datasources/remote/occasion_api_remote_data_source.dart'
+    as _i540;
+import 'package:flower_app/features/occasion/data/datasources/remote/occasion_remote_data_source.dart'
+    as _i224;
+import 'package:flower_app/features/occasion/data/repositories/occasion_repository_impl.dart'
+    as _i547;
+import 'package:flower_app/features/occasion/domain/repositories/occasion_repository.dart'
+    as _i429;
+import 'package:flower_app/features/occasion/domain/usecases/get_occasions_by_id_use_case.dart'
+    as _i859;
+import 'package:flower_app/features/occasion/presentation/cubit/occasion_cubit.dart'
+    as _i814;
 import 'package:flutter/cupertino.dart' as _i719;
 import 'package:flutter/material.dart' as _i409;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -104,12 +116,16 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i1053.AuthLocalDataSourceContract>(
         () => _i851.AuthLocalDataSourceImpl(gh<_i666.LocalStorageClient>()));
+    gh.factory<_i224.OccasionRemoteDataSource>(
+        () => _i540.OccasionApiRemoteDataSource(gh<_i570.ApiClient>()));
     gh.factory<_i286.HomeDataSourceContract>(
         () => _i399.HomeDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i851.AuthRemoteDataSourceContract>(
         () => _i374.AuthRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i453.HomeRepositoryContract>(
         () => _i779.HomeRepositoryImpl(gh<_i286.HomeDataSourceContract>()));
+    gh.factory<_i429.OccasionRepository>(() =>
+        _i547.OccasionRepositoryImpl(gh<_i224.OccasionRemoteDataSource>()));
     gh.factory<_i514.AuthRepo>(() => _i1012.AuthRepoImpl(
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
@@ -128,6 +144,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
+    gh.factory<_i859.GetOccasionsByIdUseCase>(
+        () => _i859.GetOccasionsByIdUseCase(gh<_i429.OccasionRepository>()));
     gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
           gh<_i366.SignupUseCase>(),
           gh<_i235.ForgetPasswordUseCase>(),
@@ -137,6 +155,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i666.LocalStorageClient>(),
           gh<_i419.ResendOtpUseCase>(),
         ));
+    gh.factory<_i814.OccasionCubit>(
+        () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),
           locationService: gh<_i754.LocationService>(),

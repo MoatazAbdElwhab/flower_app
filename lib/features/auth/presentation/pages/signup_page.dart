@@ -44,10 +44,13 @@ class SignupPage extends StatelessWidget {
 
               if (state.signUpState is BaseErrorState) {
                 Navigator.pop(context);
+
                 /// use
-                getIt<DialogUtils>().showErrorDialog(context,
+                getIt<DialogUtils>().showErrorDialog(
+                    context,
                     'dialogs.error.title'.tr(),
                     (state.signUpState as BaseErrorState).errorMessage);
+
                 /// don't use
                 // showDialog(
                 //   builder: (context) {

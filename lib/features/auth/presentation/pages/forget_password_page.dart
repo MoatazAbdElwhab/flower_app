@@ -85,8 +85,10 @@ class ForgetPasswordPage extends StatelessWidget {
                         final errorMessage =
                             (state.forgetPasswordState as BaseErrorState)
                                 .errorMessage;
-                        getIt<DialogUtils>().showSnackBar(textColor: AppColors.error,
-                            message: errorMessage, context: context);
+                        getIt<DialogUtils>().showSnackBar(
+                            textColor: AppColors.error,
+                            message: errorMessage,
+                            context: context);
                       }
                     },
                     buildWhen: (previous, current) {

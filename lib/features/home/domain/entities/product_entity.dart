@@ -44,4 +44,14 @@ class ProductEntity extends Equatable {
       description: model.description ?? '',
     );
   }
+
+  Product formEntityToModel(ProductEntity entity) {
+    return Product(
+      id: entity.id,
+      title: entity.title,
+      imgCover: entity.imgCover,
+      price: entity.price,
+      priceAfterDiscount: entity.priceAfterDiscount,
+    );
+  }
 }

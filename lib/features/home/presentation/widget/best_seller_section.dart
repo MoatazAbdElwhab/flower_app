@@ -5,7 +5,6 @@ import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BestSellerSection extends StatelessWidget {
   final List<ProductEntity> bestSellers;
@@ -25,7 +24,7 @@ class BestSellerSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Best seller section header
-        SectionHeader(title: 'home.sections.best_seller'.tr()),
+        SectionHeader(title: 'home.sections.best_seller'.tr(), bestSeller: bestSellers),
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////best seller list view

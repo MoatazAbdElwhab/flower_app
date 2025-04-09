@@ -64,7 +64,6 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         builder: (_) => const ResetPasswordPage(),
       );
 
-
     case Routes.occasion:
       final arguments = settings.arguments as OccasionPageArguments?;
       return MaterialPageRoute(
@@ -74,6 +73,8 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
             categories: arguments?.categories,
             selectedCategoryIndex: arguments?.selectedCategoryIndex,
           ),
+        ),
+      );
 
     case Routes.bestSeller:
       final arguments = settings.arguments;
@@ -84,7 +85,6 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => BestSellerPage(
           productEntityList: productList,
-
         ),
       );
 

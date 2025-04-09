@@ -1,18 +1,16 @@
-// core/routes/app_router.dart
-
 import 'package:flower_app/core/routes/routes.dart';
+
+import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
+import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
+import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
-import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
-import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 
 import 'package:flutter/material.dart';
-
-import '../../features/auth/presentation/pages/signup_page.dart';
 
 Route<dynamic>? generateRoute(RouteSettings settings) {
   switch (settings.name) {

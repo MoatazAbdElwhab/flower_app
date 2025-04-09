@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
@@ -7,6 +8,7 @@ import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/occasion/presentation/cubit/occasion_cubit.dart';
 import 'package:flower_app/features/occasion/presentation/widgets/product_grid.dart';
 import 'package:flower_app/features/occasion/presentation/widgets/sources_tabs.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,10 +68,16 @@ class _OccasionPageState extends State<OccasionPage> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Occasions'),
+                Text(
+                  LocaleKeys.occasionPage_title.tr(),
+                  style: getMediumStyle(
+                    color: AppColors.black,
+                    fontSize: 20.sp,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
-                  'Bloom with our exquisite best sellers',
+                  LocaleKeys.occasionPage_description.tr(),
                   style: getMediumStyle(color: AppColors.grey, fontSize: 13.sp),
                 ),
               ],

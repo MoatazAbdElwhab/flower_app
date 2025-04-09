@@ -1,4 +1,3 @@
-// core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
@@ -29,9 +28,9 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         builder: (_) => const LoginPage(),
       );
     case Routes.signup:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (_) => const SignupPage(),
+     return MaterialPageRoute(
+     settings: settings,
+      builder: (_) =>  const SignupPage(),
       );
 
     case Routes.home:
@@ -45,7 +44,6 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => const NavbarPage(),
       );
-
     case Routes.forgetPassword:
       return MaterialPageRoute(
         settings: settings,

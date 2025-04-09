@@ -43,6 +43,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-pubspec.lock
-pubspec.yaml
-ios/Runner.xcworkspace/contents.xcworkspacedata
+/devtools_options.yaml
+/.vscode/settings.json

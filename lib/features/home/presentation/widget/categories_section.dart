@@ -24,10 +24,14 @@ class CategoriesSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Categories section header
+
+       
+
         SectionHeader(
           title: 'home.sections.categories'.tr(),
           onViewAllTap: () {},
         ),
+
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////categories list view

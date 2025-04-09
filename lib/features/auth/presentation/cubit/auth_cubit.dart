@@ -1,25 +1,93 @@
 // features/auth/presentation/cubit/auth_cubit.dart
-import 'package:flower_app/core/base/base_state.dart';
-import 'package:flower_app/features/auth/domain/ues_case/forget_password_use_case.dart';
-import 'package:flower_app/features/auth/domain/ues_case/resend_otp_use_case.dart';
-import 'package:flower_app/features/auth/domain/ues_case/reset_password_use_case.dart';
-import 'package:flower_app/features/auth/domain/ues_case/signup_use_case.dart';
-import 'package:flower_app/features/auth/domain/ues_case/verify_reset_code_use_case.dart';
-import 'package:flower_app/features/auth/domain/ues_case/sign_in_use_case.dart';
-import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
+import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_impl.dart';
 import 'package:flower_app/features/auth/domain/entities/auth_response_entity.dart';
+import 'package:flower_app/features/auth/domain/use_case/sign_in_use_case.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../data/model/signup_request_model.dart';
 import '../../data/model/signup_request_model.dart';
 
 @injectable
 class AuthCubit extends Cubit<AuthState> {
+  AuthCubit(this._signupUseCase, this.localStorageClient, this.signInUseCase) : super(const AuthState()){
+    _rememberMe =
+        localStorageClient.getData('rememberMe')?.toLowerCase() == 'true';
+    if (_rememberMe) {
+      checkSavedToken();
+    } else {
+      emit(AuthState(signInState: BaseInitialState()));
+    }
+  }
+  final SignupUseCase _signupUseCase;
+  final SignInUseCase signInUseCase;
+  final LocalStorageClient localStorageClient;
+  bool _rememberMe = false;
+  // text controllers
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  /// Login Controllers
+  final TextEditingController loginemailController = TextEditingController();
+  final TextEditingController loginpasswordController = TextEditingController();
+
+  ValueNotifier<String> selectedGenderNotifier = ValueNotifier('');
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Future<void> signup() async {
+    if (selectedGenderNotifier.value.isEmpty) {
+      emit(state.copyWith(
+          signUpState: BaseErrorState("Please select a gender")));
+      return;
+    }
+
+    emit(state.copyWith(signUpState: BaseLoadingState()));
+
+    final response = await _signupUseCase.call(
+      SignUpRequestModel(
+        email: emailController.text,
+        rePassword: confirmPasswordController.text,
+        password: passwordController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        phone: phoneController.text,
+        gender: selectedGenderNotifier.value,
+      ),
+    );
+
+    response.fold(
+      (error) async {
+        emit(
+          state.copyWith(
+            signUpState: BaseErrorState(error.message),
+          ),
+        );
+      },
+      (success) {
+        emit(
+            state.copyWith(signUpState: BaseSuccessState<Unit>(data: success)));
+      },
+    );
+  }
+
+
+  // this function is to enforce the egyptian prefix {+2} on the phone number
+  void enforceEgyptianPrefix(TextEditingController controller) {
+    if (!controller.text.startsWith("+2")) {
+      controller.text = "+2"; // Reset if deleted
+      controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length),
+      );
+    }
+  }
   AuthCubit(
     this._signupUseCase,
     this._forgetPasswordUseCase,

@@ -16,6 +16,7 @@ class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
 
@@ -23,23 +24,26 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late CategoriesCubit _cubit;
 
-  @override
+@override
   void initState() {
     super.initState();
     _cubit = getIt<CategoriesCubit>();
     _cubit.initTabController(this, _cubit.categories.length);
     _cubit.initScrollController(this);
+    // Initial load of data for the first category
     if (_cubit.categories.isNotEmpty) {
       _cubit.getProductByCategoryList(_cubit.categories[0].id ?? '');
     }
+
+    // Listen to tab changes
     _cubit.tabController.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     if (_cubit.tabController.indexIsChanging) {
-      return;
+      return; // Prevent duplicate calls during animation
     }
-    _cubit.changeTab(_cubit.tabController.index);
+    _cubit.changeTab(_cubit.tabController.index); // Update tabIndex
     _cubit.getProductByCategoryList(
         _cubit.categories[_cubit.tabController.index].id ?? '');
   }
@@ -91,7 +95,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
             ),
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Column(
@@ -144,102 +148,79 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                   ],
                 ),
                 SizedBox(height: 16.h),
-                BlocBuilder<CategoriesCubit, CategoriesStates>(
-                  bloc: _cubit,
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        CustomTabBar(
-                          tabController: _cubit.tabController,
-                          tabsTitles:
-                          _cubit.categories.map((e) => e.name).toList(),
-                          selectedIndex: _cubit.tabIndex.value,
-                          changeTabIndex: (index) {
-                            _cubit.changeTab(index);
-                          },
-                        ),
-                        SizedBox(height: 32.h),
-                        Expanded(
-                          child: state.categoryState is BaseLoadingState
-                              ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                              : state.categoryState is BaseErrorState
-                              ? Center(
-                            child: Text(
-                              (state.categoryState as BaseErrorState)
-                                  .errorMessage,
-                            ),
-                          )
-                              : TabBarView(
-                            controller: _cubit.tabController,
-                            children: _cubit.categories.map((category) {
-                              List<Products> products =
-                              state.categoryState
-                              is BaseSuccessState
-                                  ? (state.categoryState
-                              as BaseSuccessState)
-                                  .data!
-                                  : [];
-                              return products.isEmpty
-                                  ? Center(
-                                  child: Text(
-                                    'No products available',
-                                    style: getMediumStyle(
-                                        color: AppColors.black,
-                                        fontSize: 20.sp),
-                                  ))
-                                  : GridView.builder(
-                                controller:
-                                _cubit.scrollController,
-                                gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.7.r,
-                                  crossAxisSpacing: 16.w,
-                                  mainAxisSpacing: 16.h,
-                                ),
-                                itemCount: products.isNotEmpty
-                                    ? products.length
-                                    : 1,
-                                itemBuilder: (context, index) {
-                                  final product = ProductEntity(
-                                    id: products[index].id ?? '',
-                                    title: products[index]
-                                        .title ??
-                                        '',
-                                    imgCover: products[index]
-                                        .images
-                                        ?.first ??
-                                        '',
-                                    price: products[index]
-                                        .price ??
-                                        0,
-                                    priceAfterDiscount:
-                                    products[index]
-                                        .priceAfterDiscount ??
-                                        0,
-                                    images: products[index]
-                                        .images ??
-                                        [],
-                                    description:
-                                    products[index]
-                                        .description ??
-                                        '',
-                                  );
-                                  return ProductCard(
-                                    product: product,
-                                    onAddToCartTap: () {},
-                                    isInCart: false,
-                                  );
-                                },
-                              );
-                            }).toList(),
+                   CustomTabBar(
+                      tabController: _cubit.tabController,
+                      tabsTitles: _cubit.categories.map((e) => e.name).toList(),
+                      selectedIndex: _cubit.tabIndex.value,
+                      changeTabIndex: (index) {
+                        _cubit.changeTab(index);
+                      },
+                ),
+                SizedBox(height: 32.h),
+                Expanded(
+                  child: BlocBuilder<CategoriesCubit, CategoriesStates>(
+                    bloc: _cubit,
+                    builder: (context, state) {
+                      if (state.categoryState is BaseLoadingState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state.categoryState is BaseErrorState) {
+                        return Center(
+                          child: Text(
+                            (state.categoryState as BaseErrorState)
+                                .errorMessage,
                           ),
-                        ),
-                      ],
-                    );
-                  },
+                        );
+                      }
+                      return TabBarView(
+                        controller: _cubit.tabController,
+                        children: _cubit.categories.map((category) {
+                          List<Products> products = state.categoryState
+                                  is BaseSuccessState
+                              ? (state.categoryState as BaseSuccessState).data!
+                              : [];
+                          return products.isEmpty
+                              ? Center(
+                                  child: Text(
+                                  'No products available',
+                                  style: getMediumStyle(
+                                      color: AppColors.black, fontSize: 20.sp),
+                                ))
+                              : GridView.builder(
+                                  controller: _cubit.scrollController,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 0.7.r,
+                                    crossAxisSpacing: 16.w,
+                                    mainAxisSpacing: 16.h,
+                                  ),
+                                  itemCount:
+                                      products.isNotEmpty ? products.length : 1,
+                                  itemBuilder: (context, index) {
+                                    final product = ProductEntity(
+                                        id: products[index].id ?? '',
+                                        title: products[index].title ?? '',
+                                        imgCover:
+                                            products[index].images?.first ?? '',
+                                        price: products[index].price?? 0,
+                                        priceAfterDiscount:
+                                            products[index].priceAfterDiscount?? 0,
+                                        images: products[index].images ?? [],
+                                        description: products[index].description ?? '',);
+
+                                    return ProductCard(
+                                      product: product,
+                                      onAddToCartTap: () {},
+                                      isInCart: false,
+                                    );
+                                  },
+                                );
+                        }).toList(),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

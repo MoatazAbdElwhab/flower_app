@@ -160,5 +160,10 @@
     "title": "Reset Password",
     "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
     "resetButton": "Reset"
+  },
+
+  "bestSeller": {
+    "title": "Best seller",
+    "description": "Bloom with our exquisite best sellers"
   }
 }

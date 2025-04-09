@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
 import '../../../../core/base/base_state.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/home_entity.dart';
 import '../widget/best_seller_section.dart';
 import '../widget/categories_section.dart';

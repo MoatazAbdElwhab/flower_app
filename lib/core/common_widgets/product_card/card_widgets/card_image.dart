@@ -14,21 +14,20 @@ class CardImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return image != null
         ? Image.network(image!,
-        fit: BoxFit.cover,
-        height: 120.h,
-        width: double.infinity,
-        errorBuilder: (context, error, stackTrace) =>
-        // DialogUtils.imageErrorBuilder(
-        //     context, error, stackTrace, widget.image, 30.h, 30.w),
-        const Icon(Icons.error_outline)
-    )
+            fit: BoxFit.cover,
+            height: 120.h,
+            width: double.infinity,
+            errorBuilder: (context, error, stackTrace) =>
+                // DialogUtils.imageErrorBuilder(
+                //     context, error, stackTrace, widget.image, 30.h, 30.w),
+                const Icon(Icons.error_outline))
         : SizedBox(
-      height: 120.h,
-      width: double.infinity,
-      child: const Icon(
-        Icons.warning_amber_outlined,
-        color: AppColors.grey,
-      ),
-    );
+            height: 120.h,
+            width: double.infinity,
+            child: const Icon(
+              Icons.warning_amber_outlined,
+              color: AppColors.grey,
+            ),
+          );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../features/home/data/model/response/home/product.dart';
+import '../../../features/home/domain/entities/product_entity.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_styles.dart';
 import '../app_carousel/app_carousel.dart';
@@ -22,7 +22,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var productArgument = ModalRoute.of(context)!.settings.arguments as Product;
+    var productArgument =
+        ModalRoute.of(context)!.settings.arguments as ProductEntity;
 
     ///  product dm is dummy class implemented below to show how to use it;
     return Scaffold(

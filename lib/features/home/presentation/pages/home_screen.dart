@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
 import '../../../../core/base/base_state.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/home_entity.dart';
 import '../widget/best_seller_section.dart';
 import '../widget/categories_section.dart';
@@ -23,7 +22,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
 
 class _HomePage extends StatefulWidget {
   const _HomePage();
@@ -45,7 +43,8 @@ class _HomePageState extends State<_HomePage> {
     super.didChangeDependencies();
     if (_isFirstLoad) {
       _isFirstLoad = false;
-      Future.microtask(() async=> await context.read<HomeCubit>().getHomeData());
+      Future.microtask(
+          () async => await context.read<HomeCubit>().getHomeData());
     }
   }
 
@@ -58,9 +57,9 @@ class _HomePageState extends State<_HomePage> {
           child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {
               if (state.homeDataState is BaseErrorState) {
-
                 final errorState = state.homeDataState as BaseErrorState;
-                getIt<DialogUtils>().showSnackBar(textColor: Colors.red,
+                getIt<DialogUtils>().showSnackBar(
+                    textColor: Colors.red,
                     message: errorState.errorMessage,
                     context: context);
               }

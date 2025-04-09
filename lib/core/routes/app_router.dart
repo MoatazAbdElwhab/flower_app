@@ -1,11 +1,14 @@
 import 'package:flower_app/core/routes/routes.dart';
-
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
+import 'package:flower_app/features/best_seller/presentation/pages/best_seller_page.dart';
+import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
+import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
@@ -57,6 +60,30 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ResetPasswordPage(),
+      );
+
+    case Routes.occasion:
+      final arguments = settings.arguments as OccasionPageArguments?;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => OccasionPage(
+          arguments: OccasionPageArguments(
+            categories: arguments?.categories,
+            selectedCategoryIndex: arguments?.selectedCategoryIndex,
+          ),
+        ),
+      );
+
+    case Routes.bestSeller:
+      final arguments = settings.arguments;
+      final productList = (arguments is List<ProductEntity>)
+          ? arguments
+          : <ProductEntity>[]; // Default to empty list if null or wrong type
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => BestSellerPage(
+          productEntityList: productList,
+        ),
       );
 
     default:

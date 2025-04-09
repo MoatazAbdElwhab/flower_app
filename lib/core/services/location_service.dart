@@ -18,7 +18,7 @@ class LocationService {
         throw Exception('Location permissions are denied');
       }
     }
-    
+
     if (permission == LocationPermission.deniedForever) {
       throw Exception('Location permissions are permanently denied');
     }
@@ -30,7 +30,8 @@ class LocationService {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
-        return "${place.locality ?? ""}, ${place.administrativeArea ?? ""}".trim();
+        return "${place.locality ?? ""}, ${place.administrativeArea ?? ""}"
+            .trim();
       }
       throw Exception("Could not find location details");
     } catch (e) {

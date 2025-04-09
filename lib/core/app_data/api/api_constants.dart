@@ -9,4 +9,5 @@ class ApiConstants {
   static const String forgetPasswordEndPoint = 'auth/forgotPassword';
   static const String verifyResetCodeEndPoint = 'auth/verifyResetCode';
   static const String resetPasswordEndPoint = 'auth/resetPassword';
+  static const String occasionsEndPoint = 'products';
 }

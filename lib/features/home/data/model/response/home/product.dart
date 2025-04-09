@@ -21,7 +21,6 @@ class Product extends Equatable {
   final double? rateAvg;
   final int? rateCount;
 
-
   const Product({
     this.id,
     this.title,
@@ -49,7 +48,9 @@ class Product extends Equatable {
         slug: json['slug'] as String?,
         description: json['description'] as String?,
         imgCover: json['imgCover'] as String?,
-        images: (json['images'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
+        images: (json['images'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .toList(),
         price: json['price'] as int?,
         priceAfterDiscount: json['priceAfterDiscount'] as int?,
         quantity: json['quantity'] as int?,

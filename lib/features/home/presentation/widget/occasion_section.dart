@@ -1,9 +1,11 @@
 // features/home/presentation/widget/occasion_section.dart
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
+import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flutter/material.dart';
 
 class OccasionSection extends StatelessWidget {
@@ -17,14 +19,17 @@ class OccasionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.01; 
-    
+    final headerSpacing = size.height * 0.01;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Occasion section header
-        SectionHeader(title: 'home.sections.occasion'.tr()),
+        SectionHeader(
+          title: 'home.sections.occasion'.tr(),
+          onViewAllTap: () {},
+        ),
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////occasion list view
@@ -38,11 +43,24 @@ class OccasionSection extends StatelessWidget {
                   itemCount: occasions.length,
                   itemBuilder: (context, index) {
                     final occasion = occasions[index];
-                    return ItemCard(
-                      id: occasion.id,
-                      title: occasion.name,
-                      imageUrl: occasion.image,
-                      showPrice: false,
+
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.occasion,
+                          arguments: OccasionPageArguments(
+                            categories: occasions,
+                            selectedCategoryIndex: index,
+                          ),
+                        );
+                      },
+                      child: ItemCard(
+                        id: occasion.id,
+                        title: occasion.name,
+                        imageUrl: occasion.image,
+                        showPrice: false,
+                      ),
                     );
                   },
                 ),

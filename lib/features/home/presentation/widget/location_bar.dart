@@ -20,14 +20,15 @@ class LocationBar extends StatelessWidget {
       builder: (context, state) {
         String locationText = 'home.location.select'.tr();
         Color textColor = AppColors.black;
-        
+
         final HomeCubit cubit = context.read<HomeCubit>();
 
         if (state.locationState is BaseLoadingState) {
           locationText = 'home.location.finding'.tr();
         } else if (state.locationState is BaseSuccessState &&
             cubit.locationAddress != null) {
-          locationText = '${'home.location.deliver_to'.tr()} ${cubit.locationAddress}';
+          locationText =
+              '${'home.location.deliver_to'.tr()} ${cubit.locationAddress}';
         } else if (state.locationState is BaseErrorState) {
           locationText = 'home.location.error'.tr();
           textColor = AppColors.error;

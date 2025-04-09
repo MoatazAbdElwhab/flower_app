@@ -18,8 +18,8 @@ class CategoriesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.008; 
-    
+    final headerSpacing = size.height * 0.008;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

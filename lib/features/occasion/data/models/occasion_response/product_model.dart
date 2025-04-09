@@ -1,13 +1,12 @@
-// features/home/data/model/response/home/product.dart
-import 'package:equatable/equatable.dart';
+import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 
-class Product extends Equatable {
+class ProductModel {
   final String? id;
   final String? title;
   final String? slug;
   final String? description;
   final String? imgCover;
-  final List<String>? images;
+  final List<dynamic>? images;
   final int? price;
   final int? priceAfterDiscount;
   final int? quantity;
@@ -21,7 +20,7 @@ class Product extends Equatable {
   final double? rateAvg;
   final int? rateCount;
 
-  const Product({
+  const ProductModel({
     this.id,
     this.title,
     this.slug,
@@ -42,15 +41,13 @@ class Product extends Equatable {
     this.rateCount,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json['_id'] as String?,
         title: json['title'] as String?,
         slug: json['slug'] as String?,
         description: json['description'] as String?,
         imgCover: json['imgCover'] as String?,
-        images: (json['images'] as List<dynamic>?)
-            ?.map((e) => e.toString())
-            .toList(),
+        images: json['images'] as List<dynamic>?,
         price: json['price'] as int?,
         priceAfterDiscount: json['priceAfterDiscount'] as int?,
         quantity: json['quantity'] as int?,
@@ -90,69 +87,13 @@ class Product extends Equatable {
         'rateCount': rateCount,
       };
 
-  Product copyWith({
-    String? id,
-    String? title,
-    String? slug,
-    String? description,
-    String? imgCover,
-    List<String>? images,
-    int? price,
-    int? priceAfterDiscount,
-    int? quantity,
-    String? category,
-    String? occasion,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    int? v,
-    int? discount,
-    int? sold,
-    double? rateAvg,
-    int? rateCount,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      slug: slug ?? this.slug,
-      description: description ?? this.description,
-      imgCover: imgCover ?? this.imgCover,
-      images: images ?? this.images,
-      price: price ?? this.price,
-      priceAfterDiscount: priceAfterDiscount ?? this.priceAfterDiscount,
-      quantity: quantity ?? this.quantity,
-      category: category ?? this.category,
-      occasion: occasion ?? this.occasion,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      v: v ?? this.v,
-      discount: discount ?? this.discount,
-      sold: sold ?? this.sold,
-      rateAvg: rateAvg ?? this.rateAvg,
-      rateCount: rateCount ?? this.rateCount,
-    );
-  }
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      title,
-      slug,
-      description,
-      imgCover,
-      images,
-      price,
-      priceAfterDiscount,
-      quantity,
-      category,
-      occasion,
-      createdAt,
-      updatedAt,
-      v,
-      discount,
-      sold,
-      rateAvg,
-      rateCount,
-    ];
-  }
+  ProductEntity toEntity() => ProductEntity(
+        id: id ?? '',
+        title: title ?? '',
+        imgCover: imgCover ?? '',
+        price: price ?? 0,
+        priceAfterDiscount: priceAfterDiscount ?? 0,
+        images: images?.map((e) => e.toString()).toList() ?? [],
+        description: description ?? '',
+      );
 }

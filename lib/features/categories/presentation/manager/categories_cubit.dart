@@ -1,4 +1,5 @@
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../home/domain/entities/category_occasion_entity.dart';
 import '../widgets/categories_bottom_sheat.dart';
 import 'categories_states.dart';
 @injectable
@@ -20,6 +22,8 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
   late AnimationController _animationController;
   late Animation<Offset> fabAnimation;
   
+  List<CategoryOccasionEntity> categories =  getIt<List<CategoryOccasionEntity>>();
+
 
   // Initialize TabController
   void initTabController(TickerProvider vsync, int length) {
@@ -67,7 +71,6 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
       }
     });
   }
-  // Change tab programmatically
   void changeTab(int index) {
     tabIndex.value = index;
     tabController.animateTo(index,
@@ -82,9 +85,9 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     );
   }
 
-  void getCategrioesProuductList(String categrioesId) async{
+  void getProductByCategoryList(String categoriesId) async{
     emit(state.copyWith(categoryState: BaseLoadingState()));
-    var categoriesList = await _getCategoriesUseCase.call(categrioesId);
+    var categoriesList = await _getCategoriesUseCase.call(categoriesId);
     emit(state.copyWith(
       categoryState: categoriesList.fold(
         (error) => BaseErrorState(error.message),
@@ -92,6 +95,7 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
       ),
     ));
   }
+
 
   @override
   Future<void> close() {

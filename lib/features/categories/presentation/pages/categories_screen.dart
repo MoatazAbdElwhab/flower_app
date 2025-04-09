@@ -1,44 +1,60 @@
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
-import 'package:flower_app/features/categories/domain/entities/categories_entity.dart';
+import 'package:flower_app/features/home/data/model/response/home/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../manager/categories_cubit.dart';
 import '../manager/categories_states.dart';
 import '../widgets/custom_tab_bar.dart';
-import '../widgets/product_cart_widget.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late CategoriesCubit _cubit;
-  late final List<CategoriesEntity> categories;
-  final List<String> tabsTitles = ["Flowers", "Gifts", "Chocolates", "Cards"];
 
-  @override
+@override
   void initState() {
     super.initState();
-    _cubit = getIt<CategoriesCubit>()
-      ..getCategrioesProuductList('673c46fd1159920171827c85');
-    _cubit.initTabController(this, tabsTitles.length);
+    _cubit = getIt<CategoriesCubit>();
+    _cubit.initTabController(this, _cubit.categories.length);
     _cubit.initScrollController(this);
+    // Initial load of data for the first category
+    if (_cubit.categories.isNotEmpty) {
+      _cubit.getProductByCategoryList(_cubit.categories[0].id ?? '');
+    }
+
+    // Listen to tab changes
+    _cubit.tabController.addListener(_onTabChanged);
   }
+
+  void _onTabChanged() {
+    if (_cubit.tabController.indexIsChanging) {
+      return; // Prevent duplicate calls during animation
+    }
+    _cubit.changeTab(_cubit.tabController.index); // Update tabIndex
+    _cubit.getProductByCategoryList(
+        _cubit.categories[_cubit.tabController.index].id ?? '');
+  }
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void dispose() {
     _cubit.close();
+    _cubit.tabController.removeListener(_onTabChanged);
     super.dispose();
   }
 
@@ -50,7 +66,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       child: SafeArea(
         child: Scaffold(
           floatingActionButton: SlideTransition(
-            position: _cubit.fabAnimation, 
+            position: _cubit.fabAnimation,
             child: FloatingActionButton.extended(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(1000.r),
@@ -79,7 +95,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
             ),
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: Column(
@@ -137,9 +153,11 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                     final cubit = context.read<CategoriesCubit>();
                     return CustomTabBar(
                       tabController: cubit.tabController,
-                      tabsTitles: tabsTitles,
+                      tabsTitles: cubit.categories.map((e) => e.name).toList(),
                       selectedIndex: cubit.tabIndex.value,
-                      changeTabIndex: cubit.changeTab,
+                      changeTabIndex: (index) {
+                        cubit.changeTab(index);
+                      },
                     );
                   },
                 ),
@@ -162,45 +180,47 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                       }
                       return TabBarView(
                         controller: cubit.tabController,
-                        children: tabsTitles.map(
-                              (category) => GridView.builder(
-                                
-                            controller: cubit.scrollController,
-                            gridDelegate:
-                             SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7.r,
-                              crossAxisSpacing: 16.w,
-                              mainAxisSpacing: 16.h,
-                            ),
-                                itemCount: state.categoryState
-                                        is BaseSuccessState
-                                    ? (state.categoryState as BaseSuccessState)
-                                        .data!
-                                        .length
-                                    : 0,
-                            itemBuilder: (context, index) {
-                                  List<Products> products =
-                                      (state.categoryState as BaseSuccessState)
-                                          .data!;
-                              return ProductCardWidget(
-                                    imageUrl: products[index].images![0],
-                                    title: products[index].title ?? '',
-                                    price: products[index].price?.toDouble() ??
-                                        0.0,
-                                    priceAfterDiscount: products[index]
-                                            .priceAfterDiscount
-                                            ?.toDouble() ??
-                                        0.0,
-                                    heroTag: products[index].id ?? '',
-                                onPressed: () {},
-                                buttonIcon: Icons.add,
-                                buttonTitle: "Add to Cart",
-                                onCardPressed: () {},
-                              );
-                            },
-                          ),
-                        ).toList(),
+                        children: cubit.categories.map((category) {
+                          List<Products> products = state.categoryState
+                                  is BaseSuccessState
+                              ? (state.categoryState as BaseSuccessState).data!
+                              : [];
+                          return products.isEmpty
+                              ? Center(
+                                  child: Text(
+                                  'No products available',
+                                  style: getMediumStyle(
+                                      color: AppColors.black, fontSize: 20.sp),
+                                ))
+                              : GridView.builder(
+                                  controller: cubit.scrollController,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 0.7.r,
+                                    crossAxisSpacing: 16.w,
+                                    mainAxisSpacing: 16.h,
+                                  ),
+                                  itemCount:
+                                      products.isNotEmpty ? products.length : 1,
+                                  itemBuilder: (context, index) {
+                                    final product = Product(
+                                        id: products[index].id ?? '',
+                                        title: products[index].title ?? '',
+                                        imgCover:
+                                            products[index].images?.first ?? '',
+                                        price: products[index].price,
+                                        priceAfterDiscount:
+                                            products[index].priceAfterDiscount);
+
+                                    return ProductCard(
+                                      product: product,
+                                      onAddToCartTap: () {},
+                                      isInCart: false,
+                                    );
+                                  },
+                                );
+                        }).toList(),
                       );
                     },
                   ),
@@ -212,6 +232,4 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       ),
     );
   }
-  
- 
 }

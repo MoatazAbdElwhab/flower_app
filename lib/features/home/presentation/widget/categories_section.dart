@@ -25,7 +25,7 @@ class CategoriesSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Categories section header
-        SectionHeader(title: 'home.sections.categories'.tr()),
+        SectionHeader(title: 'home.sections.categories'.tr(), onPressed: () {},),
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////categories list view

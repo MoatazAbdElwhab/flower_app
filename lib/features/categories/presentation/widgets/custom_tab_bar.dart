@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTabBar extends StatelessWidget {
   final TabController tabController;
-  final List<String> tabsTitles;
+  final List<dynamic> tabsTitles;
   final void Function(int)? changeTabIndex;
   final int selectedIndex;
 
@@ -35,6 +35,7 @@ class CustomTabBar extends StatelessWidget {
           dividerColor: Colors.transparent,
           indicatorSize: TabBarIndicatorSize.label,
           indicatorPadding: const EdgeInsets.only(bottom: 8),
+          automaticIndicatorColorAdjustment: true,
           onTap: (index) => changeTabIndex?.call(index),
           tabs: List.generate(
             tabsTitles.length,

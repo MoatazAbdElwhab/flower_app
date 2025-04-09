@@ -24,7 +24,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
 class _HomePage extends StatefulWidget {
   const _HomePage();
 
@@ -45,7 +44,8 @@ class _HomePageState extends State<_HomePage> {
     super.didChangeDependencies();
     if (_isFirstLoad) {
       _isFirstLoad = false;
-      Future.microtask(() async=> await context.read<HomeCubit>().getHomeData());
+      Future.microtask(
+          () async => await context.read<HomeCubit>().getHomeData());
     }
   }
 
@@ -58,9 +58,9 @@ class _HomePageState extends State<_HomePage> {
           child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {
               if (state.homeDataState is BaseErrorState) {
-
                 final errorState = state.homeDataState as BaseErrorState;
-                getIt<DialogUtils>().showSnackBar(textColor: Colors.red,
+                getIt<DialogUtils>().showSnackBar(
+                    textColor: Colors.red,
                     message: errorState.errorMessage,
                     context: context);
               }

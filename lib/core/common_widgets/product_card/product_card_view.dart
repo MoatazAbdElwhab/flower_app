@@ -1,4 +1,5 @@
 import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../features/home/data/model/response/home/product.dart';
@@ -9,7 +10,7 @@ import 'card_widgets/card_image.dart';
 import 'card_widgets/card_price_row.dart';
 
 class ProductCard extends StatefulWidget {
-  final Product product;
+  final ProductEntity product;
   final VoidCallback onAddToCartTap;
   final bool isInCart;
 
@@ -115,7 +116,8 @@ class _ProductCardState extends State<ProductCard>
     );
   }
 
-  void _navigateToProductDetails(BuildContext context, Product arguments) {
+  void _navigateToProductDetails(
+      BuildContext context, ProductEntity arguments) {
     final RenderBox renderBox =
         _buttonKey.currentContext!.findRenderObject() as RenderBox;
     final Offset buttonPosition = renderBox.localToGlobal(Offset.zero);

@@ -20,7 +20,7 @@ class HomeDataSourceImpl implements HomeDataSourceContract {
     try {
       final response = await _apiClient.get(
         ApiConstants.homeEndPoint,
-        requiresToken: true, 
+        requiresToken: true,
       );
 
       final homeResponse = Home.fromJson(response);

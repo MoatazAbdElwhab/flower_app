@@ -18,8 +18,8 @@ class BestSellerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.01; 
-    
+    final headerSpacing = size.height * 0.01;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

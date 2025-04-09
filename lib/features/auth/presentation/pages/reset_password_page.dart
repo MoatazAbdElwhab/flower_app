@@ -35,14 +35,14 @@ class ResetPasswordPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                     // LocaleKeys.resetPassword_title.tr(),
+                      // LocaleKeys.resetPassword_title.tr(),
                       'resetPassword.title'.tr(),
                       style: getMediumStyle(
                           color: AppColors.black, fontSize: 18.sp),
                     ),
                     SizedBox(height: 16.h),
                     Text(
-                     // LocaleKeys.resetPassword_description.tr(),
+                      // LocaleKeys.resetPassword_description.tr(),
                       'resetPassword.description'.tr(),
                       textAlign: TextAlign.center,
                       style:
@@ -80,9 +80,10 @@ class ResetPasswordPage extends StatelessWidget {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           obscureText: true,
                           decoration: InputDecoration(
-                           // labelText: LocaleKeys.confirmPassword_label.tr(),
-                           // hintText: LocaleKeys.confirmPassword_hint.tr(),
-                            labelText: 'resetPassword.confirmPassword.label'.tr(),
+                            // labelText: LocaleKeys.confirmPassword_label.tr(),
+                            // hintText: LocaleKeys.confirmPassword_hint.tr(),
+                            labelText:
+                                'resetPassword.confirmPassword.label'.tr(),
                             hintText: 'resetPassword.confirmPassword.hint'.tr(),
                           ),
                           keyboardType: TextInputType.visiblePassword,
@@ -100,8 +101,10 @@ class ResetPasswordPage extends StatelessWidget {
                         final errorMessage =
                             (state.resetPasswordState as BaseErrorState)
                                 .errorMessage;
-                        getIt<DialogUtils>().showSnackBar(textColor: AppColors.error,
-                            message: errorMessage, context: context);
+                        getIt<DialogUtils>().showSnackBar(
+                            textColor: AppColors.error,
+                            message: errorMessage,
+                            context: context);
                       }
                     },
                     builder: (context, state) {
@@ -124,10 +127,9 @@ class ResetPasswordPage extends StatelessWidget {
                         child: state.resetPasswordState is BaseLoadingState
                             ? const CircularProgressIndicator(
                                 color: AppColors.white)
-                         //   : Text(LocaleKeys.resetPassword_resetButton.tr()),
+                            //   : Text(LocaleKeys.resetPassword_resetButton.tr()),
                             : Text(
                                 'resetPassword.resetButton'.tr(),
-                               
                               ),
                       );
                     },

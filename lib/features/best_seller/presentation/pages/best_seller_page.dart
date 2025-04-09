@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/home/data/model/response/home/product.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,6 @@ class BestSellerPage extends StatelessWidget {
   final List<ProductEntity> productEntityList;
   @override
   Widget build(BuildContext context) {
-    final List<Product> productList =
-        productEntityList.map((e) => e.formEntityToModel(e)).toList();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 38,
@@ -45,7 +42,7 @@ class BestSellerPage extends StatelessWidget {
           ),
           child: GridView.builder(
             scrollDirection: Axis.vertical,
-            itemCount: productList.length,
+            itemCount: productEntityList.length,
             padding: const EdgeInsets.only(
               top: 16,
             ),
@@ -56,7 +53,7 @@ class BestSellerPage extends StatelessWidget {
               childAspectRatio: .8,
             ),
             itemBuilder: (context, index) => ProductCard(
-                product: productList[index],
+                product: productEntityList[index],
                 onAddToCartTap: () {},
                 isInCart: false),
           ),

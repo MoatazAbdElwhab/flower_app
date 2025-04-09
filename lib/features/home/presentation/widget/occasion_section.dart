@@ -28,7 +28,15 @@ class OccasionSection extends StatelessWidget {
         //////////////////////////////////////////////////Occasion section header
         SectionHeader(
           title: 'home.sections.occasion'.tr(),
-          onViewAllTap: () {},
+          onViewAllTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.occasion,
+              arguments: OccasionPageArguments(
+                categories: occasions,
+              ),
+            );
+          },
         ),
         SizedBox(height: headerSpacing),
 

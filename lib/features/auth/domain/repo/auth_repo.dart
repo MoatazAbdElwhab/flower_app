@@ -1,4 +1,6 @@
-import 'package:dartz/dartz.dart';
+import 'package:either_dart/either.dart';
+import 'package:flower_app/features/auth/data/model/signup_request_model.dart';
+
 import '../../../../core/error_handling/exceptions/api_exception.dart';
 import '../entities/auth_response_entity.dart';
 

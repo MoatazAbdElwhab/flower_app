@@ -16,12 +16,13 @@ import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
 //////its for name of the section and the viewAll ubderline text
 class SectionHeader extends StatelessWidget {
   final String title;
-  final List<ProductEntity>? bestSeller;
+
+  final void Function()? onViewAllTap;
 
   const SectionHeader({
     super.key,
     required this.title,
-    this.bestSeller,
+    required this.onViewAllTap,
   });
 
   @override
@@ -36,16 +37,12 @@ class SectionHeader extends StatelessWidget {
             fontSize: 18.sp,
           ),
         ),
-        InkWell(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              Routes.occasion,
-              arguments: OccasionPageArguments(
-                categories: context.read<HomeCubit>().homeData?.occasions,
-              ),
-            );
-          },
+
+        TextButton(
+          onPressed: onViewAllTap,
+
+  
+
           child: Text(
             'home.sections.view_all'.tr(),
             style: getTextUnderLine(

@@ -26,7 +26,10 @@ class OccasionSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         //////////////////////////////////////////////////Occasion section header
-        SectionHeader(title: 'home.sections.occasion'.tr()),
+        SectionHeader(
+          title: 'home.sections.occasion'.tr(),
+          onViewAllTap: () {},
+        ),
         SizedBox(height: headerSpacing),
 
         //////////////////////////////////////////////////occasion list view

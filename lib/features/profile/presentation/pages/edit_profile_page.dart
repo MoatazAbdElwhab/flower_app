@@ -181,6 +181,7 @@ class EditProfilePage extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                   TextFormField(
+                    controller: profileCubit.passwordController,
                     onTapOutside: (event) {
                       FocusManager.instance.primaryFocus?.unfocus();
                     },

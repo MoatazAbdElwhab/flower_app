@@ -14,22 +14,29 @@ class TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 4.w),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: isSelected ? AppColors.primary : AppColors.white[70]!,
-            width: 3,
+    return IntrinsicWidth(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            title,
+            style: getRegularStyle(
+              color: isSelected ? AppColors.primary : AppColors.white[70]!,
+              fontSize: 16.sp,
+            ),
           ),
-        ),
-      ),
-      child: Text(
-        title,
-        style: getRegularStyle(
-          color: isSelected ? AppColors.primary : AppColors.white[70]!,
-          fontSize: 16.sp,
-        ),
+          const SizedBox(height: 8),
+          Container(
+            height: 4,
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.primary : AppColors.white[70]!,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(100),
+                topRight: Radius.circular(100),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

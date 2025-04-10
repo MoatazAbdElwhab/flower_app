@@ -1,3 +1,5 @@
+// features/occasion/presentation/pages/occasion_page.dart
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
@@ -27,11 +29,12 @@ class OccasionPage extends StatefulWidget {
 
 class _OccasionPageState extends State<OccasionPage> {
   late List<ProductEntity> categoryItems;
+  final cubit = getIt<OccasionCubit>();
+
   @override
   void initState() {
     super.initState();
 
-    // Create dummy items for each category
     categoryItems = List.generate(
       15,
       (index) => ProductEntity(
@@ -46,7 +49,6 @@ class _OccasionPageState extends State<OccasionPage> {
     );
   }
 
-  final cubit = getIt<OccasionCubit>();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -56,13 +58,21 @@ class _OccasionPageState extends State<OccasionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final categories = widget.arguments.categories;
+    final initialIndex = widget.arguments.selectedCategoryIndex ?? 0;
+
+    String? categoryId;
+    if (categories != null &&
+        categories.isNotEmpty &&
+        initialIndex < categories.length) {
+      categoryId = categories[initialIndex].id;
+    }
+
     return BlocProvider(
-      create: (context) => cubit
-        ..getOccasionsProducts(widget
-                .arguments.categories?[cubit.selectedCategoryIndex.value].id ??
-            '673b34c21159920171827ae0'),
+      create: (context) => cubit..getOccasionsProducts(categoryId),
       child: DefaultTabController(
-        length: widget.arguments.categories?.length ?? 0,
+        length: categories?.length ?? 0,
+        initialIndex: initialIndex,
         child: Scaffold(
           appBar: AppBar(
             surfaceTintColor: Colors.transparent,
@@ -92,12 +102,17 @@ class _OccasionPageState extends State<OccasionPage> {
                   valueListenable: cubit.selectedCategoryIndex,
                   builder: (context, value, child) {
                     return SourcesTabs(
-                      categories: widget.arguments.categories ?? [],
+                      categories: categories ?? [],
                       onTabChanged: (index) {
+                        final id =
+                            categories != null && index < categories.length
+                                ? categories[index].id
+                                : null;
+
                         cubit.switchTab(
-                            index: index,
-                            categoryOccasionId:
-                                widget.arguments.categories?[index].id ?? '');
+                          index: index,
+                          categoryOccasionId: id,
+                        );
                       },
                     );
                   },
@@ -107,8 +122,43 @@ class _OccasionPageState extends State<OccasionPage> {
                     if (state.occasionsProductsState is BaseErrorState) {
                       final error =
                           state.occasionsProductsState as BaseErrorState;
-                      return Center(child: Text(error.errorMessage));
+                      return Expanded(
+                        child: Center(
+                          child: Text(
+                            error.errorMessage,
+                            style: getMediumStyle(
+                              color: AppColors.error,
+                              fontSize: 16.sp,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
                     }
+
+                    // Get products if success state
+                    final List<ProductEntity> products;
+                    if (state.occasionsProductsState is BaseSuccessState) {
+                      products = (state.occasionsProductsState as BaseSuccessState)
+                          .data as List<ProductEntity>;
+
+                      // Show "No occasions" message if product list is empty
+                      if (products.isEmpty) {
+                        return Expanded(
+                          child: Center(
+                            child: Text(
+                              'No occasions available',
+                              style: getMediumStyle(
+                                color: AppColors.black,
+                                fontSize: 18.sp,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
+                    }
+
                     return Expanded(
                       child: Skeletonizer(
                         enabled:

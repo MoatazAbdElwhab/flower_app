@@ -14,4 +14,5 @@ class Routes {
 
   static const String occasion = '/occasion';
   static const String bestSeller = '/bestSeller';
+  static const String categories = '/categories';
 }

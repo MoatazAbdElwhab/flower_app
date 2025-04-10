@@ -7,7 +7,9 @@ import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
+import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +22,10 @@ class ItemCard extends StatelessWidget {
   final String? price;
   final String? discountPrice;
   final ProductEntity? product;
+  final VoidCallback? onTap;
+  final CategoryOccasionEntity? occasion;
+  final int? occasionIndex;
+  final List<CategoryOccasionEntity>? occasionList;
 
   const ItemCard({
     super.key,
@@ -30,26 +36,38 @@ class ItemCard extends StatelessWidget {
     this.price,
     this.discountPrice,
     this.product,
+    this.onTap,
+    this.occasion,
+    this.occasionIndex,
+    this.occasionList,
   });
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    // Make item cards smaller to prevent overflow
     final cardWidth = size.width * 0.3;
     final imageSize = cardWidth * .9;
     final iconSize = size.width * 0.07;
-    // final loaderSize = size.width * 0.05;
     final marginRight = size.width * 0.02;
 
     return GestureDetector(
-      onTap: () {
+      onTap: onTap ?? () {
         if (product != null) {
           Navigator.pushNamed(
             context,
             Routes.productDetailsView,
             arguments: product,
+          );
+        } else if (occasion != null && occasionList != null && occasionIndex != null) {
+          print("Navigating to occasion: $occasionIndex - ${occasion?.name}");
+          Navigator.pushNamed(
+            context,
+            Routes.occasion,
+            arguments: OccasionPageArguments(
+              categories: occasionList,
+              selectedCategoryIndex: occasionIndex,
+            ),
           );
         }
       },
@@ -90,7 +108,7 @@ class ItemCard extends StatelessWidget {
                 title ?? 'home.items.unknown'.tr(),
                 style: getMediumStyle(
                   color: AppColors.black,
-                  fontSize: 11.sp, // Smaller font
+                  fontSize: 11.sp, 
                 ),
                 textAlign: TextAlign.start,
                 maxLines: 1,

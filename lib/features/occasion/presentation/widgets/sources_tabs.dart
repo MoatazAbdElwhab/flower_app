@@ -23,33 +23,31 @@ class SourcesTabs extends StatefulWidget {
 class _SourcesTabsState extends State<SourcesTabs> {
   @override
   Widget build(BuildContext context) {
+    final selectedIndex = context.read<OccasionCubit>().selectedCategoryIndex.value;
+    
     return Column(
       children: [
-        DefaultTabController(
-          length: widget.categories.length,
-          child: TabBar(
-            isScrollable: true,
-            indicatorColor: Colors.transparent,
-            dividerColor: Colors.transparent,
-            padding: EdgeInsets.zero,
-            labelColor: AppColors.primary,
-            unselectedLabelColor: AppColors.white[70],
-            labelStyle:
-                getRegularStyle(color: AppColors.primary, fontSize: 16.sp),
-            unselectedLabelStyle:
-                getRegularStyle(color: AppColors.white[70]!, fontSize: 16.sp),
-            tabAlignment: TabAlignment.start,
-            onTap: widget.onTabChanged,
-            tabs: widget.categories.map(
-              (category) {
-                return TabItem(
-                  title: category.name ?? '',
-                  isSelected: widget.categories.indexOf(category) ==
-                      context.read<OccasionCubit>().selectedCategoryIndex.value,
-                );
-              },
-            ).toList(),
-          ),
+        TabBar(
+          isScrollable: true,
+          indicatorColor: Colors.transparent,
+          dividerColor: Colors.transparent,
+          padding: EdgeInsets.zero,
+          labelColor: AppColors.primary,
+          unselectedLabelColor: AppColors.white[70],
+          labelStyle:
+              getRegularStyle(color: AppColors.primary, fontSize: 16.sp),
+          unselectedLabelStyle:
+              getRegularStyle(color: AppColors.white[70]!, fontSize: 16.sp),
+          tabAlignment: TabAlignment.start,
+          onTap: widget.onTabChanged,
+          tabs: widget.categories.map(
+            (category) {
+              return TabItem(
+                title: category.name ?? '',
+                isSelected: widget.categories.indexOf(category) == selectedIndex,
+              );
+            },
+          ).toList(),
         ),
       ],
     );

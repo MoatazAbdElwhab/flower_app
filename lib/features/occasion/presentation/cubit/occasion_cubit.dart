@@ -14,7 +14,14 @@ class OccasionCubit extends Cubit<OccasionState> {
 
   final ValueNotifier<int> selectedCategoryIndex = ValueNotifier(0);
 
-  Future<void> getOccasionsProducts(String id) async {
+  Future<void> getOccasionsProducts(String? id) async {
+    if (id == null || id.isEmpty) {
+      emit(state.copyWith(
+        occasionsProductsState: BaseErrorState('No valid category selected'),
+      ));
+      return;
+    }
+
     emit(state.copyWith(occasionsProductsState: BaseLoadingState()));
     final result = await _getOccasionsByIdUseCase(id);
     result.fold(
@@ -31,7 +38,7 @@ class OccasionCubit extends Cubit<OccasionState> {
     );
   }
 
-  void switchTab({required int index, required String categoryOccasionId}) {
+  void switchTab({required int index, required String? categoryOccasionId}) {
     selectedCategoryIndex.value = index;
     getOccasionsProducts(categoryOccasionId);
   }

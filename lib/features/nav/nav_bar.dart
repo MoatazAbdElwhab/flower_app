@@ -6,6 +6,13 @@ import 'package:flutter/material.dart';
 
 class NavbarPage extends StatefulWidget {
   const NavbarPage({super.key});
+  
+  // creating Static instance to access the current state
+  
+  static _NavbarPageState? of(BuildContext context) {
+    final state = context.findAncestorStateOfType<_NavbarPageState>();
+    return state;
+  }
 
   @override
   State<NavbarPage> createState() => _NavbarPageState();
@@ -30,6 +37,13 @@ class _NavbarPageState extends State<NavbarPage> {
   void dispose() {
     _selectedIndex.dispose();
     super.dispose();
+  }
+  
+  // Public method to change the tab 
+  void changeTab(int index) {
+    if (index >= 0 && index < _pages.length) {
+      _selectedIndex.value = index;
+    }
   }
 
   @override

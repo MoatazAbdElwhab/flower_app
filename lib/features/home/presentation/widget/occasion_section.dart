@@ -51,24 +51,15 @@ class OccasionSection extends StatelessWidget {
                   itemCount: occasions.length,
                   itemBuilder: (context, index) {
                     final occasion = occasions[index];
-
-                    return InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          Routes.occasion,
-                          arguments: OccasionPageArguments(
-                            categories: occasions,
-                            selectedCategoryIndex: index,
-                          ),
-                        );
-                      },
-                      child: ItemCard(
-                        id: occasion.id,
-                        title: occasion.name,
-                        imageUrl: occasion.image,
-                        showPrice: false,
-                      ),
+                    
+                    return ItemCard(
+                      id: occasion.id,
+                      title: occasion.name,
+                      imageUrl: occasion.image,
+                      showPrice: false,
+                      occasion: occasion,
+                      occasionIndex: index,
+                      occasionList: occasions,
                     );
                   },
                 ),

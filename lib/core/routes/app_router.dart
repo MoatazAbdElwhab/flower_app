@@ -12,6 +12,7 @@ import 'package:flower_app/features/occasion/presentation/pages/occasion_page.da
 import 'package:flower_app/features/splash/splash_screen.dart';
 import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
+import 'package:flower_app/features/categories/presentation/pages/categories_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -101,6 +102,12 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
             child: Text('Product not found'),
           ),
         ),
+      );
+
+    case Routes.categories:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const CategoriesScreen(),
       );
 
     default:

@@ -55,6 +55,7 @@ class BestSellerSection extends StatelessWidget {
                       showPrice: true,
                       price: bestSeller.price?.toString(),
                       discountPrice: bestSeller.priceAfterDiscount?.toString(),
+                      product: bestSeller, // Pass the entire product entity
                     );
                   },
                 ),

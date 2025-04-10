@@ -6,7 +6,12 @@ import '../../theme/app_styles.dart';
 import '../app_carousel/app_carousel.dart';
 
 class ProductDetailsPage extends StatefulWidget {
-  const ProductDetailsPage({super.key});
+  final ProductEntity? productArgument;
+  
+  const ProductDetailsPage({
+    super.key, 
+    this.productArgument,
+  });
 
   @override
   _ProductDetailsPageState createState() => _ProductDetailsPageState();
@@ -22,8 +27,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var productArgument =
-        ModalRoute.of(context)!.settings.arguments as ProductEntity;
+    // Get product either from widget parameter or route arguments
+    final ProductEntity? productArgument = widget.productArgument ?? 
+        (ModalRoute.of(context)?.settings.arguments as ProductEntity?);
+        
+    if (productArgument == null) {
+      return Scaffold(
+        body: Center(
+          child: Text(
+            'Product not found',
+            style: getMediumStyle(color: AppColors.error, fontSize: 16.sp),
+          ),
+        ),
+      );
+    }
 
     ///  product dm is dummy class implemented below to show how to use it;
     return Scaffold(

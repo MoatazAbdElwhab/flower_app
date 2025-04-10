@@ -10,7 +10,7 @@ import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
-
+import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 
 import 'package:flutter/material.dart';
@@ -83,6 +83,23 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => BestSellerPage(
           productEntityList: productList,
+        ),
+      );
+      
+    case Routes.productDetailsView:
+      final product = settings.arguments as ProductEntity?;
+      if (product != null) {
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => ProductDetailsPage(productArgument: product),
+        );
+      }
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => Scaffold(
+          body: Center(
+            child: Text('Product not found'),
+          ),
         ),
       );
 

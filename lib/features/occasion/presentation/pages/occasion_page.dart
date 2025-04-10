@@ -65,6 +65,7 @@ class _OccasionPageState extends State<OccasionPage> {
         length: widget.arguments.categories?.length ?? 0,
         child: Scaffold(
           appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

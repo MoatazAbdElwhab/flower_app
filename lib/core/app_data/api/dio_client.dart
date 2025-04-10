@@ -121,7 +121,7 @@ class DioApiClient implements ApiClient {
     try {
       final token = await localStorage.getSecuredData('token');
       if (token != null) {
-        _dio.options.headers.addAll({'token': token});
+        _dio.options.headers.addAll({'Authorization': 'Bearer $token'});
       } else {
         Log.e('throwing ApiException(message: User token is null)');
         throw ApiException(message: 'User token is null');

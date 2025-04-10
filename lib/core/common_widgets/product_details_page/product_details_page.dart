@@ -27,8 +27,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
     ///  product dm is dummy class implemented below to show how to use it;
     return Scaffold(
+        extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),

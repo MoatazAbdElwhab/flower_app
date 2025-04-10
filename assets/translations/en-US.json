@@ -168,5 +168,15 @@
   "bestSeller": {
     "title": "Best seller",
     "description": "Bloom with our exquisite best sellers"
+  },
+
+  "profile": {
+    "myOrders": "My orders",
+    "savedAddress": "Saved address",
+    "notification": "Notification",
+    "language": "Language",
+    "aboutUs": "About us",
+    "termsAndConditions": "Terms & conditions",
+    "logout": "Logout"
   }
 }

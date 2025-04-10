@@ -10,4 +10,5 @@ class ApiConstants {
   static const String verifyResetCodeEndPoint = 'auth/verifyResetCode';
   static const String resetPasswordEndPoint = 'auth/resetPassword';
   static const String occasionsEndPoint = 'products';
+  static const String profileDataEndPoint = 'auth/profile-data';
 }

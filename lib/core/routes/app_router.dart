@@ -15,6 +15,9 @@ import 'package:flower_app/features/auth/presentation/pages/reset_password_page.
 
 import 'package:flutter/material.dart';
 
+import '../../features/profile/domain/entities/user_data.dart';
+import '../../features/profile/presentation/pages/edit_profile_page.dart';
+
 Route<dynamic>? generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.splash:
@@ -85,6 +88,13 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
           productEntityList: productList,
         ),
       );
+
+     case Routes.editProfilePage:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) =>  EditProfilePage(
+          userData: settings.arguments as UserData,
+        ),);
 
     default:
       return MaterialPageRoute(

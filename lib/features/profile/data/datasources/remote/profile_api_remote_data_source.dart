@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/app_data/api/api_client.dart';
 import 'package:flower_app/core/app_data/api/api_constants.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
 import 'package:flower_app/features/profile/data/models/profile_data_response/profile_data_response.dart';
 import 'package:flower_app/features/profile/data/models/profile_data_response/user_data_model.dart';
+import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ProfileRemoteDataSource)
@@ -17,6 +19,19 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
       ApiConstants.profileDataEndPoint,
     );
 
-    return ProfileDataResponse.fromJson(response).user;
+    return ProfileDataResponse
+        .fromJson(response)
+        .user;
+  }
+
+  @override
+  Future<void> editProfileData(
+      UpdateProfileRequest updateProfileRequest) async {
+    final response = await _apiClient.put(
+      ApiConstants.editProfileEndPoint,
+      data: updateProfileRequest.toJson(),
+      requiresToken: true,
+    );
+    return response;
   }
 }

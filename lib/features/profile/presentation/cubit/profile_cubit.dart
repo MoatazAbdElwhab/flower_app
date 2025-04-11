@@ -43,7 +43,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
 
   // ValueNotifier<String> updateUserGender = ValueNotifier('');
-   String userGender = '';
+  String userGender = '';
   Future<void> getUserData() async {
     emit(state.copyWith(getUserDataState: BaseLoadingState()));
     final result = await _getUserDataUseCase();
@@ -170,7 +170,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     firstNameController.dispose();
     phoneController.dispose();
     lastNameController.dispose();
-    isNotificationEnabled.dispose();
+    // updateUserGender.dispose();
     super.close();
   }
 }

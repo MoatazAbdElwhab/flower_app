@@ -90,6 +90,8 @@ import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_cas
     as _i732;
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart'
     as _i389;
+import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart'
+    as _i850;
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart'
     as _i928;
 import 'package:flutter/cupertino.dart' as _i719;
@@ -186,6 +188,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i732.EditProfileUseCase>(
         () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i850.ResetPasswordUseCase>(
+        () => _i850.ResetPasswordUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i859.GetOccasionsByIdUseCase>(
         () => _i859.GetOccasionsByIdUseCase(gh<_i429.OccasionRepository>()));
     gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
@@ -202,6 +206,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i928.ProfileCubit>(() => _i928.ProfileCubit(
           gh<_i389.GetUserDataUseCase>(),
           gh<_i732.EditProfileUseCase>(),
+          gh<_i850.ResetPasswordUseCase>(),
+          gh<_i1053.AuthLocalDataSourceContract>(),
         ));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),

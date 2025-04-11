@@ -1,5 +1,10 @@
+// features/profile/presentation/cubit/profile_cubit.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
+import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
+import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +19,15 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final GetUserDataUseCase _getUserDataUseCase;
   final EditProfileUseCase _editProfileUseCase;
+  final ResetPasswordUseCase _resetPasswordUseCase;
+  final AuthLocalDataSourceContract _authLocalDataSource;
 
-  ProfileCubit(this._getUserDataUseCase, this._editProfileUseCase)
-      : super(const ProfileState()) {
+  ProfileCubit(
+    this._getUserDataUseCase,
+    this._editProfileUseCase,
+    this._resetPasswordUseCase,
+    this._authLocalDataSource,
+  ) : super(const ProfileState()) {
     getUserData();
   }
 
@@ -85,7 +96,56 @@ class ProfileCubit extends Cubit<ProfileState> {
                 editProfileState: BaseSuccessState<void>(),
               ),
             ),
+  //  ----------------------Reset password ----------------------
+  Future<void> profileResetPassword(
+      String currentPassword, String newPassword) async {
+    emit(state.copyWith(resetPasswordState: BaseLoadingState()));
+
+    if (currentPassword == newPassword) {
+      emit(
+        state.copyWith(
+          resetPasswordState:
+              BaseErrorState('profile.reset_password.error.same_password'.tr()),
+        ),
       );
+      return;
+    }
+
+    final request = ProfileResetPasswordRequest(
+      password: currentPassword,
+      newPassword: newPassword,
+    );
+
+    final result = await _resetPasswordUseCase(request);
+
+    if (result.isRight) {
+      if (result.right.token != null) {
+        await _authLocalDataSource.cacheToken(result.right.token!);
+      }
+      emit(
+        state.copyWith(
+          resetPasswordState: BaseSuccessState(data: result.right),
+        ),
+      );
+    } else {
+      String errorMessage = result.left.message;
+
+      if (errorMessage.toLowerCase().contains('incorrect') ||
+          errorMessage.toLowerCase().contains('password') ||
+          errorMessage.toLowerCase().contains('error')) {
+        emit(
+          state.copyWith(
+            resetPasswordState: BaseErrorState(
+                'profile.reset_password.error.incorrect_password'.tr()),
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            resetPasswordState: BaseErrorState(errorMessage),
+          ),
+        );
+      }
     }
   }
 

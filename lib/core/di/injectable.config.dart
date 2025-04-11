@@ -42,6 +42,18 @@ import 'package:flower_app/features/auth/domain/ues_case/verify_reset_code_use_c
     as _i242;
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart'
     as _i315;
+import 'package:flower_app/features/categories/data/remote/data_sources/categories_remote_data_source.dart'
+    as _i634;
+import 'package:flower_app/features/categories/data/remote/data_sources/categories_remote_data_source_impl.dart'
+    as _i161;
+import 'package:flower_app/features/categories/data/repositories/categories_repo_impl.dart'
+    as _i486;
+import 'package:flower_app/features/categories/domain/repositories/categories_repo.dart'
+    as _i1;
+import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart'
+    as _i298;
+import 'package:flower_app/features/categories/presentation/manager/categories_cubit.dart'
+    as _i659;
 import 'package:flower_app/features/home/data/datasource/home_data_source_contract.dart'
     as _i286;
 import 'package:flower_app/features/home/data/datasource/home_data_source_impl.dart'
@@ -66,6 +78,20 @@ import 'package:flower_app/features/occasion/domain/usecases/get_occasions_by_id
     as _i859;
 import 'package:flower_app/features/occasion/presentation/cubit/occasion_cubit.dart'
     as _i814;
+import 'package:flower_app/features/profile/data/datasources/remote/profile_api_remote_data_source.dart'
+    as _i1015;
+import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart'
+    as _i445;
+import 'package:flower_app/features/profile/data/repositories/profile_repository_impl.dart'
+    as _i866;
+import 'package:flower_app/features/profile/domain/repositories/profile_repository.dart'
+    as _i806;
+import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart'
+    as _i732;
+import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart'
+    as _i389;
+import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart'
+    as _i928;
 import 'package:flutter/cupertino.dart' as _i719;
 import 'package:flutter/material.dart' as _i409;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -98,9 +124,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i558.FlutterSecureStorage>(
         () => getItRegisterModule.secureStorage);
-    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i210.AppNavigatorObserver>(
         () => _i210.AppNavigatorObserver());
+    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i666.LocalStorageClient>(() => _i666.LocalStorageClient(
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
@@ -122,28 +148,44 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i399.HomeDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i851.AuthRemoteDataSourceContract>(
         () => _i374.AuthRemoteDataSourceImpl(gh<_i570.ApiClient>()));
+    gh.factory<_i634.CategoriesRemoteDataSourceContract>(
+        () => _i161.CategoriesRemoteDataSourceImpl(gh<_i570.ApiClient>()));
+    gh.factory<_i445.ProfileRemoteDataSource>(
+        () => _i1015.ProfileApiRemoteDataSource(gh<_i570.ApiClient>()));
+    gh.factory<_i1.CategoriesRepo>(() => _i486.CategoriesRepoImpl(
+        gh<_i634.CategoriesRemoteDataSourceContract>()));
     gh.factory<_i453.HomeRepositoryContract>(
         () => _i779.HomeRepositoryImpl(gh<_i286.HomeDataSourceContract>()));
+    gh.factory<_i298.GetCategoriesUseCase>(
+        () => _i298.GetCategoriesUseCase(gh<_i1.CategoriesRepo>()));
     gh.factory<_i429.OccasionRepository>(() =>
         _i547.OccasionRepositoryImpl(gh<_i224.OccasionRemoteDataSource>()));
     gh.factory<_i514.AuthRepo>(() => _i1012.AuthRepoImpl(
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
         ));
-    gh.factory<_i242.VerifyResetCodeUseCase>(
-        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i621.SignInUseCase>(
-        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i235.ForgetPasswordUseCase>(
         () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i366.SignupUseCase>(
-        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i696.ResetPasswordUseCase>(
-        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i419.ResendOtpUseCase>(
         () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i696.ResetPasswordUseCase>(
+        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i366.SignupUseCase>(
+        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i242.VerifyResetCodeUseCase>(
+        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i659.CategoriesCubit>(
+        () => _i659.CategoriesCubit(gh<_i298.GetCategoriesUseCase>()));
+    gh.factory<_i806.ProfileRepository>(
+        () => _i866.ProfileRepositoryImpl(gh<_i445.ProfileRemoteDataSource>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
+    gh.factory<_i389.GetUserDataUseCase>(
+        () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i732.EditProfileUseCase>(
+        () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i859.GetOccasionsByIdUseCase>(
         () => _i859.GetOccasionsByIdUseCase(gh<_i429.OccasionRepository>()));
     gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
@@ -157,6 +199,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i814.OccasionCubit>(
         () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
+    gh.factory<_i928.ProfileCubit>(() => _i928.ProfileCubit(
+          gh<_i389.GetUserDataUseCase>(),
+          gh<_i732.EditProfileUseCase>(),
+        ));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),
           locationService: gh<_i754.LocationService>(),

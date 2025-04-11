@@ -1,3 +1,4 @@
+// features/profile/presentation/pages/edit_profile_page.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/base/base_state.dart';
 import '../../../../core/common_widgets/app_network_image/app_network_image.dart';
 import '../../../../core/di/injectable.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/utils/validator.dart';
 import '../../../../core/widget/dialog_utils.dart';
 import '../../../../generated/locale_keys.g.dart';
@@ -54,53 +56,53 @@ class EditProfilePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: BlocConsumer<ProfileCubit, ProfileState>(
               listener: (context, state) {
-                if (state.editProfileState is BaseErrorState) {
-                  getIt<DialogUtils>().showErrorDialog(
-                    context,
-                    LocaleKeys.dialogs_error_title.tr(),
-                    (state.editProfileState as BaseErrorState).errorMessage,
-                  );
-                }
-                if (state.editProfileState is BaseSuccessState && !isDialogShowing) {
-                  isDialogShowing = true;
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                LocaleKeys.profile_updateProfileSuccess.tr(),
-                                style: getMediumStyle(
-                                    color: AppColors.success, fontSize: 16),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: 16.h),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  isDialogShowing = false;
-                                },
-                                child: Text(LocaleKeys.dialogs_success_ok.tr()),
-                              ),
-                            ],
+            if (state.editProfileState is BaseErrorState) {
+              getIt<DialogUtils>().showErrorDialog(
+                context,
+                LocaleKeys.dialogs_error_title.tr(),
+                (state.editProfileState as BaseErrorState).errorMessage,
+              );
+            }
+            if (state.editProfileState is BaseSuccessState && !isDialogShowing) {
+              isDialogShowing = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            LocaleKeys.profile_updateProfileSuccess.tr(),
+                            style: getMediumStyle(
+                                color: AppColors.success, fontSize: 16),
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      },
-                    ).then((_) => isDialogShowing = false);
-                  });
-                }
-              },
-              listenWhen: (previous, current) {
-                return previous.editProfileState != current.editProfileState;
-              },
-              buildWhen: (previous, current) {
-                return previous.editProfileState != current.editProfileState;
-              },
-              builder: (context, state) {
+                          SizedBox(height: 16.h),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              isDialogShowing = false;
+                            },
+                            child: Text(LocaleKeys.dialogs_success_ok.tr()),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ).then((_) => isDialogShowing = false);
+              });
+            }
+          },
+           listenWhen: (previous, current) {
+            return previous.editProfileState != current.editProfileState;
+          }, 
+          buildWhen: (previous, current) {
+            return previous.editProfileState != current.editProfileState;
+          },
+           builder: (context, state) {
             final profileCubit = context.read<ProfileCubit>();
             return Form(
               key: profileCubit.editProfileFormKey,
@@ -190,14 +192,15 @@ class EditProfilePage extends StatelessWidget {
                       labelText: 'password',
                       hintText: "********",
                       suffix: GestureDetector(
-                        onTap: (){
-                        //  Navigator.pushNamed(context, Routes.changePassword);
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.profileResetPassword);
                         },
                         child: Text(
                           "Change",
                           style:
-                              getBoldStyle(color: AppColors.primary, fontSize: 12)
-                                  .copyWith(fontWeight: FontWeight.w600),
+                           getBoldStyle(color: AppColors.primary, fontSize: 12)
+                              .copyWith(fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -232,17 +235,17 @@ class EditProfilePage extends StatelessWidget {
                     height: 48.h,
                   ),
                   ElevatedButton(
-                      onPressed: () {
+                    onPressed: () {
                       profileCubit.updateProfileData();
-                      },
-                      child: state.editProfileState is BaseLoadingState
+                    },
+                    child: state.editProfileState is BaseLoadingState
                           ?  const CupertinoActivityIndicator(color: AppColors.white,animating: true,
-                      radius: 16,
-                      )
-                          : Text(
-                              LocaleKeys.profile_updateProfile.tr(),
-                              style: getMediumStyle(
-                                  color: AppColors.white, fontSize: 16),
+                            radius: 16,
+                          )
+                        : Text(
+                            LocaleKeys.profile_updateProfile.tr(),
+                            style: getMediumStyle(
+                                color: AppColors.white, fontSize: 16),
                             ),),
                 ],
               ),

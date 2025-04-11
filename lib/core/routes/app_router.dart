@@ -1,3 +1,4 @@
+// core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
@@ -9,6 +10,7 @@ import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
+import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
@@ -89,12 +91,19 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         ),
       );
 
-     case Routes.editProfilePage:
+    case Routes.editProfilePage:
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) =>  EditProfilePage(
+        builder: (_) => EditProfilePage(
           userData: settings.arguments as UserData,
-        ),);
+        ),
+      );
+
+    case Routes.profileResetPassword:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const ProfileResetPassword(),
+      );
 
     default:
       return MaterialPageRoute(

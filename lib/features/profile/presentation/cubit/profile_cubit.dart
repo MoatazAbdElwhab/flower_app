@@ -63,26 +63,30 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> editProfileData() async {
     emit(state.copyWith(editProfileState: BaseLoadingState()));
-    final result = await _editProfileUseCase(UpdateProfileRequest(
+    final result = editProfileFormKey.currentState!.validate()
+        ? await _editProfileUseCase(UpdateProfileRequest(
       email: emailController.text,
       firstName: firstNameController.text,
       lastName: lastNameController.text,
       phone: phoneController.text,
-    ));
-    result.fold(
-          (error) =>
-          emit(
-            state.copyWith(
-              editProfileState: BaseErrorState(error.toString()),
+    ))
+        : null;
+    if (result != null) {
+      result.fold(
+            (error) =>
+            emit(
+              state.copyWith(
+                editProfileState: BaseErrorState(error.toString()),
+              ),
             ),
-          ),
-          (success) =>
-          emit(
-            state.copyWith(
-              editProfileState: BaseSuccessState<void>(),
+            (success) =>
+            emit(
+              state.copyWith(
+                editProfileState: BaseSuccessState<void>(),
+              ),
             ),
-          ),
-    );
+      );
+    }
   }
 
   void initEditProfileData(UserData? userData) {

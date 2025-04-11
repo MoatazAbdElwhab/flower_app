@@ -132,8 +132,8 @@ class EditProfilePage extends StatelessWidget {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) =>
                               Validator.firstNameValidation(value),
-                          decoration: const InputDecoration(
-                            labelText: "firstName",
+                          decoration:  InputDecoration(
+                            labelText: LocaleKeys.firstName_label.tr(),
                           ),
                         ),
                       ),
@@ -147,8 +147,8 @@ class EditProfilePage extends StatelessWidget {
                           },
                           validator: (value) =>
                               Validator.firstNameValidation(value),
-                          decoration: const InputDecoration(
-                            labelText: "Last Name",
+                          decoration:  InputDecoration(
+                            labelText: LocaleKeys.lastName_label.tr(),
                           ),
                         ),
                       ),
@@ -162,8 +162,8 @@ class EditProfilePage extends StatelessWidget {
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     validator: (value) => Validator.emailValidate(value),
-                    decoration: const InputDecoration(
-                      labelText: 'email',
+                    decoration:  InputDecoration(
+                      labelText: LocaleKeys.email_label.tr(),
                     ),
                   ),
                   SizedBox(height: 16.h),
@@ -175,8 +175,8 @@ class EditProfilePage extends StatelessWidget {
                     },
                     validator: (value) =>
                         Validator.phoneNumberValidation(value),
-                    decoration: const InputDecoration(
-                      labelText: 'phone',
+                    decoration:  InputDecoration(
+                      labelText: LocaleKeys.phone_label.tr(),
                     ),
                   ),
                   SizedBox(height: 16.h),
@@ -232,13 +232,10 @@ class EditProfilePage extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        if (profileCubit.editProfileFormKey.currentState!
-                            .validate()) {
-                          profileCubit.editProfileData();
-                        }
+                      profileCubit.editProfileData();
                       },
                       child: state.editProfileState is BaseLoadingState
-                          ?  CupertinoActivityIndicator(color: AppColors.white,animating: true,
+                          ?  const CupertinoActivityIndicator(color: AppColors.white,animating: true,
                       radius: 16,
                       )
                           : Text(

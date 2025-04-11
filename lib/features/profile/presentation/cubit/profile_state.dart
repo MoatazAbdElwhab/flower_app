@@ -1,11 +1,10 @@
 part of 'profile_cubit.dart';
 
 class ProfileState extends Equatable {
-  const ProfileState({this.getUserDataState, this.editProfileState, this.userData});
+  const ProfileState({this.getUserDataState, this.editProfileState});
 
   final BaseState? getUserDataState;
   final BaseState? editProfileState;
-  final UserData? userData;
 
   ProfileState copyWith({
     BaseState? getUserDataState,
@@ -15,10 +14,9 @@ class ProfileState extends Equatable {
     return ProfileState(
       getUserDataState: getUserDataState ?? this.getUserDataState,
       editProfileState: editProfileState ?? this.editProfileState,
-      userData: userData ?? this.userData,
     );
   }
 
   @override
-  List<Object?> get props => [getUserDataState, editProfileState, userData];
+  List<Object?> get props => [getUserDataState, editProfileState,];
 }

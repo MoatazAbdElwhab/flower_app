@@ -61,7 +61,7 @@ class ProfileCubit extends Cubit<ProfileState> {
  //   updateUserGender.value = gender;
  // }
 
-  Future<void> editProfileData() async {
+  Future<void> updateProfileData() async {
     emit(state.copyWith(editProfileState: BaseLoadingState()));
     final result = editProfileFormKey.currentState!.validate()
         ? await _editProfileUseCase(UpdateProfileRequest(

@@ -233,14 +233,14 @@ class EditProfilePage extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                      profileCubit.editProfileData();
+                      profileCubit.updateProfileData();
                       },
                       child: state.editProfileState is BaseLoadingState
                           ?  const CupertinoActivityIndicator(color: AppColors.white,animating: true,
                       radius: 16,
                       )
                           : Text(
-                              'Update',
+                              LocaleKeys.profile_updateProfile.tr(),
                               style: getMediumStyle(
                                   color: AppColors.white, fontSize: 16),
                             ),),

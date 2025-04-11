@@ -48,19 +48,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.copyWith(getUserDataState: BaseLoadingState()));
     final result = await _getUserDataUseCase();
     result.fold(
-          (error) =>
-          emit(
-            state.copyWith(
-              getUserDataState: BaseErrorState(error.toString()),
-            ),
-          ),
-          (data) =>
-          emit(
-            state.copyWith(
-              getUserDataState: BaseSuccessState(data: data),
-              userData: data,
-            ),
-          ),
+      (error) => emit(
+        state.copyWith(
+          getUserDataState: BaseErrorState(error.toString()),
+        ),
+      ),
+      (data) => emit(
+        state.copyWith(
+          getUserDataState: BaseSuccessState(data: data),
+          userData: data,
+        ),
+      ),
     );
   }
 
@@ -68,34 +66,36 @@ class ProfileCubit extends Cubit<ProfileState> {
     isNotificationEnabled.value = !isNotificationEnabled.value;
   }
   //  ----------------------edit profile ----------------------
- //  void updateProfileGender(String gender) {
- //   updateUserGender.value = gender;
- // }
+  //  void updateProfileGender(String gender) {
+  //   updateUserGender.value = gender;
+  // }
 
   Future<void> updateProfileData() async {
     emit(state.copyWith(editProfileState: BaseLoadingState()));
     final result = editProfileFormKey.currentState!.validate()
         ? await _editProfileUseCase(UpdateProfileRequest(
-      email: emailController.text,
-      firstName: firstNameController.text,
-      lastName: lastNameController.text,
-      phone: phoneController.text,
-    ))
+            email: emailController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            phone: phoneController.text,
+          ))
         : null;
     if (result != null) {
       result.fold(
-            (error) =>
-            emit(
-              state.copyWith(
-                editProfileState: BaseErrorState(error.toString()),
-              ),
-            ),
-            (success) =>
-            emit(
-              state.copyWith(
-                editProfileState: BaseSuccessState<void>(),
-              ),
-            ),
+        (error) => emit(
+          state.copyWith(
+            editProfileState: BaseErrorState(error.toString()),
+          ),
+        ),
+        (success) => emit(
+          state.copyWith(
+            editProfileState: BaseSuccessState<void>(),
+          ),
+        ),
+      );
+    }
+  }
+
   //  ----------------------Reset password ----------------------
   Future<void> profileResetPassword(
       String currentPassword, String newPassword) async {
@@ -130,9 +130,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     } else {
       String errorMessage = result.left.message;
 
+      // Debug the actual error message format
+      debugPrint("Password Reset Error: $errorMessage");
+
       if (errorMessage.toLowerCase().contains('incorrect') ||
           errorMessage.toLowerCase().contains('password') ||
           errorMessage.toLowerCase().contains('error')) {
+        // Use our localized error message for incorrect password
         emit(
           state.copyWith(
             resetPasswordState: BaseErrorState(
@@ -140,6 +144,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           ),
         );
       } else {
+        // Fallback to the original error message for other errors
         emit(
           state.copyWith(
             resetPasswordState: BaseErrorState(errorMessage),
@@ -165,7 +170,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     firstNameController.dispose();
     phoneController.dispose();
     lastNameController.dispose();
-    // updateUserGender.dispose();
+    isNotificationEnabled.dispose();
     super.close();
   }
 }

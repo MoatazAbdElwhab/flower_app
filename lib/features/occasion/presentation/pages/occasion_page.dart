@@ -27,10 +27,10 @@ class OccasionPage extends StatefulWidget {
 
 class _OccasionPageState extends State<OccasionPage> {
   late List<ProductEntity> categoryItems;
+  late OccasionCubit cubit;
   @override
   void initState() {
     super.initState();
-
     // Create dummy items for each category
     categoryItems = List.generate(
       15,
@@ -44,9 +44,10 @@ class _OccasionPageState extends State<OccasionPage> {
         description: '',
       ),
     );
+
+    cubit = getIt<OccasionCubit>();
   }
 
-  final cubit = getIt<OccasionCubit>();
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -63,6 +64,7 @@ class _OccasionPageState extends State<OccasionPage> {
             '673b34c21159920171827ae0'),
       child: DefaultTabController(
         length: widget.arguments.categories?.length ?? 0,
+        initialIndex: cubit.selectedCategoryIndex.value,
         child: Scaffold(
           appBar: AppBar(
             surfaceTintColor: Colors.transparent,

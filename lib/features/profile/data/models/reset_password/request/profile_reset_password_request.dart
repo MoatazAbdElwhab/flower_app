@@ -15,14 +15,4 @@ class ProfileResetPasswordRequest {
         'password': password,
         'newPassword': newPassword,
       };
-
-  ProfileResetPasswordRequest copyWith({
-    String? password,
-    String? newPassword,
-  }) {
-    return ProfileResetPasswordRequest(
-      password: password ?? this.password,
-      newPassword: newPassword ?? this.newPassword,
-    );
-  }
 }

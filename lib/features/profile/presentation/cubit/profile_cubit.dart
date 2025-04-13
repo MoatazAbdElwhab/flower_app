@@ -21,8 +21,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   final ValueNotifier<bool> isNotificationEnabled = ValueNotifier(false);
-
-  // text controllers
+   // text controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -32,24 +31,22 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
 
   // ValueNotifier<String> updateUserGender = ValueNotifier('');
-   String userGender = '';
+  String userGender = '';
   Future<void> getUserData() async {
     emit(state.copyWith(getUserDataState: BaseLoadingState()));
     final result = await _getUserDataUseCase();
     result.fold(
-          (error) =>
-          emit(
-            state.copyWith(
-              getUserDataState: BaseErrorState(error.toString()),
-            ),
-          ),
-          (data) =>
-          emit(
-            state.copyWith(
-              getUserDataState: BaseSuccessState(data: data),
-              userData: data,
-            ),
-          ),
+      (error) => emit(
+        state.copyWith(
+          getUserDataState: BaseErrorState(error.toString()),
+        ),
+      ),
+      (data) => emit(
+        state.copyWith(
+          getUserDataState: BaseSuccessState(data: data),
+          userData: data,
+        ),
+      ),
     );
   }
 
@@ -57,34 +54,32 @@ class ProfileCubit extends Cubit<ProfileState> {
     isNotificationEnabled.value = !isNotificationEnabled.value;
   }
   //  ----------------------edit profile ----------------------
- //  void updateProfileGender(String gender) {
- //   updateUserGender.value = gender;
- // }
+  //  void updateProfileGender(String gender) {
+  //   updateUserGender.value = gender;
+  // }
 
   Future<void> updateProfileData() async {
     emit(state.copyWith(editProfileState: BaseLoadingState()));
     final result = editProfileFormKey.currentState!.validate()
         ? await _editProfileUseCase(UpdateProfileRequest(
-      email: emailController.text,
-      firstName: firstNameController.text,
-      lastName: lastNameController.text,
-      phone: phoneController.text,
-    ))
+            email: emailController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            phone: phoneController.text,
+          ))
         : null;
     if (result != null) {
       result.fold(
-            (error) =>
-            emit(
-              state.copyWith(
-                editProfileState: BaseErrorState(error.toString()),
-              ),
-            ),
-            (success) =>
-            emit(
-              state.copyWith(
-                editProfileState: BaseSuccessState<void>(),
-              ),
-            ),
+        (error) => emit(
+          state.copyWith(
+            editProfileState: BaseErrorState(error.toString()),
+          ),
+        ),
+        (success) => emit(
+          state.copyWith(
+            editProfileState: BaseSuccessState<void>(),
+          ),
+        ),
       );
     }
   }

@@ -5,21 +5,19 @@ import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/routes/routes.dart';
-
 class ProfileSection extends StatelessWidget {
   final UserData userData;
-   const ProfileSection({
+  final void Function()? onTap; 
+  const ProfileSection({
     super.key,
     required this.userData,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.editProfilePage, arguments: userData);
-      },
+      onTap: onTap,
       child: Column(
         children: [
           AppNetworkImage(

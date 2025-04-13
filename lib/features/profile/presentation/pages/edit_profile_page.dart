@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,15 @@ class EditProfilePage extends StatelessWidget {
       create: (context) => getIt<ProfileCubit>()..initEditProfileData(userData),
       child: Scaffold(
         appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: AppColors.black,
-            size: 24,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: AppColors.black,
+              size: 24,
+            ),
           ),
           title: Text(
             LocaleKeys.profile_editProfile.tr(),
@@ -37,16 +43,11 @@ class EditProfilePage extends StatelessWidget {
           ),
           titleSpacing: 0,
           leadingWidth: 35.w,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.notifications_none_rounded,
-                color: AppColors.black,
-                size: 24,
-              ),
+          actions: const [
+            Icon(
+              Icons.notifications_none_rounded,
+              color: AppColors.black,
+              size: 24,
             )
           ],
         ),
@@ -54,53 +55,53 @@ class EditProfilePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: BlocConsumer<ProfileCubit, ProfileState>(
               listener: (context, state) {
-                if (state.editProfileState is BaseErrorState) {
-                  getIt<DialogUtils>().showErrorDialog(
-                    context,
-                    LocaleKeys.dialogs_error_title.tr(),
-                    (state.editProfileState as BaseErrorState).errorMessage,
-                  );
-                }
-                if (state.editProfileState is BaseSuccessState && !isDialogShowing) {
-                  isDialogShowing = true;
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                LocaleKeys.profile_updateProfileSuccess.tr(),
-                                style: getMediumStyle(
-                                    color: AppColors.success, fontSize: 16),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: 16.h),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  isDialogShowing = false;
-                                },
-                                child: Text(LocaleKeys.dialogs_success_ok.tr()),
-                              ),
-                            ],
+            if (state.editProfileState is BaseErrorState) {
+              getIt<DialogUtils>().showErrorDialog(
+                context,
+                LocaleKeys.dialogs_error_title.tr(),
+                (state.editProfileState as BaseErrorState).errorMessage,
+              );
+            }
+            if (state.editProfileState is BaseSuccessState &&
+                !isDialogShowing) {
+              isDialogShowing = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            LocaleKeys.profile_updateProfileSuccess.tr(),
+                            style: getExtraBoldStyle(
+                                color: AppColors.success, fontSize: 16),
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      },
-                    ).then((_) => isDialogShowing = false);
-                  });
-                }
-              },
-              listenWhen: (previous, current) {
-                return previous.editProfileState != current.editProfileState;
-              },
-              buildWhen: (previous, current) {
-                return previous.editProfileState != current.editProfileState;
-              },
-              builder: (context, state) {
+                          SizedBox(height: 16.h),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+
+                              isDialogShowing = false;
+                            },
+                            child: Text(LocaleKeys.dialogs_success_ok.tr()),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ).then((_) => isDialogShowing = false);
+              });
+            }
+          }, listenWhen: (previous, current) {
+            return previous.editProfileState != current.editProfileState;
+          }, buildWhen: (previous, current) {
+            return previous.editProfileState != current.editProfileState;
+          }, builder: (context, state) {
             final profileCubit = context.read<ProfileCubit>();
             return Form(
               key: profileCubit.editProfileFormKey,
@@ -132,7 +133,7 @@ class EditProfilePage extends StatelessWidget {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) =>
                               Validator.firstNameValidation(value),
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: LocaleKeys.firstName_label.tr(),
                           ),
                         ),
@@ -147,7 +148,7 @@ class EditProfilePage extends StatelessWidget {
                           },
                           validator: (value) =>
                               Validator.firstNameValidation(value),
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: LocaleKeys.lastName_label.tr(),
                           ),
                         ),
@@ -162,7 +163,7 @@ class EditProfilePage extends StatelessWidget {
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     validator: (value) => Validator.emailValidate(value),
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       labelText: LocaleKeys.email_label.tr(),
                     ),
                   ),
@@ -175,7 +176,7 @@ class EditProfilePage extends StatelessWidget {
                     },
                     validator: (value) =>
                         Validator.phoneNumberValidation(value),
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       labelText: LocaleKeys.phone_label.tr(),
                     ),
                   ),
@@ -190,14 +191,14 @@ class EditProfilePage extends StatelessWidget {
                       labelText: 'password',
                       hintText: "********",
                       suffix: GestureDetector(
-                        onTap: (){
-                        //  Navigator.pushNamed(context, Routes.changePassword);
+                        onTap: () {
+                          //  Navigator.pushNamed(context, Routes.changePassword);
                         },
                         child: Text(
                           "Change",
-                          style:
-                              getBoldStyle(color: AppColors.primary, fontSize: 12)
-                                  .copyWith(fontWeight: FontWeight.w600),
+                          style: getBoldStyle(
+                                  color: AppColors.primary, fontSize: 12)
+                              .copyWith(fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -232,18 +233,21 @@ class EditProfilePage extends StatelessWidget {
                     height: 48.h,
                   ),
                   ElevatedButton(
-                      onPressed: () {
+                    onPressed: () {
                       profileCubit.updateProfileData();
-                      },
-                      child: state.editProfileState is BaseLoadingState
-                          ?  const CupertinoActivityIndicator(color: AppColors.white,animating: true,
-                      radius: 16,
-                      )
-                          : Text(
-                              LocaleKeys.profile_updateProfile.tr(),
-                              style: getMediumStyle(
-                                  color: AppColors.white, fontSize: 16),
-                            ),),
+                    },
+                    child: state.editProfileState is BaseLoadingState
+                        ? const CupertinoActivityIndicator(
+                            color: AppColors.white,
+                            animating: true,
+                            radius: 16,
+                          )
+                        : Text(
+                            LocaleKeys.profile_updateProfile.tr(),
+                            style: getMediumStyle(
+                                color: AppColors.white, fontSize: 16),
+                          ),
+                  ),
                 ],
               ),
             );

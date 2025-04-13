@@ -1,5 +1,7 @@
 import 'package:either_dart/either.dart';
+import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
+import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flower_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -17,6 +19,16 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return Right(userData.toEntity());
     } catch (e) {
       return Left(Exception(e));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, void>> editUserProfileData(UpdateProfileRequest updateProfileRequest) async{
+    try {
+      await _profileRemoteDataSource.editProfileData(updateProfileRequest);
+      return const Right(null);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
     }
   }
 }

@@ -7,33 +7,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileSection extends StatelessWidget {
   final UserData userData;
+  final void Function()? onTap; 
   const ProfileSection({
     super.key,
     required this.userData,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppNetworkImage(
-          networkImage: userData.photo,
-          width: 81,
-          height: 81,
-          borderRadius: BorderRadius.circular(100),
-          fit: BoxFit.cover,
-        ),
-        const SizedBox(height: 16),
-        Text(
-          '${userData.firstName} ${userData.lastName}',
-          style: getMediumStyle(fontSize: 18.sp, color: AppColors.black),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          userData.email,
-          style: getMediumStyle(fontSize: 18.sp, color: AppColors.grey),
-        ),
-      ],
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          AppNetworkImage(
+            networkImage: userData.photo,
+            width: 81,
+            height: 81,
+            borderRadius: BorderRadius.circular(100),
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            '${userData.firstName} ${userData.lastName}',
+            style: getMediumStyle(fontSize: 18.sp, color: AppColors.black),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            userData.email,
+            style: getMediumStyle(fontSize: 18.sp, color: AppColors.grey),
+          ),
+        ],
+      ),
     );
   }
 }

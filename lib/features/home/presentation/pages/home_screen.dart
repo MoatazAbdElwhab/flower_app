@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
 import '../../../../core/base/base_state.dart';
+import '../../../nav/presentation/pages/navbar_page.dart';
 import '../../domain/entities/home_entity.dart';
 import '../widget/best_seller_section.dart';
 import '../widget/categories_section.dart';
@@ -75,7 +76,10 @@ class _HomePageState extends State<_HomePage> {
               final homeData = cubit.homeData;
 
               if (state.homeDataState is BaseSuccessState && homeData != null) {
+                // getting an argument for the categories section to Have the categories list when the user click on the categories section
+                final navBarState = NavbarPage.of(context);
                 return _buildHomeContent(context, homeData);
+
               }
 
               return const Center(
@@ -117,6 +121,10 @@ class _HomePageState extends State<_HomePage> {
             flex: 2,
             child: CategoriesSection(
               categories: homeData.categories ?? [],
+             onViewAllTap: () {
+               final navBarState = NavbarPage.of(context);
+               navBarState?.changeTab(1);
+             },
             ),
           ),
           SizedBox(height: sectionSpacing),

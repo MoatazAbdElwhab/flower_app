@@ -179,6 +179,8 @@
     "changeLanguage": "Change Language",
     "aboutUs": "About us",
     "termsAndConditions": "Terms & conditions",
-    "logout": "Logout"
+    "logout": "Logout",
+    "updateProfile": "Update",
+    "updateProfileSuccess": "Updated"
   }
 }

@@ -145,5 +145,6 @@ abstract class  LocaleKeys {
   static const profile_updateProfile = 'profile.updateProfile';
   static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
   static const profile = 'profile';
+  static const profile_editProfile= 'profile.editProfile';
 
 }

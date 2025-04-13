@@ -194,7 +194,8 @@ class EditProfilePage extends StatelessWidget {
                       hintText: "********",
                       suffix: GestureDetector(
                         onTap: () {
-                          //  Navigator.pushNamed(context, Routes.changePassword);
+                          Navigator.pushNamed(
+                              context, Routes.profileResetPassword);
                         },
                         child: Text(
                           "Change",

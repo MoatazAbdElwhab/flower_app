@@ -1,3 +1,4 @@
+// core/di/injectable.config.dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -122,9 +123,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i558.FlutterSecureStorage>(
         () => getItRegisterModule.secureStorage);
-    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i210.AppNavigatorObserver>(
         () => _i210.AppNavigatorObserver());
+    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i666.LocalStorageClient>(() => _i666.LocalStorageClient(
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
@@ -162,16 +163,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
         ));
-    gh.factory<_i242.VerifyResetCodeUseCase>(
-        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i621.SignInUseCase>(
-        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i235.ForgetPasswordUseCase>(
         () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i366.SignupUseCase>(
-        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i696.ResetPasswordUseCase>(
-        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i419.ResendOtpUseCase>(
         () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i659.CategoriesCubit>(
@@ -195,6 +188,12 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i814.OccasionCubit>(
         () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
+    gh.factory<_i928.ProfileCubit>(() => _i928.ProfileCubit(
+          gh<_i389.GetUserDataUseCase>(),
+          gh<_i732.EditProfileUseCase>(),
+          gh<_i850.ResetPasswordUseCase>(),
+          gh<_i1053.AuthLocalDataSourceContract>(),
+        ));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),
           locationService: gh<_i754.LocationService>(),

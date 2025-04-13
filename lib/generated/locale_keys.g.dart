@@ -1,4 +1,4 @@
-// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+// generated/locale_keys.g.dart
 
 // ignore_for_file: constant_identifier_names
 
@@ -142,6 +142,8 @@ abstract class  LocaleKeys {
   static const profile_aboutUs = 'profile.aboutUs';
   static const profile_termsAndConditions = 'profile.termsAndConditions';
   static const profile_logout = 'profile.logout';
+  static const profile_updateProfile = 'profile.updateProfile';
+  static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
   static const profile = 'profile';
 
 }

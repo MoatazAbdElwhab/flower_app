@@ -1,6 +1,8 @@
 import 'package:either_dart/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
+import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
+import 'package:flower_app/features/profile/data/models/reset_password/response/profile_reset_password_response.dart';
 import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flower_app/features/profile/domain/repositories/profile_repository.dart';
@@ -27,6 +29,18 @@ class ProfileRepositoryImpl extends ProfileRepository {
     try {
       await _profileRemoteDataSource.editProfileData(updateProfileRequest);
       return const Right(null);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, ProfileResetPasswordResponse>>
+      profileResetPassword(ProfileResetPasswordRequest request) async {
+    try {
+      final response =
+          await _profileRemoteDataSource.profileResetPassword(request);
+      return Right(response);
     } catch (e) {
       return Left(ApiException(message: e.toString()));
     }

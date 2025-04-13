@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,15 @@ class EditProfilePage extends StatelessWidget {
       create: (context) => getIt<ProfileCubit>()..initEditProfileData(userData),
       child: Scaffold(
         appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back_ios_rounded,
-            color: AppColors.black,
-            size: 24,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: AppColors.black,
+              size: 24,
+            ),
           ),
           title: Text(
             // LocaleKeys.profile_editProfile.tr(),
@@ -38,16 +44,11 @@ class EditProfilePage extends StatelessWidget {
           ),
           titleSpacing: 0,
           leadingWidth: 35.w,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.notifications_none_rounded,
-                color: AppColors.black,
-                size: 24,
-              ),
+          actions: const [
+            Icon(
+              Icons.notifications_none_rounded,
+              color: AppColors.black,
+              size: 24,
             )
           ],
         ),
@@ -75,9 +76,11 @@ class EditProfilePage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            // LocaleKeys.profile_updateProfileSuccess.tr(),
-                            'Updated',
-                            style: getMediumStyle(
+
+
+
+                            LocaleKeys.profile_updateProfileSuccess.tr(),
+                            style: getExtraBoldStyle(
                                 color: AppColors.success, fontSize: 16),
                             textAlign: TextAlign.center,
                           ),
@@ -85,10 +88,13 @@ class EditProfilePage extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context);
+                              Navigator.pop(context);
+
                               isDialogShowing = false;
                             },
                             child: Text(LocaleKeys.dialogs_success_ok.tr()),
                           ),
+
                         ],
                       ),
                     );
@@ -242,8 +248,12 @@ class EditProfilePage extends StatelessWidget {
                             radius: 16,
                           )
                         : Text(
-                            // LocaleKeys.profile_updateProfile.tr(),
-                            'Update',
+
+
+
+
+                            LocaleKeys.profile_updateProfile.tr(),
+
                             style: getMediumStyle(
                                 color: AppColors.white, fontSize: 16),
                           ),

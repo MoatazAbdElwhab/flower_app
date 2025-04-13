@@ -25,12 +25,11 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
   @override
   Future<void> editProfileData(
       UpdateProfileRequest updateProfileRequest) async {
-    final response = await _apiClient.put(
+    await _apiClient.put(
       ApiConstants.editProfileEndPoint,
       data: updateProfileRequest.toJson(),
       requiresToken: true,
     );
-    return response;
   }
 
   @override

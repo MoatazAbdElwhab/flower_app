@@ -1,67 +1,88 @@
-import 'package:flower_app/core/theme/app_colors.dart';
-import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_styles.dart';
 
 class CustomTabBar extends StatelessWidget {
   final TabController tabController;
-  final List<dynamic> tabsTitles;
+  final List<String> tabsTitles;
   final void Function(int)? changeTabIndex;
-  final int selectedIndex;
 
   const CustomTabBar({
     super.key,
     required this.tabController,
     required this.tabsTitles,
-    required this.selectedIndex,
     this.changeTabIndex,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: tabController.animation!,
-      builder: (context, value, _) {
-        return TabBar(
-          controller: tabController,
-          unselectedLabelColor: Colors.grey,
-          labelColor: Colors.pink,
-          overlayColor: const WidgetStatePropertyAll<Color>(Colors.transparent),
-          isScrollable: true,
-          indicatorColor: Colors.pink,
-          tabAlignment: TabAlignment.start,
-          indicatorWeight: 3.0,
-          dividerColor: Colors.transparent,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicatorPadding: const EdgeInsets.only(bottom: 8),
-          automaticIndicatorColorAdjustment: true,
-          onTap: (index) => changeTabIndex?.call(index),
-          tabs: List.generate(
-            tabsTitles.length,
-            (index) {
-              return CustomTab(
-                title: tabsTitles[index],
-                isSelected: index == tabController.index,
-              );
-            },
-          ),
-        );
-      },
+    return TabBar(
+      controller: tabController,
+      isScrollable: true,
+      indicatorColor: AppColors.primary,
+      tabAlignment: TabAlignment.start,
+      indicatorSize: TabBarIndicatorSize.label,
+      splashFactory:  NoSplash.splashFactory,
+      indicatorPadding: EdgeInsets.zero,
+      indicatorWeight: 4.h,
+      labelColor: Colors.transparent,
+      unselectedLabelColor: Colors.transparent,
+      dividerColor: Colors.transparent,
+      onTap: changeTabIndex,
+      tabs: tabsTitles
+          .asMap()
+          .map((index, title) => MapEntry(
+                index,
+                _TabWidgetStyle(
+                  title: title,
+                  controller: tabController,
+                  tabIndex: index,
+                ),
+              ))
+          .values
+          .toList(),
     );
   }
 }
 
-
-class CustomTab extends StatelessWidget {
+class _TabWidgetStyle extends StatefulWidget {
   final String title;
-  final bool isSelected;
+  final TabController controller;
+  final int tabIndex;
 
-  const CustomTab({
-    super.key,
+  const _TabWidgetStyle({
     required this.title,
-    required this.isSelected,
+    required this.controller,
+    required this.tabIndex,
   });
+
+  @override
+  State<_TabWidgetStyle> createState() => _TabWidgetStyleState();
+}
+
+class _TabWidgetStyleState extends State<_TabWidgetStyle> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.controller.index == widget.tabIndex;
+    widget.controller.addListener(_updateSelection);
+  }
+
+  void _updateSelection() {
+    final newValue = widget.controller.index == widget.tabIndex;
+    if (newValue != _isSelected) {
+      setState(() => _isSelected = newValue);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_updateSelection);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,26 +91,31 @@ class CustomTab extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            title,
-            style: getRegularStyle(color: isSelected ? AppColors.primary : AppColors.grey, fontSize: 16.sp),
+            widget.title,
+            style: getRegularStyle(
+              color: _isSelected ? AppColors.primary : AppColors.grey,
+              fontSize: 16.sp,
+            ),
           ),
           SizedBox(height: 8.h),
-          if (!isSelected)
-            Container(
-              height: 3,
-              width: title.length * 8.w,
-              decoration: BoxDecoration(
-                color: AppColors.white[70],
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(100.r),
-                  topRight: Radius.circular(100.r),
-                ),
-              ),
-            ),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: _isSelected
+                ? Container() // Show nothing when selected
+                : Container(
+                    height: 4.h,
+                    width: widget.title.length * 8.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.white[70],
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(100.r),
+                        topRight: Radius.circular(100.r),
+                      ),
+                    ),
+                  ),
+          ),
         ],
       ),
     );
   }
 }
-
-

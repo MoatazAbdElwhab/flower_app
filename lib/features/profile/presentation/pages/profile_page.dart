@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
+import 'package:flower_app/core/routes/routes.dart';
 
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
+import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:flower_app/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:flower_app/features/profile/presentation/widgets/app_bar_section.dart';
 import 'package:flower_app/features/profile/presentation/widgets/custom_row_item.dart';
 import 'package:flower_app/features/profile/presentation/widgets/logout_dialog.dart';
@@ -74,6 +77,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ? (state.getUserDataState as BaseSuccessState)
                                     .data as UserData
                                 : dummyUserData,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => EditProfilePage(
+                                    userData: state.getUserDataState
+                                            is BaseSuccessState
+                                        ? (state.getUserDataState
+                                                as BaseSuccessState)
+                                            .data as UserData
+                                        : dummyUserData,
+                                  ),
+                                ),
+                              ).then((_) {
+                                // عند الرجوع، نقوم بتغيير التبويب للـ Profile
+                                NavbarPage.of(context)?.changeTab(3);
+                                // ثم نقوم بسحب الداتا الجديدة من API
+                                context.read<ProfileCubit>().getUserData();
+                              });
+                            },
                           ),
                           const SizedBox(height: 32),
                           const SettingsSection(),

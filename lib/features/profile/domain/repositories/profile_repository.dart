@@ -6,5 +6,8 @@ import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 abstract class ProfileRepository {
   Future<Either<Exception, UserData>> getUserData();
 
-  Future<Either<ApiException, void>> editUserProfileData(UpdateProfileRequest updateProfileRequest);
+  Future<Either<ApiException, void>> editUserProfileData(
+      UpdateProfileRequest updateProfileRequest);
+
+  Future<Either<Exception, void>> logout();
 }

@@ -5,4 +5,5 @@ import '../../models/update_profile_data/update_profile_request.dart';
 abstract class ProfileRemoteDataSource {
   Future<UserDataModel> getUserData();
   Future<void> editProfileData(UpdateProfileRequest updateProfileRequest);
+  Future<void> logout();
 }

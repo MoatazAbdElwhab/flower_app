@@ -19,9 +19,7 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
       ApiConstants.profileDataEndPoint,
     );
 
-    return ProfileDataResponse
-        .fromJson(response)
-        .user;
+    return ProfileDataResponse.fromJson(response).user;
   }
 
   @override
@@ -30,6 +28,15 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
     final response = await _apiClient.put(
       ApiConstants.editProfileEndPoint,
       data: updateProfileRequest.toJson(),
+      requiresToken: true,
+    );
+    return response;
+  }
+
+  @override
+  Future<void> logout() async {
+    final response = await _apiClient.get(
+      ApiConstants.logOutEndPoint,
       requiresToken: true,
     );
     return response;

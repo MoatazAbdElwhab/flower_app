@@ -4,6 +4,7 @@ import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flower_app/features/profile/presentation/widgets/custom_row_item.dart';
+import 'package:flower_app/features/profile/presentation/widgets/language_bottom_sheet.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,14 +83,28 @@ class SettingsSection extends StatelessWidget {
             size: 18,
           ),
           rightWidget: Text(
-            'English',
+            LocaleKeys.profile_userLanguage.tr(),
             style: getRegularStyle(
               fontSize: 11.sp,
               color: AppColors.primary,
             ),
           ),
           title: LocaleKeys.profile_language.tr(),
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              enableDrag: true,
+              showDragHandle: true,
+              backgroundColor: AppColors.white,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                ),
+              ),
+              builder: (context) => const LanguageBottomSheet(),
+            );
+          },
         ),
         CustomRowItem(
           title: LocaleKeys.profile_aboutUs.tr(),

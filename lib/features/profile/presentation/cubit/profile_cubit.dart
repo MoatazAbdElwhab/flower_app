@@ -99,7 +99,6 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> logout() async {
     emit(state.copyWith(logoutState: BaseLoadingState()));
-    await Future.delayed(Duration(seconds: 5));
     final result = await _logoutUseCase();
     result.fold(
       (error) {

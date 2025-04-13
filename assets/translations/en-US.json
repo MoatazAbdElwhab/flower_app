@@ -179,8 +179,11 @@
     "changeLanguage": "Change Language",
     "aboutUs": "About us",
     "termsAndConditions": "Terms & conditions",
-    "logout": "Logout",
     "updateProfile": "Update",
-    "updateProfileSuccess": "Updated"
+    "updateProfileSuccess": "Updated",
+    "logoutTitle": "LOGOUT",
+    "logout": "Logout",
+    "confirmLogout":"Confirm logout !!",
+    "cancel": "Cancel"
   }
 }

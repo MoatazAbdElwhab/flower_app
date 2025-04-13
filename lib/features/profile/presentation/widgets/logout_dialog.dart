@@ -1,9 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +28,7 @@ class LogoutDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'LOGOUT',
+              LocaleKeys.profile_logoutTitle.tr(),
               style: getExtraBoldStyle(
                 color: AppColors.black,
                 fontSize: 18.sp,
@@ -33,7 +36,7 @@ class LogoutDialog extends StatelessWidget {
             ),
             SizedBox(height: 8.h),
             Text(
-              'Confirm logout!!',
+              LocaleKeys.profile_confirmLogout.tr(),
               style: getRegularStyle(
                 color: AppColors.black,
                 fontSize: 16.sp,
@@ -62,7 +65,7 @@ class LogoutDialog extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Text(
-                        'Cancel',
+                        LocaleKeys.profile_cancel.tr(),
                         style: getMediumStyle(
                           color: AppColors.black,
                           fontSize: 14.sp,
@@ -85,19 +88,11 @@ class LogoutDialog extends StatelessWidget {
                       listener: (context, state) {
                         if (state.logoutState is BaseErrorState) {
                           Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: AppColors.black,
-                              content: Text(
-                                (state.logoutState as BaseErrorState)
-                                    .errorMessage,
-                                style: getRegularStyle(
-                                  color: AppColors.white,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              duration: const Duration(seconds: 3),
-                            ),
+                          getIt<DialogUtils>().showSnackBar(
+                            textColor: AppColors.white,
+                            message: (state.logoutState as BaseErrorState)
+                                .errorMessage,
+                            context: context,
                           );
                         }
                         if (state.logoutState is BaseSuccessState) {
@@ -111,7 +106,7 @@ class LogoutDialog extends StatelessWidget {
                           );
                         } else {
                           return Text(
-                            'Log Out',
+                            LocaleKeys.profile_logout.tr(),
                             style: getMediumStyle(
                               color: AppColors.white,
                               fontSize: 14.sp,

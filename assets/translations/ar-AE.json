@@ -178,6 +178,9 @@
     "changeLanguage": "تغيير اللغة",
     "aboutUs": "معلومات عنا",
     "termsAndConditions": "الشروط والأحكام",
-    "logout": "تسجيل الخروج"
+    "logoutTitle": "تسجيل الخروج",
+  "logout": "تسجيل الخروج",
+  "confirmLogout": "تأكيد تسجيل الخروج !!",
+  "cancel": "إلغاء"
   }
 }

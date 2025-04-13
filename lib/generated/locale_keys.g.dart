@@ -127,8 +127,21 @@ abstract class  LocaleKeys {
   static const resetPassword_description = 'resetPassword.description';
   static const resetPassword_resetButton = 'resetPassword.resetButton';
   static const resetPassword = 'resetPassword';
+  static const occasionPage_title = 'occasionPage.title';
+  static const occasionPage_description = 'occasionPage.description';
+  static const occasionPage = 'occasionPage';
   static const bestSeller_title = 'bestSeller.title';
   static const bestSeller_description = 'bestSeller.description';
   static const bestSeller = 'bestSeller';
+  static const profile_myOrders = 'profile.myOrders';
+  static const profile_savedAddress = 'profile.savedAddress';
+  static const profile_notification = 'profile.notification';
+  static const profile_language = 'profile.language';
+  static const profile_userLanguage = 'profile.userLanguage';
+  static const profile_changeLanguage = 'profile.changeLanguage';
+  static const profile_aboutUs = 'profile.aboutUs';
+  static const profile_termsAndConditions = 'profile.termsAndConditions';
+  static const profile_logout = 'profile.logout';
+  static const profile = 'profile';
 
 }

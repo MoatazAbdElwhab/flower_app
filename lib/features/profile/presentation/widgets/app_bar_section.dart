@@ -8,6 +8,7 @@ class AppBarSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      textDirection: TextDirection.ltr,
       children: [
         Image.asset(
           AppIcon.logo,

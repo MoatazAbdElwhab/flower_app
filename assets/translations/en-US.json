@@ -175,6 +175,8 @@
     "savedAddress": "Saved address",
     "notification": "Notification",
     "language": "Language",
+    "userLanguage": "English",
+    "changeLanguage": "Change Language",
     "aboutUs": "About us",
     "termsAndConditions": "Terms & conditions",
     "logout": "Logout",

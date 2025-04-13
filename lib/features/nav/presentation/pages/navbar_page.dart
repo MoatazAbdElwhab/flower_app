@@ -1,7 +1,14 @@
+import 'package:flower_app/features/categories/presentation/pages/categories_screen.dart';
+import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
+import 'package:flower_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class NavbarPage extends StatefulWidget {
   const NavbarPage({super.key});
+
+  static _NavbarPageState? of(BuildContext context) {
+    return context.findAncestorStateOfType<_NavbarPageState>();
+  }
 
   @override
   State<NavbarPage> createState() => _NavbarPageState();
@@ -11,14 +18,20 @@ class _NavbarPageState extends State<NavbarPage> {
   final ValueNotifier<int> _selectedIndex = ValueNotifier(0);
   late final List<Widget> _pages;
 
+  void changeTab(int index) {
+    if (index >= 0 && index < _pages.length) {
+      _selectedIndex.value = index;
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _pages = const [
-      Center(child: Text('Home')),
-      Center(child: Text('Categories')),
+      HomeScreen(),
+      CategoriesScreen(),
       Center(child: Text('Cart')),
-      Center(child: Text('Profile')),
+      ProfilePage(),
     ];
   }
 

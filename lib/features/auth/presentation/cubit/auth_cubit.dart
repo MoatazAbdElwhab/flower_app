@@ -1,3 +1,4 @@
+// features/auth/presentation/cubit/auth_cubit.dart
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/logger/app_logger.dart';

@@ -8,6 +8,7 @@ import 'package:flower_app/features/home/presentation/widget/category_item.dart'
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoriesSection extends StatelessWidget {
   final List<CategoryOccasionEntity> categories;
@@ -28,9 +29,6 @@ class CategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.008;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -50,9 +48,10 @@ class CategoriesSection extends StatelessWidget {
           },
         ),
 
-        SizedBox(height: headerSpacing),
+        SizedBox(height: 5.h),
 
-        Expanded(
+        SizedBox(
+          height: 100.h,
           child: categories.isEmpty
               ? Center(child: Text('home.empty_states.categories'.tr()))
               : ListView.builder(

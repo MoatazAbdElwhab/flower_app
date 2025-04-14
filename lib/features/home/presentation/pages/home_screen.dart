@@ -1,8 +1,11 @@
+// features/home/presentation/pages/home_screen.dart
+
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/base/base_state.dart';
 import '../../domain/entities/home_entity.dart';
 import '../widget/best_seller_section.dart';
@@ -89,56 +92,40 @@ class _HomePageState extends State<_HomePage> {
   }
 
   Widget _buildHomeContent(BuildContext context, HomeEntity homeData) {
-    final size = MediaQuery.of(context).size;
-
-    final topSpacing = size.height * 0.01;
-    final headerSpacing = size.height * 0.02;
-    final locationSpacing = size.height * 0.015;
-    final sectionSpacing = size.height * 0.012;
-    final bottomSpacing = size.height * 0.008;
-    final horizontalPadding = size.width * 0.04;
-
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //---------------------------flowery logo && search
-          SizedBox(height: topSpacing),
-          const HomeHeader(),
-          SizedBox(height: headerSpacing),
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //---------------------------flowery logo && search
+            SizedBox(height: 8.h),
+            const HomeHeader(),
+            SizedBox(height: 12.h),
 
-          //---------------------------location bar
-          const LocationBar(),
-          SizedBox(height: locationSpacing),
+            //---------------------------location bar
+            const LocationBar(),
+            SizedBox(height: 8.h),
 
-          //---------------------------categories section
-          Flexible(
-            flex: 2,
-            child: CategoriesSection(
+            //---------------------------categories section
+            CategoriesSection(
               categories: homeData.categories ?? [],
             ),
-          ),
-          SizedBox(height: sectionSpacing),
+            SizedBox(height: 5.h),
 
-          //---------------------------best seller section
-          Flexible(
-            flex: 3,
-            child: BestSellerSection(
+            //---------------------------best seller section
+            BestSellerSection(
               bestSellers: homeData.bestSeller ?? [],
             ),
-          ),
-          SizedBox(height: sectionSpacing),
+            SizedBox(height: 5.h),
 
-          //---------------------------occasion section
-          Flexible(
-            flex: 3,
-            child: OccasionSection(
+            //---------------------------occasion section
+            OccasionSection(
               occasions: homeData.occasions ?? [],
             ),
-          ),
-          SizedBox(height: bottomSpacing),
-        ],
+            SizedBox(height: 10.h),
+          ],
+        ),
       ),
     );
   }

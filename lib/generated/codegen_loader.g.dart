@@ -177,9 +177,22 @@ class CodegenLoader extends AssetLoader{
     "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
     "resetButton": "Reset"
   },
+  "occasionPage": {
+    "title": "Occasions",
+    "description": "Bloom with our exquisite best sellers"
+  },
   "bestSeller": {
     "title": "Best seller",
     "description": "Bloom with our exquisite best sellers"
+  },
+  "profile": {
+    "myOrders": "My orders",
+    "savedAddress": "Saved address",
+    "notification": "Notification",
+    "language": "Language",
+    "aboutUs": "About us",
+    "termsAndConditions": "Terms & conditions",
+    "logout": "Logout"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en_US": _en_US};

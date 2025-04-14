@@ -48,12 +48,6 @@ class BestSellerSection extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final bestSeller = bestSellers[index];
                     return ItemCard(
-                      id: bestSeller.id,
-                      title: bestSeller.title,
-                      imageUrl: bestSeller.imgCover,
-                      showPrice: true,
-                      price: bestSeller.price?.toString(),
-                      discountPrice: bestSeller.priceAfterDiscount?.toString(),
                       product: bestSeller,
                     );
                   },

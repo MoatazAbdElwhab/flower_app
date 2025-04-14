@@ -23,24 +23,17 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    final containerSize = size.width * 0.16;
-    final imageSize = size.width * 0.06;
-    final loaderSize = size.width * 0.04;
-    final marginRight = size.width * 0.02;
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: containerSize,
-        margin: EdgeInsets.only(right: marginRight),
+        width: 54.w,
+        margin: EdgeInsets.only(right: 8.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: containerSize,
-              height: containerSize,
+              width: 54.w,
+              height: 54.w,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.primary[10],
@@ -48,14 +41,14 @@ class CategoryItem extends StatelessWidget {
               ),
               child: category.image != null
                   ? SizedBox(
-                      width: imageSize,
-                      height: imageSize,
+                      width: 20.w,
+                      height: 20.w,
                       child: AppNetworkImage(
                         networkImage: category.image!,
                         fit: BoxFit.contain,
                         placeHolder: SizedBox(
-                          width: loaderSize,
-                          height: loaderSize,
+                          width: 14.w,
+                          height: 14.w,
                           child: CircularProgressIndicator(
                             strokeWidth: 2.w,
                             color: AppColors.primary,
@@ -64,17 +57,17 @@ class CategoryItem extends StatelessWidget {
                         errorBuilder: Icon(
                           Icons.local_florist,
                           color: AppColors.primary,
-                          size: imageSize,
+                          size: 20.w,
                         ),
                       ),
                     )
                   : Icon(
                       Icons.local_florist,
                       color: AppColors.primary,
-                      size: imageSize,
+                      size: 20.w,
                     ),
             ),
-            SizedBox(height: size.height * 0.005),
+            SizedBox(height: 4.h),
             Text(
               category.name ?? 'home.items.unknown'.tr(),
               style: getRegularStyle(

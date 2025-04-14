@@ -15,41 +15,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ItemCard extends StatelessWidget {
-  final String? id;
-  final String? title;
-  final String? imageUrl;
-  final bool showPrice;
-  final String? price;
-  final String? discountPrice;
   final ProductEntity? product;
-  final VoidCallback? onTap;
   final CategoryOccasionEntity? occasion;
   final int? occasionIndex;
   final List<CategoryOccasionEntity>? occasionList;
+  final VoidCallback? onTap;
 
   const ItemCard({
     super.key,
-    this.id,
-    this.title,
-    this.imageUrl,
-    this.showPrice = false,
-    this.price,
-    this.discountPrice,
     this.product,
-    this.onTap,
     this.occasion,
     this.occasionIndex,
     this.occasionList,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    final cardWidth = size.width * 0.3;
-    final imageSize = cardWidth * .9;
-    final iconSize = size.width * 0.07;
-    final marginRight = size.width * 0.02;
+    final String? title = product?.title ?? occasion?.name;
+    final String? imageUrl = product?.imgCover ?? occasion?.image;
+    final bool showPrice = product != null;
 
     return GestureDetector(
       onTap: onTap ?? () {
@@ -72,38 +57,38 @@ class ItemCard extends StatelessWidget {
         }
       },
       child: Container(
-        width: cardWidth,
-        margin: EdgeInsets.only(right: marginRight),
+        width: 100.w,
+        margin: EdgeInsets.only(right: 8.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: imageSize,
-              height: imageSize,
+              width: 90.w,
+              height: 90.w,
               decoration: BoxDecoration(
                 color: AppColors.grey,
                 borderRadius: BorderRadius.circular(4.r),
               ),
-              child: imageUrl != null && imageUrl!.isNotEmpty
+              child: imageUrl != null && imageUrl.isNotEmpty
                   ? AppNetworkImage(
-                      networkImage: imageUrl!,
+                      networkImage: imageUrl,
                       borderRadius: BorderRadius.circular(4.r))
                   : Container(
                       color: AppColors.grey,
                       child: Center(
                         child: SvgPicture.asset(
                           AppIcons.flower,
-                          width: iconSize,
-                          height: iconSize,
+                          width: 24.w,
+                          height: 24.w,
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
             ),
-            SizedBox(height: size.height * 0.005),
+            SizedBox(height: 5.h),
             SizedBox(
-              width: cardWidth,
+              width: 100.w,
               child: Text(
                 title ?? 'home.items.unknown'.tr(),
                 style: getMediumStyle(
@@ -115,14 +100,14 @@ class ItemCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (showPrice && price != null) ...[
-              SizedBox(height: size.height * 0.002),
+            if (showPrice) ...[
+              SizedBox(height: 2.h),
               SizedBox(
-                width: cardWidth,
+                width: 100.w,
                 child: Text(
-                  discountPrice != null
-                      ? '$discountPrice ${'common.currency'.tr()}'
-                      : '$price ${'common.currency'.tr()}',
+                  product!.priceAfterDiscount != 0
+                      ? '${product!.priceAfterDiscount} ${'common.currency'.tr()}'
+                      : '${product!.price} ${'common.currency'.tr()}',
                   style: getRegularStyle(
                     color: AppColors.black,
                     fontSize: 10.sp,
@@ -132,7 +117,7 @@ class ItemCard extends StatelessWidget {
                 ),
               ),
             ],
-            SizedBox(height: size.height * 0.002),
+            SizedBox(height: 2.h),
           ],
         ),
       ),

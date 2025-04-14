@@ -52,10 +52,6 @@ class OccasionSection extends StatelessWidget {
                     final occasion = occasions[index];
                     
                     return ItemCard(
-                      id: occasion.id,
-                      title: occasion.name,
-                      imageUrl: occasion.image,
-                      showPrice: false,
                       occasion: occasion,
                       occasionIndex: index,
                       occasionList: occasions,

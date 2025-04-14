@@ -7,6 +7,7 @@ import 'package:flower_app/features/home/presentation/widget/item_card.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OccasionSection extends StatelessWidget {
   final List<CategoryOccasionEntity> occasions;
@@ -18,62 +19,49 @@ class OccasionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.01;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        //////////////////////////////////////////////////Occasion section header
-        SectionHeader(
-          title: 'home.sections.occasion'.tr(),
-          onViewAllTap: () {
-            Navigator.pushNamed(
-              context,
-              Routes.occasion,
-              arguments: OccasionPageArguments(
-                categories: occasions,
-              ),
-            );
-          },
-        ),
-        SizedBox(height: headerSpacing),
-
-        //////////////////////////////////////////////////occasion list view
-        Expanded(
-          child: occasions.isEmpty
-              ? Center(child: Text('home.empty_states.occasions'.tr()))
-              : ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: occasions.length,
-                  itemBuilder: (context, index) {
-                    final occasion = occasions[index];
-
-                    return InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          Routes.occasion,
-                          arguments: OccasionPageArguments(
-                            categories: occasions,
-                            selectedCategoryIndex: index,
-                          ),
-                        );
-                      },
-                      child: ItemCard(
-                        id: occasion.id,
-                        title: occasion.name,
-                        imageUrl: occasion.image,
-                        showPrice: false,
-                      ),
-                    );
-                  },
+    return Container(
+      height: 220.h,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //////////////////////////////////////////////////Occasion section header
+          SectionHeader(
+            title: 'home.sections.occasion'.tr(),
+            onViewAllTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.occasion,
+                arguments: OccasionPageArguments(
+                  categories: occasions,
                 ),
-        ),
-      ],
+              );
+            },
+          ),
+          SizedBox(height: 10.h),
+
+          //////////////////////////////////////////////////occasion list view
+          Expanded(
+            child: occasions.isEmpty
+                ? Center(child: Text('home.empty_states.occasions'.tr()))
+                : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: occasions.length,
+                    itemBuilder: (context, index) {
+                      final occasion = occasions[index];
+                      
+                      return ItemCard(
+                        occasion: occasion,
+                        occasionIndex: index,
+                        occasionList: occasions,
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

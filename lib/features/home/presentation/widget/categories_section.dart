@@ -6,6 +6,7 @@ import 'package:flower_app/features/home/presentation/widget/category_item.dart'
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/di/injectable.dart';
 import '../../../categories/presentation/manager/categories_cubit.dart';
@@ -23,9 +24,6 @@ class CategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final headerSpacing = size.height * 0.008;
-
     return BlocProvider(
       create: (context) => getIt<CategoriesCubit>(),
       child: Column(
@@ -39,10 +37,11 @@ class CategoriesSection extends StatelessWidget {
             onViewAllTap: onViewAllTap,
           ),
 
-          SizedBox(height: headerSpacing),
+          SizedBox(height: 5.h),
 
           //////////////////////////////////////////////////categories list view
-          Expanded(
+          SizedBox(
+            height: 75.h,
             child: categories.isEmpty
                 ? Center(child: Text('home.empty_states.categories'.tr()))
                 : ListView.builder(
@@ -57,7 +56,6 @@ class CategoriesSection extends StatelessWidget {
                           final navbarState = NavbarPage.of(context);
                           if (navbarState != null) {
                             navbarState.changeTab(1);
-
                             context
                                 .read<CategoriesCubit>()
                                 .selectCategoryFromHomeByID(

@@ -129,7 +129,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
           child: Column(
             children: [
               SizedBox(height: 30.h),
@@ -173,7 +173,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                   ),
                 ],
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 12.h),
               CustomTabBar(
                 tabController: _cubit.tabController,
                 tabsTitles: _cubit.categories.map((e) => e.name).toList(),
@@ -182,7 +182,6 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                   _cubit.changeTab(index);
                 },
               ),
-              SizedBox(height: 32.h),
               Expanded(
                 child: BlocBuilder<CategoriesCubit, CategoriesStates>(
                   bloc: _cubit,
@@ -233,8 +232,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             childAspectRatio: 0.7.r,
-                            crossAxisSpacing: 16.w,
-                            mainAxisSpacing: 16.h,
+                            crossAxisSpacing: 8.w,
+                            mainAxisSpacing: 8.h,
                           ),
                           itemCount: products.isNotEmpty ? products.length : 1,
                           itemBuilder: (context, index) {

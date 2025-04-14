@@ -1,8 +1,8 @@
+// features/categories/presentation/widgets/custom_tab_bar.dart
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class CustomTabBar extends StatelessWidget {
   final TabController tabController;
@@ -31,10 +31,11 @@ class CustomTabBar extends StatelessWidget {
           isScrollable: true,
           indicatorColor: Colors.pink,
           tabAlignment: TabAlignment.start,
-          indicatorWeight: 3.0,
+          indicatorWeight: 1.0,
           dividerColor: Colors.transparent,
           indicatorSize: TabBarIndicatorSize.label,
-          indicatorPadding: const EdgeInsets.only(bottom: 8),
+          indicatorPadding: EdgeInsets.zero,
+          labelPadding: EdgeInsets.symmetric(horizontal: 8.w),
           automaticIndicatorColorAdjustment: true,
           onTap: (index) => changeTabIndex?.call(index),
           tabs: List.generate(
@@ -52,7 +53,6 @@ class CustomTabBar extends StatelessWidget {
   }
 }
 
-
 class CustomTab extends StatelessWidget {
   final String title;
   final bool isSelected;
@@ -66,18 +66,21 @@ class CustomTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tab(
+      height: 28,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             title,
-            style: getRegularStyle(color: isSelected ? AppColors.primary : AppColors.grey, fontSize: 16.sp),
+            style: getRegularStyle(
+                color: isSelected ? AppColors.primary : AppColors.grey,
+                fontSize: 14.sp),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 3.h),
           if (!isSelected)
             Container(
-              height: 3,
-              width: title.length * 8.w,
+              height: 1,
+              width: title.length * 6.w,
               decoration: BoxDecoration(
                 color: AppColors.white[70],
                 borderRadius: BorderRadius.only(
@@ -91,5 +94,3 @@ class CustomTab extends StatelessWidget {
     );
   }
 }
-
-

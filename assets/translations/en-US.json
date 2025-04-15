@@ -182,12 +182,11 @@
     "updateProfileSuccess": "Updated",
     "logoutTitle": "LOGOUT",
     "confirmLogout":"Confirm logout !!",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
 
     "logout": "Logout",
     "editProfile": "Edit Profile",
     "updateProfile": "Update",
-    "updateProfileSuccess": "Updated",
     "reset_password": {
       "title": "Reset Password",
       "current_password": "Current Password",

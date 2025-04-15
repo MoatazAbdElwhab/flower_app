@@ -41,6 +41,7 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
       requiresToken: true,
     );
     return response;
+  }
 
   Future<ProfileResetPasswordResponse> profileResetPassword(
       ProfileResetPasswordRequest request) async {

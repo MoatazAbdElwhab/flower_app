@@ -178,9 +178,11 @@
     "changeLanguage": "تغيير اللغة",
     "aboutUs": "معلومات عنا",
     "termsAndConditions": "الشروط والأحكام",
+    "updateProfileSuccess": "تم التحديث",
     "logoutTitle": "تسجيل الخروج",
   "logout": "تسجيل الخروج",
   "confirmLogout": "تأكيد تسجيل الخروج !!",
-  "cancel": "إلغاء"
+  "cancel": "إلغاء",
+  "updateProfile": "تحديث"
   }
 }

@@ -46,6 +46,10 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return const Right(null);
     } catch (e) {
       return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<ApiException, ProfileResetPasswordResponse>>
       profileResetPassword(ProfileResetPasswordRequest request) async {
     try {

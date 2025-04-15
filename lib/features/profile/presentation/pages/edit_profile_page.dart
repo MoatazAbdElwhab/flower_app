@@ -40,7 +40,8 @@ class EditProfilePage extends StatelessWidget {
             ),
           ),
           title: Text(
-            LocaleKeys.profile_editProfile.tr(),
+            // LocaleKeys.profile_editProfile.tr(),
+            'Edit Profile',
             style: getMediumStyle(color: AppColors.black, fontSize: 20),
           ),
           titleSpacing: 0,

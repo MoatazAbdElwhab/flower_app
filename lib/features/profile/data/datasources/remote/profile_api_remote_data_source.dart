@@ -21,9 +21,7 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
       ApiConstants.profileDataEndPoint,
     );
 
-    return ProfileDataResponse
-        .fromJson(response)
-        .user;
+    return ProfileDataResponse.fromJson(response).user;
   }
 
   @override
@@ -37,6 +35,14 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
   }
 
   @override
+  Future<void> logout() async {
+    final response = await _apiClient.get(
+      ApiConstants.logOutEndPoint,
+      requiresToken: true,
+    );
+    return response;
+  }
+
   Future<ProfileResetPasswordResponse> profileResetPassword(
       ProfileResetPasswordRequest request) async {
     final response = await _apiClient.patch(

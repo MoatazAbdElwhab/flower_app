@@ -182,7 +182,10 @@
     "logout": "Logout",
     "updateProfile": "Update",
     "updateProfileSuccess": "Updated",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "logoutTitle": "LOGOUT",
+    "confirmLogout":"Confirm logout !!",
+    "cancel": "Cancel"
   },
   "cart": {
     "cart": "Cart",

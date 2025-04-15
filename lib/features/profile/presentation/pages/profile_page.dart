@@ -11,6 +11,7 @@ import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dar
 import 'package:flower_app/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:flower_app/features/profile/presentation/widgets/app_bar_section.dart';
 import 'package:flower_app/features/profile/presentation/widgets/custom_row_item.dart';
+import 'package:flower_app/features/profile/presentation/widgets/logout_dialog.dart';
 import 'package:flower_app/features/profile/presentation/widgets/profile_section.dart';
 import 'package:flower_app/features/profile/presentation/widgets/settings_section.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
@@ -58,6 +59,9 @@ class _ProfilePageState extends State<ProfilePage> {
             buildWhen: (previous, current) =>
                 previous.getUserDataState != current.getUserDataState,
             builder: (context, state) {
+              // Getting ProfileCubit here to send it to LogoutDialog, 
+              // because Dialog can't see ProfileCubit on its own.
+              final cubit = context.read<ProfileCubit>(); 
               return Skeletonizer(
                 enabled: state.getUserDataState is! BaseSuccessState,
                 child: Column(
@@ -108,7 +112,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               size: 24,
                             ),
                             title: LocaleKeys.profile_logout.tr(),
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => LogoutDialog(
+                                  cubit: cubit,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

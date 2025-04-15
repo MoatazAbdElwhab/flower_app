@@ -181,7 +181,10 @@
     "logout": "تسجيل الخروج",
     "updateProfile": "تحديث الملف الشخصي",
     "updateProfileSuccess": "تم التحديث",
-    "editProfile": "تحرير الملف الشخصي"
+    "editProfile": "تحرير الملف الشخصي",
+    "logoutTitle": "تسجيل الخروج",
+    "confirmLogout": "تأكيد تسجيل الخروج !!",
+    "cancel": "إلغاء"
   },
   "cart": {
     "cart": "عربة التسوق",

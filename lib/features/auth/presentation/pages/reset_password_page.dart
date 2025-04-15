@@ -96,7 +96,7 @@ class ResetPasswordPage extends StatelessWidget {
                     bloc: authCubit,
                     listener: (context, state) {
                       if (state.resetPasswordState is BaseSuccessState) {
-                        Navigator.pushNamed(context, Routes.navbar);
+                        Navigator.pushNamed(context, Routes.login);
                       } else if (state.resetPasswordState is BaseErrorState) {
                         final errorMessage =
                             (state.resetPasswordState as BaseErrorState)

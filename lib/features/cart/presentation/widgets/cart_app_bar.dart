@@ -14,7 +14,7 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
     const double backBtnWidth =  38;
     return AppBar(
       surfaceTintColor: Colors.transparent,
-      leadingWidth: 200,
+      leadingWidth: 230,
       leading: Row(
         children: [
           IconButton(

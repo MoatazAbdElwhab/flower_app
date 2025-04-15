@@ -44,7 +44,6 @@ class _CardAddAndRemoveButtonState extends State<CardAddAndRemoveButton> {
       builder: (context, state) => BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           bool isCart = state.addToCartState is BaseLoadingState;
-          log(isCart.toString());
           bool isInCart = (state.cartProducts ?? []).any(
             (element) => element.id == widget.product.id,
           );

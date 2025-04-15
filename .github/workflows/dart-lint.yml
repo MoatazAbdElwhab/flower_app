@@ -1,0 +1,56 @@
+name: Dart Lint
+
+on:
+  push:
+    branches: [ dev_github_actions ]
+    paths:
+      - '**.dart'
+      - 'pubspec.yaml'
+      - 'analysis_options.yaml'
+  pull_request:
+    branches: [ dev_github_actions ]
+    paths:
+      - '**.dart'
+      - 'pubspec.yaml'
+      - 'analysis_options.yaml'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SHIMAA_TOKEN }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.3'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze project source
+        run: flutter analyze --no-pub
+
+      - name: Run custom lint rules (if available)
+        run: |
+          if grep -q "custom_lint:" "pubspec.yaml"; then
+            echo "Running custom lints..."
+            dart run custom_lint
+          else
+            echo "No custom_lint dependency found, skipping custom lint check."
+          fi
+        continue-on-error: true
+
+      - name: Check for Flutter/Dart issues
+        run: flutter doctor -v

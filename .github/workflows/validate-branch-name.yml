@@ -1,0 +1,65 @@
+name: Validate Branch Name
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - develop
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate-branch-name:
+    name: Validate Branch Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SHIMAA_TOKEN }}
+
+      - name: Get Branch Name
+        id: get-branch-name
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "branch_name=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          else
+            echo "branch_name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate Branch Name
+        id: validate
+        run: |
+          BRANCH_NAME="${{ steps.get-branch-name.outputs.branch_name }}"
+          echo "Validating branch name: $BRANCH_NAME"
+
+          # Define the valid patterns
+          MAIN_PATTERN="^(main|develop)$"
+          FEATURE_PATTERN="^feature/[a-z0-9]+(-[a-z0-9]+)*$"
+          BUGFIX_PATTERN="^bugfix/[a-z0-9]+(-[a-z0-9]+)*$"
+          HOTFIX_PATTERN="^hotfix/[a-z0-9]+(-[a-z0-9]+)*$"
+          RELEASE_PATTERN="^release/[0-9]+\.[0-9]+(\.[0-9]+)?$"
+          
+          # Check if the branch name matches any of the valid patterns
+          if [[ $BRANCH_NAME =~ $MAIN_PATTERN ]] || 
+             [[ $BRANCH_NAME =~ $FEATURE_PATTERN ]] || 
+             [[ $BRANCH_NAME =~ $BUGFIX_PATTERN ]] || 
+             [[ $BRANCH_NAME =~ $HOTFIX_PATTERN ]] || 
+             [[ $BRANCH_NAME =~ $RELEASE_PATTERN ]]; then
+            echo "Branch name is valid! ✅"
+            exit 0
+          else
+            echo "::error::Branch name '$BRANCH_NAME' does not follow the naming convention. ❌"
+            echo ""
+            echo "Valid branch name formats:"
+            echo "- main, develop"
+            echo "- feature/feature-name"
+            echo "- bugfix/bug-description"
+            echo "- hotfix/fix-description"
+            echo "- release/x.y.z"
+            exit 1
+          fi

@@ -1,29 +1,28 @@
+import 'package:flower_app/features/cart/presentation/bloc/event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../features/cart/presentation/bloc/cart_bloc.dart';
+import '../../../features/cart/presentation/bloc/cart_state.dart';
 import '../../../features/home/domain/entities/product_entity.dart';
+import '../../base/base_state.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_styles.dart';
 import '../app_carousel/app_carousel.dart';
 
-class ProductDetailsPage extends StatefulWidget {
-  const ProductDetailsPage({super.key});
-
-  @override
-  _ProductDetailsPageState createState() => _ProductDetailsPageState();
-}
-
-class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  // late bool isInCart; // to initialize in initState
-  @override
-  void initState() {
-    /// check if is in cart then handle add to cart method
-    super.initState();
-  }
+class ProductDetailsPage extends StatelessWidget {
+  final ProductEntity productArgument;
+  const ProductDetailsPage({super.key, required this.productArgument});
 
   @override
   Widget build(BuildContext context) {
-    var productArgument =
-        ModalRoute.of(context)!.settings.arguments as ProductEntity;
+    // final bloc = context.read<CartBloc>();
+    // bool isInCart = context.read<CartBloc>().state.cartProducts?.any(
+    //       (element) {
+    //     return element.id == productArgument.id;
+    //   },
+    // ) ??
+    //     false;
 
     ///  product dm is dummy class implemented below to show how to use it;
     return Scaffold(
@@ -45,10 +44,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    productArgument.images != null &&
-                            productArgument.images!.isNotEmpty
+                    productArgument.images.isNotEmpty
                         ? AppCarousel(
-                            networkImages: productArgument.images!,
+                            networkImages: productArgument.images,
                           )
                         : SizedBox(
                             height: MediaQuery.sizeOf(context).height * 0.5,
@@ -67,13 +65,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         children: [
                           // Price
                           Text(
-                            "EGP ${productArgument.price?.toStringAsFixed(2) ?? ''}",
+                            "EGP ${productArgument.price.toStringAsFixed(2)}",
                             style: getBoldStyle(
                                 color: Colors.black, fontSize: 20.sp),
                           ),
                           SizedBox(height: 8.h),
                           Text(
-                            productArgument.title ?? '',
+                            productArgument.title,
                             style: getMediumStyle(
                                 color: Colors.black, fontSize: 16.sp),
                           ),
@@ -83,7 +81,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 style: getMediumStyle(
                                     color: Colors.black, fontSize: 16.sp)),
                           ),
-                          Text(productArgument.description ?? '',
+                          Text(productArgument.description,
                               style: getRegularStyle(
                                   color: Colors.black, fontSize: 14.sp)),
                         ],
@@ -96,16 +94,42 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              child: ElevatedButton(
-                onPressed: () {
-                  //isInCart? remove: addToCart
+              child: BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  bool isInCart = state.cartProducts?.any(
+                        (p) => p.id == productArgument.id,
+                      ) ??
+                      false;
+                  return ElevatedButton(
+                    onPressed: () {
+                      if (state.addToCartState is! BaseLoadingState &&
+                          state.removeFromCartState is! BaseLoadingState) {
+                        context.read<CartBloc>().add(isInCart
+                            ? CartRemoveProductEvent(
+                                productId: productArgument.id)
+                            : CartAddProductEvent(product: productArgument));
+                      }
+                    },
+                    child: (state.addToCartState is BaseLoadingState ||
+                                state.removeFromCartState
+                                    is BaseLoadingState) &&
+                            state.activeCartItemId == productArgument.id
+                        ? SizedBox(
+                            height: 20.h,
+                            width: MediaQuery.sizeOf(context).width * 0.5,
+                            child: Center(
+                              child: LinearProgressIndicator(
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColors.grey,
+                              ),
+                            ))
+                        : Text(
+                            isInCart ? 'Remove from cart' : 'Add to cart',
+                            style: getMediumStyle(
+                                color: AppColors.white, fontSize: 16.sp),
+                          ),
+                  );
                 },
-                child: Text(
-                  // isInCart? 'Remove from cart':
-                  'Add to cart',
-                  style:
-                      getMediumStyle(color: AppColors.white, fontSize: 16.sp),
-                ),
               ),
             ),
           ],

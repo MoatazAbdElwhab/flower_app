@@ -1,5 +1,5 @@
-// features/home/data/model/response/home/product.dart
 import 'package:equatable/equatable.dart';
+import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 
 class Product extends Equatable {
   final String? id;
@@ -10,7 +10,8 @@ class Product extends Equatable {
   final List<String>? images;
   final int? price;
   final int? priceAfterDiscount;
-  final int? quantity;
+  final int? availableQuantity;
+  int? cartQuantity;
   final String? category;
   final String? occasion;
   final DateTime? createdAt;
@@ -21,7 +22,7 @@ class Product extends Equatable {
   final double? rateAvg;
   final int? rateCount;
 
-  const Product({
+  Product({
     this.id,
     this.title,
     this.slug,
@@ -30,7 +31,8 @@ class Product extends Equatable {
     this.images,
     this.price,
     this.priceAfterDiscount,
-    this.quantity,
+    this.availableQuantity,
+    this.cartQuantity,
     this.category,
     this.occasion,
     this.createdAt,
@@ -53,7 +55,7 @@ class Product extends Equatable {
             .toList(),
         price: json['price'] as int?,
         priceAfterDiscount: json['priceAfterDiscount'] as int?,
-        quantity: json['quantity'] as int?,
+        availableQuantity: json['quantity'] as int?,
         category: json['category'] as String?,
         occasion: json['occasion'] as String?,
         createdAt: json['createdAt'] == null
@@ -78,7 +80,7 @@ class Product extends Equatable {
         'images': images,
         'price': price,
         'priceAfterDiscount': priceAfterDiscount,
-        'quantity': quantity,
+        'quantity': availableQuantity,
         'category': category,
         'occasion': occasion,
         'createdAt': createdAt?.toIso8601String(),
@@ -90,46 +92,18 @@ class Product extends Equatable {
         'rateCount': rateCount,
       };
 
-  Product copyWith({
-    String? id,
-    String? title,
-    String? slug,
-    String? description,
-    String? imgCover,
-    List<String>? images,
-    int? price,
-    int? priceAfterDiscount,
-    int? quantity,
-    String? category,
-    String? occasion,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    int? v,
-    int? discount,
-    int? sold,
-    double? rateAvg,
-    int? rateCount,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      slug: slug ?? this.slug,
-      description: description ?? this.description,
-      imgCover: imgCover ?? this.imgCover,
-      images: images ?? this.images,
-      price: price ?? this.price,
-      priceAfterDiscount: priceAfterDiscount ?? this.priceAfterDiscount,
-      quantity: quantity ?? this.quantity,
-      category: category ?? this.category,
-      occasion: occasion ?? this.occasion,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      v: v ?? this.v,
-      discount: discount ?? this.discount,
-      sold: sold ?? this.sold,
-      rateAvg: rateAvg ?? this.rateAvg,
-      rateCount: rateCount ?? this.rateCount,
-    );
+  ProductEntity toEntity() {
+    return ProductEntity(
+        id: id ?? '',
+        title: title ?? '',
+        imgCover: imgCover ?? '',
+        price: price ?? 0,
+        priceAfterDiscount: priceAfterDiscount ?? 0,
+        images: images ?? [],
+        description: description ?? '',
+        cartQuantity: cartQuantity,
+        totalPrice:
+            cartQuantity != null && price != null ? cartQuantity! * price! : 0);
   }
 
   @override
@@ -143,7 +117,8 @@ class Product extends Equatable {
       images,
       price,
       priceAfterDiscount,
-      quantity,
+      availableQuantity,
+      cartQuantity,
       category,
       occasion,
       createdAt,

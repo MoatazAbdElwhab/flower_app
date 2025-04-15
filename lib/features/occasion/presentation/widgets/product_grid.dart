@@ -21,8 +21,6 @@ class ProductGrid extends StatelessWidget {
         final item = items[index];
         return ProductCard(
           product: item,
-          onAddToCartTap: () {},
-          isInCart: false,
         );
       },
     );

@@ -141,12 +141,32 @@ abstract class  LocaleKeys {
   static const profile_changeLanguage = 'profile.changeLanguage';
   static const profile_aboutUs = 'profile.aboutUs';
   static const profile_termsAndConditions = 'profile.termsAndConditions';
-  static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
-  static const profile_logoutTitle = 'profile.logoutTitle';
   static const profile_logout = 'profile.logout';
+  static const profile_updateProfile = 'profile.updateProfile';
+  static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
+  static const profile_editProfile = 'profile.editProfile';
+  static const profile_logoutTitle = 'profile.logoutTitle';
   static const profile_confirmLogout = 'profile.confirmLogout';
   static const profile_cancel = 'profile.cancel';
-  static const profile_updateProfile = 'profile.updateProfile';
   static const profile = 'profile';
+  static const cart_cart = 'cart.cart';
+  static const cart_items = 'cart.items';
+  static const cart_delivery = 'cart.delivery';
+  static const cart_total = 'cart.total';
+  static const cart_deliveryFee = 'cart.deliveryFee';
+  static const cart_deliverTo = 'cart.deliverTo';
+  static const cart_subTotal = 'cart.subTotal';
+  static const cart_checkout = 'cart.checkout';
+  static const cart_address = 'cart.address';
+  static const cart_cartEmpty = 'cart.cartEmpty';
+  static const cart_failedToGetCart = 'cart.failedToGetCart';
+  static const cart_pound = 'cart.pound';
+  static const cart_errorUpdateQuantity = 'cart.errorUpdateQuantity';
+  static const cart_resetQuantityErrorMsg = 'cart.resetQuantityErrorMsg';
+  static const cart_quantityUpdatedTo = 'cart.quantityUpdatedTo';
+  static const cart_successfullyRemoved = 'cart.successfullyRemoved';
+  static const cart_failedToRemove = 'cart.failedToRemove';
+  static const cart_updateProfileSuccess = 'cart.updateProfileSuccess';
+  static const cart = 'cart';
 
 }

@@ -1,0 +1,68 @@
+name: Validate PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches: [ dev_github_actions ]
+
+jobs:
+  validate:
+    name: Validate PR Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Validate PR Title
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          echo "Validating PR title: $PR_TITLE"
+          
+          # Define valid conventional commit patterns
+          FEAT_PATTERN="^feat(\([a-z0-9-]+\))?: .+"
+          FIX_PATTERN="^fix(\([a-z0-9-]+\))?: .+"
+          DOCS_PATTERN="^docs(\([a-z0-9-]+\))?: .+"
+          STYLE_PATTERN="^style(\([a-z0-9-]+\))?: .+"
+          REFACTOR_PATTERN="^refactor(\([a-z0-9-]+\))?: .+"
+          PERF_PATTERN="^perf(\([a-z0-9-]+\))?: .+"
+          TEST_PATTERN="^test(\([a-z0-9-]+\))?: .+"
+          BUILD_PATTERN="^build(\([a-z0-9-]+\))?: .+"
+          CI_PATTERN="^ci(\([a-z0-9-]+\))?: .+"
+          CHORE_PATTERN="^chore(\([a-z0-9-]+\))?: .+"
+          REVERT_PATTERN="^revert: .+"
+          
+          # Check if PR title matches any of these patterns
+          if [[ $PR_TITLE =~ $FEAT_PATTERN ]] || 
+             [[ $PR_TITLE =~ $FIX_PATTERN ]] || 
+             [[ $PR_TITLE =~ $DOCS_PATTERN ]] || 
+             [[ $PR_TITLE =~ $STYLE_PATTERN ]] || 
+             [[ $PR_TITLE =~ $REFACTOR_PATTERN ]] || 
+             [[ $PR_TITLE =~ $PERF_PATTERN ]] || 
+             [[ $PR_TITLE =~ $TEST_PATTERN ]] || 
+             [[ $PR_TITLE =~ $BUILD_PATTERN ]] || 
+             [[ $PR_TITLE =~ $CI_PATTERN ]] || 
+             [[ $PR_TITLE =~ $CHORE_PATTERN ]] || 
+             [[ $PR_TITLE =~ $REVERT_PATTERN ]]; then
+            echo "PR title is valid!"
+            exit 0
+          else
+            echo "::error::PR title '$PR_TITLE' does not follow conventional commit format."
+            echo ""
+            echo "Valid PR title formats:"
+            echo "- feat: Add new feature"
+            echo "- fix: Fix bug in component"
+            echo "- docs: Update documentation"
+            echo "- style: Format code"
+            echo "- refactor: Restructure code without changing behavior"
+            echo "- perf: Improve performance"
+            echo "- test: Add or update tests"
+            echo "- build: Update build process"
+            echo "- ci: Configure CI pipeline"
+            echo "- chore: Regular maintenance tasks"
+            echo "- revert: Revert previous changes"
+            echo ""
+            echo "Optionally, you can include a scope: feat(auth): Add login feature"
+            exit 1
+          fi

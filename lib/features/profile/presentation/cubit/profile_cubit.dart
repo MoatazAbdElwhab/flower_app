@@ -9,6 +9,7 @@ import 'package:flower_app/features/profile/domain/usecases/reset_password_use_c
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/logout_use_case.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -156,7 +157,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(
         state.copyWith(
           resetPasswordState:
-              BaseErrorState('profile.reset_password.error.same_password'.tr()),
+              BaseErrorState(LocaleKeys.profile_reset_password_error_same_password.tr()),
         ),
       );
       return false;
@@ -195,7 +196,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     if (lowerCaseError.contains('incorrect') ||
         lowerCaseError.contains('password') ||
         lowerCaseError.contains('error')) {
-      return 'profile.reset_password.error.incorrect_password'.tr();
+      return LocaleKeys.profile_reset_password_error_incorrect_password.tr();
     }
     return apiErrorMessage;
   }

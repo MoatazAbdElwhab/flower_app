@@ -5,6 +5,7 @@ import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -75,14 +76,14 @@ class _ProfileResetPasswordState extends State<ProfileResetPassword> {
       value: _profileCubit,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('profile.reset_password.title'.tr()),
+          title: Text(LocaleKeys.profile_reset_password_title.tr()),
         ),
         body: BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {
             if (state.resetPasswordState is BaseSuccessState) {
               GetIt.I<DialogUtils>().showSnackBar(
                 context: context,
-                message: 'profile.reset_password.success_message'.tr(),
+                message: LocaleKeys.profile_reset_password_success_message.tr(),
                 textColor: AppColors.white,
               );
               Navigator.pop(context);
@@ -111,11 +112,13 @@ class _ProfileResetPasswordState extends State<ProfileResetPassword> {
                       validator: null,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        labelText:
-                            'profile.reset_password.current_password'.tr(),
+                        labelText: LocaleKeys
+                            .profile_reset_password_current_password
+                            .tr(),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText:
-                            'profile.reset_password.current_password_hint'.tr(),
+                        hintText: LocaleKeys
+                            .profile_reset_password_current_password_hint
+                            .tr(),
                       ),
                     ),
 
@@ -127,10 +130,12 @@ class _ProfileResetPasswordState extends State<ProfileResetPassword> {
                       validator: Validator.passwordValidation,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        labelText: 'profile.reset_password.new_password'.tr(),
+                        labelText:
+                            LocaleKeys.profile_reset_password_new_password.tr(),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText:
-                            'profile.reset_password.new_password_hint'.tr(),
+                        hintText: LocaleKeys
+                            .profile_reset_password_new_password_hint
+                            .tr(),
                       ),
                     ),
 
@@ -141,22 +146,26 @@ class _ProfileResetPasswordState extends State<ProfileResetPassword> {
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'profile.reset_password.error.confirm_password_required'
+                          return LocaleKeys
+                              .profile_reset_password_error_confirm_password_required
                               .tr();
                         }
                         if (value != _newPasswordController.text) {
-                          return 'profile.reset_password.error.passwords_not_match'
+                          return LocaleKeys
+                              .profile_reset_password_error_passwords_not_match
                               .tr();
                         }
                         return null;
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        labelText:
-                            'profile.reset_password.confirm_password'.tr(),
+                        labelText: LocaleKeys
+                            .profile_reset_password_confirm_password
+                            .tr(),
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        hintText:
-                            'profile.reset_password.confirm_password_hint'.tr(),
+                        hintText: LocaleKeys
+                            .profile_reset_password_confirm_password_hint
+                            .tr(),
                       ),
                     ),
 
@@ -193,7 +202,8 @@ class _ProfileResetPasswordState extends State<ProfileResetPassword> {
                                 ),
                               )
                             : Text(
-                                'profile.reset_password.update_button'.tr(),
+                                LocaleKeys.profile_reset_password_update_button
+                                    .tr(),
                               ),
                       ),
                     ),

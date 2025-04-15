@@ -194,12 +194,51 @@ class CodegenLoader extends AssetLoader{
     "changeLanguage": "تغيير اللغة",
     "aboutUs": "معلومات عنا",
     "termsAndConditions": "الشروط والأحكام",
-    "updateProfileSuccess": "تم التحديث",
-    "logoutTitle": "تسجيل الخروج",
     "logout": "تسجيل الخروج",
+    "updateProfile": "تحديث الملف الشخصي",
+    "updateProfileSuccess": "تم التحديث",
+    "editProfile": "تحرير الملف الشخصي",
+    "logoutTitle": "تسجيل الخروج",
     "confirmLogout": "تأكيد تسجيل الخروج !!",
     "cancel": "إلغاء",
-    "updateProfile": "تحديث"
+    "reset_password": {
+      "title": "إعادة تعيين كلمة المرور",
+      "current_password": "كلمة المرور الحالية",
+      "current_password_hint": "كلمة المرور الحالية",
+      "new_password": "كلمة المرور الجديدة",
+      "new_password_hint": "كلمة المرور الجديدة",
+      "confirm_password": "تأكيد كلمة المرور",
+      "confirm_password_hint": "تأكيد كلمة المرور",
+      "update_button": "تحديث",
+      "success_message": "تم تحديث كلمة المرور بنجاح",
+      "error_message": "فشل تحديث كلمة المرور. يرجى المحاولة مرة أخرى.",
+      "error": {
+        "confirm_password_required": "يرجى تأكيد كلمة المرور",
+        "passwords_not_match": "كلمتا المرور غير متطابقتين",
+        "same_password": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية",
+        "incorrect_password": "كلمة المرور الحالية غير صحيحة"
+      }
+    }
+  },
+  "cart": {
+    "cart": "عربة التسوق",
+    "items": "العناصر",
+    "delivery": "التوصيل",
+    "total": "الإجمالي",
+    "deliveryFee": "رسوم التوصيل",
+    "deliverTo": "التوصيل إلى",
+    "subTotal": "المجموع الفرعي",
+    "checkout": "إتمام الشراء",
+    "address": "العنوان",
+    "cartEmpty": "عربة التسوق فارغة",
+    "failedToGetCart": "فشل في الحصول على عربة التسوق الخاصة بالمستخدم",
+    "pound": "ج.م",
+    "errorUpdateQuantity": "حدث خطأ أثناء تحديث كمية المنتج",
+    "resetQuantityErrorMsg": "تعذر تحديث كمية المنتج، يرجى المحاولة مرة أخرى لاحقًا",
+    "quantityUpdatedTo": "تم تحديث الكمية إلى",
+    "successfullyRemoved": "تمت إزالة المنتج بنجاح",
+    "failedToRemove": "فشل في إزالة المنتج",
+    "updateProfileSuccess": "تم التحديث بنجاح"
   }
 };
 static const Map<String,dynamic> _en_US = {
@@ -382,31 +421,51 @@ static const Map<String,dynamic> _en_US = {
     "changeLanguage": "Change Language",
     "aboutUs": "About us",
     "termsAndConditions": "Terms & conditions",
+    "logout": "Logout",
+    "updateProfile": "Update",
     "updateProfileSuccess": "Updated",
+    "editProfile": "Edit Profile",
     "logoutTitle": "LOGOUT",
     "confirmLogout": "Confirm logout !!",
-    "cancel": "Cancel",
-    "logout": "Logout",
-    "editProfile": "Edit Profile",
-    "updateProfile": "Update",
-    "reset_password": {
-      "title": "Reset Password",
-      "current_password": "Current Password",
-      "current_password_hint": "Current Password",
-      "new_password": "New Password",
-      "new_password_hint": "New Password",
-      "confirm_password": "Confirm Password",
-      "confirm_password_hint": "Confirm Password",
-      "update_button": "Update",
-      "success_message": "Password updated successfully",
-      "error_message": "Failed to update password. Please try again.",
-      "error": {
-        "confirm_password_required": "Please confirm your password",
-        "passwords_not_match": "Passwords do not match",
-        "same_password": "New password must be different from current password",
-        "incorrect_password": "Current password is not correct"
-      }
+    "cancel": "Cancel"
+  },
+  "resetpassword": {
+    "title": "Reset Password",
+    "current_password": "Current Password",
+    "current_password_hint": "Current Password",
+    "new_password": "New Password",
+    "new_password_hint": "New Password",
+    "confirm_password": "Confirm Password",
+    "confirm_password_hint": "Confirm Password",
+    "update_button": "Update",
+    "success_message": "Password updated successfully",
+    "error_message": "Failed to update password. Please try again.",
+    "error": {
+      "confirm_password_required": "Please confirm your password",
+      "passwords_not_match": "Passwords do not match",
+      "same_password": "New password must be different from current password",
+      "incorrect_password": "Current password is not correct"
     }
+  },
+  "cart": {
+    "cart": "Cart",
+    "items": "Items",
+    "delivery": "Delivery",
+    "total": "Total",
+    "deliveryFee": "Delivery Fee",
+    "deliverTo": "Deliver to",
+    "subTotal": "Sub Total",
+    "checkout": "Checkout",
+    "address": "Address",
+    "cartEmpty": "Cart is empty",
+    "failedToGetCart": "'Failed to get user cart.",
+    "pound": "EGP",
+    "errorUpdateQuantity": "error occured while updating product quantity",
+    "resetQuantityErrorMsg": "unable to update product quantity, please try again later",
+    "quantityUpdatedTo": "quantity is updated to",
+    "successfullyRemoved": "product successfully removed",
+    "failedToRemove": "failed to remove product",
+    "updateProfileSuccess": "Updated"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar_AE": _ar_AE, "en_US": _en_US};

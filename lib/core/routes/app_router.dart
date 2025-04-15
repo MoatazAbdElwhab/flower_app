@@ -103,19 +103,11 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
           builder: (_) {
             return ProductDetailsPage(productArgument: arguments);
           });
-        ),
-      );
 
     case Routes.profileResetPassword:
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ProfileResetPassword(),
-      );
-
-    case Routes.productDetailsView:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (_) => const ProductDetailsPage(),
       );
 
     default:

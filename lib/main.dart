@@ -10,12 +10,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/theme/theme_data/theme_data_light.dart';
 
+// global variable
+bool? isUserLoggedInAutomatically;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
   Bloc.observer = AppBlocObserver();
-  await configureDependencies();
+  await configureDependencies().then((_) async {
+   isUserLoggedInAutomatically = await getIt<AuthCubit>().isUserLoggedIn();
+  },);
 
   runApp(
     EasyLocalization(

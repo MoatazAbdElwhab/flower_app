@@ -8,6 +8,7 @@ import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/base/base_state.dart';
+import '../../../../main.dart';
 import '../../domain/use_cases/update_product_quantity_use_case.dart';
 import 'cart_state.dart';
 import 'event.dart';
@@ -35,7 +36,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartUpdateProductQuantityEvent>((_onUpdateProductQuantity),
         transformer: (events, mapper) =>
             events.debounceTime(const Duration(seconds: 1)).switchMap(mapper));
-    add(const CartLoadEvent());
+    if(isUserLoggedInAutomatically?? false) {
+      add(const CartLoadEvent());
+    }
   }
 
   Future<void> _onLoadCart(CartLoadEvent event, Emitter<CartState> emit) async {

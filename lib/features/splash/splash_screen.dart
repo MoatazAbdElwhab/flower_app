@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen>
     _2controller.forward();
     _animationController.forward().then(
       (_) {
-        context.read<AuthCubit>().checkSavedToken();
+        context.read<AuthCubit>().isUserLoggedIn();
       },
     );
   }

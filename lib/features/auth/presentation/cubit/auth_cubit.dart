@@ -38,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
     _rememberMe =
         localStorageClient.getData('rememberMe')?.toLowerCase() == 'true';
     if (_rememberMe) {
-      checkSavedToken();
+      isUserLoggedIn();
     }
   }
 
@@ -124,7 +124,7 @@ class AuthCubit extends Cubit<AuthState> {
     ));
   }
 
-  Future<void> checkSavedToken() async {
+  Future<bool> isUserLoggedIn() async {
     try {
       emit(AuthState(signInState: BaseLoadingState()));
 
@@ -137,12 +137,15 @@ class AuthCubit extends Cubit<AuthState> {
           signInState: BaseSuccessState(),
           authResponse: AuthResponseEntity(token: token),
         ));
+        return true;
       } else {
         emit(AuthState(signInState: BaseInitialState()));
+        return false;
       }
     } catch (e) {
       Log.e('Token check error: ${e.toString()}');
       emit(AuthState(signInState: BaseErrorState(e.toString())));
+      return false;
     }
   }
 

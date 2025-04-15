@@ -178,6 +178,29 @@
     "changeLanguage": "تغيير اللغة",
     "aboutUs": "معلومات عنا",
     "termsAndConditions": "الشروط والأحكام",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "updateProfile": "تحديث الملف الشخصي",
+    "updateProfileSuccess": "تم التحديث",
+    "editProfile": "تحرير الملف الشخصي"
+  },
+  "cart": {
+    "cart": "عربة التسوق",
+    "items": "العناصر",
+    "delivery": "التوصيل",
+    "total": "الإجمالي",
+    "deliveryFee": "رسوم التوصيل",
+    "deliverTo": "التوصيل إلى",
+    "subTotal": "المجموع الفرعي",
+    "checkout": "إتمام الشراء",
+    "address": "العنوان",
+    "cartEmpty": "عربة التسوق فارغة",
+    "failedToGetCart": "فشل في الحصول على عربة التسوق الخاصة بالمستخدم",
+    "pound": "ج.م",
+    "errorUpdateQuantity": "حدث خطأ أثناء تحديث كمية المنتج",
+    "resetQuantityErrorMsg": "تعذر تحديث كمية المنتج، يرجى المحاولة مرة أخرى لاحقًا",
+    "quantityUpdatedTo": "تم تحديث الكمية إلى",
+    "successfullyRemoved": "تمت إزالة المنتج بنجاح",
+    "failedToRemove": "فشل في إزالة المنتج",
+    "updateProfileSuccess": "تم التحديث بنجاح"
   }
 }

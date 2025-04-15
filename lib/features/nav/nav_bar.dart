@@ -1,8 +1,9 @@
-// features/nav/nav_bar.dart
 import 'package:flower_app/features/categories/presentation/pages/categories_screen.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
+
+import '../cart/presentation/pages/cart_page.dart';
 
 class NavbarPage extends StatefulWidget {
   const NavbarPage({super.key});
@@ -16,13 +17,14 @@ class _NavbarPageState extends State<NavbarPage> {
   late final List<Widget> _pages;
 
   @override
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _pages = const [
-      HomeScreen(),
-      CategoriesScreen(),
-      Center(child: Text('Cart')),
-      ProfilePage(),
+    _pages = [
+      const HomeScreen(),
+      const CategoriesScreen(),
+      CartPage(onBackButton: () => _selectedIndex.value = 0),
+      const ProfilePage(),
     ];
   }
 

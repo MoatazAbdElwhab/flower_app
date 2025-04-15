@@ -1,13 +1,10 @@
-// main.dart
-import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/app_bloc_observer.dart';
-
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,8 +37,15 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => BlocProvider(
-        create: (context) => getIt<AuthCubit>(),
+      builder: (context, child) => MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthCubit>(
+            create: (BuildContext context) => getIt<AuthCubit>(),
+          ),
+          BlocProvider<CartBloc>(
+            create: (BuildContext context) => getIt<CartBloc>(),
+          ),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           //initialRoute: Routes.login,

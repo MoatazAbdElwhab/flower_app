@@ -1,10 +1,8 @@
-// core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
-import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
@@ -15,9 +13,7 @@ import 'package:flower_app/features/splash/splash_screen.dart';
 import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
-
 import 'package:flutter/material.dart';
-
 import '../../features/profile/domain/entities/user_data.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
 
@@ -97,6 +93,16 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => EditProfilePage(
           userData: settings.arguments as UserData,
+        ),
+      );
+
+    case Routes.productDetailsView:
+      final arguments = settings.arguments as ProductEntity;
+      return MaterialPageRoute(
+          settings: settings,
+          builder: (_) {
+            return ProductDetailsPage(productArgument: arguments);
+          });
         ),
       );
 

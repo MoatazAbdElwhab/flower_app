@@ -29,13 +29,13 @@ class HomeEntity extends Equatable {
   static HomeEntity fromModel(Home model) {
     return HomeEntity(
       products: model.products
-          ?.map((e) => ProductEntity.mapProductToEntity(e))
+          ?.map((e) => e.toEntity())
           .toList(),
       categories: model.categories
           ?.map((e) => CategoryOccasionEntity.mapCategoryToEntity(e))
           .toList(),
       bestSeller: model.bestSeller
-          ?.map((e) => ProductEntity.mapProductToEntity(e))
+          ?.map((e) => e.toEntity())
           .toList(),
       occasions: model.occasions
           ?.map((e) => CategoryOccasionEntity.mapOccasionToEntity(e))

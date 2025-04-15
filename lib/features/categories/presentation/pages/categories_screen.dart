@@ -243,8 +243,6 @@ class CategoriesScreenState extends State<CategoriesScreen>
                                           images: p.images ?? [],
                                           description: p.description ?? '',
                                         ),
-                                        onAddToCartTap: () {},
-                                        isInCart: false,
                                       );
                                     },
                                   );

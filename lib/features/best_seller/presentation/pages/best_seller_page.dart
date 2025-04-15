@@ -53,9 +53,7 @@ class BestSellerPage extends StatelessWidget {
               childAspectRatio: .8,
             ),
             itemBuilder: (context, index) => ProductCard(
-                product: productEntityList[index],
-                onAddToCartTap: () {},
-                isInCart: false),
+                product: productEntityList[index]),
           ),
         ),
       ),

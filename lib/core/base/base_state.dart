@@ -13,3 +13,4 @@ class BaseErrorState extends BaseState {
   String errorMessage;
   BaseErrorState(this.errorMessage);
 }
+

@@ -1,24 +1,17 @@
-import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../features/home/data/model/response/home/product.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_styles.dart';
 import '../product_details_page/product_details_page.dart';
+import 'card_widgets/add_and_remove_from_cart_button.dart';
 import 'card_widgets/card_image.dart';
 import 'card_widgets/card_price_row.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductEntity product;
-  final VoidCallback onAddToCartTap;
-  final bool isInCart;
 
-  const ProductCard(
-      {super.key,
-      required this.product,
-      required this.onAddToCartTap,
-      required this.isInCart});
+  const ProductCard({super.key, required this.product});
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -39,7 +32,7 @@ class _ProductCardState extends State<ProductCard>
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.grey.withOpacity(0.5),
+            color: AppColors.grey.withValues(alpha: 0.5),
             width: 1.w,
           ),
           borderRadius: BorderRadius.circular(8.r),
@@ -61,7 +54,7 @@ class _ProductCardState extends State<ProductCard>
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 6.w),
                   child: Text(
-                    widget.product.title != null ? widget.product.title! : '',
+                    widget.product.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: getRegularStyle(color: AppColors.black),
@@ -71,43 +64,7 @@ class _ProductCardState extends State<ProductCard>
                   priceAfterDiscount: widget.product.priceAfterDiscount,
                   originalPrice: widget.product.price,
                 ),
-                ElevatedButton(
-                    onPressed: widget.onAddToCartTap,
-                    style: ElevatedButton.styleFrom(
-                      visualDensity: VisualDensity.compact,
-                      shadowColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      maximumSize: Size(double.infinity, 30.h),
-                      minimumSize: Size(double.infinity, 30.h),
-                      fixedSize: Size(double.infinity, 30.h),
-                      backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.r),
-                      ),
-                    ),
-                    child: FittedBox(
-                      child: Row(
-                        children: [
-                          Icon(
-                            widget.isInCart
-                                ? Icons.remove_circle_outline
-                                : Icons.shopping_cart_outlined,
-                            color: AppColors.white,
-                          ),
-                          SizedBox(
-                            width: 6.w,
-                          ),
-                          Text(
-                            widget.isInCart
-                                ? 'Remove from cart'
-                                : 'Add to cart',
-                            style: getMediumStyle(
-                                color: AppColors.white, fontSize: 13.sp),
-                          )
-                        ],
-                      ),
-                    ))
+                CardAddAndRemoveButton(product: widget.product)
               ],
             );
           }),
@@ -134,12 +91,10 @@ class _ProductCardState extends State<ProductCard>
     );
     Navigator.of(context).push(
       PageRouteBuilder(
-        settings: RouteSettings(
-          name: Routes.productDetailsView,
-          arguments: arguments,
-        ),
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const ProductDetailsPage(),
+            ProductDetailsPage(
+          productArgument: arguments,
+        ),
         transitionDuration: const Duration(milliseconds: 400),
         reverseTransitionDuration: const Duration(milliseconds: 400),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {

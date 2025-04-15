@@ -1,0 +1,68 @@
+name: Flutter Tests
+
+on:
+  push:
+    branches: [ dev_github_actions ]
+    paths:
+      - '**.dart'
+      - 'pubspec.yaml'
+      - 'test/**'
+  pull_request:
+    branches: [ dev_github_actions ]
+    paths:
+      - '**.dart'
+      - 'pubspec.yaml'
+      - 'test/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.3'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Run tests
+        run: flutter test --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          fail_ci_if_error: false
+          verbose: true
+
+      - name: Check test coverage
+        run: |
+          COVERAGE_PERCENTAGE=$(lcov --summary coverage/lcov.info | grep "lines" | awk '{print $4}' | cut -d'%' -f1)
+          echo "Test coverage: $COVERAGE_PERCENTAGE%"
+          if (( $(echo "$COVERAGE_PERCENTAGE < 80" | bc -l) )); then
+            echo "Warning: Test coverage is below 80%"
+            # Uncomment the line below to fail the workflow if coverage is below threshold
+            # exit 1
+          else
+            echo "Coverage is acceptable! ✅"
+          fi
+        continue-on-error: true  # Don't fail the build initially, just warn
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: |
+            ./coverage/lcov.info
+            ./coverage/html/
+          retention-days: 7

@@ -38,6 +38,7 @@ jobs:
 
           # Define the valid patterns
           MAIN_PATTERN="^(main|develop)$"
+          DEV_PATTERN="^dev_[a-z0-9]+(_[a-z0-9]+)*$"
           FEATURE_PATTERN="^feature/[a-z0-9]+(-[a-z0-9]+)*$"
           BUGFIX_PATTERN="^bugfix/[a-z0-9]+(-[a-z0-9]+)*$"
           HOTFIX_PATTERN="^hotfix/[a-z0-9]+(-[a-z0-9]+)*$"
@@ -45,6 +46,7 @@ jobs:
           
           # Check if the branch name matches any of the valid patterns
           if [[ $BRANCH_NAME =~ $MAIN_PATTERN ]] || 
+             [[ $BRANCH_NAME =~ $DEV_PATTERN ]] ||
              [[ $BRANCH_NAME =~ $FEATURE_PATTERN ]] || 
              [[ $BRANCH_NAME =~ $BUGFIX_PATTERN ]] || 
              [[ $BRANCH_NAME =~ $HOTFIX_PATTERN ]] || 
@@ -56,6 +58,7 @@ jobs:
             echo ""
             echo "Valid branch name formats:"
             echo "- main, develop"
+            echo "- dev_branch-name"
             echo "- feature/feature-name"
             echo "- bugfix/bug-description"
             echo "- hotfix/fix-description"

@@ -8,6 +8,7 @@ import 'package:flower_app/features/profile/data/models/reset_password/request/p
 import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart';
+import 'package:flower_app/features/profile/domain/usecases/logout_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -20,12 +21,14 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final GetUserDataUseCase _getUserDataUseCase;
   final EditProfileUseCase _editProfileUseCase;
+  final LogoutUseCase _logoutUseCase;
   final ResetPasswordUseCase _resetPasswordUseCase;
   final AuthLocalDataSourceContract _authLocalDataSource;
 
   ProfileCubit(
     this._getUserDataUseCase,
     this._editProfileUseCase,
+    this._logoutUseCase,
     this._resetPasswordUseCase,
     this._authLocalDataSource,
   ) : super(const ProfileState()) {
@@ -120,6 +123,19 @@ class ProfileCubit extends Cubit<ProfileState> {
     phoneController.text = userData?.phone ?? '';
     userGender = userData?.gender ?? '';
     passwordController.text = '********';
+  }
+
+  Future<void> logout() async {
+    emit(state.copyWith(logoutState: BaseLoadingState()));
+    final result = await _logoutUseCase();
+    result.fold(
+      (error) {
+        emit(state.copyWith(logoutState: BaseErrorState(error.toString())));
+      },
+      (success) {
+        emit(state.copyWith(logoutState: BaseSuccessState()));
+      },
+    );
   }
 
   @override

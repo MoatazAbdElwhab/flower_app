@@ -40,7 +40,8 @@ class EditProfilePage extends StatelessWidget {
             ),
           ),
           title: Text(
-            LocaleKeys.profile_editProfile.tr(),
+            // LocaleKeys.profile_editProfile.tr(),
+            'Edit Profile',
             style: getMediumStyle(color: AppColors.black, fontSize: 20),
           ),
           titleSpacing: 0,
@@ -77,6 +78,9 @@ class EditProfilePage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
+
+
+
                             LocaleKeys.profile_updateProfileSuccess.tr(),
                             style: getExtraBoldStyle(
                                 color: AppColors.success, fontSize: 16),
@@ -92,6 +96,7 @@ class EditProfilePage extends StatelessWidget {
                             },
                             child: Text(LocaleKeys.dialogs_success_ok.tr()),
                           ),
+
                         ],
                       ),
                     );
@@ -246,7 +251,12 @@ class EditProfilePage extends StatelessWidget {
                             radius: 16,
                           )
                         : Text(
+
+
+
+
                             LocaleKeys.profile_updateProfile.tr(),
+
                             style: getMediumStyle(
                                 color: AppColors.white, fontSize: 16),
                           ),

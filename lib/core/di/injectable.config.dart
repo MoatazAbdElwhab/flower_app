@@ -80,6 +80,10 @@ import 'package:flower_app/features/occasion/domain/usecases/get_occasions_by_id
     as _i859;
 import 'package:flower_app/features/occasion/presentation/cubit/occasion_cubit.dart'
     as _i814;
+import 'package:flower_app/features/profile/data/datasources/local/profile_local_data_source.dart'
+    as _i941;
+import 'package:flower_app/features/profile/data/datasources/local/profile_local_data_source_impl.dart'
+    as _i469;
 import 'package:flower_app/features/profile/data/datasources/remote/profile_api_remote_data_source.dart'
     as _i1015;
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart'
@@ -92,6 +96,8 @@ import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_cas
     as _i732;
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart'
     as _i389;
+import 'package:flower_app/features/profile/domain/usecases/logout_use_case.dart'
+    as _i307;
 import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart'
     as _i850;
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart'
@@ -128,9 +134,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i558.FlutterSecureStorage>(
         () => getItRegisterModule.secureStorage);
+    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i210.AppNavigatorObserver>(
         () => _i210.AppNavigatorObserver());
-    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i666.LocalStorageClient>(() => _i666.LocalStorageClient(
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
@@ -144,6 +150,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i343.DioErrorHandler>(),
           gh<_i719.GlobalKey<_i719.NavigatorState>>(),
         ));
+    gh.factory<_i941.ProfileLocalDataSource>(
+        () => _i469.ProfileLocalDataSourceImpl(gh<_i666.LocalStorageClient>()));
     gh.factory<_i1053.AuthLocalDataSourceContract>(
         () => _i851.AuthLocalDataSourceImpl(gh<_i666.LocalStorageClient>()));
     gh.factory<_i224.OccasionRemoteDataSource>(
@@ -162,36 +170,40 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i779.HomeRepositoryImpl(gh<_i286.HomeDataSourceContract>()));
     gh.factory<_i298.GetCategoriesUseCase>(
         () => _i298.GetCategoriesUseCase(gh<_i1.CategoriesRepo>()));
+    gh.factory<_i806.ProfileRepository>(() => _i866.ProfileRepositoryImpl(
+          gh<_i445.ProfileRemoteDataSource>(),
+          gh<_i941.ProfileLocalDataSource>(),
+        ));
     gh.factory<_i429.OccasionRepository>(() =>
         _i547.OccasionRepositoryImpl(gh<_i224.OccasionRemoteDataSource>()));
     gh.factory<_i514.AuthRepo>(() => _i1012.AuthRepoImpl(
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
         ));
-    gh.factory<_i235.ForgetPasswordUseCase>(
-        () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i419.ResendOtpUseCase>(
-        () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i696.ResetPasswordUseCase>(
-        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i366.SignupUseCase>(
-        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i621.SignInUseCase>(
-        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i242.VerifyResetCodeUseCase>(
         () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i235.ForgetPasswordUseCase>(
+        () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i366.SignupUseCase>(
+        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i696.ResetPasswordUseCase>(
+        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i419.ResendOtpUseCase>(
+        () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
           gh<_i298.GetCategoriesUseCase>(),
           gh<List<_i1025.CategoryOccasionEntity>>(),
         ));
-    gh.factory<_i806.ProfileRepository>(
-        () => _i866.ProfileRepositoryImpl(gh<_i445.ProfileRemoteDataSource>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
     gh.factory<_i389.GetUserDataUseCase>(
         () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i732.EditProfileUseCase>(
         () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i307.LogoutUseCase>(
+        () => _i307.LogoutUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i850.ResetPasswordUseCase>(
         () => _i850.ResetPasswordUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i859.GetOccasionsByIdUseCase>(
@@ -205,14 +217,15 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i666.LocalStorageClient>(),
           gh<_i419.ResendOtpUseCase>(),
         ));
-    gh.factory<_i814.OccasionCubit>(
-        () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
     gh.factory<_i928.ProfileCubit>(() => _i928.ProfileCubit(
           gh<_i389.GetUserDataUseCase>(),
           gh<_i732.EditProfileUseCase>(),
+          gh<_i307.LogoutUseCase>(),
           gh<_i850.ResetPasswordUseCase>(),
           gh<_i1053.AuthLocalDataSourceContract>(),
         ));
+    gh.factory<_i814.OccasionCubit>(
+        () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),
           locationService: gh<_i754.LocationService>(),

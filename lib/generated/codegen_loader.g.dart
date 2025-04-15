@@ -194,7 +194,12 @@ class CodegenLoader extends AssetLoader{
     "changeLanguage": "تغيير اللغة",
     "aboutUs": "معلومات عنا",
     "termsAndConditions": "الشروط والأحكام",
-    "logout": "تسجيل الخروج"
+    "updateProfileSuccess": "تم التحديث",
+    "logoutTitle": "تسجيل الخروج",
+    "logout": "تسجيل الخروج",
+    "confirmLogout": "تأكيد تسجيل الخروج !!",
+    "cancel": "إلغاء",
+    "updateProfile": "تحديث"
   }
 };
 static const Map<String,dynamic> _en_US = {
@@ -377,7 +382,31 @@ static const Map<String,dynamic> _en_US = {
     "changeLanguage": "Change Language",
     "aboutUs": "About us",
     "termsAndConditions": "Terms & conditions",
-    "logout": "Logout"
+    "updateProfileSuccess": "Updated",
+    "logoutTitle": "LOGOUT",
+    "confirmLogout": "Confirm logout !!",
+    "cancel": "Cancel",
+    "logout": "Logout",
+    "editProfile": "Edit Profile",
+    "updateProfile": "Update",
+    "reset_password": {
+      "title": "Reset Password",
+      "current_password": "Current Password",
+      "current_password_hint": "Current Password",
+      "new_password": "New Password",
+      "new_password_hint": "New Password",
+      "confirm_password": "Confirm Password",
+      "confirm_password_hint": "Confirm Password",
+      "update_button": "Update",
+      "success_message": "Password updated successfully",
+      "error_message": "Failed to update password. Please try again.",
+      "error": {
+        "confirm_password_required": "Please confirm your password",
+        "passwords_not_match": "Passwords do not match",
+        "same_password": "New password must be different from current password",
+        "incorrect_password": "Current password is not correct"
+      }
+    }
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar_AE": _ar_AE, "en_US": _en_US};

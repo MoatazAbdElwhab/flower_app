@@ -19,7 +19,7 @@ class OccasionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 220.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

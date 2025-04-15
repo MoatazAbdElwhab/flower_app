@@ -111,10 +111,6 @@ class _HomePageState extends State<_HomePage> {
             //---------------------------categories section
             CategoriesSection(
               categories: homeData.categories ?? [],
-              onViewAllTap: () {
-                final navBarState = NavbarPage.of(context);
-                navBarState?.changeTab(1);
-              },
             ),
             SizedBox(height: 15.h),
 

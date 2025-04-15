@@ -1,6 +1,8 @@
 // features/home/presentation/widget/categories_section.dart
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/features/categories/presentation/manager/categories_states.dart';
 import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/presentation/widget/category_item.dart';
 import 'package:flower_app/features/home/presentation/widget/section_header.dart';
@@ -14,12 +16,12 @@ import '../../../nav/presentation/pages/navbar_page.dart';
 
 class CategoriesSection extends StatelessWidget {
   final List<CategoryOccasionEntity> categories;
-  final void Function()? onViewAllTap;
+  //final VoidCallback? onViewAllTap;
 
   const CategoriesSection({
     super.key,
     required this.categories,
-    required this.onViewAllTap,
+    // this.onViewAllTap,
   });
 
   @override
@@ -31,10 +33,16 @@ class CategoriesSection extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           //////////////////////////////////////////////////Categories section header
-
           SectionHeader(
             title: 'home.sections.categories'.tr(),
-            onViewAllTap: onViewAllTap,
+            onViewAllTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NavbarPage(initialTabIndex: 1),
+                ),
+              );
+            },
           ),
 
           SizedBox(height: 5.h),
@@ -53,15 +61,19 @@ class CategoriesSection extends StatelessWidget {
                       return CategoryItem(
                         category: categories[index],
                         onTap: () {
-                          final navbarState = NavbarPage.of(context);
-                          if (navbarState != null) {
-                            navbarState.changeTab(1);
-                            context
-                                .read<CategoriesCubit>()
-                                .selectCategoryFromHomeByID(
-                                  categories[index].id ?? '',
-                                );
-                          }
+                          final categoryId = categories[index].id ?? '';
+                          final categoriesCubit =
+                              context.read<CategoriesCubit>();
+                          categoriesCubit
+                              .selectCategoryFromHomeByID(categoryId);
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const NavbarPage(initialTabIndex: 1),
+                            ),
+                          );
                         },
                       );
                     },

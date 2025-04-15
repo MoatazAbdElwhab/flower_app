@@ -12,7 +12,6 @@ class CategoryItem extends StatelessWidget {
   final CategoryOccasionEntity category;
   final void Function()? onTap;
 
-
   const CategoryItem({
     super.key,
     required this.category,
@@ -21,85 +20,69 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    final containerSize = size.width * 0.16;
-    final imageSize = size.width * 0.06;
-    final loaderSize = size.width * 0.04;
-    final marginRight = size.width * 0.02;
-
     return Container(
-      width: containerSize,
-      margin: EdgeInsets.only(right: marginRight),
+      width: 70.w,
+      margin: EdgeInsets.only(right: 4.w),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
-          onTap: onTap,
-            child: Container(
-              width: containerSize,
-              height: containerSize,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.primary[10],
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: category.image != null
-                  ? SizedBox(
-                      width: imageSize,
-                      height: imageSize,
-                      child: AppNetworkImage(
-                        networkImage: category.image!,
-                        fit: BoxFit.contain,
-                        placeHolder: SizedBox(
-                          width: loaderSize,
-                          height: loaderSize,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.w,
+          Container(
+            width: 55.w,
+            height: 55.w,
+            decoration: BoxDecoration(
+              color: AppColors.primary[10],
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(12.r),
+                child: Center(
+                  child: category.image != null
+                    ? SizedBox(
+                        width: 25.w,
+                        height: 25.h,
+                        child: AppNetworkImage(
+                          networkImage: category.image!,
+                          fit: BoxFit.contain,
+                          placeHolder: SizedBox(
+                            width: 15.w,
+                            height: 15.w,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.w,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          errorBuilder: Icon(
+                            Icons.local_florist,
                             color: AppColors.primary,
+                            size: 25.w,
                           ),
                         ),
-                        errorBuilder: Icon(
-                          Icons.local_florist,
-                          color: AppColors.primary,
-                          size: imageSize,
-                        ),
+                      )
+                    : Icon(
+                        Icons.local_florist,
+                        color: AppColors.primary,
+                        size: 25.w,
                       ),
-                      // child: CachedNetworkImage(
-                      //   imageUrl: category.image!,
-                      //   fit: BoxFit.contain,
-                      //   placeholder: (context, url) => SizedBox(
-                      //     width: loaderSize,
-                      //     height: loaderSize,
-                      //     child: CircularProgressIndicator(
-                      //       strokeWidth: 2.w,
-                      //       color: AppColors.primary,
-                      //     ),
-                      //   ),
-                      //   errorWidget: (context, url, error) => Icon(
-                      //     Icons.local_florist,
-                      //     color: AppColors.primary,
-                      //     size: imageSize,
-                      //   ),
-                      // ),
-                    )
-                  : Icon(
-                      Icons.local_florist,
-                      color: AppColors.primary,
-                      size: imageSize,
-                    ),
+                ),
+              ),
             ),
           ),
-          SizedBox(height: size.height * 0.005),
-          Text(
-            category.name ?? 'home.items.unknown'.tr(),
-            style: getRegularStyle(
-              color: AppColors.black,
-              fontSize: 11.sp,
+          SizedBox(height: 3.h),
+          SizedBox(
+            height: 12.h,
+            child: Text(
+              category.name ?? 'home.items.unknown'.tr(),
+              style: getRegularStyle(
+                color: AppColors.black,
+                fontSize: 10.sp,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

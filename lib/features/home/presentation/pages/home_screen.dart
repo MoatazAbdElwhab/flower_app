@@ -1,6 +1,8 @@
+// features/home/presentation/pages/home_screen.dart
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
 import '../../../../core/base/base_state.dart';
@@ -76,10 +78,8 @@ class _HomePageState extends State<_HomePage> {
               final homeData = cubit.homeData;
 
               if (state.homeDataState is BaseSuccessState && homeData != null) {
-                // getting an argument for the categories section to Have the categories list when the user click on the categories section
-                final navBarState = NavbarPage.of(context);
+                //final navBarState = NavbarPage.of(context);
                 return _buildHomeContent(context, homeData);
-
               }
 
               return const Center(
@@ -93,60 +93,40 @@ class _HomePageState extends State<_HomePage> {
   }
 
   Widget _buildHomeContent(BuildContext context, HomeEntity homeData) {
-    final size = MediaQuery.of(context).size;
-
-    final topSpacing = size.height * 0.01;
-    final headerSpacing = size.height * 0.02;
-    final locationSpacing = size.height * 0.015;
-    final sectionSpacing = size.height * 0.012;
-    final bottomSpacing = size.height * 0.008;
-    final horizontalPadding = size.width * 0.04;
-
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //---------------------------flowery logo && search
-          SizedBox(height: topSpacing),
-          const HomeHeader(),
-          SizedBox(height: headerSpacing),
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //---------------------------flowery logo && search
+            SizedBox(height: 10.h),
+            const HomeHeader(),
+            SizedBox(height: 12.h),
 
-          //---------------------------location bar
-          const LocationBar(),
-          SizedBox(height: locationSpacing),
+            //---------------------------location bar
+            const LocationBar(),
+            SizedBox(height: 15.h),
 
-          //---------------------------categories section
-          Flexible(
-            flex: 2,
-            child: CategoriesSection(
+            //---------------------------categories section
+            CategoriesSection(
               categories: homeData.categories ?? [],
-             onViewAllTap: () {
-               final navBarState = NavbarPage.of(context);
-               navBarState?.changeTab(1);
-             },
             ),
-          ),
-          SizedBox(height: sectionSpacing),
+            SizedBox(height: 15.h),
 
-          //---------------------------best seller section
-          Flexible(
-            flex: 3,
-            child: BestSellerSection(
+            //---------------------------best seller section
+            BestSellerSection(
               bestSellers: homeData.bestSeller ?? [],
             ),
-          ),
-          SizedBox(height: sectionSpacing),
+            SizedBox(height: 15.h),
 
-          //---------------------------occasion section
-          Flexible(
-            flex: 3,
-            child: OccasionSection(
+            //---------------------------occasion section
+            OccasionSection(
               occasions: homeData.occasions ?? [],
             ),
-          ),
-          SizedBox(height: bottomSpacing),
-        ],
+            SizedBox(height: 15.h),
+          ],
+        ),
       ),
     );
   }

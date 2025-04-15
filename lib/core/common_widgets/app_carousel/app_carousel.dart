@@ -17,7 +17,8 @@ class _State extends State<AppCarousel> {
   int _currentImageIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
         CarouselSlider(
           items: widget.networkImages.map((image) {
@@ -37,22 +38,25 @@ class _State extends State<AppCarousel> {
             },
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: widget.networkImages.map((image) {
-            int index = widget.networkImages.indexOf(image);
-            return Container(
-              width: 10.w,
-              height: 10.h,
-              margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 4.w),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _currentImageIndex == index
-                    ? AppColors.primary
-                    : Colors.grey.shade300,
-              ),
-            );
-          }).toList(),
+        Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: widget.networkImages.map((image) {
+              int index = widget.networkImages.indexOf(image);
+              return Container(
+                width: 8.w,
+                height: 8.h,
+                margin: EdgeInsets.symmetric(horizontal: 4.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _currentImageIndex == index
+                      ? AppColors.primary
+                      : Colors.white,
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ],
     );

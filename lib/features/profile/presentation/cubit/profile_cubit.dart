@@ -1,5 +1,11 @@
+// features/profile/presentation/cubit/profile_cubit.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/utils/validator.dart';
+import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
+import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
+import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/logout_use_case.dart';
@@ -16,10 +22,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GetUserDataUseCase _getUserDataUseCase;
   final EditProfileUseCase _editProfileUseCase;
   final LogoutUseCase _logoutUseCase;
+  final ResetPasswordUseCase _resetPasswordUseCase;
+  final AuthLocalDataSourceContract _authLocalDataSource;
 
   ProfileCubit(
-      this._getUserDataUseCase, this._editProfileUseCase, this._logoutUseCase)
-      : super(const ProfileState()) {
+    this._getUserDataUseCase,
+    this._editProfileUseCase,
+    this._logoutUseCase,
+    this._resetPasswordUseCase,
+    this._authLocalDataSource,
+  ) : super(const ProfileState()) {
     getUserData();
   }
 
@@ -30,6 +42,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+
   // form keys
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
 
@@ -87,6 +100,22 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
+  //  ----------------------Reset password ----------------------
+  Future<void> profileResetPassword(
+      String currentPassword, String newPassword) async {
+    if (!_validatePasswordsBeforeSubmit(currentPassword, newPassword)) {
+      return;
+    }
+    emit(state.copyWith(resetPasswordState: BaseLoadingState()));
+
+    final request = ProfileResetPasswordRequest(
+      password: currentPassword,
+      newPassword: newPassword,
+    );
+    final result = await _resetPasswordUseCase(request);
+    _handleResetPasswordResult(result);
+  }
+
   void initEditProfileData(UserData? userData) {
     emailController.text = userData?.email ?? '';
     firstNameController.text = userData?.firstName ?? '';
@@ -118,5 +147,81 @@ class ProfileCubit extends Cubit<ProfileState> {
     lastNameController.dispose();
     // updateUserGender.dispose();
     super.close();
+  }
+
+
+  bool _validatePasswordsBeforeSubmit(
+      String currentPassword, String newPassword) {
+    if (currentPassword == newPassword) {
+      emit(
+        state.copyWith(
+          resetPasswordState:
+              BaseErrorState('profile.reset_password.error.same_password'.tr()),
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
+  void _handleResetPasswordResult(dynamic result) {
+    if (result.isRight) {
+      if (result.right.token != null) {
+        _authLocalDataSource.cacheToken(result.right.token!);
+      }
+      emit(
+        state.copyWith(
+          resetPasswordState: BaseSuccessState(data: result.right),
+        ),
+      );
+    } else {
+      _handleResetPasswordError(result.left.message);
+    }
+  }
+
+  void _handleResetPasswordError(String errorMessage) {
+    final String userFacingErrorMessage =
+        _getPasswordErrorMessage(errorMessage);
+    emit(
+      state.copyWith(
+        resetPasswordState: BaseErrorState(userFacingErrorMessage),
+      ),
+    );
+  }
+
+  String _getPasswordErrorMessage(String apiErrorMessage) {
+    final lowerCaseError = apiErrorMessage.toLowerCase();
+
+    if (lowerCaseError.contains('incorrect') ||
+        lowerCaseError.contains('password') ||
+        lowerCaseError.contains('error')) {
+      return 'profile.reset_password.error.incorrect_password'.tr();
+    }
+    return apiErrorMessage;
+  }
+
+  void updateResetPasswordFormValidity({
+    String? currentPassword,
+    String? newPassword,
+    String? confirmPassword,
+    bool? isValid,
+  }) {
+    if (isValid != null) {
+      emit(state.copyWith(isResetPasswordFormValid: isValid));
+      return;
+    }
+    final currentPasswordValid =
+        Validator.passwordValidation(currentPassword ?? '') == null;
+    final newPasswordValid =
+        Validator.passwordValidation(newPassword ?? '') == null;
+    final confirmPasswordFilled = (confirmPassword ?? '').isNotEmpty;
+    final passwordsMatch = newPassword == confirmPassword;
+
+    final formValid = currentPasswordValid &&
+        newPasswordValid &&
+        confirmPasswordFilled &&
+        passwordsMatch;
+
+    emit(state.copyWith(isResetPasswordFormValid: formValid));
   }
 }

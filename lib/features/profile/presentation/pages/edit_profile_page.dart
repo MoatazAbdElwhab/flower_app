@@ -1,3 +1,4 @@
+// features/profile/presentation/pages/edit_profile_page.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/base/base_state.dart';
 import '../../../../core/common_widgets/app_network_image/app_network_image.dart';
 import '../../../../core/di/injectable.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/utils/validator.dart';
 import '../../../../core/widget/dialog_utils.dart';
 import '../../../../generated/locale_keys.g.dart';
@@ -197,7 +199,8 @@ class EditProfilePage extends StatelessWidget {
                       hintText: "********",
                       suffix: GestureDetector(
                         onTap: () {
-                          //  Navigator.pushNamed(context, Routes.changePassword);
+                          Navigator.pushNamed(
+                              context, Routes.profileResetPassword);
                         },
                         child: Text(
                           "Change",

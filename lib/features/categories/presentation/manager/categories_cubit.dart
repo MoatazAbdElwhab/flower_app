@@ -1,3 +1,4 @@
+// features/categories/presentation/manager/categories_cubit.dart
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../home/domain/entities/category_occasion_entity.dart';
+import '../../../nav/presentation/pages/navbar_page.dart';
 import '../widgets/categories_bottom_sheat.dart';
 import 'categories_states.dart';
 
@@ -58,6 +60,18 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
       emit(state.copyWith(
         categoryState: BaseErrorState('Invalid category ID'),
       ));
+    }
+  }
+  
+  void navigateToCategoriesTab(BuildContext context) {
+    final navbarState = NavbarPage.of(context);
+    if (navbarState != null) {
+      navbarState.changeTab(1);
+      if (categories.isNotEmpty) {
+        getProductByCategoryList(categories[0].id ?? '');
+        tabController.index = 0;
+        emit(state.copyWith(selectedCategoryIndex: 0));
+      }
     }
   }
 }

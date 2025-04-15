@@ -179,11 +179,32 @@
     "changeLanguage": "Change Language",
     "aboutUs": "About us",
     "termsAndConditions": "Terms & conditions",
-    "updateProfile": "Update",
     "updateProfileSuccess": "Updated",
     "logoutTitle": "LOGOUT",
-    "logout": "Logout",
     "confirmLogout":"Confirm logout !!",
     "cancel": "Cancel"
+
+    "logout": "Logout",
+    "editProfile": "Edit Profile",
+    "updateProfile": "Update",
+    "updateProfileSuccess": "Updated",
+    "reset_password": {
+      "title": "Reset Password",
+      "current_password": "Current Password",
+      "current_password_hint": "Current Password",
+      "new_password": "New Password",
+      "new_password_hint": "New Password",
+      "confirm_password": "Confirm Password",
+      "confirm_password_hint": "Confirm Password",
+      "update_button": "Update",
+      "success_message": "Password updated successfully",
+      "error_message": "Failed to update password. Please try again.",
+      "error": {
+        "confirm_password_required": "Please confirm your password",
+        "passwords_not_match": "Passwords do not match",
+        "same_password": "New password must be different from current password",
+        "incorrect_password": "Current password is not correct"
+      }
+    }
   }
 }

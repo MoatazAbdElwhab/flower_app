@@ -1,10 +1,12 @@
+// features/nav/presentation/pages/navbar_page.dart
 import 'package:flower_app/features/categories/presentation/pages/categories_screen.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class NavbarPage extends StatefulWidget {
-  const NavbarPage({super.key});
+  final int initialTabIndex;
+  const NavbarPage({super.key, this.initialTabIndex = 0});
 
   static _NavbarPageState? of(BuildContext context) {
     return context.findAncestorStateOfType<_NavbarPageState>();
@@ -15,12 +17,20 @@ class NavbarPage extends StatefulWidget {
 }
 
 class _NavbarPageState extends State<NavbarPage> {
-  final ValueNotifier<int> _selectedIndex = ValueNotifier(0);
+  late final ValueNotifier<int> _selectedIndex;
   late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = ValueNotifier(widget.initialTabIndex);
+  }
 
   void changeTab(int index) {
     if (index >= 0 && index < _pages.length) {
-      _selectedIndex.value = index;
+      setState(() {
+        _selectedIndex.value = index;
+      });
     }
   }
 
@@ -73,7 +83,7 @@ class _NavbarPageState extends State<NavbarPage> {
               ),
             ],
             currentIndex: _selectedIndex.value,
-            onTap: (index) => _selectedIndex.value = index,
+            onTap: (index) => changeTab(index),
             type: BottomNavigationBarType.fixed,
           );
         },

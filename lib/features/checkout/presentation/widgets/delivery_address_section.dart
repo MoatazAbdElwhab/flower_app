@@ -25,11 +25,14 @@ class DeliveryAddressSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          ListView.builder(
+          ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
             itemCount: cubit.addresses.length,
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 16);
+            },
             itemBuilder: (context, index) {
               return ValueListenableBuilder(
                 valueListenable: cubit.selectedAddressIndex,
@@ -47,6 +50,7 @@ class DeliveryAddressSection extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 16),
           SizedBox(
             height: 36.h,
             child: OutlinedButton(

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
+import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -30,9 +31,23 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     ),
   ];
 
+  final List<PaymentMethod> paymentMethods = [
+    PaymentMethod(
+      paymentType: PaymentMethodsType.cash,
+      name: 'Cash on delivery',
+    ),
+    PaymentMethod(
+      paymentType: PaymentMethodsType.card,
+      name: 'Credit card',
+    ),
+  ];
   final ValueNotifier<int> selectedAddressIndex = ValueNotifier(0);
-
+  final ValueNotifier<int> selectedPaymentMethodIndex = ValueNotifier(0);
   void setSelectedAddressIndex(int index) {
     selectedAddressIndex.value = index;
+  }
+
+  void setSelectedPaymentMethodIndex(int index) {
+    selectedPaymentMethodIndex.value = index;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
 import 'package:flower_app/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:flower_app/features/checkout/presentation/widgets/delivery_address_section.dart';
 import 'package:flower_app/features/checkout/presentation/widgets/delivery_time_section.dart';
@@ -46,26 +47,44 @@ class _CheckoutPageState extends State<CheckoutPage> {
           surfaceTintColor: Colors.transparent,
           backgroundColor: AppColors.scaffoldBackground,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DeliveryTimeSection(),
-              _buildSpacer(),
-              const DeliveryAddressSection(),
-              _buildSpacer(),
-              const PaymentMethodSection(),
-              _buildSpacer(),
-              GiftSection(
-                isGift: isGift,
-                onGiftToggle: _toggleGift,
-                nameController: nameController,
-                phoneController: phoneController,
+        body: BlocBuilder<CheckoutCubit, CheckoutState>(
+          builder: (context, state) {
+            final cubit = context.read<CheckoutCubit>();
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const DeliveryTimeSection(),
+                  _buildSpacer(),
+                  const DeliveryAddressSection(),
+                  _buildSpacer(),
+                  const PaymentMethodSection(),
+                  _buildSpacer(),
+                  ValueListenableBuilder(
+                    valueListenable: cubit.selectedPaymentMethodIndex,
+                    builder: (context, value, child) {
+                      return AnimatedSize(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        alignment: Alignment.topCenter,
+                        child: cubit.paymentMethods[value].paymentType ==
+                                PaymentMethodsType.card
+                            ? GiftSection(
+                                isGift: isGift,
+                                onGiftToggle: _toggleGift,
+                                nameController: nameController,
+                                phoneController: phoneController,
+                              )
+                            : const SizedBox.shrink(),
+                      );
+                    },
+                  ),
+                  _buildSpacer(),
+                  _buildPlaceOrderButton(),
+                ],
               ),
-              _buildSpacer(),
-              _buildPlaceOrderButton(),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

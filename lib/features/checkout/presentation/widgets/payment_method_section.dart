@@ -1,21 +1,17 @@
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:flower_app/features/checkout/presentation/widgets/payment_method_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PaymentMethodSection extends StatefulWidget {
+class PaymentMethodSection extends StatelessWidget {
   const PaymentMethodSection({super.key});
 
   @override
-  State<PaymentMethodSection> createState() => _PaymentMethodSectionState();
-}
-
-class _PaymentMethodSectionState extends State<PaymentMethodSection> {
-  int selectedPaymentMethod = 0;
-
-  @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CheckoutCubit>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Column(
@@ -29,22 +25,27 @@ class _PaymentMethodSectionState extends State<PaymentMethodSection> {
             ),
           ),
           const SizedBox(height: 16),
-          PaymentMethodItem(
-            title: 'Cash on delivery',
-            isSelected: selectedPaymentMethod == 0,
-            onTap: () {
-              setState(() {
-                selectedPaymentMethod = 0;
-              });
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: cubit.paymentMethods.length,
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 8);
             },
-          ),
-          PaymentMethodItem(
-            title: 'Credit card',
-            isSelected: selectedPaymentMethod == 1,
-            onTap: () {
-              setState(() {
-                selectedPaymentMethod = 1;
-              });
+            itemBuilder: (context, index) {
+              return ValueListenableBuilder(
+                valueListenable: cubit.selectedPaymentMethodIndex,
+                builder: (context, value, child) {
+                  return PaymentMethodItem(
+                    title: cubit.paymentMethods[index].name,
+                    isSelected: value == index,
+                    onTap: () {
+                      cubit.setSelectedPaymentMethodIndex(index);
+                    },
+                  );
+                },
+              );
             },
           ),
         ],

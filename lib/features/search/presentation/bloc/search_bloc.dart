@@ -19,6 +19,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             .debounceTime(const Duration(milliseconds: 300))
             .switchMap(mapper));
     on<ClearSearchEvent>(_onClearSearch);
+    on<RefreshSearchEvent>(_onRefreshSearch);
   }
 
   Future<void> _onSearchQuery(
@@ -54,5 +55,34 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       searchResults: [],
       searchState: BaseInitialState(),
     ));
+  }
+
+  Future<void> _onRefreshSearch(
+    RefreshSearchEvent event, 
+    Emitter<SearchState> emit
+  ) async {
+    if (event.query.isEmpty) {
+      emit(state.copyWith(
+        searchResults: [],
+        searchState: BaseInitialState(),
+      ));
+      return;
+    }
+
+    emit(state.copyWith(
+      searchState: BaseLoadingState(),
+    ));
+
+    final result = await _searchProductsUseCase(event.query, categoryId: event.categoryId);
+
+    result.fold(
+      (error) => emit(state.copyWith(
+        searchState: BaseErrorState(error.message),
+      )),
+      (products) => emit(state.copyWith(
+        searchState: BaseSuccessState(data: products),
+        searchResults: products,
+      )),
+    );
   }
 }

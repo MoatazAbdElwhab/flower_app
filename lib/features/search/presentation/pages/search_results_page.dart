@@ -1,5 +1,6 @@
 // features/search/presentation/pages/search_results_page.dart
 
+import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
@@ -101,27 +102,102 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                   } else if (state.searchState is BaseSuccessState) {
                     if (state.searchResults != null &&
                         state.searchResults!.isNotEmpty) {
-                      return GridView.builder(
-                        padding: EdgeInsets.all(16.w),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.7,
-                          crossAxisSpacing: 16.w,
-                          mainAxisSpacing: 16.h,
-                        ),
-                        itemCount: state.searchResults!.length,
-                        itemBuilder: (context, index) {
-                          final product = state.searchResults![index];
-                          return ProductCard(
-                            product: product,
-                          );
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          _searchBloc.add(RefreshSearchEvent(
+                            _searchController.text,
+                            categoryId: widget.categoryId,
+                          ));
+
+                          // Create a completer to wait for state changes
+                          final completer = Completer<void>();
+
+                          // Listen for state changes to complete the refresh
+                          late final StreamSubscription subscription;
+                          subscription = _searchBloc.stream.listen((state) {
+                            if (state.searchState is! BaseLoadingState) {
+                              completer.complete();
+                              subscription.cancel();
+                            }
+                          });
+
+                          // Wait for the completer
+                          return completer.future;
                         },
+                        child: GridView.builder(
+                          padding: EdgeInsets.all(16.w),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 16.w,
+                            mainAxisSpacing: 16.h,
+                          ),
+                          itemCount: state.searchResults!.length,
+                          itemBuilder: (context, index) {
+                            final product = state.searchResults![index];
+                            return ProductCard(
+                              product: product,
+                            );
+                          },
+                        ),
                       );
                     } else {
-                      return _buildEmptySearchResults();
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          if (_searchController.text.isNotEmpty) {
+                            _searchBloc.add(RefreshSearchEvent(
+                              _searchController.text,
+                              categoryId: widget.categoryId,
+                            ));
+
+                            // Create a completer to wait for state changes
+                            final completer = Completer<void>();
+
+                            // Listen for state changes to complete the refresh
+                            late final StreamSubscription subscription;
+                            subscription = _searchBloc.stream.listen((state) {
+                              if (state.searchState is! BaseLoadingState) {
+                                completer.complete();
+                                subscription.cancel();
+                              }
+                            });
+
+                            // Wait for the completer
+                            return completer.future;
+                          }
+                          // If search text is empty, complete immediately
+                          return Future.value();
+                        },
+                        child: _buildEmptyState(),
+                      );
                     }
                   } else {
-                    return _buildEmptyInitialState();
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        // Even with empty query, we can refresh the page
+                        // This will work as a "load all products" action
+                        _searchBloc.add(RefreshSearchEvent(
+                          widget.initialQuery,
+                          categoryId: widget.categoryId,
+                        ));
+
+                        // Create a completer to wait for state changes
+                        final completer = Completer<void>();
+
+                        // Listen for state changes to complete the refresh
+                        late final StreamSubscription subscription;
+                        subscription = _searchBloc.stream.listen((state) {
+                          if (state.searchState is! BaseLoadingState) {
+                            completer.complete();
+                            subscription.cancel();
+                          }
+                        });
+
+                        return completer.future;
+                      },
+                      child: _buildEmptyState(),
+                    );
                   }
                 },
               ),
@@ -187,51 +263,33 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     );
   }
 
-  Widget _buildEmptySearchResults() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.search,
-            size: 64.r,
-            color: AppColors.grey.withOpacity(0.7),
+  Widget _buildEmptyState() {
+    return ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.search,
+                size: 64.r,
+                color: AppColors.grey.withOpacity(0.7),
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                LocaleKeys.home_empty_states_no_data.tr(),
+                style: getMediumStyle(
+                  color: AppColors.grey,
+                  fontSize: 16.sp,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
-          Text(
-            LocaleKeys.home_empty_states_no_data.tr(),
-            style: getMediumStyle(
-              color: AppColors.grey,
-              fontSize: 16.sp,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyInitialState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.search,
-            size: 64.r,
-            color: AppColors.grey.withOpacity(0.7),
-          ),
-          SizedBox(height: 16.h),
-          Text(
-            LocaleKeys.home_empty_states_no_data.tr(),
-            style: getMediumStyle(
-              color: AppColors.grey,
-              fontSize: 16.sp,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

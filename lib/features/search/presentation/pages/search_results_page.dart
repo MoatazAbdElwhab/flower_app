@@ -76,6 +76,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              //------------------------------------------search bar
               child: SearchBarWidget(
                 controller: _searchController,
                 onTextChanged: (query) {
@@ -89,6 +90,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                 autoFocus: widget.initialQuery.isEmpty,
               ),
             ),
+            //------------------------------------------search results
             Expanded(
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
@@ -146,7 +148,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           return ProductCard(
             product: ProductEntity(
               id: '',
-              title: 'Product Name',
+              title: LocaleKeys.home_sections_best_seller.tr(),
               price: 600,
               priceAfterDiscount: 0,
               imgCover: '',

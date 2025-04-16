@@ -12,36 +12,32 @@ import 'search_event.dart';
 @singleton
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchProductsUseCase _searchProductsUseCase;
-  
+
   SearchBloc(this._searchProductsUseCase) : super(SearchState()) {
-    on<SearchQueryEvent>(_onSearchQuery, 
-      transformer: (events, mapper) => events
-        .debounceTime(const Duration(milliseconds: 300))
-        .switchMap(mapper));
+    on<SearchQueryEvent>(_onSearchQuery,
+        transformer: (events, mapper) => events
+            .debounceTime(const Duration(milliseconds: 300))
+            .switchMap(mapper));
     on<ClearSearchEvent>(_onClearSearch);
   }
-  
+
   Future<void> _onSearchQuery(
-    SearchQueryEvent event, 
-    Emitter<SearchState> emit
-  ) async {
+      SearchQueryEvent event, Emitter<SearchState> emit) async {
     if (event.query.isEmpty) {
       emit(state.copyWith(
         searchResults: [],
-        query: '',
         searchState: BaseInitialState(),
       ));
       return;
     }
-    
+
     emit(state.copyWith(
       searchState: BaseLoadingState(),
-      query: event.query,
-      selectedCategoryId: event.categoryId,
     ));
-    
-    final result = await _searchProductsUseCase(event.query, categoryId: event.categoryId);
-    
+
+    final result =
+        await _searchProductsUseCase(event.query, categoryId: event.categoryId);
+
     result.fold(
       (error) => emit(state.copyWith(
         searchState: BaseErrorState(error.message),
@@ -52,14 +48,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       )),
     );
   }
-  
-  void _onClearSearch(
-    ClearSearchEvent event, 
-    Emitter<SearchState> emit
-  ) {
+
+  void _onClearSearch(ClearSearchEvent event, Emitter<SearchState> emit) {
     emit(state.copyWith(
       searchResults: [],
-      query: '',
       searchState: BaseInitialState(),
     ));
   }

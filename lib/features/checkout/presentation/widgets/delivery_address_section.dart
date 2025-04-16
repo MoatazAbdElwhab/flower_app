@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:flower_app/features/checkout/presentation/widgets/delivery_option_item.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +20,7 @@ class DeliveryAddressSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Delivery address',
+            LocaleKeys.checkout_delivery_address.tr(),
             style: getMediumStyle(
               color: AppColors.black,
               fontSize: 18.sp,
@@ -29,7 +31,7 @@ class DeliveryAddressSection extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
-            itemCount: cubit.addresses.length,
+            itemCount: cubit.state.addresses?.length ?? 0,
             separatorBuilder: (context, index) {
               return const SizedBox(height: 16);
             },
@@ -38,8 +40,8 @@ class DeliveryAddressSection extends StatelessWidget {
                 valueListenable: cubit.selectedAddressIndex,
                 builder: (context, value, child) {
                   return DeliveryOptionItem(
-                    type: cubit.addresses[index].city,
-                    address: cubit.addresses[index].street,
+                    type: cubit.state.addresses![index].city,
+                    address: cubit.state.addresses![index].street,
                     isSelected: value == index,
                     onTap: () {
                       cubit.setSelectedAddressIndex(index);
@@ -64,7 +66,7 @@ class DeliveryAddressSection extends StatelessWidget {
                   const Icon(Icons.add, color: AppColors.primary, size: 24),
                   const SizedBox(width: 4),
                   Text(
-                    'Add new',
+                    LocaleKeys.checkout_add_new.tr(),
                     style: getMediumStyle(
                       color: AppColors.primary,
                       fontSize: 14.sp,

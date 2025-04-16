@@ -5,6 +5,8 @@ import 'package:flower_app/features/checkout/presentation/widgets/payment_method
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 
 class PaymentMethodSection extends StatelessWidget {
   const PaymentMethodSection({super.key});
@@ -18,7 +20,7 @@ class PaymentMethodSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Payment method',
+            LocaleKeys.checkout_payment_method.tr(),
             style: getMediumStyle(
               color: AppColors.black,
               fontSize: 18.sp,

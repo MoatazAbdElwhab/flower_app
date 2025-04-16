@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
@@ -6,9 +8,11 @@ import 'package:flower_app/features/checkout/presentation/widgets/delivery_addre
 import 'package:flower_app/features/checkout/presentation/widgets/delivery_time_section.dart';
 import 'package:flower_app/features/checkout/presentation/widgets/gift_section.dart';
 import 'package:flower_app/features/checkout/presentation/widgets/payment_method_section.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -50,38 +54,48 @@ class _CheckoutPageState extends State<CheckoutPage> {
         body: BlocBuilder<CheckoutCubit, CheckoutState>(
           builder: (context, state) {
             final cubit = context.read<CheckoutCubit>();
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const DeliveryTimeSection(),
-                  _buildSpacer(),
-                  const DeliveryAddressSection(),
-                  _buildSpacer(),
-                  const PaymentMethodSection(),
-                  _buildSpacer(),
-                  ValueListenableBuilder(
-                    valueListenable: cubit.selectedPaymentMethodIndex,
-                    builder: (context, value, child) {
-                      return AnimatedSize(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOut,
-                        alignment: Alignment.topCenter,
-                        child: cubit.paymentMethods[value].paymentType ==
-                                PaymentMethodsType.card
-                            ? GiftSection(
-                                isGift: isGift,
-                                onGiftToggle: _toggleGift,
-                                nameController: nameController,
-                                phoneController: phoneController,
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
+            if (state.addressesState is BaseErrorState) {
+              return Center(
+                child: Text(
+                  (state.addressesState as BaseErrorState).errorMessage,
+                  style: getRegularStyle(
+                    color: AppColors.grey,
+                    fontSize: 16.sp,
                   ),
-                  _buildSpacer(),
-                  _buildPlaceOrderButton(),
-                ],
+                ),
+              );
+            }
+            return Skeletonizer(
+              enabled: state.addressesState is BaseLoadingState,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const DeliveryTimeSection(),
+                    _buildSpacer(),
+                    const DeliveryAddressSection(),
+                    _buildSpacer(),
+                    const PaymentMethodSection(),
+                    _buildSpacer(),
+                    ValueListenableBuilder(
+                      valueListenable: cubit.selectedPaymentMethodIndex,
+                      builder: (context, value, child) {
+                        return AnimatedSize(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          alignment: Alignment.topCenter,
+                          child: cubit.paymentMethods[value].paymentType ==
+                                  PaymentMethodsType.card
+                              // ignore: prefer_const_constructors
+                              ? GiftSection()
+                              : const SizedBox.shrink(),
+                        );
+                      },
+                    ),
+                    _buildSpacer(),
+                    _buildPlaceOrderButton(),
+                  ],
+                ),
               ),
             );
           },
@@ -107,7 +121,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Sub Total',
+                LocaleKeys.checkout_sub_total.tr(),
                 style: getRegularStyle(
                   color: AppColors.grey,
                   fontSize: 16.sp,
@@ -127,7 +141,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Delivery Fee',
+                LocaleKeys.checkout_delivery_fee.tr(),
                 style: getRegularStyle(
                   color: AppColors.grey,
                   fontSize: 16.sp,
@@ -152,7 +166,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Total',
+                LocaleKeys.checkout_total.tr(),
                 style: getMediumStyle(
                   color: AppColors.black,
                   fontSize: 18.sp,
@@ -171,7 +185,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ElevatedButton(
             onPressed: () {},
             child: Text(
-              'Place order',
+              LocaleKeys.checkout_place_order.tr(),
               style: getMediumStyle(
                 color: AppColors.white,
                 fontSize: 16.sp,

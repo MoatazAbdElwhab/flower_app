@@ -1,6 +1,7 @@
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class PaymentMethodItem extends StatelessWidget {
@@ -44,13 +45,16 @@ class PaymentMethodItem extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Radio(
-              value: true,
-              groupValue: isSelected,
-              onChanged: (_) => onTap(),
-              activeColor: AppColors.primary,
-              fillColor: WidgetStateProperty.all(AppColors.primary),
-              visualDensity: VisualDensity.compact,
+            Skeleton.replace(
+              replacement: const SizedBox.shrink(),
+              child: Radio(
+                value: true,
+                groupValue: isSelected,
+                onChanged: (_) => onTap(),
+                activeColor: AppColors.primary,
+                fillColor: WidgetStateProperty.all(AppColors.primary),
+                visualDensity: VisualDensity.compact,
+              ),
             ),
           ],
         ),

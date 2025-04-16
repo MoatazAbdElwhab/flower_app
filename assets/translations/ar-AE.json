@@ -184,7 +184,25 @@
     "editProfile": "تحرير الملف الشخصي",
     "logoutTitle": "تسجيل الخروج",
     "confirmLogout": "تأكيد تسجيل الخروج !!",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "reset_password": {
+      "title": "إعادة تعيين كلمة المرور",
+      "current_password": "كلمة المرور الحالية",
+      "current_password_hint": "كلمة المرور الحالية",
+      "new_password": "كلمة المرور الجديدة",
+      "new_password_hint": "كلمة المرور الجديدة",
+      "confirm_password": "تأكيد كلمة المرور",
+      "confirm_password_hint": "تأكيد كلمة المرور",
+      "update_button": "تحديث",
+      "success_message": "تم تحديث كلمة المرور بنجاح",
+      "error_message": "فشل تحديث كلمة المرور. يرجى المحاولة مرة أخرى.",
+      "error": {
+        "confirm_password_required": "يرجى تأكيد كلمة المرور",
+        "passwords_not_match": "كلمتا المرور غير متطابقتين",
+        "same_password": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية",
+        "incorrect_password": "كلمة المرور الحالية غير صحيحة"
+      }
+    }
   },
   "cart": {
     "cart": "عربة التسوق",

@@ -23,7 +23,7 @@ class CustomTabBar extends StatelessWidget {
       indicatorColor: AppColors.primary,
       tabAlignment: TabAlignment.start,
       indicatorSize: TabBarIndicatorSize.label,
-      splashFactory:  NoSplash.splashFactory,
+      splashFactory: NoSplash.splashFactory,
       indicatorPadding: EdgeInsets.zero,
       indicatorWeight: 4.h,
       labelColor: Colors.transparent,

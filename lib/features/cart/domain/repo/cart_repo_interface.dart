@@ -1,6 +1,6 @@
 import '../../data/models/get_cart_response.dart';
 
-abstract class CartRepoInterface  {
+abstract class CartRepoInterface {
   Future<void> addProductToCart(String productId);
   Future<void> removeProductFromCart(String productId);
   Future<void> clearCart();

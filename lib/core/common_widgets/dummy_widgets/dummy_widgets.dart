@@ -2,7 +2,7 @@ import '../../../features/cart/presentation/widgets/cart_product/cart_product.da
 import '../../../features/home/domain/entities/product_entity.dart';
 
 class AppDummyWidgets {
-  get dummyCartProductsList =>  [
+  get dummyCartProductsList => [
         CartProductWidget(
             isDummy: true,
             productEntity: ProductEntity(

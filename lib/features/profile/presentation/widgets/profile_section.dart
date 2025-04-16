@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileSection extends StatelessWidget {
   final UserData userData;
-  final void Function()? onTap; 
+  final void Function()? onTap;
   const ProfileSection({
     super.key,
     required this.userData,

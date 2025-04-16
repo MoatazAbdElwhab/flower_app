@@ -52,8 +52,8 @@ class BestSellerPage extends StatelessWidget {
               crossAxisCount: 2,
               childAspectRatio: .8,
             ),
-            itemBuilder: (context, index) => ProductCard(
-                product: productEntityList[index]),
+            itemBuilder: (context, index) =>
+                ProductCard(product: productEntityList[index]),
           ),
         ),
       ),

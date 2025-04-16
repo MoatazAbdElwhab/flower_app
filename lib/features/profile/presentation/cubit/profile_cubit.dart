@@ -36,7 +36,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   final ValueNotifier<bool> isNotificationEnabled = ValueNotifier(false);
-   // text controllers
+  // text controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -148,7 +148,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     // updateUserGender.dispose();
     super.close();
   }
-
 
   bool _validatePasswordsBeforeSubmit(
       String currentPassword, String newPassword) {

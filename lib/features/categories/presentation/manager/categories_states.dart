@@ -13,8 +13,6 @@ class CategoriesStates extends Equatable {
     this.selectedCategoryIndex,
     this.updatedCategories = const [],
   });
-  
-
 
   CategoriesStates copyWith({
     BaseState? categoryState,
@@ -23,10 +21,13 @@ class CategoriesStates extends Equatable {
   }) {
     return CategoriesStates(
       categoryState: categoryState ?? this.categoryState,
-      selectedCategoryIndex: selectedCategoryIndex ?? this.selectedCategoryIndex,
+      selectedCategoryIndex:
+          selectedCategoryIndex ?? this.selectedCategoryIndex,
       updatedCategories: updatedCategories ?? this.updatedCategories,
     );
   }
+
   @override
-  List<Object> get props => [categoryState ?? '', selectedCategoryIndex?? 0, updatedCategories];
+  List<Object> get props =>
+      [categoryState ?? '', selectedCategoryIndex ?? 0, updatedCategories];
 }

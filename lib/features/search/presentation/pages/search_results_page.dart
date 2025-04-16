@@ -109,10 +109,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                             categoryId: widget.categoryId,
                           ));
 
-                          // Create a completer to wait for state changes
                           final completer = Completer<void>();
 
-                          // Listen for state changes to complete the refresh
                           late final StreamSubscription subscription;
                           subscription = _searchBloc.stream.listen((state) {
                             if (state.searchState is! BaseLoadingState) {
@@ -121,7 +119,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                             }
                           });
 
-                          // Wait for the completer
                           return completer.future;
                         },
                         child: GridView.builder(
@@ -151,10 +148,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                               categoryId: widget.categoryId,
                             ));
 
-                            // Create a completer to wait for state changes
                             final completer = Completer<void>();
 
-                            // Listen for state changes to complete the refresh
                             late final StreamSubscription subscription;
                             subscription = _searchBloc.stream.listen((state) {
                               if (state.searchState is! BaseLoadingState) {
@@ -163,10 +158,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                               }
                             });
 
-                            // Wait for the completer
                             return completer.future;
                           }
-                          // If search text is empty, complete immediately
                           return Future.value();
                         },
                         child: _buildEmptyState(),
@@ -175,17 +168,13 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                   } else {
                     return RefreshIndicator(
                       onRefresh: () async {
-                        // Even with empty query, we can refresh the page
-                        // This will work as a "load all products" action
                         _searchBloc.add(RefreshSearchEvent(
                           widget.initialQuery,
                           categoryId: widget.categoryId,
                         ));
 
-                        // Create a completer to wait for state changes
                         final completer = Completer<void>();
 
-                        // Listen for state changes to complete the refresh
                         late final StreamSubscription subscription;
                         subscription = _searchBloc.stream.listen((state) {
                           if (state.searchState is! BaseLoadingState) {

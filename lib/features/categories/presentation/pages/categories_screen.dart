@@ -3,10 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/di/injectable.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
-import 'package:flower_app/features/search/presentation/navigation/search_navigation.dart';
 import 'package:flower_app/features/search/presentation/widgets/search_bar_widget.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
@@ -144,10 +144,19 @@ class CategoriesScreenState extends State<CategoriesScreen>
                                     : null;
 
                                 if (selectedCategoryId != null) {
-                                  SearchNavigation.onCategorySearchTap(
-                                      context, selectedCategoryId);
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.searchResults,
+                                    arguments: {
+                                      'categoryId': selectedCategoryId
+                                    }
+                                  );
                                 } else {
-                                  SearchNavigation.onHomeSearchTap(context);
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.searchResults,
+                                    arguments: {}
+                                  );
                                 }
                               },
                             ),
@@ -241,16 +250,27 @@ class CategoriesScreenState extends State<CategoriesScreen>
                                     itemCount: products.length,
                                     itemBuilder: (context, productIndex) {
                                       final p = products[productIndex];
-                                      return ProductCard(
-                                        product: ProductEntity(
-                                          id: p.id ?? '',
-                                          title: p.title ?? '',
-                                          imgCover: p.images?.first ?? '',
-                                          price: p.price ?? 0,
-                                          priceAfterDiscount:
-                                              p.priceAfterDiscount ?? 0,
-                                          images: p.images ?? [],
-                                          description: p.description ?? '',
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            Routes.searchResults,
+                                            arguments: {
+                                              'categoryId': p.id ?? ''
+                                            }
+                                          );
+                                        },
+                                        child: ProductCard(
+                                          product: ProductEntity(
+                                            id: p.id ?? '',
+                                            title: p.title ?? '',
+                                            imgCover: p.images?.first ?? '',
+                                            price: p.price ?? 0,
+                                            priceAfterDiscount:
+                                                p.priceAfterDiscount ?? 0,
+                                            images: p.images ?? [],
+                                            description: p.description ?? '',
+                                          ),
                                         ),
                                       );
                                     },

@@ -1,9 +1,14 @@
+// features/categories/presentation/pages/categories_screen.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
+import 'package:flower_app/features/search/presentation/navigation/search_navigation.dart';
+import 'package:flower_app/features/search/presentation/widgets/search_bar_widget.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,33 +128,36 @@ class CategoriesScreenState extends State<CategoriesScreen>
                       EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                   child: Column(
                     children: [
+                      // SearchBar section
                       Row(
                         children: [
                           Expanded(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.search),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  borderSide: BorderSide(
-                                      color: AppColors.white[70]!, width: 1.w),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  borderSide: BorderSide(
-                                      color: AppColors.white[70]!, width: 1.w),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  borderSide: BorderSide(
-                                      color: AppColors.white[70]!, width: 1.w),
-                                ),
-                                hintText: 'Search',
-                              ),
+                            //search bar
+                            child: SearchBarWidget(
+                              readOnly: true,
+                              onTap: () {
+                                final selectedCategoryId = _cubit
+                                        .categories.isNotEmpty
+                                    ? _cubit
+                                        .categories[_cubit.tabController.index]
+                                        .id
+                                    : null;
+
+                                if (selectedCategoryId != null) {
+                                  SearchNavigation.onCategorySearchTap(
+                                      context, selectedCategoryId);
+                                } else {
+                                  SearchNavigation.onHomeSearchTap(context);
+                                }
+                              },
                             ),
                           ),
+                          /////////////////////////
                           SizedBox(width: 8.w),
                           GestureDetector(
+                            onTap: () {
+                              _cubit.showCategoriesFilterSheet(context);
+                            },
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20.w, vertical: 12.h),
@@ -164,6 +172,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
                           ),
                         ],
                       ),
+                      // Tab bar section
                       SizedBox(height: 16.h),
                       CustomTabBar(
                         tabController: _cubit.tabController,

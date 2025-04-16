@@ -122,6 +122,18 @@ import 'package:flower_app/features/profile/domain/usecases/reset_password_use_c
     as _i850;
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart'
     as _i928;
+import 'package:flower_app/features/search/data/datasources/search_remote_ds_impl.dart'
+    as _i261;
+import 'package:flower_app/features/search/data/datasources/search_remote_ds_interface.dart'
+    as _i717;
+import 'package:flower_app/features/search/data/repositories/search_repository_impl.dart'
+    as _i823;
+import 'package:flower_app/features/search/domain/repositories/search_repository.dart'
+    as _i347;
+import 'package:flower_app/features/search/domain/usecases/search_products_use_case.dart'
+    as _i902;
+import 'package:flower_app/features/search/presentation/bloc/search_bloc.dart'
+    as _i690;
 import 'package:flutter/cupertino.dart' as _i719;
 import 'package:flutter/material.dart' as _i409;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -186,6 +198,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i161.CategoriesRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i445.ProfileRemoteDataSource>(
         () => _i1015.ProfileApiRemoteDataSource(gh<_i570.ApiClient>()));
+    gh.factory<_i717.SearchRemoteDsInterface>(
+        () => _i261.SearchRemoteDsImpl(gh<_i570.ApiClient>()));
     gh.factory<_i1.CategoriesRepo>(() => _i486.CategoriesRepoImpl(
         gh<_i634.CategoriesRemoteDataSourceContract>()));
     gh.factory<_i453.HomeRepositoryContract>(
@@ -198,6 +212,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i429.OccasionRepository>(() =>
         _i547.OccasionRepositoryImpl(gh<_i224.OccasionRemoteDataSource>()));
+    gh.factory<_i347.SearchRepository>(
+        () => _i823.SearchRepositoryImpl(gh<_i717.SearchRemoteDsInterface>()));
     gh.factory<_i241.CartRepoInterface>(
         () => _i355.CartRepoImpl(gh<_i861.CartRemoteDsInterface>()));
     gh.factory<_i514.AuthRepo>(() => _i1012.AuthRepoImpl(
@@ -226,16 +242,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i242.VerifyResetCodeUseCase>(
         () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i902.SearchProductsUseCase>(
+        () => _i902.SearchProductsUseCase(gh<_i347.SearchRepository>()));
     gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
           gh<_i298.GetCategoriesUseCase>(),
           gh<List<_i1025.CategoryOccasionEntity>>(),
         ));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
-    gh.factory<_i389.GetUserDataUseCase>(
-        () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i732.EditProfileUseCase>(
         () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i389.GetUserDataUseCase>(
+        () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i307.LogoutUseCase>(
         () => _i307.LogoutUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i850.ResetPasswordUseCase>(
@@ -265,6 +283,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i850.ResetPasswordUseCase>(),
           gh<_i1053.AuthLocalDataSourceContract>(),
         ));
+    gh.singleton<_i690.SearchBloc>(
+        () => _i690.SearchBloc(gh<_i902.SearchProductsUseCase>()));
     gh.factory<_i814.OccasionCubit>(
         () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(

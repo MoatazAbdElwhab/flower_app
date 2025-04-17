@@ -1,3 +1,4 @@
+// core/common_widgets/dummy_widgets/dummy_widgets.dart
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
@@ -67,7 +68,6 @@ class AppDummyWidgets {
                 description: 'asd asdasd'))
       ];
       
-  // Product grid skeleton loader for search results and similar pages
   static Widget buildProductsGridSkeleton({int itemCount = 4}) {
     return Skeletonizer(
       enabled: true,

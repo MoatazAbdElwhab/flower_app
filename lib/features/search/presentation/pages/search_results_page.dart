@@ -7,7 +7,6 @@ import 'package:flower_app/core/common_widgets/product_card/product_card_view.da
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/search/presentation/bloc/search_bloc.dart';
 import 'package:flower_app/features/search/presentation/bloc/search_event.dart';
 import 'package:flower_app/features/search/presentation/bloc/search_state.dart';
@@ -55,7 +54,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     super.dispose();
   }
 
-  // Simple method to handle refresh for all states
   Future<void> _handleRefresh() async {
     final currentQuery = _searchController.text;
     if (currentQuery.isNotEmpty) {
@@ -64,8 +62,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
         categoryId: widget.categoryId,
       ));
     }
-    // Return a delayed future to give the UI time to update
-    // This ensures the refresh indicator stays visible long enough
     return Future.delayed(const Duration(milliseconds: 500));
   }
 

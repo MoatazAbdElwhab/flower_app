@@ -52,7 +52,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   Future<void> _onRefreshSearch(
       RefreshSearchEvent event, Emitter<SearchState> emit) async {
-    // Convert RefreshSearchEvent to SearchQueryEvent to reuse logic
     final searchEvent = SearchQueryEvent(
       event.query,
       categoryId: event.categoryId,

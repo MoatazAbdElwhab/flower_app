@@ -84,6 +84,8 @@ abstract class LocaleKeys {
   static const home_empty_states_categories = 'home.empty_states.categories';
   static const home_empty_states_occasions = 'home.empty_states.occasions';
   static const home_empty_states_no_data = 'home.empty_states.no_data';
+  static const home_empty_states_pull_to_refresh =
+      'home.empty_states.pull_to_refresh';
   static const home_empty_states = 'home.empty_states';
   static const home_location_select = 'home.location.select';
   static const home_location_finding = 'home.location.finding';
@@ -151,6 +153,32 @@ abstract class LocaleKeys {
   static const profile_changeLanguage = 'profile.changeLanguage';
   static const profile_aboutUs = 'profile.aboutUs';
   static const profile_termsAndConditions = 'profile.termsAndConditions';
+  static const profile_terms_title = 'profile.terms.title';
+  static const profile_terms_last_updated = 'profile.terms.last_updated';
+  static const profile_terms_introduction = 'profile.terms.introduction';
+  static const profile_terms_definitions = 'profile.terms.definitions';
+  static const profile_terms_account = 'profile.terms.account';
+  static const profile_terms_delivery = 'profile.terms.delivery';
+  static const profile_terms_cancellation = 'profile.terms.cancellation';
+  static const profile_terms_app_usage = 'profile.terms.app_usage';
+  static const profile_terms_legal = 'profile.terms.legal';
+  static const profile_terms_contact = 'profile.terms.contact';
+  static const profile_terms_introduction_text =
+      'profile.terms.introduction_text';
+  static const profile_terms_definitions_text =
+      'profile.terms.definitions_text';
+  static const profile_terms_account_text = 'profile.terms.account_text';
+  static const profile_terms_delivery_text = 'profile.terms.delivery_text';
+  static const profile_terms_cancellation_text =
+      'profile.terms.cancellation_text';
+  static const profile_terms_app_usage_text = 'profile.terms.app_usage_text';
+  static const profile_terms_legal_text = 'profile.terms.legal_text';
+  static const profile_terms_contact_text = 'profile.terms.contact_text';
+  static const profile_terms_email = 'profile.terms.email';
+  static const profile_terms_phone = 'profile.terms.phone';
+  static const profile_terms_address = 'profile.terms.address';
+  static const profile_terms_thank_you = 'profile.terms.thank_you';
+  static const profile_terms_copyright = 'profile.terms.copyright';
   static const profile_logout = 'profile.logout';
   static const profile_updateProfile = 'profile.updateProfile';
   static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
@@ -207,4 +235,23 @@ abstract class LocaleKeys {
   static const cart_failedToRemove = 'cart.failedToRemove';
   static const cart_updateProfileSuccess = 'cart.updateProfileSuccess';
   static const cart = 'cart';
+  static const checkout_payment_method_cash = 'checkout.payment_method.cash';
+  static const checkout_payment_method_card = 'checkout.payment_method.card';
+  static const checkout_payment_method = 'checkout.payment_method';
+  static const checkout_sub_total = 'checkout.sub_total';
+  static const checkout_delivery_fee = 'checkout.delivery_fee';
+  static const checkout_total = 'checkout.total';
+  static const checkout_place_order = 'checkout.place_order';
+  static const checkout_delivery_address = 'checkout.delivery_address';
+  static const checkout_add_new = 'checkout.add_new';
+  static const checkout_delivery_time = 'checkout.delivery_time';
+  static const checkout_schedule = 'checkout.schedule';
+  static const checkout_instant = 'checkout.instant';
+  static const checkout_it_is_a_gift = 'checkout.it_is_a_gift';
+  static const checkout_enter_the_name = 'checkout.enter_the_name';
+  static const checkout_name = 'checkout.name';
+  static const checkout_enter_the_phone_number =
+      'checkout.enter_the_phone_number';
+  static const checkout_phone_number = 'checkout.phone_number';
+  static const checkout = 'checkout';
 }

@@ -56,37 +56,43 @@ class CartProductTitleAndRemoveIcon extends StatelessWidget {
                       size: 20,
                     )
                   : BlocConsumer<CartBloc, CartState>(
-                listenWhen: (previous, current) =>
-                  previous.removeFromCartState != current.removeFromCartState,
-                listener: (context, state) {
-                  final utils = getIt<DialogUtils>();
-                  if(state.removeFromCartState is BaseSuccessState){
-                    utils.showSnackBar(textColor: Colors.green, message:
-                    LocaleKeys.cart_successfullyRemoved.tr(),
-                        context: context);
-                  }else if(state.removeFromCartState is BaseErrorState){
-                    utils.showSnackBar(textColor: Colors.red, message:
-                    '${LocaleKeys.cart_failedToRemove.tr()}\n'
-                        '${((state.removeFromCartState)as BaseErrorState).errorMessage}',
-                        context: context);
-                  }
-                },
+                      listenWhen: (previous, current) =>
+                          previous.removeFromCartState !=
+                          current.removeFromCartState,
+                      listener: (context, state) {
+                        final utils = getIt<DialogUtils>();
+                        if (state.removeFromCartState is BaseSuccessState) {
+                          utils.showSnackBar(
+                              textColor: Colors.green,
+                              message: LocaleKeys.cart_successfullyRemoved.tr(),
+                              context: context);
+                        } else if (state.removeFromCartState
+                            is BaseErrorState) {
+                          utils.showSnackBar(
+                              textColor: Colors.red,
+                              message:
+                                  '${LocaleKeys.cart_failedToRemove.tr()}\n'
+                                  '${((state.removeFromCartState) as BaseErrorState).errorMessage}',
+                              context: context);
+                        }
+                      },
                       buildWhen: (p, c) =>
                           p.removeFromCartState != c.removeFromCartState,
-                      builder: (context, state) => state.removeFromCartState
-                                  is BaseLoadingState &&
-                              state.activeCartItemId == id
-                          ? const Padding(
-                            padding: EdgeInsets.all(8),
-                            child: CircularProgressIndicator(
-                              strokeWidth: 4,
-                              color: AppColors.primary,
-                            ),
-                          )
-                          : Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: SvgPicture.asset('assets/icons/delete_icon.svg'),
-                          ),
+                      builder: (context, state) =>
+                          state.removeFromCartState is BaseLoadingState &&
+                                  state.activeCartItemId == id
+                              ? const Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 4,
+                                    color: AppColors.primary,
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: SvgPicture.asset(
+                                      'assets/icons/delete_icon.svg'),
+                                ),
                     ),
             )),
       ],

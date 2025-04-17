@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:flower_app/features/cart/presentation/bloc/cart_state.dart';
@@ -54,10 +55,9 @@ class CartPriceAndCheckoutWidget extends StatelessWidget {
                     Text(LocaleKeys.cart_deliveryFee.tr(),
                         style: getRegularStyle(
                             color: Colors.black, fontSize: 16.sp)),
-                     Text(
-                            '${state.deliveryFee} ${LocaleKeys.cart_pound.tr()}',
-                            style: getRegularStyle(
-                                color: Colors.black, fontSize: 16.sp))
+                    Text('${state.deliveryFee} ${LocaleKeys.cart_pound.tr()}',
+                        style: getRegularStyle(
+                            color: Colors.black, fontSize: 16.sp))
                   ],
                 ),
               ),
@@ -90,7 +90,9 @@ class CartPriceAndCheckoutWidget extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.checkout);
+                },
                 child: FittedBox(child: Text(LocaleKeys.cart_checkout.tr())),
               ),
             ],

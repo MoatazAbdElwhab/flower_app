@@ -1,8 +1,10 @@
+// features/profile/presentation/cubit/profile_state.dart
 part of 'profile_cubit.dart';
 
 class ProfileState extends Equatable {
+
   const ProfileState({
-    this.getUserDataState,
+    this.getUserDataState, 
     this.editProfileState,
     this.logoutState,
     this.resetPasswordState,
@@ -40,6 +42,7 @@ class ProfileState extends Equatable {
     BaseState? editProfileState,
     BaseState? logoutState,
     BaseState? resetPasswordState,
+    UserData? userData,
     bool? isResetPasswordFormValid,
     BaseState? getUserLocationOnMap,
     String? address,
@@ -47,7 +50,6 @@ class ProfileState extends Equatable {
     String? city,
     LatLng? selectedLocation,
     Set<Marker>? markers,
-    UserData? userData,
     BaseState? addAddressState,
     List<String>? localCities,
     List<String>? localAreas,

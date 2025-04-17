@@ -36,24 +36,27 @@ class ItemCard extends StatelessWidget {
     final bool showPrice = product != null;
 
     return GestureDetector(
-      onTap: onTap ?? () {
-        if (product != null) {
-          Navigator.pushNamed(
-            context,
-            Routes.productDetailsView,
-            arguments: product,
-          );
-        } else if (occasion != null && occasionList != null && occasionIndex != null) {
-          Navigator.pushNamed(
-            context,
-            Routes.occasion,
-            arguments: OccasionPageArguments(
-              categories: occasionList!,
-              selectedCategoryIndex: occasionIndex!,
-            ),
-          );
-        }
-      },
+      onTap: onTap ??
+          () {
+            if (product != null) {
+              Navigator.pushNamed(
+                context,
+                Routes.productDetailsView,
+                arguments: product,
+              );
+            } else if (occasion != null &&
+                occasionList != null &&
+                occasionIndex != null) {
+              Navigator.pushNamed(
+                context,
+                Routes.occasion,
+                arguments: OccasionPageArguments(
+                  categories: occasionList!,
+                  selectedCategoryIndex: occasionIndex!,
+                ),
+              );
+            }
+          },
       child: Container(
         width: 120.w,
         margin: EdgeInsets.only(right: 10.w),
@@ -102,7 +105,7 @@ class ItemCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            if (showPrice) 
+            if (showPrice)
               Expanded(
                 child: Text(
                   product!.priceAfterDiscount != 0

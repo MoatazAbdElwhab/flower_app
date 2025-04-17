@@ -17,4 +17,5 @@ class Routes {
   static const String editProfilePage = '/editProfilePage';
   static const String cart = '/cart';
   static const String addAddress = '/addAddress';
+  static const String checkout = '/checkout';
 }

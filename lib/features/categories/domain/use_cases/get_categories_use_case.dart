@@ -6,9 +6,10 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class GetCategoriesUseCase {
- final CategoriesRepo _repo;
+  final CategoriesRepo _repo;
 
   GetCategoriesUseCase(this._repo);
 
- Future<Either<ApiException, List<Products>>> call(String categoryId) async=> await _repo.getCategories(categoryId);
+  Future<Either<ApiException, List<Products>>> call(String categoryId) async =>
+      await _repo.getCategories(categoryId);
 }

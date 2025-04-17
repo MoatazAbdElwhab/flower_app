@@ -40,24 +40,24 @@ class HomeCubit extends Cubit<HomeState> {
     final response = await getHomeDataUseCase.call();
 
     response.fold(
-          (error) {
+      (error) {
         Log.e('Get Home Data Error: $error');
-        emit(state.copyWith(
-            homeDataState: BaseErrorState(error.toString())));
+        emit(state.copyWith(homeDataState: BaseErrorState(error.toString())));
       },
-          (data) {
+      (data) {
         _homeData = data;
         if (!getIt.isRegistered<List<CategoryOccasionEntity>>()) {
-          getIt.registerSingleton<List<CategoryOccasionEntity>>(data.categories ?? []);
+          getIt.registerSingleton<List<CategoryOccasionEntity>>(
+              data.categories ?? []);
         } else {
           getIt.unregister<List<CategoryOccasionEntity>>();
-          getIt.registerSingleton<List<CategoryOccasionEntity>>(data.categories ?? []);
+          getIt.registerSingleton<List<CategoryOccasionEntity>>(
+              data.categories ?? []);
         }
 
         emit(state.copyWith(homeDataState: BaseSuccessState()));
       },
     );
-
   }
 
   // -----------------------------------------------------location

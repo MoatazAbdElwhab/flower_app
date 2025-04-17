@@ -8,6 +8,5 @@ class CartLoadUseCase {
 
   CartLoadUseCase(this.cartRepo);
 
-  Future<GetCartResponse> call() async =>
-      await cartRepo.getUserCart();
+  Future<GetCartResponse> call() async => await cartRepo.getUserCart();
 }

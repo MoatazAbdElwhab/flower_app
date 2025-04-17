@@ -7,6 +7,5 @@ class ClearCartUseCase {
 
   ClearCartUseCase(this.cartRepo);
 
-  Future<void> call() async =>
-      await cartRepo.clearCart();
+  Future<void> call() async => await cartRepo.clearCart();
 }

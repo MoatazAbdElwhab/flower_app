@@ -11,6 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../pages/add_adress_screen.dart';
+
 class SettingsSection extends StatelessWidget {
   const SettingsSection({
     super.key,
@@ -37,7 +39,12 @@ class SettingsSection extends StatelessWidget {
             height: 20,
           ),
           title: LocaleKeys.profile_savedAddress.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AddAddressScreen()),
+            );
+          },
         ),
         const SizedBox(height: 16),
         Divider(

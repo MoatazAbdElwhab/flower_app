@@ -6,7 +6,7 @@
     "label": "الاسم الأول",
     "error": {
       "empty": "يرجى إدخال الاسم الأول",
-      "invalid": "الرجاء إدخال اسم أول صحيح"
+      "invalid": "يرجى إدخال اسم أول صالح"
     }
   },
   "lastName": {
@@ -14,7 +14,7 @@
     "label": "اسم العائلة",
     "error": {
       "empty": "يرجى إدخال اسم العائلة",
-      "invalid": "الرجاء إدخال اسم عائلة صحيح"
+      "invalid": "يرجى إدخال اسم عائلة صالح"
     }
   },
   "email": {
@@ -22,7 +22,7 @@
     "label": "البريد الإلكتروني",
     "error": {
       "empty": "يرجى إدخال البريد الإلكتروني",
-      "invalid": "يرجى إدخال بريد إلكتروني صحيح"
+      "invalid": "يرجى إدخال بريد إلكتروني صالح"
     }
   },
   "password": {
@@ -47,7 +47,7 @@
       "sign_in_error": "حدث خطأ أثناء تسجيل الدخول: {error}",
       "navigation": {
         "forgot_password": "الانتقال إلى صفحة استعادة كلمة المرور",
-        "sign_up": "الانتقال إلى صفحة إنشاء الحساب"
+        "sign_up": "الانتقال إلى صفحة التسجيل"
       }
     },
     "login": {
@@ -57,7 +57,7 @@
         "hint": "أدخل بريدك الإلكتروني",
         "validation": {
           "required": "البريد الإلكتروني مطلوب",
-          "invalid": "يرجى إدخال بريد إلكتروني صحيح"
+          "invalid": "يرجى إدخال بريد إلكتروني صالح"
         }
       },
       "password": {
@@ -65,7 +65,7 @@
         "hint": "أدخل كلمة المرور",
         "validation": {
           "required": "كلمة المرور مطلوبة",
-          "invalid": "كلمة المرور يجب أن تكون 6 أحرف على الأقل"
+          "invalid": "يجب أن تكون كلمة المرور 6 أحرف على الأقل"
         }
       },
       "remember_me": "تذكرني",
@@ -73,7 +73,7 @@
       "login_button": "تسجيل الدخول",
       "guest_button": "الدخول كزائر",
       "no_account": "ليس لديك حساب؟ ",
-      "sign_up": "إنشاء حساب",
+      "sign_up": "سجّل الآن",
       "guest_message": "تم تسجيل الدخول كزائر"
     }
   },
@@ -81,20 +81,20 @@
     "sections": {
       "best_seller": "الأكثر مبيعًا",
       "categories": "الفئات",
-      "occasion": "المناسبات",
+      "occasion": "المناسبة",
       "view_all": "عرض الكل",
       "search": "بحث",
-      "flowery": "فلاوري"
+      "flowery": "زهور"
     },
     "empty_states": {
-      "best_sellers": "لا توجد منتجات أكثر مبيعًا",
+      "best_sellers": "لا توجد منتجات أكثر مبيعًا متاحة",
       "categories": "لا توجد فئات متاحة",
       "occasions": "لا توجد مناسبات متاحة",
-      "no_data": "لا توجد بيانات. اسحب للتحديث."
+      "no_data": "لا توجد بيانات متاحة. اسحب للتحديث."
     },
     "location": {
       "select": "اختر الموقع",
-      "finding": "جارٍ تحديد موقعك...",
+      "finding": "يتم تحديد موقعك...",
       "deliver_to": "التوصيل إلى",
       "error": "خطأ في الموقع",
       "placeholder": "..................."
@@ -127,12 +127,12 @@
   "dialogs": {
     "error": {
       "title": "خطأ",
-      "ok": "حسنًا"
+      "ok": "موافق"
     },
     "success": {
       "title": "تم الإنشاء بنجاح",
-      "message": "تم إنشاء الحساب بنجاح\nاضغط حسنًا لتسجيل الدخول.",
-      "ok": "حسنًا"
+      "message": "تم إنشاء الحساب بنجاح \n اضغط موافق لتسجيل الدخول.",
+      "ok": "موافق"
     }
   },
   "loginPrompt": {
@@ -141,87 +141,109 @@
   },
   "success": {
     "title": "تم الإنشاء بنجاح",
-    "message": "تم إنشاء الحساب بنجاح\nاضغط حسنًا لتسجيل الدخول.",
-    "ok": "حسنًا"
+    "message": "تم إنشاء الحساب بنجاح \n اضغط موافق لتسجيل الدخول.",
+    "ok": "موافق"
   },
   "forgetPassword": {
     "title": "نسيت كلمة المرور",
     "description": "يرجى إدخال البريد الإلكتروني المرتبط بحسابك",
-    "continueButton": "متابعة"
+    "continueButton": "استمرار"
   },
   "pinCode": {
-    "title": "تأكيد البريد الإلكتروني",
+    "title": "التحقق من البريد الإلكتروني",
     "description": "يرجى إدخال الرمز المرسل إلى بريدك الإلكتروني",
-    "ErrorMessage": "رمز غير صحيح",
+    "ErrorMessage": "رمز غير صالح",
     "ReadyMessage": "لم يصلك الرمز؟",
     "ResendMessage": "إعادة الإرسال"
   },
   "resetPassword": {
     "title": "إعادة تعيين كلمة المرور",
-    "description": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف على الأقل مع حرف كبير ورقم واحد على الأقل",
+    "description": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف على الأقل، وحرف كبير ورقم واحد على الأقل",
     "resetButton": "إعادة التعيين"
   },
   "occasionPage": {
     "title": "المناسبات",
-    "description": "ازدهر مع منتجاتنا المميزة"
+    "description": "تألق مع منتجاتنا الأكثر مبيعًا"
   },
   "bestSeller": {
     "title": "الأكثر مبيعًا",
-    "description": "ازدهر مع منتجاتنا المميزة"
+    "description": "تألق مع منتجاتنا الأكثر مبيعًا"
   },
   "profile": {
     "myOrders": "طلباتي",
     "savedAddress": "العناوين المحفوظة",
     "notification": "الإشعارات",
     "language": "اللغة",
-    "userLanguage": "العربية",
+    "userLanguage": "الإنجليزية",
     "changeLanguage": "تغيير اللغة",
-    "aboutUs": "معلومات عنا",
+    "aboutUs": "من نحن",
     "termsAndConditions": "الشروط والأحكام",
     "logout": "تسجيل الخروج",
-    "updateProfile": "تحديث الملف الشخصي",
+    "updateProfile": "تحديث",
     "updateProfileSuccess": "تم التحديث",
-    "editProfile": "تحرير الملف الشخصي",
+    "editProfile": "تعديل الملف الشخصي",
     "logoutTitle": "تسجيل الخروج",
-    "confirmLogout": "تأكيد تسجيل الخروج !!",
-    "cancel": "إلغاء",
-    "reset_password": {
-      "title": "إعادة تعيين كلمة المرور",
-      "current_password": "كلمة المرور الحالية",
-      "current_password_hint": "كلمة المرور الحالية",
-      "new_password": "كلمة المرور الجديدة",
-      "new_password_hint": "كلمة المرور الجديدة",
-      "confirm_password": "تأكيد كلمة المرور",
-      "confirm_password_hint": "تأكيد كلمة المرور",
-      "update_button": "تحديث",
-      "success_message": "تم تحديث كلمة المرور بنجاح",
-      "error_message": "فشل تحديث كلمة المرور. يرجى المحاولة مرة أخرى.",
-      "error": {
-        "confirm_password_required": "يرجى تأكيد كلمة المرور",
-        "passwords_not_match": "كلمتا المرور غير متطابقتين",
-        "same_password": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية",
-        "incorrect_password": "كلمة المرور الحالية غير صحيحة"
-      }
+    "confirmLogout": "هل أنت متأكد من تسجيل الخروج؟",
+    "cancel": "إلغاء"
+  },
+  "resetpassword": {
+    "title": "إعادة تعيين كلمة المرور",
+    "current_password": "كلمة المرور الحالية",
+    "current_password_hint": "كلمة المرور الحالية",
+    "new_password": "كلمة المرور الجديدة",
+    "new_password_hint": "كلمة المرور الجديدة",
+    "confirm_password": "تأكيد كلمة المرور",
+    "confirm_password_hint": "تأكيد كلمة المرور",
+    "update_button": "تحديث",
+    "success_message": "تم تحديث كلمة المرور بنجاح",
+    "error_message": "فشل في تحديث كلمة المرور. يرجى المحاولة مرة أخرى.",
+    "error": {
+      "confirm_password_required": "يرجى تأكيد كلمة المرور",
+      "passwords_not_match": "كلمتا المرور غير متطابقتين",
+      "same_password": "يجب أن تكون كلمة المرور الجديدة مختلفة عن الحالية",
+      "incorrect_password": "كلمة المرور الحالية غير صحيحة"
     }
   },
   "cart": {
-    "cart": "عربة التسوق",
+    "cart": "السلة",
     "items": "العناصر",
     "delivery": "التوصيل",
     "total": "الإجمالي",
     "deliveryFee": "رسوم التوصيل",
     "deliverTo": "التوصيل إلى",
-    "subTotal": "المجموع الفرعي",
-    "checkout": "إتمام الشراء",
+    "subTotal": "الإجمالي الفرعي",
+    "checkout": "الدفع",
     "address": "العنوان",
-    "cartEmpty": "عربة التسوق فارغة",
-    "failedToGetCart": "فشل في الحصول على عربة التسوق الخاصة بالمستخدم",
+    "cartEmpty": "السلة فارغة",
+    "failedToGetCart": "فشل في جلب سلة المستخدم.",
     "pound": "ج.م",
     "errorUpdateQuantity": "حدث خطأ أثناء تحديث كمية المنتج",
-    "resetQuantityErrorMsg": "تعذر تحديث كمية المنتج، يرجى المحاولة مرة أخرى لاحقًا",
+    "resetQuantityErrorMsg": "تعذر تحديث كمية المنتج، يرجى المحاولة لاحقًا",
     "quantityUpdatedTo": "تم تحديث الكمية إلى",
-    "successfullyRemoved": "تمت إزالة المنتج بنجاح",
-    "failedToRemove": "فشل في إزالة المنتج",
-    "updateProfileSuccess": "تم التحديث بنجاح"
+    "successfullyRemoved": "تم حذف المنتج بنجاح",
+    "failedToRemove": "فشل في حذف المنتج",
+    "updateProfileSuccess": "تم التحديث"
+  },
+  "addAddress": {
+    "title": "إضافة عنوان",
+    "save_address_button": "حفظ العنوان",
+    "address_label": "العنوان",
+    "address_hint": "أدخل العنوان",
+    "address_error_empty": "يرجى إدخال العنوان",
+    "phone_label": "رقم الهاتف",
+    "phone_hint": "أدخل رقم الهاتف",
+    "phone_error_empty": "يرجى إدخال رقم الهاتف",
+    "phone_error_length": "يجب أن يتكون رقم الهاتف من 11 رقمًا",
+    "recipient_name_label": "اسم المستلم",
+    "recipient_name_hint": "أدخل اسم المستلم",
+    "recipient_name_error_empty": "يرجى إدخال اسم المستلم",
+    "recipient_name_error_length": "يجب ألا يقل الاسم عن حرفين",
+    "city_label": "المدينة",
+    "city_hint": "اكتب أو اختر مدينة",
+    "city_error_empty": "يرجى اختيار أو إدخال مدينة",
+    "area_label": "المنطقة",
+    "area_hint": "اكتب أو اختر منطقة",
+    "area_error_empty": "يرجى اختيار أو إدخال منطقة",
+    "map_error_message": "خطأ في تحديد موقعك \n يرجى إدخاله يدويًا"
   }
 }

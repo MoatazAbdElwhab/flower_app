@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 
 class Validator {
   Validator._();
@@ -91,4 +92,34 @@ class Validator {
     }
     return null;
   }
+
+static String? recipientNameValidation(String? recipientName) {
+  if (recipientName == null || recipientName.isEmpty) {
+    return LocaleKeys.addAddress_recipient_name_error_empty.tr();
+  } else if (recipientName.length < 2) {
+    return LocaleKeys.addAddress_recipient_name_error_length.tr();
+  }
+  return null;
+}
+
+static String? cityValidation(String? city) {
+  if (city == null || city.isEmpty) {
+    return 'city.error.empty'.tr();
+  }
+  return null;
+}
+
+static String? areaValidation(String? area) {
+  if (area == null || area.isEmpty) {
+    return 'area.error.empty'.tr();
+  }
+  return null;
+}
+
+static String? addressValidation(String? address) {
+  if (address == null || address.isEmpty) {
+    return 'address.error.empty'.tr();
+  }
+  return null;
+}
 }

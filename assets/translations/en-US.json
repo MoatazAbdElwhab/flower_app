@@ -225,5 +225,27 @@
     "successfullyRemoved": "product successfully removed",
     "failedToRemove": "failed to remove product",
     "updateProfileSuccess": "Updated"
+  },
+  "addAddress": {
+    "title": "Add Address",
+    "save_address_button": "Save Address",
+    "address_label": "Address",
+    "address_hint": "Enter the address",
+    "address_error_empty": "Please enter an address",
+    "phone_label": "Phone Number",
+    "phone_hint": "Enter the phone number",
+    "phone_error_empty": "Please enter a phone number",
+    "phone_error_length": "Phone number must be 11 digits",
+    "recipient_name_label": "Recipient name",
+    "recipient_name_hint": "Enter the recipient name",
+    "recipient_name_error_empty": "Please enter a recipient name",
+    "recipient_name_error_length": "Name must be at least 2 characters",
+    "city_label": "City",
+    "city_hint": "Type or select a city",
+    "city_error_empty": "Please select or enter a city",
+    "area_label": "Area",
+    "area_hint": "Type or select an area",
+    "area_error_empty": "Please select or enter an area",
+    "map_error_message": "Error getting your location \n please try enter it Manually"
   }
 }

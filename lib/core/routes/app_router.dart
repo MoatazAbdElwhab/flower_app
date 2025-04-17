@@ -1,3 +1,4 @@
+import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
@@ -8,12 +9,15 @@ import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
+import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:flower_app/features/profile/presentation/pages/add_adress_screen.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/profile/domain/entities/user_data.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
 
@@ -108,6 +112,13 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ProfileResetPassword(),
+      );
+      case Routes.addAddress:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => BlocProvider(
+          create: (context) => getIt<ProfileCubit>(),
+          child: const AddAddressScreen()),
       );
 
     default:

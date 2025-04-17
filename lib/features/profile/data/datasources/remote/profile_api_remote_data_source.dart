@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/app_data/api/api_client.dart';
 import 'package:flower_app/core/app_data/api/api_constants.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
+import 'package:flower_app/features/profile/data/models/add_adress_model/add_adress_request.dart';
 import 'package:flower_app/features/profile/data/models/profile_data_response/profile_data_response.dart';
 import 'package:flower_app/features/profile/data/models/profile_data_response/user_data_model.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
@@ -52,5 +53,14 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
     );
 
     return ProfileResetPasswordResponse.fromJson(response);
+  }
+
+  @override
+  Future<void> addAddress(AddAdressRequest addAdressRequest) async {  
+    await _apiClient.patch(
+      ApiConstants.addAddressEndPoint,
+      data: addAdressRequest.toJson(),
+      requiresToken: true,
+    );
   }
 }

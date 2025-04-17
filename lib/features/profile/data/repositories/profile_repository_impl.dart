@@ -2,6 +2,7 @@ import 'package:either_dart/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/profile/data/datasources/local/profile_local_data_source.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
+import 'package:flower_app/features/profile/data/models/add_adress_model/add_adress_request.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/response/profile_reset_password_response.dart';
 import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
@@ -58,6 +59,16 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return Right(response);
     } catch (e) {
       return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, void>> addAddress(AddAdressRequest addAdressRequest) async{
+    try {
+    await _profileRemoteDataSource.addAddress(addAdressRequest);
+      return const Right(null);
+    } catch (e) {
+      return Left(Exception(e.toString()));
     }
   }
 }

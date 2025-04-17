@@ -187,24 +187,24 @@
     "confirmLogout":"Confirm logout !!",
     "cancel": "Cancel"
   },
-  "resetpassword": {
-      "title": "Reset Password",
-      "current_password": "Current Password",
-      "current_password_hint": "Current Password",
-      "new_password": "New Password",
-      "new_password_hint": "New Password",
-      "confirm_password": "Confirm Password",
-      "confirm_password_hint": "Confirm Password",
-      "update_button": "Update",
-      "success_message": "Password updated successfully",
-      "error_message": "Failed to update password. Please try again.",
-      "error": {
-        "confirm_password_required": "Please confirm your password",
-        "passwords_not_match": "Passwords do not match",
-        "same_password": "New password must be different from current password",
-        "incorrect_password": "Current password is not correct"
-      }
-    
+  "reset_password": {
+    "title": "Reset Password",
+    "current_password": "Current Password",
+    "current_password_hint": "Current Password",
+    "new_password": "New Password",
+    "new_password_hint": "New Password",
+    "confirm_password": "Confirm Password",
+    "confirm_password_hint": "Confirm Password",
+    "update_button": "Update",
+    "success_message": "Password updated successfully",
+    "error_message": "Failed to update password. Please try again.",
+    "error": {
+      "confirm_password_required": "Please confirm your password",
+      "passwords_not_match": "Passwords do not match",
+      "same_password": "New password must be different from current password",
+      "incorrect_password": "Current password is not correct"
+    }
+
   },
   "cart": {
     "cart": "Cart",
@@ -225,6 +225,27 @@
     "successfullyRemoved": "product successfully removed",
     "failedToRemove": "failed to remove product",
     "updateProfileSuccess": "Updated"
+  },
+
+  "checkout": {
+    "title": "Checkout",
+    "delivery_time": "Delivery time",
+    "schedule": "Schedule",
+    "instant": "Instant, ",
+    "delivery_address": "Delivery address",
+    "add_new": "Add new",
+    "payment_method": "Payment method",
+    "payment_method_cash": "Cash on delivery",
+    "payment_method_card": "Credit card",
+    "it_is_a_gift": "It is a gift",
+    "enter_the_name": "Enter the name",
+    "name": "Name",
+    "enter_the_phone_number": "Enter the phone number",
+    "phone_number": "Phone number",
+    "sub_total": "Sub Total",
+    "delivery_fee": "Delivery Fee",
+    "total": "Total",
+    "place_order": "Place order"
   },
   "addAddress": {
     "title": "Add Address",

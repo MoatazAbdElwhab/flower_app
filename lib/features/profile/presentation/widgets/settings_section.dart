@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/resources/app_icon.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
@@ -40,10 +41,7 @@ class SettingsSection extends StatelessWidget {
           ),
           title: LocaleKeys.profile_savedAddress.tr(),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const AddAddressScreen()),
-            );
+            Navigator.pushNamed(context, Routes.addAddress);
           },
         ),
         const SizedBox(height: 16),

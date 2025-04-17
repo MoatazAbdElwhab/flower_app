@@ -15,5 +15,5 @@ class ApiConstants {
   static const String logOutEndPoint = 'auth/logout';
   static const String cart = 'cart';
   static const String changePasswordEndPoint = 'auth/change-password';
-  static const String addAddressEndPoint = 'addresses';
+  static const String addressesEndPoint = 'addresses';
 }

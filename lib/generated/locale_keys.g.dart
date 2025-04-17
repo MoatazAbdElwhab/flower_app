@@ -74,6 +74,7 @@ abstract class  LocaleKeys {
   static const home_empty_states_categories = 'home.empty_states.categories';
   static const home_empty_states_occasions = 'home.empty_states.occasions';
   static const home_empty_states_no_data = 'home.empty_states.no_data';
+  static const home_empty_states_pull_to_refresh = 'home.empty_states.pull_to_refresh';
   static const home_empty_states = 'home.empty_states';
   static const home_location_select = 'home.location.select';
   static const home_location_finding = 'home.location.finding';

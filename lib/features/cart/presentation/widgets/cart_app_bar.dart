@@ -7,11 +7,14 @@ import '../../../../generated/locale_keys.g.dart';
 class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onBackButton;
   final int cartProductsLength;
-  const CartAppBar({super.key, required this.onBackButton, required this.cartProductsLength});
+  const CartAppBar(
+      {super.key,
+      required this.onBackButton,
+      required this.cartProductsLength});
 
   @override
   Widget build(BuildContext context) {
-    const double backBtnWidth =  38;
+    const double backBtnWidth = 38;
     return AppBar(
       surfaceTintColor: Colors.transparent,
       leadingWidth: 230,
@@ -29,16 +32,17 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(LocaleKeys.cart_cart.tr(),
-                style:
-                getMediumStyle(color: AppColors.black, fontSize: 20)),
+                style: getMediumStyle(color: AppColors.black, fontSize: 20)),
           ),
-          if(cartProductsLength != 0)
-          Text(
-              '( $cartProductsLength ${LocaleKeys.cart_items.tr()} )',)
+          if (cartProductsLength != 0)
+            Text(
+              '( $cartProductsLength ${LocaleKeys.cart_items.tr()} )',
+            )
         ],
       ),
     );
   }
-@override
+
+  @override
   Size get preferredSize => const Size(double.infinity, 40);
 }

@@ -2,9 +2,8 @@
 part of 'profile_cubit.dart';
 
 class ProfileState extends Equatable {
-
   const ProfileState({
-    this.getUserDataState, 
+    this.getUserDataState,
     this.editProfileState,
     this.logoutState,
     this.resetPasswordState,
@@ -30,7 +29,8 @@ class ProfileState extends Equatable {
       editProfileState: editProfileState ?? this.editProfileState,
       logoutState: logoutState ?? this.logoutState,
       resetPasswordState: resetPasswordState ?? this.resetPasswordState,
-      isResetPasswordFormValid: isResetPasswordFormValid ?? this.isResetPasswordFormValid,
+      isResetPasswordFormValid:
+          isResetPasswordFormValid ?? this.isResetPasswordFormValid,
     );
   }
 

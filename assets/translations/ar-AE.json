@@ -223,5 +223,29 @@
     "successfullyRemoved": "تمت إزالة المنتج بنجاح",
     "failedToRemove": "فشل في إزالة المنتج",
     "updateProfileSuccess": "تم التحديث بنجاح"
+  },
+
+
+
+
+  "checkout": {
+    "title": "إتمام الشراء",
+    "delivery_time": "وقت التوصيل",
+    "schedule": "الجدول",
+    "instant": "فوري, ",
+    "delivery_address": "العنوان المراد توصيله",
+    "add_new": "إضافة جديد",
+    "payment_method": "طريقة الدفع",
+    "payment_method_cash": "الدفع عند التوصيل",
+    "payment_method_card": "الدفع بالبطاقة",
+    "it_is_a_gift": "هو هدية",
+    "enter_the_name": "أدخل الاسم",
+    "name": "الاسم",
+    "enter_the_phone_number": "أدخل رقم الهاتف",
+    "phone_number": "رقم الهاتف",
+    "sub_total": "المجموع الفرعي",
+    "delivery_fee": "رسوم التوصيل",
+    "total": "الإجمالي",
+    "place_order": "إتمام الشراء"
   }
 }

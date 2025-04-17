@@ -32,8 +32,7 @@ class _CardAddAndRemoveButtonState extends State<CardAddAndRemoveButton> {
               textColor: Colors.red,
               message: (state.addToCartState as BaseErrorState).errorMessage,
               context: context);
-        }
-        else if (state.updateQuantityState is BaseErrorState) {
+        } else if (state.updateQuantityState is BaseErrorState) {
           utils.showSnackBar(
               textColor: Colors.red,
               message: 'something went in updating product quantity,\n'

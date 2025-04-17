@@ -49,10 +49,6 @@ class CartDm {
   String? _updatedAt;
   num? _v;
 
-
-
-
-
   String? get id => _id;
   String? get user => _user;
   List<CartItem>? get cartItems => _cartItems;
@@ -102,4 +98,3 @@ class CartDm {
   //       v: v ?? _v,
   //     );
 }
-

@@ -45,16 +45,16 @@ class ProductEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    title,
-    imgCover,
-    price,
-    priceAfterDiscount,
-    images,
-    description,
-    _totalPrice,
-    _cartQuantity
-  ];
+        id,
+        title,
+        imgCover,
+        price,
+        priceAfterDiscount,
+        images,
+        description,
+        _totalPrice,
+        _cartQuantity
+      ];
 
   Product formEntityToModel(ProductEntity entity) {
     return Product(
@@ -68,6 +68,13 @@ class ProductEntity extends Equatable {
         description: entity.description);
   }
 }
-final prod =ProductEntity(id: 'id', title: 'title', imgCover: 'imgCover',
-    price: 22, priceAfterDiscount: 22, images: [], description: '',
-cartQuantity: 2);
+
+final prod = ProductEntity(
+    id: 'id',
+    title: 'title',
+    imgCover: 'imgCover',
+    price: 22,
+    priceAfterDiscount: 22,
+    images: [],
+    description: '',
+    cartQuantity: 2);

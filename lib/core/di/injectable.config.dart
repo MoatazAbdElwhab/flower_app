@@ -1,3 +1,4 @@
+// core/di/injectable.config.dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -74,6 +75,8 @@ import 'package:flower_app/features/categories/domain/use_cases/get_categories_u
     as _i298;
 import 'package:flower_app/features/categories/presentation/manager/categories_cubit.dart'
     as _i659;
+import 'package:flower_app/features/checkout/presentation/cubit/checkout_cubit.dart'
+    as _i122;
 import 'package:flower_app/features/home/data/datasource/home_data_source_contract.dart'
     as _i286;
 import 'package:flower_app/features/home/data/datasource/home_data_source_impl.dart'
@@ -156,6 +159,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final getItRegisterModule = _$GetItRegisterModule();
     gh.factory<_i754.LocationService>(() => _i754.LocationService());
+    gh.factory<_i122.CheckoutCubit>(() => _i122.CheckoutCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => getItRegisterModule.navigatorKey);
     gh.singleton<_i973.InternetConnectionChecker>(
@@ -166,9 +170,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i558.FlutterSecureStorage>(
         () => getItRegisterModule.secureStorage);
+    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i210.AppNavigatorObserver>(
         () => _i210.AppNavigatorObserver());
-    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i666.LocalStorageClient>(() => _i666.LocalStorageClient(
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
@@ -220,20 +224,24 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
         ));
-    gh.factory<_i589.CartAddProductUseCase>(
-        () => _i589.CartAddProductUseCase(gh<_i241.CartRepoInterface>()));
-    gh.factory<_i379.CartLoadUseCase>(
-        () => _i379.CartLoadUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i703.CartUpdateProductQuantityUseCase>(() =>
+        _i703.CartUpdateProductQuantityUseCase(gh<_i241.CartRepoInterface>()));
     gh.factory<_i325.CartRemoveProductUseCase>(
         () => _i325.CartRemoveProductUseCase(gh<_i241.CartRepoInterface>()));
     gh.factory<_i264.ClearCartUseCase>(
         () => _i264.ClearCartUseCase(gh<_i241.CartRepoInterface>()));
-    gh.factory<_i703.CartUpdateProductQuantityUseCase>(() =>
-        _i703.CartUpdateProductQuantityUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i379.CartLoadUseCase>(
+        () => _i379.CartLoadUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i589.CartAddProductUseCase>(
+        () => _i589.CartAddProductUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i242.VerifyResetCodeUseCase>(
+        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i235.ForgetPasswordUseCase>(
         () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i419.ResendOtpUseCase>(
-        () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i366.SignupUseCase>(
+        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i696.ResetPasswordUseCase>(
         () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i366.SignupUseCase>(
@@ -242,8 +250,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i242.VerifyResetCodeUseCase>(
         () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i902.SearchProductsUseCase>(
-        () => _i902.SearchProductsUseCase(gh<_i347.SearchRepository>()));
     gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
           gh<_i298.GetCategoriesUseCase>(),
           gh<List<_i1025.CategoryOccasionEntity>>(),
@@ -254,6 +260,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i389.GetUserDataUseCase>(
         () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i732.EditProfileUseCase>(
+        () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i307.LogoutUseCase>(
         () => _i307.LogoutUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i850.ResetPasswordUseCase>(

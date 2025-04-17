@@ -5,6 +5,7 @@ import 'package:flower_app/features/auth/presentation/pages/forget_password_page
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_page.dart';
+import 'package:flower_app/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
@@ -113,7 +114,8 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       );
 
     case Routes.searchResults:
-      final Map<String, dynamic> args = settings.arguments as Map<String, dynamic>? ?? {};
+      final Map<String, dynamic> args =
+          settings.arguments as Map<String, dynamic>? ?? {};
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => SearchResultsPage(
@@ -121,6 +123,11 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
           categoryId: args['categoryId'] as String?,
           onBackPressed: () => Navigator.pop(_),
         ),
+      );
+    case Routes.checkout:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const CheckoutPage(),
       );
 
     default:

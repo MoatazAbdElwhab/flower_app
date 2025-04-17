@@ -1,10 +1,8 @@
 // features/search/presentation/bloc/search_bloc.dart
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flower_app/features/search/domain/usecases/search_products_use_case.dart';
 import 'package:flower_app/features/search/presentation/bloc/search_state.dart';
-import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'search_event.dart';
@@ -22,6 +20,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     on<RefreshSearchEvent>(_onRefreshSearch);
   }
 
+//------------------------------------------search query-----------------------------------
   Future<void> _onSearchQuery(
       SearchQueryEvent event, Emitter<SearchState> emit) async {
     emit(state.copyWith(
@@ -43,6 +42,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
   }
 
+//------------------------------------------clear search-----------------------------------
   void _onClearSearch(ClearSearchEvent event, Emitter<SearchState> emit) {
     emit(state.copyWith(
       searchResultProducts: [],
@@ -50,6 +50,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     ));
   }
 
+//------------------------------------------refresh search-----------------------------------
   Future<void> _onRefreshSearch(
       RefreshSearchEvent event, Emitter<SearchState> emit) async {
     final searchEvent = SearchQueryEvent(

@@ -45,6 +45,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     if (widget.initialQuery.isNotEmpty) {
       _searchBloc.add(
           SearchQueryEvent(widget.initialQuery, categoryId: widget.categoryId));
+    } else {
+      // Clear previous search results when returning to page with empty query
+      _searchBloc.add(ClearSearchEvent());
     }
   }
 

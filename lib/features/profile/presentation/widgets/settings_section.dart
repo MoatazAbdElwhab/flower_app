@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../pages/add_adress_screen.dart';
 
 class SettingsSection extends StatelessWidget {
   const SettingsSection({

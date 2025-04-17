@@ -2,7 +2,10 @@ import 'package:flower_app/features/categories/presentation/pages/categories_scr
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../cart/presentation/bloc/cart_bloc.dart';
+import '../cart/presentation/bloc/event.dart';
 import '../cart/presentation/pages/cart_page.dart';
 
 class NavbarPage extends StatefulWidget {
@@ -26,6 +29,10 @@ class _NavbarPageState extends State<NavbarPage> {
       CartPage(onBackButton: () => _selectedIndex.value = 0),
       const ProfilePage(),
     ];
+      final cartBloc = context.read<CartBloc>();
+      if (cartBloc.state.cartProducts == null) {
+        cartBloc.add(const CartLoadEvent());
+      }
   }
 
   @override

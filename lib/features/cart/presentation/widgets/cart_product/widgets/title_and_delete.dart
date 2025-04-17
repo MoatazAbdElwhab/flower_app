@@ -50,10 +50,10 @@ class CartProductTitleAndRemoveIcon extends StatelessWidget {
             child: InkWell(
               onTap: () => bloc.add(CartRemoveProductEvent(productId: id)),
               child: isDummy
-                  ? const Icon(
+                  ?  Icon(
                       Icons.delete,
                       color: Colors.red,
-                      size: 20,
+                      size: 20.sp,
                     )
                   : BlocConsumer<CartBloc, CartState>(
                       listenWhen: (previous, current) =>
@@ -81,18 +81,12 @@ class CartProductTitleAndRemoveIcon extends StatelessWidget {
                       builder: (context, state) =>
                           state.removeFromCartState is BaseLoadingState &&
                                   state.activeCartItemId == id
-                              ? const Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 4,
-                                    color: AppColors.primary,
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(4),
-                                  child: SvgPicture.asset(
-                                      'assets/icons/delete_icon.svg'),
-                                ),
+                              ? Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.h,horizontal: 4.w),
+                                child: const LinearProgressIndicator(),
+                              )
+                              : SvgPicture.asset(
+                                  'assets/icons/delete_icon.svg'),
                     ),
             )),
       ],

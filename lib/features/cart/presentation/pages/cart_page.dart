@@ -23,14 +23,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  @override
-  void didChangeDependencies() {
-    final bloc = context.read<CartBloc>();
-    if (bloc.state.cartProducts == null) {
-      bloc.add(const CartLoadEvent());
-    }
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {

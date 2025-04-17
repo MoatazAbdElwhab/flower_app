@@ -1,6 +1,7 @@
 // features/search/data/datasources/search_remote_ds_impl.dart
 import 'package:flower_app/core/app_data/api/api_client.dart';
 import 'package:flower_app/core/app_data/api/api_constants.dart';
+import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
 import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:injectable/injectable.dart';
 import 'search_remote_ds_interface.dart';
@@ -13,26 +14,25 @@ class SearchRemoteDsImpl implements SearchRemoteDsInterface {
 
   @override
   Future<List<Products>> searchProducts(String query, {String? categoryId}) async {
-    try {
-      Map<String, dynamic> queryParams = {'keyword': query};
-      if (categoryId != null && categoryId.isNotEmpty) {
-        queryParams['category'] = categoryId;
-      }
+    Map<String, dynamic> queryParams = {'keyword': query};
+    if (categoryId != null && categoryId.isNotEmpty) {
+      queryParams['category'] = categoryId;
+    }
 
-      final response = await _apiClient.get(
-        ApiConstants.getProudctByCategoryEndPoint,
-        queryParameters: queryParams,
-        requiresToken: false,
-      );
+    final response = await _apiClient.get(
+      ApiConstants.getProudctByCategoryEndPoint,
+      queryParameters: queryParams,
+      requiresToken: false,
+    );
 
-      if (response['message'] == 'success') {
-        final CategoryProductsModel data = CategoryProductsModel.fromJson(response);
-        return data.products ?? [];
-      } else {
-        throw Exception('Failed to search products: ${response['message'] ?? 'Unknown error'}');
+    if (response['message'] == 'success') {
+      final CategoryProductsModel data = CategoryProductsModel.fromJson(response);
+      if (data.products == null) {
+        throw ApiException(message: 'API returned success but products data is missing');
       }
-    } catch (e) {
-      throw Exception('Failed to search products: ${e.toString()}');
+      return data.products!;
+    } else {
+      throw ApiException(message: 'Failed to search products: ${response['message'] ?? 'Unknown error'}');
     }
   }
 }

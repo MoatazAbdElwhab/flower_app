@@ -5,28 +5,23 @@ import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 
 class SearchState extends Equatable {
   final BaseState searchState;
-  final List<ProductEntity>? searchResults;
-  
-  static final BaseState _initialState = BaseInitialState();
-  
+  final List<ProductEntity>? searchResultProducts;
+
   SearchState({
     BaseState? searchState,
-    this.searchResults,
-  }) : searchState = searchState ?? _initialState;
-  
+    this.searchResultProducts,
+  }) : searchState = searchState ?? BaseInitialState();
+
+  @override
+  List<Object?> get props => [searchState, searchResultProducts];
+
   SearchState copyWith({
     BaseState? searchState,
-    List<ProductEntity>? searchResults,
+    List<ProductEntity>? searchResultProducts,
   }) {
     return SearchState(
       searchState: searchState ?? this.searchState,
-      searchResults: searchResults ?? this.searchResults,
+      searchResultProducts: searchResultProducts ?? this.searchResultProducts,
     );
   }
-  
-  @override
-  List<Object?> get props => [
-    searchState, 
-    searchResults
-  ];
 }

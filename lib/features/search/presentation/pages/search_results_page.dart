@@ -1,8 +1,8 @@
 // features/search/presentation/pages/search_results_page.dart
 
-import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
@@ -16,7 +16,6 @@ import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchResultsPage extends StatefulWidget {
   final String initialQuery;
@@ -54,6 +53,20 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  // Simple method to handle refresh for all states
+  Future<void> _handleRefresh() async {
+    final currentQuery = _searchController.text;
+    if (currentQuery.isNotEmpty) {
+      _searchBloc.add(RefreshSearchEvent(
+        currentQuery,
+        categoryId: widget.categoryId,
+      ));
+    }
+    // Return a delayed future to give the UI time to update
+    // This ensures the refresh indicator stays visible long enough
+    return Future.delayed(const Duration(milliseconds: 500));
   }
 
   @override
@@ -96,95 +109,44 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
                   if (state.searchState is BaseLoadingState) {
-                    return _buildLoadingSkeleton();
+                    return AppDummyWidgets.buildProductsGridSkeleton();
                   } else if (state.searchState is BaseErrorState) {
-                    return _buildErrorState(state);
+                    return RefreshIndicator(
+                      onRefresh: _handleRefresh,
+                      child: _buildErrorState(state),
+                    );
                   } else if (state.searchState is BaseSuccessState) {
-                    if (state.searchResults != null &&
-                        state.searchResults!.isNotEmpty) {
+                    if (state.searchResultProducts != null &&
+                        state.searchResultProducts!.isNotEmpty) {
                       return RefreshIndicator(
-                        onRefresh: () async {
-                          _searchBloc.add(RefreshSearchEvent(
-                            _searchController.text,
-                            categoryId: widget.categoryId,
-                          ));
-
-                          final completer = Completer<void>();
-
-                          late final StreamSubscription subscription;
-                          subscription = _searchBloc.stream.listen((state) {
-                            if (state.searchState is! BaseLoadingState) {
-                              completer.complete();
-                              subscription.cancel();
-                            }
-                          });
-
-                          return completer.future;
-                        },
+                        onRefresh: _handleRefresh,
                         child: GridView.builder(
                           padding: EdgeInsets.all(16.w),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            childAspectRatio: 0.7,
+                            childAspectRatio: 0.7.r,
                             crossAxisSpacing: 16.w,
                             mainAxisSpacing: 16.h,
                           ),
-                          itemCount: state.searchResults!.length,
+                          itemCount: state.searchResultProducts!.length,
                           itemBuilder: (context, index) {
-                            final product = state.searchResults![index];
                             return ProductCard(
-                              product: product,
+                              product: state.searchResultProducts![index],
                             );
                           },
                         ),
                       );
                     } else {
                       return RefreshIndicator(
-                        onRefresh: () async {
-                          if (_searchController.text.isNotEmpty) {
-                            _searchBloc.add(RefreshSearchEvent(
-                              _searchController.text,
-                              categoryId: widget.categoryId,
-                            ));
-
-                            final completer = Completer<void>();
-
-                            late final StreamSubscription subscription;
-                            subscription = _searchBloc.stream.listen((state) {
-                              if (state.searchState is! BaseLoadingState) {
-                                completer.complete();
-                                subscription.cancel();
-                              }
-                            });
-
-                            return completer.future;
-                          }
-                          return Future.value();
-                        },
+                        onRefresh: _handleRefresh,
                         child: _buildEmptyState(),
                       );
                     }
                   } else {
+                    // Initial state
                     return RefreshIndicator(
-                      onRefresh: () async {
-                        _searchBloc.add(RefreshSearchEvent(
-                          widget.initialQuery,
-                          categoryId: widget.categoryId,
-                        ));
-
-                        final completer = Completer<void>();
-
-                        late final StreamSubscription subscription;
-                        subscription = _searchBloc.stream.listen((state) {
-                          if (state.searchState is! BaseLoadingState) {
-                            completer.complete();
-                            subscription.cancel();
-                          }
-                        });
-
-                        return completer.future;
-                      },
+                      onRefresh: _handleRefresh,
                       child: _buildEmptyState(),
                     );
                   }
@@ -197,58 +159,35 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     );
   }
 
-  Widget _buildLoadingSkeleton() {
-    return Skeletonizer(
-      enabled: true,
-      child: GridView.builder(
-        padding: EdgeInsets.all(16.w),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.7.r,
-          crossAxisSpacing: 16.w,
-          mainAxisSpacing: 16.h,
-        ),
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          return ProductCard(
-            product: ProductEntity(
-              id: '',
-              title: LocaleKeys.home_sections_best_seller.tr(),
-              price: 600,
-              priceAfterDiscount: 0,
-              imgCover: '',
-              images: const [],
-              description: '',
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   Widget _buildErrorState(SearchState state) {
     final errorMessage = (state.searchState as BaseErrorState).errorMessage;
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.search_off,
-            size: 64.r,
-            color: AppColors.grey,
+    return ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.search_off,
+                size: 64.r,
+                color: AppColors.grey,
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                errorMessage,
+                style: getMediumStyle(
+                  color: AppColors.grey,
+                  fontSize: 16.sp,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
-          Text(
-            errorMessage,
-            style: getMediumStyle(
-              color: AppColors.grey,
-              fontSize: 16.sp,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

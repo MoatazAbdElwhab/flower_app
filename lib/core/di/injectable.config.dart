@@ -1,4 +1,3 @@
-// core/di/injectable.config.dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -227,6 +226,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i429.OccasionRepository>(() =>
         _i547.OccasionRepositoryImpl(gh<_i224.OccasionRemoteDataSource>()));
+    gh.factory<_i347.SearchRepository>(
+        () => _i823.SearchRepositoryImpl(gh<_i717.SearchRemoteDsInterface>()));
+    gh.factory<_i46.CheckoutRepository>(() =>
+        _i486.CheckoutRepositoryImpl(gh<_i766.CheckoutRemoteDataSource>()));
     gh.factory<_i241.CartRepoInterface>(
         () => _i355.CartRepoImpl(gh<_i861.CartRemoteDsInterface>()));
     gh.factory<_i147.GetAddressesUseCase>(
@@ -253,8 +256,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i696.ResetPasswordUseCase>(
         () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i419.ResendOtpUseCase>(
-        () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i366.SignupUseCase>(
+        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i242.VerifyResetCodeUseCase>(
+        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i902.SearchProductsUseCase>(
+        () => _i902.SearchProductsUseCase(gh<_i347.SearchRepository>()));
     gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
           gh<_i298.GetCategoriesUseCase>(),
           gh<List<_i1025.CategoryOccasionEntity>>(),

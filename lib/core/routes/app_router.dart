@@ -11,6 +11,8 @@ import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
+import 'package:flower_app/features/profile/presentation/pages/terms_and_conditions.dart';
+import 'package:flower_app/features/search/presentation/pages/search_results_page.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
 

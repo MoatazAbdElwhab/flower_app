@@ -104,21 +104,21 @@ static String? recipientNameValidation(String? recipientName) {
 
 static String? cityValidation(String? city) {
   if (city == null || city.isEmpty) {
-    return 'city.error.empty'.tr();
+    return LocaleKeys.addAddress_city_error_empty.tr();
   }
   return null;
 }
 
 static String? areaValidation(String? area) {
   if (area == null || area.isEmpty) {
-    return 'area.error.empty'.tr();
+    return LocaleKeys.addAddress_area_error_empty.tr();
   }
   return null;
 }
 
 static String? addressValidation(String? address) {
   if (address == null || address.isEmpty) {
-    return 'address.error.empty'.tr();
+    return LocaleKeys.addAddress_address_error_empty.tr();
   }
   return null;
 }

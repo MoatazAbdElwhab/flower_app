@@ -63,12 +63,12 @@ class ProfileRepositoryImpl extends ProfileRepository {
   }
 
   @override
-  Future<Either<Exception, void>> addAddress(AddAdressRequest addAdressRequest) async{
+  Future<Either<ApiException, void>> addAddress(AddAdressRequest addAdressRequest) async{
     try {
     await _profileRemoteDataSource.addAddress(addAdressRequest);
       return const Right(null);
     } catch (e) {
-      return Left(Exception(e.toString()));
+      return Left(ApiException(message: e.toString()));
     }
   }
 }

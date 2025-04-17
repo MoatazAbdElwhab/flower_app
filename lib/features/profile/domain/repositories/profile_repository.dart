@@ -19,6 +19,6 @@ abstract class ProfileRepository {
   Future<Either<ApiException, ProfileResetPasswordResponse>>
       profileResetPassword(ProfileResetPasswordRequest request);
 
-  Future<Either<Exception, void>> addAddress(
+  Future<Either<ApiException, void>> addAddress(
       AddAdressRequest addAddressRequest);
 }

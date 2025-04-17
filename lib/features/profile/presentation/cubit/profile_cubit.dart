@@ -357,12 +357,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     final isValid = saveAdressFormKey.currentState!.validate();
 
     if (!isValid) return;
+
     final addAddressRequest = AddAdressRequest(
       street: addressController.text,
       phone: phoneNumberController.text,
       city: cityController.text,
-      latValue: state.selectedLocation?.latitude.toString() ?? '',
-      longValue: state.selectedLocation?.longitude.toString() ?? '',
+      latValue: state.selectedLocation?.latitude.toString() ?? 'Z',
+      longValue: state.selectedLocation?.longitude.toString() ?? 'Z',
       username: recipientNameController.text,
     );
     emit(state.copyWith(addAddressState: BaseLoadingState()));

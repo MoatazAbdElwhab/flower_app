@@ -10,9 +10,11 @@ import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../core/widget/dialog_utils.dart';
 
 class AddAddressScreen extends StatefulWidget {
   const AddAddressScreen({super.key});
@@ -58,52 +60,65 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         leadingWidth: 35.w,
       ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
-        listenWhen: (prev, curr) =>
-            prev.address != curr.address ||
-            prev.city != curr.city ||
-            prev.area != curr.area ||
-            prev.addAddressState != curr.addAddressState,
-        listener: (context, state) {
-          final cubit = context.read<ProfileCubit>();
-          cubit.addressController.text = state.address ?? '';
-          cubit.areaController.text = state.area ?? '';
-          cubit.cityController.text = state.city ?? '';
-          if (state.addAddressState is BaseLoadingState) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
-              ),
-            );
-          } else if (state.addAddressState is BaseSuccessState) {
-            Navigator.of(context, rootNavigator: true).pop();
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => AlertDialog(
-                backgroundColor: AppColors.white.withValues(alpha: 0.8),
-                content: Lottie.asset(
-                  'assets/icons/sucess_animation.json',
-                  repeat: false,
-                  height: 150.h,
-                  width: 150.w,
-                  fit: BoxFit.contain,
-                  onLoaded: (composition) {
-                    // u can can Edit here
-                    Future.delayed(composition.duration + const Duration(milliseconds: 200), () {
-                      if(context.mounted) {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        Navigator.of(context).pop();
-                      }
-                    });
-                  },
-                ),
-
-              ),
-            );
-          }
+        listenWhen: (prev, curr) {
+          final locationChanged = prev.getUserLocationOnMap != curr.getUserLocationOnMap;
+          final saveStateChanged = prev.addAddressState    != curr.addAddressState;
+          return locationChanged || saveStateChanged;
         },
+          listener: (context, state) {
+            final cubit = context.read<ProfileCubit>();
+
+            if (state.getUserLocationOnMap is BaseSuccessState) {
+              cubit.addressController.text = state.address ?? '';
+              cubit.cityController.text = state.city ?? '';
+              cubit.areaController.text = state.area ?? '';
+            }
+
+            if (state.addAddressState is BaseLoadingState) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const Center(
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                ),
+              );
+            }
+
+            else if (state.addAddressState is BaseSuccessState) {
+              Navigator.of(context, rootNavigator: true).pop(); // Close loading
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => AlertDialog(
+                  backgroundColor: AppColors.white.withAlpha(204),
+                  content: Lottie.asset(
+                    'assets/icons/sucess_animation.json',
+                    repeat: false,
+                    height: 150.h,
+                    width: 150.w,
+                    fit: BoxFit.contain,
+                    onLoaded: (composition) {
+                      Future.delayed(composition.duration + const Duration(milliseconds: 200), () {
+                        if (context.mounted) {
+                          Navigator.of(context, rootNavigator: true).pop(); // Close success dialog
+                          Navigator.of(context).pop();
+                        }
+                      });
+                    },
+                  ),
+                ),
+              );
+            }
+            else if (state.addAddressState is BaseErrorState) {
+              Navigator.of(context, rootNavigator: true).pop();
+              final errorState = state.addAddressState as BaseErrorState;
+              GetIt.I<DialogUtils>().showSnackBar(
+                context: context,
+                message: errorState.errorMessage,
+                textColor: AppColors.white,
+              );
+            }
+          },
         builder: (context, state) {
           final cubit = context.read<ProfileCubit>();
           return SingleChildScrollView(
@@ -114,8 +129,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 SizedBox(height: 24.h),
                 _buildAddressForm(state, cubit),
                 SizedBox(height: 48.h),
-                state.getUserLocationOnMap is BaseLoadingState?
-                _buildButtonShimmer():
                 ElevatedButton(
                   onPressed: () {
                     cubit.saveUserAddress();
@@ -188,8 +201,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   Widget _buildAddressForm(ProfileState state, ProfileCubit cubit) {
     return Form(
       key: cubit.saveAdressFormKey,
-      child:state.getUserLocationOnMap is BaseLoadingState
-          ? _buildFormShimmer()  : Column(
+      child: Column(
         children: [
           TextFormField(
             controller: cubit.addressController,
@@ -310,42 +322,4 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       ),
     );
   }
-
-  Widget _buildFormShimmer() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        children: List.generate(5, (index) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: 17.h),
-            child: Container(
-              height: 55.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-            ),
-          );
-        }),
-      ),
-    );
-  }
-
-  Widget _buildButtonShimmer() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        height: 50.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.grey[300],
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-      ),
-    );
-  }
-
 }

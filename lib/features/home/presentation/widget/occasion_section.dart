@@ -51,7 +51,7 @@ class OccasionSection extends StatelessWidget {
                     itemCount: occasions.length,
                     itemBuilder: (context, index) {
                       final occasion = occasions[index];
-                      
+
                       return ItemCard(
                         occasion: occasion,
                         occasionIndex: index,

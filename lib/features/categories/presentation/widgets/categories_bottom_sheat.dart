@@ -1,4 +1,3 @@
-
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -19,15 +18,15 @@ class CategoriesBottomSheet extends StatelessWidget {
         color: AppColors.white,
       ),
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 16.0.h, vertical: 16.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.0.h, vertical: 16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:  EdgeInsets.all(8.0.r),
-               child:  Align(
-                 alignment: Alignment.center,
-                 child: Container(
+                padding: EdgeInsets.all(8.0.r),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
                     width: 100.w,
                     height: 4.h,
                     decoration: BoxDecoration(
@@ -35,50 +34,70 @@ class CategoriesBottomSheet extends StatelessWidget {
                       color: const Color(0xff434343),
                     ),
                   ),
-               )
+                )),
+            Text(
+              "Sort by",
+              style:
+                  getExtraBoldStyle(color: AppColors.primary, fontSize: 20.sp),
             ),
-           Text("Sort by", style: getExtraBoldStyle(color: AppColors.primary, fontSize: 20.sp),),
-            SizedBox(height: 16.h,),
+            SizedBox(
+              height: 16.h,
+            ),
             Expanded(
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) {
-                  return SizedBox(height: 16.h,);
+                  return SizedBox(
+                    height: 16.h,
+                  );
                 },
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.all(8.r),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.r),color:Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0xff00000),
-                          offset: Offset(0, 0),
-                          blurRadius: 5,
-                          spreadRadius: 0,
-                        )
-                      ]
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Lowes Price", style: getRegularStyle(color: AppColors.black, fontSize: 16.sp),),
-                      Radio(value: "Lowes Price", groupValue: "Lowes Price", onChanged: (value) {
-                      },
-                        activeColor: AppColors.primary,
-                        hoverColor: AppColors.primary,
-                        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-                      ),
-                    ],
-                  ),
-                );
-              },),
+                  return Container(
+                    padding: EdgeInsets.all(8.r),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xff00000),
+                            offset: Offset(0, 0),
+                            blurRadius: 5,
+                            spreadRadius: 0,
+                          )
+                        ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Lowes Price",
+                          style: getRegularStyle(
+                              color: AppColors.black, fontSize: 16.sp),
+                        ),
+                        Radio(
+                          value: "Lowes Price",
+                          groupValue: "Lowes Price",
+                          onChanged: (value) {},
+                          activeColor: AppColors.primary,
+                          hoverColor: AppColors.primary,
+                          overlayColor:
+                              const WidgetStatePropertyAll(Colors.transparent),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-            Text("price", style: getMediumStyle(color: AppColors.primary, fontSize: 16.sp),),
+            Text(
+              "price",
+              style: getMediumStyle(color: AppColors.primary, fontSize: 16.sp),
+            ),
             SliderTheme(
               data: SliderThemeData(
-               trackShape: RectangularSliderTrackShape(),
-                valueIndicatorTextStyle: getMediumStyle(color: AppColors.black, fontSize: 16.sp),
+                trackShape: RectangularSliderTrackShape(),
+                valueIndicatorTextStyle:
+                    getMediumStyle(color: AppColors.black, fontSize: 16.sp),
                 thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.r),
                 thumbColor: AppColors.primary,
               ),
@@ -92,22 +111,24 @@ class CategoriesBottomSheet extends StatelessWidget {
                 onChanged: (value) {},
               ),
             ),
-            ElevatedButton(onPressed: () {
-            }, child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.tune_rounded,
-                  color: AppColors.white,
-                ),
-                SizedBox(width: 12.w),
-                Text(
-                  "Filter",
-                  style: getRegularStyle(color: AppColors.white),
-                ),
-              ],
-            ),),
+            ElevatedButton(
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.tune_rounded,
+                    color: AppColors.white,
+                  ),
+                  SizedBox(width: 12.w),
+                  Text(
+                    "Filter",
+                    style: getRegularStyle(color: AppColors.white),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

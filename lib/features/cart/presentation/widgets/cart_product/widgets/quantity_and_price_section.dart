@@ -99,7 +99,7 @@ class _State extends State<CartProductPriceAndQuantitySection> {
                   replacement: InkWell(
                       child: Icon(
                     Icons.remove,
-                    color: Colors.grey.withValues(alpha: 0.5),
+                    color: Colors.grey.withOpacity(0.5),
                   )),
                   child: InkWell(
                       onTap: () {

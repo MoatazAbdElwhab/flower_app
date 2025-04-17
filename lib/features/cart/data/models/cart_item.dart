@@ -15,7 +15,7 @@ class CartItem {
 
   CartItem.fromJson(dynamic json) {
     _product =
-    json['product'] != null ? Product.fromJson(json['product']) : null;
+        json['product'] != null ? Product.fromJson(json['product']) : null;
     _product?.cartQuantity = json['quantity'];
     _price = json['price'];
     _productQuantity = json['quantity'];

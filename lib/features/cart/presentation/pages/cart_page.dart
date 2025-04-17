@@ -23,7 +23,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-
   @override
   void didChangeDependencies() {
     final bloc = context.read<CartBloc>();
@@ -33,71 +32,69 @@ class _CartPageState extends State<CartPage> {
     super.didChangeDependencies();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartBloc, CartState>(
-        builder: (context, state) {
-          if (state.getCartState is BaseSuccessState &&
-              state.cartProducts != null) {
-            return Scaffold(
-              appBar: CartAppBar(
-                  onBackButton: widget.onBackButton,
-                  cartProductsLength: state.cartProducts?.length ?? 0),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.location_on_outlined),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          Text(
-                            LocaleKeys.cart_deliverTo.tr(),
-                            style: getBoldStyle(
-                                fontSize: 16.sp, color: Colors.black),
-                          ),
-                        ],
+    return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+      if (state.getCartState is BaseSuccessState &&
+          state.cartProducts != null) {
+        return Scaffold(
+          appBar: CartAppBar(
+              onBackButton: widget.onBackButton,
+              cartProductsLength: state.cartProducts?.length ?? 0),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.location_on_outlined),
+                      SizedBox(
+                        width: 8.w,
                       ),
-                    ),
-                    state.cartProducts!.isNotEmpty
-                        ? Expanded(
-                            child: ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: state.cartProducts!.length,
-                              itemBuilder: (context, index) {
-                                final product = state.cartProducts![index];
-                                return CartProductWidget(
-                                    productEntity: product);
-                              },
-                            ),
-                          )
-                        : Center(
-                            child: Text(
-                              LocaleKeys.cart_cartEmpty.tr(),
-                              style: getBoldStyle(color: Colors.black),
-                            ),
-                          ),
-                   if(state.cartProducts!.isNotEmpty) const CartPriceAndCheckoutWidget()
-                  ],
+                      Text(
+                        LocaleKeys.cart_deliverTo.tr(),
+                        style:
+                            getBoldStyle(fontSize: 16.sp, color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          } else {
-            return Scaffold(
-              appBar: AppBar(title: Text(LocaleKeys.cart_cart.tr())),
-              body: Skeletonizer(
-                enabled: true,
-                child: Column(
-                  children: AppDummyWidgets().dummyCartProductsList,
-                ),
-              ),
-            );
-          }
-        });
+                state.cartProducts!.isNotEmpty
+                    ? Expanded(
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: state.cartProducts!.length,
+                          itemBuilder: (context, index) {
+                            final product = state.cartProducts![index];
+                            return CartProductWidget(productEntity: product);
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          LocaleKeys.cart_cartEmpty.tr(),
+                          style: getBoldStyle(color: Colors.black),
+                        ),
+                      ),
+                if (state.cartProducts!.isNotEmpty)
+                  const CartPriceAndCheckoutWidget()
+              ],
+            ),
+          ),
+        );
+      } else {
+        return Scaffold(
+          appBar: AppBar(title: Text(LocaleKeys.cart_cart.tr())),
+          body: Skeletonizer(
+            enabled: true,
+            child: Column(
+              children: AppDummyWidgets().dummyCartProductsList,
+            ),
+          ),
+        );
+      }
+    });
   }
 }

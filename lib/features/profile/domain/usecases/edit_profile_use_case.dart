@@ -11,5 +11,7 @@ class EditProfileUseCase {
 
   EditProfileUseCase(this._profileRepository);
 
-  Future<Either<ApiException, void>> call(UpdateProfileRequest updateProfileRequest) async => await _profileRepository.editUserProfileData(updateProfileRequest);
+  Future<Either<ApiException, void>> call(
+          UpdateProfileRequest updateProfileRequest) async =>
+      await _profileRepository.editUserProfileData(updateProfileRequest);
 }

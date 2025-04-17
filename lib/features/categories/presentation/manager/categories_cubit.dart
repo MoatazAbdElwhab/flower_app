@@ -62,7 +62,7 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
       ));
     }
   }
-  
+
   void navigateToCategoriesTab(BuildContext context) {
     final navbarState = NavbarPage.of(context);
     if (navbarState != null) {

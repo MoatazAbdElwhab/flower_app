@@ -32,7 +32,7 @@ class _ProductCardState extends State<ProductCard>
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.grey.withValues(alpha: 0.5),
+            color: AppColors.grey.withOpacity(0.5),
             width: 1.w,
           ),
           borderRadius: BorderRadius.circular(8.r),

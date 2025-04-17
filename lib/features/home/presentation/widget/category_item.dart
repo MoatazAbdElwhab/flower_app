@@ -40,32 +40,32 @@ class CategoryItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.r),
                 child: Center(
                   child: category.image != null
-                    ? SizedBox(
-                        width: 25.w,
-                        height: 25.h,
-                        child: AppNetworkImage(
-                          networkImage: category.image!,
-                          fit: BoxFit.contain,
-                          placeHolder: SizedBox(
-                            width: 15.w,
-                            height: 15.w,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.w,
+                      ? SizedBox(
+                          width: 25.w,
+                          height: 25.h,
+                          child: AppNetworkImage(
+                            networkImage: category.image!,
+                            fit: BoxFit.contain,
+                            placeHolder: SizedBox(
+                              width: 15.w,
+                              height: 15.w,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.w,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            errorBuilder: Icon(
+                              Icons.local_florist,
                               color: AppColors.primary,
+                              size: 25.w,
                             ),
                           ),
-                          errorBuilder: Icon(
-                            Icons.local_florist,
-                            color: AppColors.primary,
-                            size: 25.w,
-                          ),
+                        )
+                      : Icon(
+                          Icons.local_florist,
+                          color: AppColors.primary,
+                          size: 25.w,
                         ),
-                      )
-                    : Icon(
-                        Icons.local_florist,
-                        color: AppColors.primary,
-                        size: 25.w,
-                      ),
                 ),
               ),
             ),

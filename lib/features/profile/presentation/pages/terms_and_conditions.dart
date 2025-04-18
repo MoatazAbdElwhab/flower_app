@@ -24,24 +24,9 @@ class TermsAndConditionsPage extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.white,
-              AppColors.primary.withOpacity(0.05),
-              AppColors.white,
-            ],
-            stops: const [0.0, 0.5, 1.0],
-          ),
-        ),
-        child: const SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: TermsContent(),
-        ),
+      body: const SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: TermsContent(),
       ),
     );
   }

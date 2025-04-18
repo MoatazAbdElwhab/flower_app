@@ -110,7 +110,12 @@ class SettingsSection extends StatelessWidget {
         ),
         CustomRowItem(
           title: LocaleKeys.profile_aboutUs.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.aboutUs,
+            );
+          },
         ),
         CustomRowItem(
           title: LocaleKeys.profile_termsAndConditions.tr(),

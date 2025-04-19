@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
-import 'package:flower_app/core/routes/routes.dart';
-
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
-import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flower_app/features/profile/presentation/pages/edit_profile_page.dart';
@@ -19,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../nav/presentation/cubit/nav_cubit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -91,10 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ).then((_) {
-                                // عند الرجوع، نقوم بتغيير التبويب للـ Profile
-                                NavbarPage.of(context)?.changeTab(3);
-                                // ثم نقوم بسحب الداتا الجديدة من API
-                                context.read<ProfileCubit>().getUserData();
+                                if(context.mounted){
+                                  context.read<NavCubit>().changeTab(3);
+                                  context.read<ProfileCubit>().getUserData();
+                                }
                               });
                             },
                           ),

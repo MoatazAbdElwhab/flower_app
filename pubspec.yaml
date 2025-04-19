@@ -37,6 +37,7 @@ dependencies:
   otp_resend_timer: ^1.0.0
   pinput: ^5.0.1
   pretty_dio_logger: ^1.4.0
+  rxdart: ^0.28.0
   shared_preferences: ^2.5.1
   shimmer: ^3.0.0
   skeletonizer: ^1.4.3
@@ -56,6 +57,7 @@ flutter:
   assets:
     - assets/translations/
     - assets/icons/
+    - assets/about_us.json
 
   fonts:
     - family: Inter

@@ -1,3 +1,4 @@
+// features/profile/presentation/widgets/settings_section.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/resources/app_icon.dart';
 import 'package:flower_app/core/routes/routes.dart';
@@ -112,11 +113,21 @@ class SettingsSection extends StatelessWidget {
         ),
         CustomRowItem(
           title: LocaleKeys.profile_aboutUs.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.aboutUs,
+            );
+          },
         ),
         CustomRowItem(
           title: LocaleKeys.profile_termsAndConditions.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.termsAndConditions,
+            );
+          },
         ),
         const SizedBox(height: 16),
         Divider(

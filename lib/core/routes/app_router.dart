@@ -1,4 +1,5 @@
 import 'package:flower_app/core/di/injectable.dart';
+// core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
@@ -11,6 +12,9 @@ import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
+import 'package:flower_app/features/profile/presentation/pages/terms_and_conditions.dart';
+import 'package:flower_app/features/profile/presentation/pages/about_us_page.dart';
+import 'package:flower_app/features/search/presentation/pages/search_results_page.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
 
@@ -122,10 +126,33 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
           child: const AddAddressScreen()),
       );
 
+    case Routes.searchResults:
+      final Map<String, dynamic> args =
+          settings.arguments as Map<String, dynamic>? ?? {};
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => SearchResultsPage(
+          initialQuery: args['initialQuery'] as String? ?? '',
+          categoryId: args['categoryId'] as String?,
+          onBackPressed: () => Navigator.pop(_),
+        ),
+      );
     case Routes.checkout:
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const CheckoutPage(),
+      );
+
+    case Routes.termsAndConditions:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const TermsAndConditionsPage(),
+      );
+
+    case Routes.aboutUs:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const AboutUsPage(),
       );
 
     default:

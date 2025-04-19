@@ -15,31 +15,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/theme/app_colors.dart';
 
-class CheckoutPage extends StatefulWidget {
+class CheckoutPage extends StatelessWidget {
   const CheckoutPage({super.key});
-
-  @override
-  State<CheckoutPage> createState() => _CheckoutPageState();
-}
-
-class _CheckoutPageState extends State<CheckoutPage> {
-  bool isGift = false;
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
-
-  void _toggleGift(bool value) {
-    setState(() {
-      isGift = value;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +24,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       create: (context) => getIt<CheckoutCubit>(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Checkout'),
+          title: Text(LocaleKeys.checkout_title.tr()),
           surfaceTintColor: Colors.transparent,
           backgroundColor: AppColors.scaffoldBackground,
         ),

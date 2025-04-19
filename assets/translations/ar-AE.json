@@ -265,6 +265,30 @@
     "total": "الإجمالي",
     "place_order": "إتمام الشراء"
   },
+  "addAddress": {
+    "title": "إضافة عنوان",
+    "save_address_button": "حفظ العنوان",
+    "address_label": "العنوان",
+    "address_hint": "أدخل العنوان",
+    "address_error_empty": "يرجى إدخال العنوان",
+    "phone_label": "رقم الهاتف",
+    "phone_hint": "أدخل رقم الهاتف",
+    "phone_error_empty": "يرجى إدخال رقم الهاتف",
+    "phone_error_length": "يجب أن يتكون رقم الهاتف من 11 رقمًا",
+    "recipient_name_label": "اسم المستلم",
+    "recipient_name_hint": "أدخل اسم المستلم",
+    "recipient_name_error_empty": "يرجى إدخال اسم المستلم",
+    "recipient_name_error_length": "يجب ألا يقل الاسم عن حرفين",
+    "city_label": "المدينة",
+    "city_hint": "اكتب أو اختر مدينة",
+    "city_error_empty": "يرجى اختيار أو إدخال مدينة",
+    "area_label": "المنطقة",
+    "area_hint": "اكتب أو اختر منطقة",
+    "area_error_empty": "يرجى اختيار أو إدخال منطقة",
+    "map_error_message": "خطأ في تحديد موقعك \n يرجى إدخاله يدويًا"
+  }
+}
+
   "terms": {
       "title": "الشروط والأحكام",
       "last_updated": "آخر تحديث: ١٧ أبريل ٢٠٢٥",

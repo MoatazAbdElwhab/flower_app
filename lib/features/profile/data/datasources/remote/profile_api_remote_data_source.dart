@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/app_data/api/api_client.dart';
 import 'package:flower_app/core/app_data/api/api_constants.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
@@ -42,7 +41,7 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
     );
     return response;
   }
-
+  @override
   Future<ProfileResetPasswordResponse> profileResetPassword(
       ProfileResetPasswordRequest request) async {
     final response = await _apiClient.patch(
@@ -53,4 +52,5 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
 
     return ProfileResetPasswordResponse.fromJson(response);
   }
+
 }

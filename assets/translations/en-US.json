@@ -212,24 +212,24 @@
     "confirmLogout":"Confirm logout !!",
     "cancel": "Cancel"
   },
-  "resetpassword": {
-      "title": "Reset Password",
-      "current_password": "Current Password",
-      "current_password_hint": "Current Password",
-      "new_password": "New Password",
-      "new_password_hint": "New Password",
-      "confirm_password": "Confirm Password",
-      "confirm_password_hint": "Confirm Password",
-      "update_button": "Update",
-      "success_message": "Password updated successfully",
-      "error_message": "Failed to update password. Please try again.",
-      "error": {
-        "confirm_password_required": "Please confirm your password",
-        "passwords_not_match": "Passwords do not match",
-        "same_password": "New password must be different from current password",
-        "incorrect_password": "Current password is not correct"
-      }
-    
+  "reset_password": {
+    "title": "Reset Password",
+    "current_password": "Current Password",
+    "current_password_hint": "Current Password",
+    "new_password": "New Password",
+    "new_password_hint": "New Password",
+    "confirm_password": "Confirm Password",
+    "confirm_password_hint": "Confirm Password",
+    "update_button": "Update",
+    "success_message": "Password updated successfully",
+    "error_message": "Failed to update password. Please try again.",
+    "error": {
+      "confirm_password_required": "Please confirm your password",
+      "passwords_not_match": "Passwords do not match",
+      "same_password": "New password must be different from current password",
+      "incorrect_password": "Current password is not correct"
+    }
+
   },
   "cart": {
     "cart": "Cart",
@@ -271,5 +271,27 @@
     "delivery_fee": "Delivery Fee",
     "total": "Total",
     "place_order": "Place order"
+  },
+  "addAddress": {
+    "title": "Add Address",
+    "save_address_button": "Save Address",
+    "address_label": "Address",
+    "address_hint": "Enter the address",
+    "address_error_empty": "Please enter an address",
+    "phone_label": "Phone Number",
+    "phone_hint": "Enter the phone number",
+    "phone_error_empty": "Please enter a phone number",
+    "phone_error_length": "Phone number must be 11 digits",
+    "recipient_name_label": "Recipient name",
+    "recipient_name_hint": "Enter the recipient name",
+    "recipient_name_error_empty": "Please enter a recipient name",
+    "recipient_name_error_length": "Name must be at least 2 characters",
+    "city_label": "City",
+    "city_hint": "Type or select a city",
+    "city_error_empty": "Please select or enter a city",
+    "area_label": "Area",
+    "area_hint": "Type or select an area",
+    "area_error_empty": "Please select or enter an area",
+    "map_error_message": "Error getting your location \n please try enter it Manually"
   }
 }

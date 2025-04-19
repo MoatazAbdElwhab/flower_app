@@ -1,3 +1,4 @@
+import 'package:flower_app/core/di/injectable.dart';
 // core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
@@ -19,6 +20,9 @@ import 'package:flower_app/core/common_widgets/product_details_page/product_deta
 
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../features/add_address/presentation/manager/add_address_cubit.dart';
+import '../../features/add_address/presentation/pages/add_adress_screen.dart';
 import '../../features/profile/domain/entities/user_data.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
 
@@ -113,6 +117,13 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const ProfileResetPassword(),
+      );
+      case Routes.addAddress:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => BlocProvider(
+          create: (context) => getIt<AddAddressCubit>(),
+          child: const AddAddressScreen()),
       );
 
     case Routes.searchResults:

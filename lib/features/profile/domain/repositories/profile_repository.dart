@@ -5,6 +5,7 @@ import 'package:flower_app/features/profile/data/models/reset_password/response/
 import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 
+
 abstract class ProfileRepository {
   Future<Either<Exception, UserData>> getUserData();
 
@@ -13,6 +14,9 @@ abstract class ProfileRepository {
 
   Future<Either<Exception, void>> logout();
 
+
   Future<Either<ApiException, ProfileResetPasswordResponse>>
       profileResetPassword(ProfileResetPasswordRequest request);
+
+
 }

@@ -9,7 +9,6 @@ import 'package:flower_app/features/best_seller/presentation/pages/best_seller_p
 import 'package:flower_app/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
-import 'package:flower_app/features/nav/nav_bar.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
 import 'package:flower_app/features/profile/presentation/pages/terms_and_conditions.dart';
@@ -23,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/add_address/presentation/manager/add_address_cubit.dart';
 import '../../features/add_address/presentation/pages/add_adress_screen.dart';
+import '../../features/nav/presentation/pages/navbar_page.dart';
 import '../../features/profile/domain/entities/user_data.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
 

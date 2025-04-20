@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ).then((_) {
                                 if(context.mounted){
-                                  context.read<NavCubit>().changeTab(3);
+                                  // context.read<NavCubit>().changeTab(3);
                                   context.read<ProfileCubit>().getUserData();
                                 }
                               });

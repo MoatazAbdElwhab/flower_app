@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/features/cart/domain/use_cases/cart_add_product_use_case.dart';
 import 'package:flower_app/features/cart/domain/use_cases/cart_load_use_case.dart';
@@ -33,6 +35,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartAddProductEvent>(_onAddProduct);
     on<CartRemoveProductEvent>(_onRemoveProduct);
     on<CartClearEvent>(_onClearCart);
+    on<ClearActiveId>(_onClearActiveId);
     on<CartUpdateProductQuantityEvent>((_onUpdateProductQuantity),
         transformer: (events, mapper) =>
             events.debounceTime(const Duration(seconds: 1)).switchMap(mapper));
@@ -115,6 +118,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _onUpdateProductQuantity(
       CartUpdateProductQuantityEvent event, Emitter<CartState> emit) async {
+    final stateProduct = state.cartProducts
+        ?.firstWhere((element) => element.id == event.productId);
+    if (stateProduct?.cartQuantity == event.quantity) return;
     emit(state.copyWith(
         updateQuantityState: BaseLoadingState(),
         activeCartItemId: event.productId));
@@ -125,17 +131,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           (p) => p.id == event.productId,
         ).cartQuantity = event.quantity;
       emit(state.copyWith(
-          updateQuantityState: BaseSuccessState(),
           cartProducts: updatedList,
+          updateQuantityState: BaseSuccessState(),
           cartTotalPrice: _getCartTotalPrice(updatedList ?? []),
           activeCartItemId: event.productId));
-      Future.delayed(
-        const Duration(milliseconds: 30),
-        () {
-          /// to remove active cart item after it's listened to
-          emit(state.copyWith());
-        },
-      );
     } catch (e) {
       emit(state.copyWith(updateQuantityState: BaseErrorState(e.toString())));
     }
@@ -145,5 +144,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (prods.isEmpty) return 0;
     return state.deliveryFee +
         prods.map((e) => e.totalPrice ?? 0).fold(0, (a, b) => a + b);
+  }
+
+  void _onClearActiveId(ClearActiveId event, Emitter<CartState> emit) {
+    emit(state.copyWith());
   }
 }

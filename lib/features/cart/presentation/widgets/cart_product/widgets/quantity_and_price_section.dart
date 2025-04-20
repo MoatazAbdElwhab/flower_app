@@ -32,22 +32,22 @@ class _State extends State<CartProductPriceAndQuantitySection> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CartBloc, CartState>(
-      listenWhen: (previous, current) {
-        final currentStateQuantity = current.cartProducts
-                ?.firstWhere(
-                  (element) => element.id == widget.productEntity.id,
-                )
-                .cartQuantity ??
-            0;
-        final previousStateQuantity = previous.cartProducts
-                ?.firstWhere(
-                  (element) => element.id == widget.productEntity.id,
-                )
-                .cartQuantity ??
-            0;
-        return currentStateQuantity != previousStateQuantity ||
-            previous.updateQuantityState != current.updateQuantityState;
-      },
+      // listenWhen: (previous, current) {
+      // final currentStateQuantity = current.cartProducts
+      //         ?.firstWhere(
+      //           (element) => element.id == widget.productEntity.id,
+      //         )
+      //         .cartQuantity ??
+      //     0;
+      // final previousStateQuantity = previous.cartProducts
+      //         ?.firstWhere(
+      //           (element) => element.id == widget.productEntity.id,
+      //         )
+      //         .cartQuantity ??
+      //     0;
+      // return currentStateQuantity != previousStateQuantity ||
+      //     previous.updateQuantityState != current.updateQuantityState;
+      // },
       listener: (context, state) {
         final utils = getIt<DialogUtils>();
         if (state.updateQuantityState is BaseErrorState) {
@@ -55,20 +55,26 @@ class _State extends State<CartProductPriceAndQuantitySection> {
               textColor: Colors.red,
               message: LocaleKeys.cart_errorUpdateQuantity.tr(),
               context: context);
-        } else if (state.updateQuantityState is BaseSuccessState) {
-          final quantityInState = state.cartProducts
-              ?.firstWhere(
-                (element) =>
-                    element.id == widget.productEntity.id &&
-                    element.id == state.activeCartItemId,
-              )
-              .cartQuantity;
-          utils.showSnackBar(
-              textColor: Colors.green,
-              duration: const Duration(milliseconds: 500),
-              message:
-                  '${LocaleKeys.cart_quantityUpdatedTo.tr()} ${quantityInState.toString()}',
-              context: context);
+        } else if (state.updateQuantityState is BaseSuccessState &&
+            state.activeCartItemId == widget.productEntity.id) {
+          if (state.cartProducts!.any(
+            (element) {
+              return element.id == widget.productEntity.id;
+            },
+          )) {
+            final quantityInState = state.cartProducts!
+                .firstWhere((element) =>
+                    widget.productEntity.id == element.id &&
+                    widget.productEntity.id == state.activeCartItemId)
+                .cartQuantity;
+            utils.showSnackBar(
+                textColor: Colors.green,
+                duration: const Duration(milliseconds: 500),
+                message:
+                    '${LocaleKeys.cart_quantityUpdatedTo.tr()} ${quantityInState.toString()}',
+                context: context);
+            context.read<CartBloc>().add(ClearActiveId());
+          }
         }
       },
       builder: (context, state) {
@@ -136,7 +142,7 @@ class _State extends State<CartProductPriceAndQuantitySection> {
         if (mounted) {
           getIt<DialogUtils>().showSnackBar(
               textColor: Colors.red,
-              message: '${LocaleKeys.cart_resetQuantityErrorMsg.tr()}',
+              message: LocaleKeys.cart_resetQuantityErrorMsg.tr(),
               context: context);
           setState(() {
             currentProductQuantity = stateProduct.cartQuantity!;

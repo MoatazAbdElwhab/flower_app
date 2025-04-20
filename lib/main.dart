@@ -5,6 +5,7 @@ import 'package:flower_app/core/routes/app_router.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<CartBloc>(
             create: (BuildContext context) => getIt<CartBloc>(),
           ),
+          BlocProvider<NavCubit>(create: (BuildContext context) => getIt<NavCubit>()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

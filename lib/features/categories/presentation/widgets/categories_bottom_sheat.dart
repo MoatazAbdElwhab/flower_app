@@ -30,12 +30,12 @@ class CategoriesBottomSheet extends StatelessWidget {
       {
         'value': SortOption.newest,
         'title': LocaleKeys.filter_new.tr(),
-        'query': 'date',
+        'query': 'createdAt',
       },
       {
         'value': SortOption.oldest,
         'title': LocaleKeys.filter_old.tr(),
-        'query': '-date',
+        'query': '-createdAt',
       },
       {
         'value': SortOption.discount,

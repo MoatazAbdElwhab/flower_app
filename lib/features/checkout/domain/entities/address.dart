@@ -16,4 +16,28 @@ class Address {
     required this.long,
     required this.username,
   });
+
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+      id: json['id'] ?? '',
+      street: json['street'] ?? '',
+      phone: json['phone'] ?? '',
+      city: json['city'] ?? '',
+      lat: json['lat'] ?? '',
+      long: json['long'] ?? '',
+      username: json['username'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'street': street,
+      'phone': phone,
+      'city': city,
+      'lat': lat,
+      'long': long,
+      'username': username,
+    };
+  }
 }

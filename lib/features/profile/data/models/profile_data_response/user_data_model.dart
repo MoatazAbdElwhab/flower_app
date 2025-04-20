@@ -1,3 +1,4 @@
+import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 
 class UserDataModel {
@@ -10,7 +11,7 @@ class UserDataModel {
   final String? photo;
   final String? role;
   final List<dynamic>? wishlist;
-  final List<dynamic>? addresses;
+  final List<Address>? addresses;
   final DateTime? createdAt;
 
   const UserDataModel({
@@ -27,21 +28,30 @@ class UserDataModel {
     this.createdAt,
   });
 
-  factory UserDataModel.fromJson(Map<String, dynamic> json) => UserDataModel(
-        id: json['_id'] as String?,
-        firstName: json['firstName'] as String?,
-        lastName: json['lastName'] as String?,
-        email: json['email'] as String?,
-        gender: json['gender'] as String?,
-        phone: json['phone'] as String?,
-        photo: json['photo'] as String?,
-        role: json['role'] as String?,
-        wishlist: json['wishlist'] as List<dynamic>?,
-        addresses: json['addresses'] as List<dynamic>?,
-        createdAt: json['createdAt'] == null
-            ? null
-            : DateTime.parse(json['createdAt'] as String),
-      );
+  factory UserDataModel.fromJson(Map<String, dynamic> json) {
+    List<Address>? addressList;
+
+    if (json['addresses'] != null && json['addresses'] is List) {
+      addressList = (json['addresses'] as List)
+          .map((addressJson) => Address.fromJson(addressJson as Map<String, dynamic>))
+          .toList();
+    }
+    return UserDataModel(
+      id: json['_id'] as String?,
+      firstName: json['firstName'] as String?,
+      lastName: json['lastName'] as String?,
+      email: json['email'] as String?,
+      gender: json['gender'] as String?,
+      phone: json['phone'] as String?,
+      photo: json['photo'] as String?,
+      role: json['role'] as String?,
+      wishlist: json['wishlist'] as List<dynamic>?,
+      addresses: addressList,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         '_id': id,
@@ -64,5 +74,6 @@ class UserDataModel {
         gender: gender ?? '',
         phone: phone ?? '',
         photo: photo ?? '',
+        addresses: addresses ?? [],
       );
 }

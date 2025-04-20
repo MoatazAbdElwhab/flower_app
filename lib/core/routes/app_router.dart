@@ -10,7 +10,9 @@ import 'package:flower_app/features/checkout/presentation/pages/checkout_page.da
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
+import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
+import 'package:flower_app/features/profile/presentation/pages/saved_address_page/saved_address_page.dart';
 import 'package:flower_app/features/profile/presentation/pages/terms_and_conditions.dart';
 import 'package:flower_app/features/profile/presentation/pages/about_us_page.dart';
 import 'package:flower_app/features/search/presentation/pages/search_results_page.dart';
@@ -153,6 +155,15 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => const AboutUsPage(),
+      );
+
+    case Routes.savedAddresses:
+      final cubit = settings.arguments as ProfileCubit;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) =>  BlocProvider.value(
+            value: cubit,
+            child: SavedAddressPage()),
       );
 
     default:

@@ -251,7 +251,6 @@
     "failedToRemove": "failed to remove product",
     "updateProfileSuccess": "Updated"
   },
-
   "filter":{
     "sortBy":"Sort by",
     "lowestPrice":"Lowest Price",
@@ -305,5 +304,6 @@
     "area_error_empty": "Please select or enter an area",
     "map_error_message": "Error getting your location \n please try enter it Manually"
   }
+
 
 }

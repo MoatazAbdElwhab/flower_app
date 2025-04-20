@@ -286,6 +286,16 @@
     "area_hint": "اكتب أو اختر منطقة",
     "area_error_empty": "يرجى اختيار أو إدخال منطقة",
     "map_error_message": "خطأ في تحديد موقعك \n يرجى إدخاله يدويًا"
+  },
+  "filter": {
+    "lowestPrice": "الاقل سعر",
+    "highestPrice": "الاعلي سعر",
+    "new": "الاحدث",
+    "old": "الاقدم",
+    "discount": "الخصم",
+    "sortBy": "الترتيب حسب",
+    "price": "السعر",
+    "filterButton": "التصفيه"
   }
 
 }

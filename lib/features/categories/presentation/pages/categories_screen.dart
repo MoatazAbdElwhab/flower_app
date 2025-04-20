@@ -114,7 +114,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
                     children: [
                       const Icon(Icons.tune_rounded, color: AppColors.white),
                       SizedBox(width: 12.w),
-                      Text("Filter",
+                      Text(LocaleKeys.filter_filterButton.tr(),
                           style: getRegularStyle(color: AppColors.white)),
                     ],
                   ),

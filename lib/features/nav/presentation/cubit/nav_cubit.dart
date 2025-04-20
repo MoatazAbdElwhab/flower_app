@@ -1,8 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../home/domain/entities/category_occasion_entity.dart';
 import 'nav_state.dart';
 
+
+@lazySingleton
 class NavCubit extends Cubit<NavState> {
   NavCubit() : super(const NavState(tabIndex: 0));
 

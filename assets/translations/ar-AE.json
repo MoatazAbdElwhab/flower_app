@@ -223,5 +223,16 @@
     "successfullyRemoved": "تمت إزالة المنتج بنجاح",
     "failedToRemove": "فشل في إزالة المنتج",
     "updateProfileSuccess": "تم التحديث بنجاح"
-  }
+  },
+
+  "filter": {
+  "sortBy": "الترتيب حسب",
+  "lowestPrice": "أقل سعر",
+  "highestPrice": "أعلى سعر",
+  "new": "جديد",
+  "old": "قديم",
+  "discount": "خصم",
+  "price": "السعر",
+  "filterButton": "تصفية"
+}
 }

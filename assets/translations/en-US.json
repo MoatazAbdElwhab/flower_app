@@ -225,5 +225,16 @@
     "successfullyRemoved": "product successfully removed",
     "failedToRemove": "failed to remove product",
     "updateProfileSuccess": "Updated"
+  },
+
+  "filter":{
+    "sortBy":"Sort by",
+    "lowestPrice":"Lowest Price",
+    "highestPrice":"Highest Price",
+    "new":"New",
+    "old":"Old",
+    "discount":"Discount",
+    "price":"Price",
+    "filterButton":"Filter"
   }
 }

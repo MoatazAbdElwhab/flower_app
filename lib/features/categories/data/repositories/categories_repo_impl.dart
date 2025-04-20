@@ -19,7 +19,23 @@ class CategoriesRepoImpl implements CategoriesRepo {
       if (response.products != null) {
         return Right((response.products ?? []));
       } else {
-        return Left(ApiException(message: 'No Proudct found'));
+        return Left(ApiException(message: 'No Product found'));
+      }
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ApiException, List<Products>>> getSortedProducts(
+      String categoryId, String sortOption) async {
+    try {
+      var response =
+          await _categoriesData.getSortedProducts(categoryId, sortOption);
+      if (response.products != null) {
+        return Right((response.products ?? []));
+      } else {
+        return Left(ApiException(message: 'No Product found'));
       }
     } catch (e) {
       return Left(ApiException(message: e.toString()));

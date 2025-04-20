@@ -2,6 +2,7 @@
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart';
+import 'package:flower_app/features/categories/domain/use_cases/get_sorted_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -15,17 +16,21 @@ import 'categories_states.dart';
 class CategoriesCubit extends Cubit<CategoriesStates> {
   final List<CategoryOccasionEntity> categories;
 
-  CategoriesCubit(this._getCategoriesUseCase, this.categories)
-      : super(const CategoriesStates());
+  CategoriesCubit(
+    this._getCategoriesUseCase,
+    this._getSortedProductsUseCase,
+    this.categories,
+  ) : super(const CategoriesStates());
 
   final GetCategoriesUseCase _getCategoriesUseCase;
+  final GetSortedProductsUseCase _getSortedProductsUseCase;
   late TabController tabController;
 
   void showCategoriesFilterSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => const CategoriesBottomSheet(),
+      builder: (context) => CategoriesBottomSheet(cubit: this),
     );
   }
 
@@ -62,7 +67,7 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
       ));
     }
   }
-  
+
   void navigateToCategoriesTab(BuildContext context) {
     final navbarState = NavbarPage.of(context);
     if (navbarState != null) {
@@ -73,5 +78,33 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
         emit(state.copyWith(selectedCategoryIndex: 0));
       }
     }
+  }
+
+  //filter
+
+  void selectSortOption(Map option) {
+    emit(state.copyWith(
+        selectedSortOption: option['value'], queryOption: option['query']));
+  }
+
+  void updatePriceRange(RangeValues range) {
+    emit(state.copyWith(priceRange: range));
+  }
+
+  Future<void> applyFilter() async {
+    emit(state.copyWith(categoryState: BaseLoadingState()));
+
+    var categoriesList = await _getSortedProductsUseCase.call(
+      categories[tabController.index].id!,
+      state.queryOption,
+    );
+    emit(
+      state.copyWith(
+        categoryState: categoriesList.fold(
+          (error) => BaseErrorState(error.message),
+          (products) => BaseSuccessState<List<Products>>(data: products),
+        ),
+      ),
+    );
   }
 }

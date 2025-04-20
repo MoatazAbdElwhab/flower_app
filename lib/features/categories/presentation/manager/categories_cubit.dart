@@ -12,32 +12,26 @@ import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../widgets/categories_bottom_sheat.dart';
 import 'categories_states.dart';
 
 @injectable
 class CategoriesCubit extends Cubit<CategoriesStates> {
-
-  final List<CategoryOccasionEntity> categories;
-
   CategoriesCubit(
     this._getCategoriesUseCase,
     this._getSortedProductsUseCase,
-    this.categories,
   ) : super(const CategoriesStates());
 
   final GetCategoriesUseCase _getCategoriesUseCase;
   final GetSortedProductsUseCase _getSortedProductsUseCase;
   late TabController tabController;
 
-
-  void showCategoriesFilterSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => CategoriesBottomSheet(cubit: this),
-    );
-  }
+  // void showCategoriesFilterSheet(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     builder: (context) => CategoriesBottomSheet(cubit: this , categories: [],),
+  //   );
+  // }
 
   Future<void> getProductByCategoryList(String categoriesId) async {
     emit(state.copyWith(categoryState: BaseLoadingState()));
@@ -45,8 +39,8 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     emit(
       state.copyWith(
         categoryState: categoriesList.fold(
-              (error) => BaseErrorState(error.message),
-              (products) => BaseSuccessState<List<ProductEntity>>(data: products),
+          (error) => BaseErrorState(error.message),
+          (products) => BaseSuccessState<List<ProductEntity>>(data: products),
         ),
       ),
     );
@@ -61,7 +55,6 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     getIt<NavCubit>().changeTab(1, selectedCategoryIndex: index);
   }
 
-
   //filter
 
   void selectSortOption(Map option) {
@@ -73,23 +66,20 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     emit(state.copyWith(priceRange: range));
   }
 
-  Future<void> applyFilter() async {
+  Future<void> applyFilter(String? categoryId) async {
     emit(state.copyWith(categoryState: BaseLoadingState()));
 
     var categoriesList = await _getSortedProductsUseCase.call(
-      categories[tabController.index].id!,
+      categoryId ?? '',
       state.queryOption,
     );
     emit(
       state.copyWith(
         categoryState: categoriesList.fold(
           (error) => BaseErrorState(error.message),
-          (products) => BaseSuccessState<List<Products>>(data: products),
+          (products) => BaseSuccessState<List<ProductEntity>>(data: products),
         ),
       ),
     );
   }
 }
-
-
-

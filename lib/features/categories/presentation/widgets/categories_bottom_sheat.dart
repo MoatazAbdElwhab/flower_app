@@ -12,7 +12,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoriesBottomSheet extends StatelessWidget {
   final CategoriesCubit cubit;
-  const CategoriesBottomSheet({super.key, required this.cubit});
+  final String? categoryId;
+
+  const CategoriesBottomSheet(
+      {super.key, required this.cubit, required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +164,7 @@ class CategoriesBottomSheet extends StatelessWidget {
                     onPressed: state.categoryState is BaseLoadingState
                         ? null
                         : () {
-                            cubit.applyFilter();
+                            cubit.applyFilter(categoryId);
                             Navigator.pop(context);
                           },
                     style: ElevatedButton.styleFrom(

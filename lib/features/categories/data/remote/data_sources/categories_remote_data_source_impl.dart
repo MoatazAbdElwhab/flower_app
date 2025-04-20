@@ -23,11 +23,11 @@ class CategoriesRemoteDataSourceImpl
       'category': categoryId,
     });
 
-    return OccasionResponse.fromJson(response).products?? [];
+    return OccasionResponse.fromJson(response).products ?? [];
   }
 
   @override
-  Future<CategoryProductsModel> getSortedProducts(
+  Future<List<ProductModel>> getSortedProducts(
       String categoryId, String sortOption) async {
     const categoryEndpoint = ApiConstants.getProudctByCategoryEndPoint;
 
@@ -37,6 +37,6 @@ class CategoriesRemoteDataSourceImpl
       'sort': sortOption,
     });
 
-    return CategoryProductsModel.fromJson(response);
+    return OccasionResponse.fromJson(response).products ?? [];
   }
 }

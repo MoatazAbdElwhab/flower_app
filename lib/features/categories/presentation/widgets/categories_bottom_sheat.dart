@@ -52,7 +52,7 @@ class CategoriesBottomSheet extends StatelessWidget {
         }
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.72,
+        height: MediaQuery.of(context).size.height * 0.8,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(32.r),

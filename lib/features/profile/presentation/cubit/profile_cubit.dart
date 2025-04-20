@@ -1,4 +1,5 @@
 // features/profile/presentation/cubit/profile_cubit.dart
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flower_app/core/base/base_state.dart';
@@ -26,6 +27,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ResetPasswordUseCase _resetPasswordUseCase;
   final AuthLocalDataSourceContract _authLocalDataSource;
 
+
   ProfileCubit(
     this._getUserDataUseCase,
     this._editProfileUseCase,
@@ -37,13 +39,14 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   final ValueNotifier<bool> isNotificationEnabled = ValueNotifier(false);
-   // text controllers
+  // text controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
+ 
   // form keys
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
 
@@ -150,14 +153,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     super.close();
   }
 
-
   bool _validatePasswordsBeforeSubmit(
       String currentPassword, String newPassword) {
     if (currentPassword == newPassword) {
       emit(
         state.copyWith(
-          resetPasswordState:
-              BaseErrorState(LocaleKeys.profile_reset_password_error_same_password.tr()),
+          resetPasswordState: BaseErrorState(
+              LocaleKeys.profile_reset_password_error_same_password.tr()),
         ),
       );
       return false;
@@ -225,4 +227,8 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     emit(state.copyWith(isResetPasswordFormValid: formValid));
   }
+
+  //  ----------------------get user location form map ----------------------
+  // add Address Section
+
 }

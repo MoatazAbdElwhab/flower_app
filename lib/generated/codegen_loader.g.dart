@@ -239,16 +239,6 @@ class CodegenLoader extends AssetLoader{
     "successfullyRemoved": "تمت إزالة المنتج بنجاح",
     "failedToRemove": "فشل في إزالة المنتج",
     "updateProfileSuccess": "تم التحديث بنجاح"
-  },
-  "filter": {
-    "sortBy": "الترتيب حسب",
-    "lowestPrice": "أقل سعر",
-    "highestPrice": "أعلى سعر",
-    "new": "جديد",
-    "old": "قديم",
-    "discount": "خصم",
-    "price": "السعر",
-    "filterButton": "تصفية"
   }
 };
 static const Map<String,dynamic> _en_US = {
@@ -476,16 +466,6 @@ static const Map<String,dynamic> _en_US = {
     "successfullyRemoved": "product successfully removed",
     "failedToRemove": "failed to remove product",
     "updateProfileSuccess": "Updated"
-  },
-  "filter": {
-    "sortBy": "Sort by",
-    "lowestPrice": "Lowest Price",
-    "highestPrice": "Highest Price",
-    "new": "New",
-    "old": "Old",
-    "discount": "Discount",
-    "price": "Price",
-    "filterButton": "Filter"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar_AE": _ar_AE, "en_US": _en_US};

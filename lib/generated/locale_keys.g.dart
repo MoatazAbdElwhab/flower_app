@@ -95,9 +95,62 @@ abstract class  LocaleKeys {
   static const phone_error_invalid = 'phone.error.invalid';
   static const phone_error = 'phone.error';
   static const phone = 'phone';
-  static const terms_prefix = 'terms.prefix';
-  static const terms_conditions = 'terms.conditions';
-  static const terms = 'terms';
+  static const profile_myOrders = 'profile.myOrders';
+  static const profile_savedAddress = 'profile.savedAddress';
+  static const profile_notification = 'profile.notification';
+  static const profile_language = 'profile.language';
+  static const profile_userLanguage = 'profile.userLanguage';
+  static const profile_changeLanguage = 'profile.changeLanguage';
+  static const profile_aboutUs = 'profile.aboutUs';
+  static const profile_termsAndConditions = 'profile.termsAndConditions';
+  static const profile_terms_title = 'profile.terms.title';
+  static const profile_terms_last_updated = 'profile.terms.last_updated';
+  static const profile_terms_introduction = 'profile.terms.introduction';
+  static const profile_terms_definitions = 'profile.terms.definitions';
+  static const profile_terms_account = 'profile.terms.account';
+  static const profile_terms_delivery = 'profile.terms.delivery';
+  static const profile_terms_cancellation = 'profile.terms.cancellation';
+  static const profile_terms_app_usage = 'profile.terms.app_usage';
+  static const profile_terms_legal = 'profile.terms.legal';
+  static const profile_terms_contact = 'profile.terms.contact';
+  static const profile_terms_introduction_text = 'profile.terms.introduction_text';
+  static const profile_terms_definitions_text = 'profile.terms.definitions_text';
+  static const profile_terms_account_text = 'profile.terms.account_text';
+  static const profile_terms_delivery_text = 'profile.terms.delivery_text';
+  static const profile_terms_cancellation_text = 'profile.terms.cancellation_text';
+  static const profile_terms_app_usage_text = 'profile.terms.app_usage_text';
+  static const profile_terms_legal_text = 'profile.terms.legal_text';
+  static const profile_terms_contact_text = 'profile.terms.contact_text';
+  static const profile_terms_email = 'profile.terms.email';
+  static const profile_terms_phone = 'profile.terms.phone';
+  static const profile_terms_address = 'profile.terms.address';
+  static const profile_terms_thank_you = 'profile.terms.thank_you';
+  static const profile_terms_copyright = 'profile.terms.copyright';
+  static const profile_terms = 'profile.terms';
+  static const profile_logout = 'profile.logout';
+  static const profile_updateProfile = 'profile.updateProfile';
+  static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
+  static const profile_editProfile = 'profile.editProfile';
+  static const profile_logoutTitle = 'profile.logoutTitle';
+  static const profile_confirmLogout = 'profile.confirmLogout';
+  static const profile_cancel = 'profile.cancel';
+  static const profile_reset_password_title = 'profile.reset_password.title';
+  static const profile_reset_password_current_password = 'profile.reset_password.current_password';
+  static const profile_reset_password_current_password_hint = 'profile.reset_password.current_password_hint';
+  static const profile_reset_password_new_password = 'profile.reset_password.new_password';
+  static const profile_reset_password_new_password_hint = 'profile.reset_password.new_password_hint';
+  static const profile_reset_password_confirm_password = 'profile.reset_password.confirm_password';
+  static const profile_reset_password_confirm_password_hint = 'profile.reset_password.confirm_password_hint';
+  static const profile_reset_password_update_button = 'profile.reset_password.update_button';
+  static const profile_reset_password_success_message = 'profile.reset_password.success_message';
+  static const profile_reset_password_error_message = 'profile.reset_password.error_message';
+  static const profile_reset_password_error_confirm_password_required = 'profile.reset_password.error.confirm_password_required';
+  static const profile_reset_password_error_passwords_not_match = 'profile.reset_password.error.passwords_not_match';
+  static const profile_reset_password_error_same_password = 'profile.reset_password.error.same_password';
+  static const profile_reset_password_error_incorrect_password = 'profile.reset_password.error.incorrect_password';
+  static const profile_reset_password_error = 'profile.reset_password.error';
+  static const profile_reset_password = 'profile.reset_password';
+  static const profile = 'profile';
   static const dialogs_error_title = 'dialogs.error.title';
   static const dialogs_error_ok = 'dialogs.error.ok';
   static const dialogs_error = 'dialogs.error';
@@ -148,21 +201,34 @@ abstract class  LocaleKeys {
   static const profile_logoutTitle = 'profile.logoutTitle';
   static const profile_confirmLogout = 'profile.confirmLogout';
   static const profile_cancel = 'profile.cancel';
-  static const profile_reset_password_title = 'profile.reset_password.title';
-  static const profile_reset_password_current_password = 'profile.reset_password.current_password';
-  static const profile_reset_password_current_password_hint = 'profile.reset_password.current_password_hint';
-  static const profile_reset_password_new_password = 'profile.reset_password.new_password';
-  static const profile_reset_password_new_password_hint = 'profile.reset_password.new_password_hint';
-  static const profile_reset_password_confirm_password = 'profile.reset_password.confirm_password';
-  static const profile_reset_password_confirm_password_hint = 'profile.reset_password.confirm_password_hint';
-  static const profile_reset_password_update_button = 'profile.reset_password.update_button';
-  static const profile_reset_password_success_message = 'profile.reset_password.success_message';
-  static const profile_reset_password_error_message = 'profile.reset_password.error_message';
-  static const profile_reset_password_error_confirm_password_required = 'profile.reset_password.error.confirm_password_required';
-  static const profile_reset_password_error_passwords_not_match = 'profile.reset_password.error.passwords_not_match';
-  static const profile_reset_password_error_same_password = 'profile.reset_password.error.same_password';
-  static const profile_reset_password_error_incorrect_password = 'profile.reset_password.error.incorrect_password';
-  static const profile_reset_password_error = 'profile.reset_password.error';
+  static const profile_reset_password_title = 'resetpassword.title';
+  static const profile_reset_password_current_password =
+      'resetpassword.current_password';
+  static const profile_reset_password_current_password_hint =
+      'resetpassword.current_password_hint';
+  static const profile_reset_password_new_password =
+      'resetpassword.new_password';
+  static const profile_reset_password_new_password_hint =
+      'resetpassword.new_password_hint';
+  static const profile_reset_password_confirm_password =
+      'resetpassword.confirm_password';
+  static const profile_reset_password_confirm_password_hint =
+      'resetpassword.confirm_password_hint';
+  static const profile_reset_password_update_button =
+      'resetpassword.update_button';
+  static const profile_reset_password_success_message =
+      'resetpassword.success_message';
+  static const profile_reset_password_error_message =
+      'resetpassword.error_message';
+  static const profile_reset_password_error_confirm_password_required =
+      'resetpassword.error.confirm_password_required';
+  static const profile_reset_password_error_passwords_not_match =
+      'resetpassword.error.passwords_not_match';
+  static const profile_reset_password_error_same_password =
+      'resetpassword.error.same_password';
+  static const profile_reset_password_error_incorrect_password =
+      'resetpassword.error.incorrect_password';
+  static const profile_reset_password_error = 'resetpassword.error';
   static const profile_reset_password = 'profile.reset_password';
   static const profile = 'profile';
   static const cart_cart = 'cart.cart';
@@ -184,14 +250,4 @@ abstract class  LocaleKeys {
   static const cart_failedToRemove = 'cart.failedToRemove';
   static const cart_updateProfileSuccess = 'cart.updateProfileSuccess';
   static const cart = 'cart';
-  static const filter_sortBy = 'filter.sortBy';
-  static const filter_lowestPrice = 'filter.lowestPrice';
-  static const filter_highestPrice = 'filter.highestPrice';
-  static const filter_new = 'filter.new';
-  static const filter_old = 'filter.old';
-  static const filter_discount = 'filter.discount';
-  static const filter_price = 'filter.price';
-  static const filter_filterButton = 'filter.filterButton';
-  static const filter = 'filter';
-
 }

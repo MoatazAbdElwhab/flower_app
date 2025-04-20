@@ -15,7 +15,7 @@ class UpdateProfileRequest {
   // @JsonKey(name: "gender")
   // final String? gender;
 
-  UpdateProfileRequest ({
+  UpdateProfileRequest({
     this.firstName,
     this.lastName,
     this.email,
@@ -31,5 +31,3 @@ class UpdateProfileRequest {
     return _$UpdateProfileRequestToJson(this);
   }
 }
-
-

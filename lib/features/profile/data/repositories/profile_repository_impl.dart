@@ -60,4 +60,5 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return Left(ApiException(message: e.toString()));
     }
   }
+
 }

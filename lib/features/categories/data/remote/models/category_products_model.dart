@@ -11,7 +11,7 @@ class CategoryProductsModel {
   @JsonKey(name: "products")
   final List<Products>? products;
 
-  CategoryProductsModel ({
+  CategoryProductsModel({
     this.message,
     this.metadata,
     this.products,
@@ -37,7 +37,7 @@ class Metadata {
   @JsonKey(name: "totalItems")
   final int? totalItems;
 
-  Metadata ({
+  Metadata({
     this.currentPage,
     this.totalPages,
     this.limit,
@@ -90,7 +90,7 @@ class Products {
   @JsonKey(name: "id")
   final String? id;
 
-  Products ({
+  Products({
     this.rateAvg,
     this.rateCount,
     this.Id,
@@ -104,8 +104,7 @@ class Products {
     this.quantity,
     this.category,
     this.occasion,
-    @JsonKey(name: "__v")
-    this.v,
+    @JsonKey(name: "__v") this.v,
     this.discount,
     this.sold,
     this.id,
@@ -119,5 +118,3 @@ class Products {
     return _$ProductsToJson(this);
   }
 }
-
-

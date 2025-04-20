@@ -38,4 +38,19 @@ class LocationService {
       throw Exception("Failed to get location: ${e.toString()}");
     }
   }
+Future<Map<String, String>> getAddressDetailsFromCoordinates(double lat, double lng) async {
+  final placemarks = await placemarkFromCoordinates(lat, lng);
+  if (placemarks.isNotEmpty) {
+    final place = placemarks.first;
+    return {
+      'address': "${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}",
+      'city': place.locality ?? '',
+      'area': place.subLocality != null && place.subLocality!.isNotEmpty 
+                  ? place.subLocality! 
+                  : (place.administrativeArea ?? ''),
+    };
+  } else {
+    throw Exception('No address found');
+  }
+}
 }

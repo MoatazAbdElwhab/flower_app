@@ -8,14 +8,17 @@ class ProfileState extends Equatable {
     this.editProfileState,
     this.logoutState,
     this.resetPasswordState,
+    this.userData,
     this.isResetPasswordFormValid = false,
   });
 
   final BaseState? getUserDataState;
   final BaseState? editProfileState;
+    final UserData? userData;
   final BaseState? logoutState;
   final BaseState? resetPasswordState;
   final bool isResetPasswordFormValid;
+
 
   ProfileState copyWith({
     BaseState? getUserDataState,
@@ -30,7 +33,9 @@ class ProfileState extends Equatable {
       editProfileState: editProfileState ?? this.editProfileState,
       logoutState: logoutState ?? this.logoutState,
       resetPasswordState: resetPasswordState ?? this.resetPasswordState,
-      isResetPasswordFormValid: isResetPasswordFormValid ?? this.isResetPasswordFormValid,
+      isResetPasswordFormValid:
+          isResetPasswordFormValid ?? this.isResetPasswordFormValid,
+      userData: userData ?? this.userData,
     );
   }
 
@@ -41,5 +46,6 @@ class ProfileState extends Equatable {
         logoutState,
         resetPasswordState,
         isResetPasswordFormValid,
+        userData,
       ];
 }

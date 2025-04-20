@@ -61,7 +61,7 @@ class CategoriesBottomSheet extends StatelessWidget {
           color: AppColors.white,
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.0.h),
           child: BlocBuilder<CategoriesCubit, CategoriesStates>(
             bloc: cubit,
             builder: (context, state) {

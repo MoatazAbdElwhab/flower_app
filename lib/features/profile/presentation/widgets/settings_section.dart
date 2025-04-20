@@ -1,5 +1,7 @@
+// features/profile/presentation/widgets/settings_section.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/resources/app_icon.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
 
 class SettingsSection extends StatelessWidget {
   const SettingsSection({
@@ -37,7 +40,9 @@ class SettingsSection extends StatelessWidget {
             height: 20,
           ),
           title: LocaleKeys.profile_savedAddress.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, Routes.addAddress);
+          },
         ),
         const SizedBox(height: 16),
         Divider(
@@ -108,11 +113,21 @@ class SettingsSection extends StatelessWidget {
         ),
         CustomRowItem(
           title: LocaleKeys.profile_aboutUs.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.aboutUs,
+            );
+          },
         ),
         CustomRowItem(
           title: LocaleKeys.profile_termsAndConditions.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.termsAndConditions,
+            );
+          },
         ),
         const SizedBox(height: 16),
         Divider(

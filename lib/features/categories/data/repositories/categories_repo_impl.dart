@@ -1,5 +1,5 @@
 import 'package:either_dart/either.dart';
-import 'package:flower_app/features/home/domain/entities/product_entity.dart';
+import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/error_handling/exceptions/api_exception.dart';
 import '../../domain/repositories/categories_repo.dart';
@@ -12,12 +12,12 @@ class CategoriesRepoImpl implements CategoriesRepo {
   CategoriesRepoImpl(this._categoriesData);
 
   @override
-  Future<Either<ApiException, List<ProductEntity>>> getCategories(
+  Future<Either<ApiException, List<Products>>> getCategories(
       String categoryId) async {
     try {
       var response = await _categoriesData.getCategories(categoryId);
-      if (response != null) {
-        return Right(response.map((e) => e.toEntity()).toList());
+      if (response.products != null) {
+        return Right((response.products ?? []));
       } else {
         return Left(ApiException(message: 'No Product found'));
       }

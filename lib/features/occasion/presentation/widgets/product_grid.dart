@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 
 class ProductGrid extends StatelessWidget {
   final List<ProductEntity> items;
-  final ScrollController? controller;
-  const ProductGrid({super.key, required this.items, this.controller});
+  const ProductGrid({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      controller: controller,
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

@@ -39,9 +39,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartUpdateProductQuantityEvent>((_onUpdateProductQuantity),
         transformer: (events, mapper) =>
             events.debounceTime(const Duration(seconds: 1)).switchMap(mapper));
-    if (isUserLoggedInAutomatically ?? false) {
-      add(const CartLoadEvent());
-    }
   }
 
   Future<void> _onLoadCart(CartLoadEvent event, Emitter<CartState> emit) async {

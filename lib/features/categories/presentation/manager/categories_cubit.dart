@@ -1,25 +1,36 @@
+// features/categories/presentation/manager/categories_cubit.dart
 import 'package:flower_app/core/base/base_state.dart';
-import 'package:flower_app/core/di/injectable.dart';
+import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart';
-import 'package:flower_app/features/home/domain/entities/product_entity.dart';
-import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart';
+import 'package:flower_app/features/categories/domain/use_cases/get_sorted_products_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../home/domain/entities/category_occasion_entity.dart';
+import '../../../nav/presentation/pages/navbar_page.dart';
 import '../widgets/categories_bottom_sheat.dart';
 import 'categories_states.dart';
 
 @injectable
 class CategoriesCubit extends Cubit<CategoriesStates> {
-  CategoriesCubit(this._getCategoriesUseCase) : super(const CategoriesStates());
+  final List<CategoryOccasionEntity> categories;
+
+  CategoriesCubit(
+    this._getCategoriesUseCase,
+    this._getSortedProductsUseCase,
+    this.categories,
+  ) : super(const CategoriesStates());
 
   final GetCategoriesUseCase _getCategoriesUseCase;
+  final GetSortedProductsUseCase _getSortedProductsUseCase;
+  late TabController tabController;
 
   void showCategoriesFilterSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => const CategoriesBottomSheet(),
+      builder: (context) => CategoriesBottomSheet(cubit: this),
     );
   }
 
@@ -29,19 +40,71 @@ class CategoriesCubit extends Cubit<CategoriesStates> {
     emit(
       state.copyWith(
         categoryState: categoriesList.fold(
-              (error) => BaseErrorState(error.message),
-              (products) => BaseSuccessState<List<ProductEntity>>(data: products),
+          (error) => BaseErrorState(error.message),
+          (products) => BaseSuccessState<List<Products>>(data: products),
         ),
       ),
     );
   }
 
-  void initializeSelectedIndex(int index) {
-    emit(state.copyWith(selectedCategoryIndex: index));
+  Future<void> selectCategoryFromHomeByID(String categoryId) async {
+    final index =
+        categories.indexWhere((category) => category.id == categoryId);
+
+    if (index >= 0) {
+      final selectedCategory = categories.removeAt(index);
+      categories.insert(0, selectedCategory);
+
+      tabController.index = 0;
+      emit(state.copyWith(
+          selectedCategoryIndex: 0, updatedCategories: categories));
+      await getProductByCategoryList(selectedCategory.id ?? '');
+    } else {
+      await getProductByCategoryList(categoryId);
+
+      emit(state.copyWith(
+        categoryState: BaseErrorState('Invalid category ID'),
+      ));
+    }
   }
 
-  void updateSelectedCategoryIndex(int index) {
-    emit(state.copyWith(selectedCategoryIndex: index));
-    getIt<NavCubit>().changeTab(1, selectedCategoryIndex: index);
+  void navigateToCategoriesTab(BuildContext context) {
+    final navbarState = NavbarPage.of(context);
+    if (navbarState != null) {
+      navbarState.changeTab(1);
+      if (categories.isNotEmpty) {
+        getProductByCategoryList(categories[0].id ?? '');
+        tabController.index = 0;
+        emit(state.copyWith(selectedCategoryIndex: 0));
+      }
+    }
+  }
+
+  //filter
+
+  void selectSortOption(Map option) {
+    emit(state.copyWith(
+        selectedSortOption: option['value'], queryOption: option['query']));
+  }
+
+  void updatePriceRange(RangeValues range) {
+    emit(state.copyWith(priceRange: range));
+  }
+
+  Future<void> applyFilter() async {
+    emit(state.copyWith(categoryState: BaseLoadingState()));
+
+    var categoriesList = await _getSortedProductsUseCase.call(
+      categories[tabController.index].id!,
+      state.queryOption,
+    );
+    emit(
+      state.copyWith(
+        categoryState: categoriesList.fold(
+          (error) => BaseErrorState(error.message),
+          (products) => BaseSuccessState<List<Products>>(data: products),
+        ),
+      ),
+    );
   }
 }

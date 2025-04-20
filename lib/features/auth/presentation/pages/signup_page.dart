@@ -104,6 +104,7 @@ class SignupPage extends StatelessWidget {
                 ),
                 children: [
                   Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: authCubit.formKey,
                     child: Column(
                       children: [
@@ -114,7 +115,6 @@ class SignupPage extends StatelessWidget {
                                 validator: (value) =>
                                     Validator.firstNameValidation(value),
                                 controller: authCubit.firstNameController,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   hintText: 'firstName.hint'.tr(),
                                   labelText: 'firstName.label'.tr(),
@@ -127,7 +127,6 @@ class SignupPage extends StatelessWidget {
                                 validator: (value) =>
                                     Validator.lastNameValidation(value),
                                 controller: authCubit.lastNameController,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   hintText: 'lastName.hint'.tr(),
                                   labelText: 'lastName.label'.tr(),
@@ -140,7 +139,6 @@ class SignupPage extends StatelessWidget {
                         TextFormField(
                           validator: (value) => Validator.emailValidate(value),
                           controller: authCubit.emailController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             hintText: 'email.hint'.tr(),
                             labelText: 'email.label'.tr(),
@@ -154,7 +152,6 @@ class SignupPage extends StatelessWidget {
                                 validator: (value) =>
                                     Validator.passwordValidation(value),
                                 controller: authCubit.passwordController,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   hintText: 'password.hint'.tr(),
@@ -169,7 +166,6 @@ class SignupPage extends StatelessWidget {
                                     Validator.confirmPasswordValidation(value,
                                         authCubit.passwordController.text),
                                 controller: authCubit.confirmPasswordController,
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   hintText: 'confirmPassword.hint'.tr(),
@@ -187,7 +183,6 @@ class SignupPage extends StatelessWidget {
                           onChanged: (value) => authCubit
                               .enforceEgyptianPrefix(authCubit.phoneController),
                           keyboardType: TextInputType.phone,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             hintText: 'phone.hint'.tr(),
                             labelText: 'phone.label'.tr(),

@@ -186,51 +186,6 @@ abstract class  LocaleKeys {
   static const bestSeller_title = 'bestSeller.title';
   static const bestSeller_description = 'bestSeller.description';
   static const bestSeller = 'bestSeller';
-  static const profile_myOrders = 'profile.myOrders';
-  static const profile_savedAddress = 'profile.savedAddress';
-  static const profile_notification = 'profile.notification';
-  static const profile_language = 'profile.language';
-  static const profile_userLanguage = 'profile.userLanguage';
-  static const profile_changeLanguage = 'profile.changeLanguage';
-  static const profile_aboutUs = 'profile.aboutUs';
-  static const profile_termsAndConditions = 'profile.termsAndConditions';
-  static const profile_logout = 'profile.logout';
-  static const profile_updateProfile = 'profile.updateProfile';
-  static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
-  static const profile_editProfile = 'profile.editProfile';
-  static const profile_logoutTitle = 'profile.logoutTitle';
-  static const profile_confirmLogout = 'profile.confirmLogout';
-  static const profile_cancel = 'profile.cancel';
-  static const profile_reset_password_title = 'resetpassword.title';
-  static const profile_reset_password_current_password =
-      'resetpassword.current_password';
-  static const profile_reset_password_current_password_hint =
-      'resetpassword.current_password_hint';
-  static const profile_reset_password_new_password =
-      'resetpassword.new_password';
-  static const profile_reset_password_new_password_hint =
-      'resetpassword.new_password_hint';
-  static const profile_reset_password_confirm_password =
-      'resetpassword.confirm_password';
-  static const profile_reset_password_confirm_password_hint =
-      'resetpassword.confirm_password_hint';
-  static const profile_reset_password_update_button =
-      'resetpassword.update_button';
-  static const profile_reset_password_success_message =
-      'resetpassword.success_message';
-  static const profile_reset_password_error_message =
-      'resetpassword.error_message';
-  static const profile_reset_password_error_confirm_password_required =
-      'resetpassword.error.confirm_password_required';
-  static const profile_reset_password_error_passwords_not_match =
-      'resetpassword.error.passwords_not_match';
-  static const profile_reset_password_error_same_password =
-      'resetpassword.error.same_password';
-  static const profile_reset_password_error_incorrect_password =
-      'resetpassword.error.incorrect_password';
-  static const profile_reset_password_error = 'resetpassword.error';
-  static const profile_reset_password = 'profile.reset_password';
-  static const profile = 'profile';
   static const cart_cart = 'cart.cart';
   static const cart_items = 'cart.items';
   static const cart_delivery = 'cart.delivery';
@@ -250,4 +205,54 @@ abstract class  LocaleKeys {
   static const cart_failedToRemove = 'cart.failedToRemove';
   static const cart_updateProfileSuccess = 'cart.updateProfileSuccess';
   static const cart = 'cart';
+  static const checkout_title = 'checkout.title';
+  static const checkout_delivery_time = 'checkout.delivery_time';
+  static const checkout_schedule = 'checkout.schedule';
+  static const checkout_instant = 'checkout.instant';
+  static const checkout_delivery_address = 'checkout.delivery_address';
+  static const checkout_add_new = 'checkout.add_new';
+  static const checkout_payment_method = 'checkout.payment_method';
+  static const checkout_payment_method_cash = 'checkout.payment_method_cash';
+  static const checkout_payment_method_card = 'checkout.payment_method_card';
+  static const checkout_it_is_a_gift = 'checkout.it_is_a_gift';
+  static const checkout_enter_the_name = 'checkout.enter_the_name';
+  static const checkout_name = 'checkout.name';
+  static const checkout_enter_the_phone_number = 'checkout.enter_the_phone_number';
+  static const checkout_phone_number = 'checkout.phone_number';
+  static const checkout_sub_total = 'checkout.sub_total';
+  static const checkout_delivery_fee = 'checkout.delivery_fee';
+  static const checkout_total = 'checkout.total';
+  static const checkout_place_order = 'checkout.place_order';
+  static const checkout = 'checkout';
+  static const addAddress_title = 'addAddress.title';
+  static const addAddress_save_address_button = 'addAddress.save_address_button';
+  static const addAddress_address_label = 'addAddress.address_label';
+  static const addAddress_address_hint = 'addAddress.address_hint';
+  static const addAddress_address_error_empty = 'addAddress.address_error_empty';
+  static const addAddress_phone_label = 'addAddress.phone_label';
+  static const addAddress_phone_hint = 'addAddress.phone_hint';
+  static const addAddress_phone_error_empty = 'addAddress.phone_error_empty';
+  static const addAddress_phone_error_length = 'addAddress.phone_error_length';
+  static const addAddress_recipient_name_label = 'addAddress.recipient_name_label';
+  static const addAddress_recipient_name_hint = 'addAddress.recipient_name_hint';
+  static const addAddress_recipient_name_error_empty = 'addAddress.recipient_name_error_empty';
+  static const addAddress_recipient_name_error_length = 'addAddress.recipient_name_error_length';
+  static const addAddress_city_label = 'addAddress.city_label';
+  static const addAddress_city_hint = 'addAddress.city_hint';
+  static const addAddress_city_error_empty = 'addAddress.city_error_empty';
+  static const addAddress_area_label = 'addAddress.area_label';
+  static const addAddress_area_hint = 'addAddress.area_hint';
+  static const addAddress_area_error_empty = 'addAddress.area_error_empty';
+  static const addAddress_map_error_message = 'addAddress.map_error_message';
+  static const addAddress = 'addAddress';
+  static const filter_lowestPrice = 'filter.lowestPrice';
+  static const filter_highestPrice = 'filter.highestPrice';
+  static const filter_new = 'filter.new';
+  static const filter_old = 'filter.old';
+  static const filter_discount = 'filter.discount';
+  static const filter_sortBy = 'filter.sortBy';
+  static const filter_price = 'filter.price';
+  static const filter_filterButton = 'filter.filterButton';
+  static const filter = 'filter';
+
 }

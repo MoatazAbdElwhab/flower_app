@@ -4,4 +4,7 @@ import 'package:flower_app/features/categories/data/remote/models/category_produ
 
 abstract class CategoriesRepo {
   Future<Either<ApiException, List<Products>>> getCategories(String categoryId);
+
+  Future<Either<ApiException, List<Products>>> getSortedProducts(
+      String categoryId, String sortOption);
 }

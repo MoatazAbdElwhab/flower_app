@@ -252,6 +252,17 @@
     "updateProfileSuccess": "Updated"
   },
 
+  "filter":{
+    "sortBy":"Sort by",
+    "lowestPrice":"Lowest Price",
+    "highestPrice":"Highest Price",
+    "new":"New",
+    "old":"Old",
+    "discount":"Discount",
+    "price":"Price",
+    "filterButton":"Filter"
+  },
+
   "checkout": {
     "title": "Checkout",
     "delivery_time": "Delivery time",

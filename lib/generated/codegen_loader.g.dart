@@ -239,26 +239,6 @@ class CodegenLoader extends AssetLoader{
     "successfullyRemoved": "تمت إزالة المنتج بنجاح",
     "failedToRemove": "فشل في إزالة المنتج",
     "updateProfileSuccess": "تم التحديث بنجاح"
-  },
-  "checkout": {
-    "title": "إتمام الشراء",
-    "delivery_time": "وقت التوصيل",
-    "schedule": "الجدول",
-    "instant": "فوري, ",
-    "delivery_address": "العنوان المراد توصيله",
-    "add_new": "إضافة جديد",
-    "payment_method": "طريقة الدفع",
-    "payment_method_cash": "الدفع عند التوصيل",
-    "payment_method_card": "الدفع بالبطاقة",
-    "it_is_a_gift": "هو هدية",
-    "enter_the_name": "أدخل الاسم",
-    "name": "الاسم",
-    "enter_the_phone_number": "أدخل رقم الهاتف",
-    "phone_number": "رقم الهاتف",
-    "sub_total": "المجموع الفرعي",
-    "delivery_fee": "رسوم التوصيل",
-    "total": "الإجمالي",
-    "place_order": "إتمام الشراء"
   }
 };
 static const Map<String,dynamic> _en_US = {
@@ -486,26 +466,6 @@ static const Map<String,dynamic> _en_US = {
     "successfullyRemoved": "product successfully removed",
     "failedToRemove": "failed to remove product",
     "updateProfileSuccess": "Updated"
-  },
-  "checkout": {
-    "title": "Checkout",
-    "delivery_time": "Delivery time",
-    "schedule": "Schedule",
-    "instant": "Instant, ",
-    "delivery_address": "Delivery address",
-    "add_new": "Add new",
-    "payment_method": "Payment method",
-    "payment_method_cash": "Cash on delivery",
-    "payment_method_card": "Credit card",
-    "it_is_a_gift": "It is a gift",
-    "enter_the_name": "Enter the name",
-    "name": "Name",
-    "enter_the_phone_number": "Enter the phone number",
-    "phone_number": "Phone number",
-    "sub_total": "Sub Total",
-    "delivery_fee": "Delivery Fee",
-    "total": "Total",
-    "place_order": "Place order"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar_AE": _ar_AE, "en_US": _en_US};

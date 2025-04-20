@@ -23,4 +23,18 @@ class CategoriesRemoteDataSourceImpl
 
     return CategoryProductsModel.fromJson(response);
   }
+
+  @override
+  Future<CategoryProductsModel> getSortedProducts(
+      String categoryId, String sortOption) async {
+    const categoryEndpoint = ApiConstants.getProudctByCategoryEndPoint;
+
+    final response = await _apiClient
+        .get(categoryEndpoint, requiresToken: false, queryParameters: {
+      'category': categoryId,
+      'sort': sortOption,
+    });
+
+    return CategoryProductsModel.fromJson(response);
+  }
 }

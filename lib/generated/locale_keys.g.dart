@@ -186,6 +186,51 @@ abstract class  LocaleKeys {
   static const bestSeller_title = 'bestSeller.title';
   static const bestSeller_description = 'bestSeller.description';
   static const bestSeller = 'bestSeller';
+  static const profile_myOrders = 'profile.myOrders';
+  static const profile_savedAddress = 'profile.savedAddress';
+  static const profile_notification = 'profile.notification';
+  static const profile_language = 'profile.language';
+  static const profile_userLanguage = 'profile.userLanguage';
+  static const profile_changeLanguage = 'profile.changeLanguage';
+  static const profile_aboutUs = 'profile.aboutUs';
+  static const profile_termsAndConditions = 'profile.termsAndConditions';
+  static const profile_logout = 'profile.logout';
+  static const profile_updateProfile = 'profile.updateProfile';
+  static const profile_updateProfileSuccess = 'profile.updateProfileSuccess';
+  static const profile_editProfile = 'profile.editProfile';
+  static const profile_logoutTitle = 'profile.logoutTitle';
+  static const profile_confirmLogout = 'profile.confirmLogout';
+  static const profile_cancel = 'profile.cancel';
+  static const profile_reset_password_title = 'resetpassword.title';
+  static const profile_reset_password_current_password =
+      'resetpassword.current_password';
+  static const profile_reset_password_current_password_hint =
+      'resetpassword.current_password_hint';
+  static const profile_reset_password_new_password =
+      'resetpassword.new_password';
+  static const profile_reset_password_new_password_hint =
+      'resetpassword.new_password_hint';
+  static const profile_reset_password_confirm_password =
+      'resetpassword.confirm_password';
+  static const profile_reset_password_confirm_password_hint =
+      'resetpassword.confirm_password_hint';
+  static const profile_reset_password_update_button =
+      'resetpassword.update_button';
+  static const profile_reset_password_success_message =
+      'resetpassword.success_message';
+  static const profile_reset_password_error_message =
+      'resetpassword.error_message';
+  static const profile_reset_password_error_confirm_password_required =
+      'resetpassword.error.confirm_password_required';
+  static const profile_reset_password_error_passwords_not_match =
+      'resetpassword.error.passwords_not_match';
+  static const profile_reset_password_error_same_password =
+      'resetpassword.error.same_password';
+  static const profile_reset_password_error_incorrect_password =
+      'resetpassword.error.incorrect_password';
+  static const profile_reset_password_error = 'resetpassword.error';
+  static const profile_reset_password = 'profile.reset_password';
+  static const profile = 'profile';
   static const cart_cart = 'cart.cart';
   static const cart_items = 'cart.items';
   static const cart_delivery = 'cart.delivery';
@@ -205,48 +250,4 @@ abstract class  LocaleKeys {
   static const cart_failedToRemove = 'cart.failedToRemove';
   static const cart_updateProfileSuccess = 'cart.updateProfileSuccess';
   static const cart = 'cart';
-  static const checkout_title = 'checkout.title';
-  static const checkout_delivery_time = 'checkout.delivery_time';
-  static const checkout_schedule = 'checkout.schedule';
-  static const checkout_instant = 'checkout.instant';
-  static const checkout_delivery_address = 'checkout.delivery_address';
-  static const checkout_add_new = 'checkout.add_new';
-  static const checkout_payment_method = 'checkout.payment_method';
-  static const checkout_payment_method_cash = 'checkout.payment_method_cash';
-  static const checkout_payment_method_card = 'checkout.payment_method_card';
-  static const checkout_it_is_a_gift = 'checkout.it_is_a_gift';
-  static const checkout_enter_the_name = 'checkout.enter_the_name';
-  static const checkout_name = 'checkout.name';
-  static const checkout_enter_the_phone_number = 'checkout.enter_the_phone_number';
-  static const checkout_phone_number = 'checkout.phone_number';
-  static const checkout_sub_total = 'checkout.sub_total';
-  static const checkout_delivery_fee = 'checkout.delivery_fee';
-  static const checkout_total = 'checkout.total';
-  static const checkout_place_order = 'checkout.place_order';
-  static const checkout = 'checkout';
-  static const terms_title = 'terms.title';
-  static const terms_last_updated = 'terms.last_updated';
-  static const terms_introduction = 'terms.introduction';
-  static const terms_definitions = 'terms.definitions';
-  static const terms_account = 'terms.account';
-  static const terms_delivery = 'terms.delivery';
-  static const terms_cancellation = 'terms.cancellation';
-  static const terms_app_usage = 'terms.app_usage';
-  static const terms_legal = 'terms.legal';
-  static const terms_contact = 'terms.contact';
-  static const terms_introduction_text = 'terms.introduction_text';
-  static const terms_definitions_text = 'terms.definitions_text';
-  static const terms_account_text = 'terms.account_text';
-  static const terms_delivery_text = 'terms.delivery_text';
-  static const terms_cancellation_text = 'terms.cancellation_text';
-  static const terms_app_usage_text = 'terms.app_usage_text';
-  static const terms_legal_text = 'terms.legal_text';
-  static const terms_contact_text = 'terms.contact_text';
-  static const terms_email = 'terms.email';
-  static const terms_phone = 'terms.phone';
-  static const terms_address = 'terms.address';
-  static const terms_thank_you = 'terms.thank_you';
-  static const terms_copyright = 'terms.copyright';
-  static const terms = 'terms';
-
 }

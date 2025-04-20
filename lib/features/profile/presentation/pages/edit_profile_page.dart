@@ -2,7 +2,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/nav/presentation/pages/navbar_page.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -27,17 +27,17 @@ class CartProductWidget extends StatelessWidget {
               arguments: productEntity);
         },
         child: Container(
-            margin: EdgeInsets.symmetric(vertical: 10.h),
-            height: 116.h,
+            margin: EdgeInsets.symmetric(vertical: 12.h),
+            height: 100,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                border: Border.all(width: 1.h, color: AppColors.grey)),
+                border: Border.all(width: 1.h)),
             child: Row(children: [
               /// Image
               Expanded(
                   flex: 3,
                   child: Padding(
-                    padding: EdgeInsets.all(6.h),
+                    padding: const EdgeInsets.all(3),
                     child: AppNetworkImage(
                       networkImage: productEntity.imgCover,
                       fit: BoxFit.cover,
@@ -49,42 +49,34 @@ class CartProductWidget extends StatelessWidget {
               Expanded(
                   flex: 7,
                   child: Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 12),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             /// title + delete
-                            Expanded(
-                              flex: 10,
-                              child: CartProductTitleAndRemoveIcon(
-                                title: productEntity.title,
-                                id: productEntity.id,
-                                isDummy: isDummy,
-                              ),
+                            CartProductTitleAndRemoveIcon(
+                              title: productEntity.title,
+                              id: productEntity.id,
+                              isDummy: isDummy,
                             ),
 
                             /// discription
-                            Expanded(
-                              flex: 10,
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                    end: rightMargining),
-                                child: Text(
-                                  productEntity.description,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: getMediumStyle(color: AppColors.grey)
-                                      .copyWith(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.w400),
-                                ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                  end: rightMargining),
+                              child: Text(
+                                productEntity.description,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: getMediumStyle(color: AppColors.grey)
+                                    .copyWith(
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w400),
                               ),
                             ),
-                            Expanded(
-                                flex: 15,
-                                child: CartProductPriceAndQuantitySection(
-                                    productEntity)),
+                            const Spacer(),
+                            CartProductPriceAndQuantitySection(productEntity),
                           ])))
             ])));
   }

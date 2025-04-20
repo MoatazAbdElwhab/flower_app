@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const signUp = 'signUp';
   static const back = 'back';
   static const firstName_hint = 'firstName.hint';
@@ -32,27 +32,36 @@ abstract class  LocaleKeys {
   static const confirmPassword_hint = 'confirmPassword.hint';
   static const confirmPassword_label = 'confirmPassword.label';
   static const confirmPassword_error_empty = 'confirmPassword.error.empty';
-  static const confirmPassword_error_mismatch = 'confirmPassword.error.mismatch';
+  static const confirmPassword_error_mismatch =
+      'confirmPassword.error.mismatch';
   static const confirmPassword_error = 'confirmPassword.error';
   static const confirmPassword = 'confirmPassword';
-  static const auth_errors_invalid_credentials = 'auth.errors.invalid_credentials';
+  static const auth_errors_invalid_credentials =
+      'auth.errors.invalid_credentials';
   static const auth_errors_sign_in_error = 'auth.errors.sign_in_error';
-  static const auth_errors_navigation_forgot_password = 'auth.errors.navigation.forgot_password';
-  static const auth_errors_navigation_sign_up = 'auth.errors.navigation.sign_up';
+  static const auth_errors_navigation_forgot_password =
+      'auth.errors.navigation.forgot_password';
+  static const auth_errors_navigation_sign_up =
+      'auth.errors.navigation.sign_up';
   static const auth_errors_navigation = 'auth.errors.navigation';
   static const auth_errors = 'auth.errors';
   static const auth_login_title = 'auth.login.title';
   static const auth_login_email_label = 'auth.login.email.label';
   static const auth_login_email_hint = 'auth.login.email.hint';
-  static const auth_login_email_validation_required = 'auth.login.email.validation.required';
-  static const auth_login_email_validation_invalid = 'auth.login.email.validation.invalid';
+  static const auth_login_email_validation_required =
+      'auth.login.email.validation.required';
+  static const auth_login_email_validation_invalid =
+      'auth.login.email.validation.invalid';
   static const auth_login_email_validation = 'auth.login.email.validation';
   static const auth_login_email = 'auth.login.email';
   static const auth_login_password_label = 'auth.login.password.label';
   static const auth_login_password_hint = 'auth.login.password.hint';
-  static const auth_login_password_validation_required = 'auth.login.password.validation.required';
-  static const auth_login_password_validation_invalid = 'auth.login.password.validation.invalid';
-  static const auth_login_password_validation = 'auth.login.password.validation';
+  static const auth_login_password_validation_required =
+      'auth.login.password.validation.required';
+  static const auth_login_password_validation_invalid =
+      'auth.login.password.validation.invalid';
+  static const auth_login_password_validation =
+      'auth.login.password.validation';
   static const auth_login_password = 'auth.login.password';
   static const auth_login_remember_me = 'auth.login.remember_me';
   static const auth_login_forgot_password = 'auth.login.forgot_password';
@@ -70,7 +79,8 @@ abstract class  LocaleKeys {
   static const home_sections_search = 'home.sections.search';
   static const home_sections_flowery = 'home.sections.flowery';
   static const home_sections = 'home.sections';
-  static const home_empty_states_best_sellers = 'home.empty_states.best_sellers';
+  static const home_empty_states_best_sellers =
+      'home.empty_states.best_sellers';
   static const home_empty_states_categories = 'home.empty_states.categories';
   static const home_empty_states_occasions = 'home.empty_states.occasions';
   static const home_empty_states_no_data = 'home.empty_states.no_data';
@@ -113,11 +123,14 @@ abstract class  LocaleKeys {
   static const profile_terms_app_usage = 'profile.terms.app_usage';
   static const profile_terms_legal = 'profile.terms.legal';
   static const profile_terms_contact = 'profile.terms.contact';
-  static const profile_terms_introduction_text = 'profile.terms.introduction_text';
-  static const profile_terms_definitions_text = 'profile.terms.definitions_text';
+  static const profile_terms_introduction_text =
+      'profile.terms.introduction_text';
+  static const profile_terms_definitions_text =
+      'profile.terms.definitions_text';
   static const profile_terms_account_text = 'profile.terms.account_text';
   static const profile_terms_delivery_text = 'profile.terms.delivery_text';
-  static const profile_terms_cancellation_text = 'profile.terms.cancellation_text';
+  static const profile_terms_cancellation_text =
+      'profile.terms.cancellation_text';
   static const profile_terms_app_usage_text = 'profile.terms.app_usage_text';
   static const profile_terms_legal_text = 'profile.terms.legal_text';
   static const profile_terms_contact_text = 'profile.terms.contact_text';
@@ -135,19 +148,32 @@ abstract class  LocaleKeys {
   static const profile_confirmLogout = 'profile.confirmLogout';
   static const profile_cancel = 'profile.cancel';
   static const profile_reset_password_title = 'profile.reset_password.title';
-  static const profile_reset_password_current_password = 'profile.reset_password.current_password';
-  static const profile_reset_password_current_password_hint = 'profile.reset_password.current_password_hint';
-  static const profile_reset_password_new_password = 'profile.reset_password.new_password';
-  static const profile_reset_password_new_password_hint = 'profile.reset_password.new_password_hint';
-  static const profile_reset_password_confirm_password = 'profile.reset_password.confirm_password';
-  static const profile_reset_password_confirm_password_hint = 'profile.reset_password.confirm_password_hint';
-  static const profile_reset_password_update_button = 'profile.reset_password.update_button';
-  static const profile_reset_password_success_message = 'profile.reset_password.success_message';
-  static const profile_reset_password_error_message = 'profile.reset_password.error_message';
-  static const profile_reset_password_error_confirm_password_required = 'profile.reset_password.error.confirm_password_required';
-  static const profile_reset_password_error_passwords_not_match = 'profile.reset_password.error.passwords_not_match';
-  static const profile_reset_password_error_same_password = 'profile.reset_password.error.same_password';
-  static const profile_reset_password_error_incorrect_password = 'profile.reset_password.error.incorrect_password';
+  static const profile_reset_password_current_password =
+      'profile.reset_password.current_password';
+  static const profile_reset_password_current_password_hint =
+      'profile.reset_password.current_password_hint';
+  static const profile_reset_password_new_password =
+      'profile.reset_password.new_password';
+  static const profile_reset_password_new_password_hint =
+      'profile.reset_password.new_password_hint';
+  static const profile_reset_password_confirm_password =
+      'profile.reset_password.confirm_password';
+  static const profile_reset_password_confirm_password_hint =
+      'profile.reset_password.confirm_password_hint';
+  static const profile_reset_password_update_button =
+      'profile.reset_password.update_button';
+  static const profile_reset_password_success_message =
+      'profile.reset_password.success_message';
+  static const profile_reset_password_error_message =
+      'profile.reset_password.error_message';
+  static const profile_reset_password_error_confirm_password_required =
+      'profile.reset_password.error.confirm_password_required';
+  static const profile_reset_password_error_passwords_not_match =
+      'profile.reset_password.error.passwords_not_match';
+  static const profile_reset_password_error_same_password =
+      'profile.reset_password.error.same_password';
+  static const profile_reset_password_error_incorrect_password =
+      'profile.reset_password.error.incorrect_password';
   static const profile_reset_password_error = 'profile.reset_password.error';
   static const profile_reset_password = 'profile.reset_password';
   static const profile = 'profile';
@@ -250,4 +276,48 @@ abstract class  LocaleKeys {
   static const cart_failedToRemove = 'cart.failedToRemove';
   static const cart_updateProfileSuccess = 'cart.updateProfileSuccess';
   static const cart = 'cart';
+  static const checkout_title = 'checkout.title';
+  static const checkout_delivery_time = 'checkout.delivery_time';
+  static const checkout_schedule = 'checkout.schedule';
+  static const checkout_instant = 'checkout.instant';
+  static const checkout_delivery_address = 'checkout.delivery_address';
+  static const checkout_add_new = 'checkout.add_new';
+  static const checkout_payment_method = 'checkout.payment_method';
+  static const checkout_payment_method_cash = 'checkout.payment_method_cash';
+  static const checkout_payment_method_card = 'checkout.payment_method_card';
+  static const checkout_it_is_a_gift = 'checkout.it_is_a_gift';
+  static const checkout_enter_the_name = 'checkout.enter_the_name';
+  static const checkout_name = 'checkout.name';
+  static const checkout_enter_the_phone_number =
+      'checkout.enter_the_phone_number';
+  static const checkout_phone_number = 'checkout.phone_number';
+  static const checkout_sub_total = 'checkout.sub_total';
+  static const checkout_delivery_fee = 'checkout.delivery_fee';
+  static const checkout_total = 'checkout.total';
+  static const checkout_place_order = 'checkout.place_order';
+  static const checkout = 'checkout';
+  static const terms_title = 'terms.title';
+  static const terms_last_updated = 'terms.last_updated';
+  static const terms_introduction = 'terms.introduction';
+  static const terms_definitions = 'terms.definitions';
+  static const terms_account = 'terms.account';
+  static const terms_delivery = 'terms.delivery';
+  static const terms_cancellation = 'terms.cancellation';
+  static const terms_app_usage = 'terms.app_usage';
+  static const terms_legal = 'terms.legal';
+  static const terms_contact = 'terms.contact';
+  static const terms_introduction_text = 'terms.introduction_text';
+  static const terms_definitions_text = 'terms.definitions_text';
+  static const terms_account_text = 'terms.account_text';
+  static const terms_delivery_text = 'terms.delivery_text';
+  static const terms_cancellation_text = 'terms.cancellation_text';
+  static const terms_app_usage_text = 'terms.app_usage_text';
+  static const terms_legal_text = 'terms.legal_text';
+  static const terms_contact_text = 'terms.contact_text';
+  static const terms_email = 'terms.email';
+  static const terms_phone = 'terms.phone';
+  static const terms_address = 'terms.address';
+  static const terms_thank_you = 'terms.thank_you';
+  static const terms_copyright = 'terms.copyright';
+  static const terms = 'terms';
 }

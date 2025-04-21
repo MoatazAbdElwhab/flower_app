@@ -1,3 +1,4 @@
+// core/routes/app_router.dart
 import 'package:flower_app/core/di/injectable.dart';
 // core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
@@ -6,7 +7,6 @@ import 'package:flower_app/features/auth/presentation/pages/forget_password_page
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_page.dart';
-import 'package:flower_app/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
@@ -20,8 +20,6 @@ import 'package:flower_app/core/common_widgets/product_details_page/product_deta
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../features/add_address/presentation/manager/add_address_cubit.dart';
-import '../../features/add_address/presentation/pages/add_adress_screen.dart';
 import '../../features/nav/presentation/pages/navbar_page.dart';
 import '../../features/profile/domain/entities/user_data.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
@@ -118,13 +116,6 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => const ProfileResetPassword(),
       );
-      case Routes.addAddress:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (_) => BlocProvider(
-          create: (context) => getIt<AddAddressCubit>(),
-          child: const AddAddressScreen()),
-      );
 
     case Routes.searchResults:
       final Map<String, dynamic> args =
@@ -137,11 +128,7 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
           onBackPressed: () => Navigator.pop(_),
         ),
       );
-    case Routes.checkout:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (_) => const CheckoutPage(),
-      );
+
 
     case Routes.termsAndConditions:
       return MaterialPageRoute(

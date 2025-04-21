@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
+import 'package:flower_app/features/profile/domain/entities/address_widget_location_enum.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:flower_app/features/profile/presentation/pages/saved_address_page/widgets/address_widget.dart';
+import 'package:flower_app/core/common_widgets/address_widget/address_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -55,6 +57,9 @@ class SavedAddressPage extends StatelessWidget {
                                       AddressWidget(
                                         address:
                                             state.userData!.addresses![index],
+                                        addressWidgetLocation:
+                                            AddressWidgetLocation
+                                                .inSavedAddresses,
                                       )),
                             ),
                           ],
@@ -74,8 +79,7 @@ class SavedAddressPage extends StatelessWidget {
                       context.read<ProfileCubit>().getUserData();
                     }
                   });
-                }
-                    ,
+                },
                 child: const Text('Add new address'))
           ],
         ),

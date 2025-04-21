@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class SettingsSection extends StatelessWidget {
   const SettingsSection({
     super.key,
@@ -41,7 +40,8 @@ class SettingsSection extends StatelessWidget {
           ),
           title: LocaleKeys.profile_savedAddress.tr(),
           onTap: () {
-            Navigator.pushNamed(context, Routes.addAddress);
+            Navigator.pushNamed(context, Routes.savedAddresses,
+                arguments: cubit);
           },
         ),
         const SizedBox(height: 16),

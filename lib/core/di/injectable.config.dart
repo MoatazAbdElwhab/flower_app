@@ -84,8 +84,6 @@ import 'package:flower_app/features/categories/domain/repositories/categories_re
     as _i1;
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart'
     as _i298;
-import 'package:flower_app/features/categories/domain/use_cases/get_sorted_products_use_case.dart'
-    as _i44;
 import 'package:flower_app/features/categories/presentation/manager/categories_cubit.dart'
     as _i659;
 import 'package:flower_app/features/checkout/data/datasources/remote/checkout_api_remote_data_source.dart'
@@ -234,13 +232,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i779.HomeRepositoryImpl(gh<_i286.HomeDataSourceContract>()));
     gh.factory<_i298.GetCategoriesUseCase>(
         () => _i298.GetCategoriesUseCase(gh<_i1.CategoriesRepo>()));
-    gh.factory<_i44.GetSortedProductsUseCase>(
-        () => _i44.GetSortedProductsUseCase(gh<_i1.CategoriesRepo>()));
-    gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
-          gh<_i298.GetCategoriesUseCase>(),
-          gh<_i44.GetSortedProductsUseCase>(),
-          gh<List<_i1025.CategoryOccasionEntity>>(),
-        ));
     gh.factory<_i806.ProfileRepository>(() => _i866.ProfileRepositoryImpl(
           gh<_i445.ProfileRemoteDataSource>(),
           gh<_i941.ProfileLocalDataSource>(),
@@ -267,28 +258,34 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i325.CartRemoveProductUseCase(gh<_i241.CartRepoInterface>()));
     gh.factory<_i264.ClearCartUseCase>(
         () => _i264.ClearCartUseCase(gh<_i241.CartRepoInterface>()));
-    gh.factory<_i703.CartUpdateProductQuantityUseCase>(() =>
-        _i703.CartUpdateProductQuantityUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i379.CartLoadUseCase>(
+        () => _i379.CartLoadUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i589.CartAddProductUseCase>(
+        () => _i589.CartAddProductUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i742.AddAddressUseCase>(
+        () => _i742.AddAddressUseCase(gh<_i718.AddAddressRepo>()));
+    gh.factory<_i723.AddAddressCubit>(() => _i723.AddAddressCubit(
+          gh<_i754.LocationService>(),
+          gh<_i742.AddAddressUseCase>(),
+        ));
     gh.factory<_i122.CheckoutCubit>(
         () => _i122.CheckoutCubit(gh<_i147.GetAddressesUseCase>()));
+    gh.factory<_i242.VerifyResetCodeUseCase>(
+        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i235.ForgetPasswordUseCase>(
         () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i366.SignupUseCase>(
         () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i696.ResetPasswordUseCase>(
         () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i366.SignupUseCase>(
-        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i621.SignInUseCase>(
-        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i242.VerifyResetCodeUseCase>(
-        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i419.ResendOtpUseCase>(
+        () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i902.SearchProductsUseCase>(
         () => _i902.SearchProductsUseCase(gh<_i347.SearchRepository>()));
-    gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
-          gh<_i298.GetCategoriesUseCase>(),
-          gh<List<_i1025.CategoryOccasionEntity>>(),
-        ));
+    gh.factory<_i659.CategoriesCubit>(
+        () => _i659.CategoriesCubit(gh<_i298.GetCategoriesUseCase>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
     gh.factory<_i389.GetUserDataUseCase>(

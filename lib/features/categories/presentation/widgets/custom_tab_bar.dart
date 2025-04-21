@@ -33,37 +33,55 @@ class CustomTabBar extends StatelessWidget {
       tabs: tabsTitles
           .asMap()
           .map((index, title) => MapEntry(
-        index,
-        _TabWidgetStyle(
-          title: title,
-          controller: tabController,
-          tabIndex: index,
-        ),
-      ))
+                index,
+                _TabWidgetStyle(
+                  title: title,
+                  controller: tabController,
+                  tabIndex: index,
+                ),
+              ))
           .values
           .toList(),
     );
   }
 }
 
-class _TabWidgetStyle extends StatelessWidget { // خليناه StatelessWidget
+class _TabWidgetStyle extends StatefulWidget {
   final String title;
   final TabController controller;
   final int tabIndex;
-  final ValueNotifier<bool> _isSelectedNotifier = ValueNotifier<bool>(false); // استخدم ValueNotifier
 
-  _TabWidgetStyle({
+  const _TabWidgetStyle({
     required this.title,
     required this.controller,
     required this.tabIndex,
-    super.key,
-  }) {
-    _isSelectedNotifier.value = controller.index == tabIndex;
-    controller.addListener(_updateSelection);
+  });
+
+  @override
+  State<_TabWidgetStyle> createState() => _TabWidgetStyleState();
+}
+
+class _TabWidgetStyleState extends State<_TabWidgetStyle> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.controller.index == widget.tabIndex;
+    widget.controller.addListener(_updateSelection);
   }
 
   void _updateSelection() {
-    _isSelectedNotifier.value = controller.index == tabIndex;
+    final newValue = widget.controller.index == widget.tabIndex;
+    if (newValue != _isSelected) {
+      setState(() => _isSelected = newValue);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_updateSelection);
+    super.dispose();
   }
 
   @override
@@ -72,31 +90,21 @@ class _TabWidgetStyle extends StatelessWidget { // خليناه StatelessWidget
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ValueListenableBuilder<bool>( // استمع لتغييرات القيمة
-            valueListenable: _isSelectedNotifier,
-            builder: (context, isSelected, child) {
-              return Text(
-                title,
-                style: getRegularStyle(
-                  color: isSelected ? AppColors.primary : AppColors.grey,
-                  fontSize: 16.sp,
-                ),
-              );
-            },
+          Text(
+            widget.title,
+            style: getRegularStyle(
+              color: _isSelected ? AppColors.primary : AppColors.grey,
+              fontSize: 16.sp,
+            ),
           ),
           SizedBox(height: 8.h),
-          ValueListenableBuilder<bool>( // استمع لتغييرات القيمة
-            valueListenable: _isSelectedNotifier,
-            builder: (context, isSelected, child) {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: isSelected
-                    ? const SizedBox.shrink()
-                    : Visibility(
-                  visible: !isSelected,
-                  child: Container(
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            child: _isSelected
+                ? Container() // Show nothing when selected
+                : Container(
                     height: 4.h,
-                    width: title.length * 8.w,
+                    width: widget.title.length * 8.w,
                     decoration: BoxDecoration(
                       color: AppColors.white[70],
                       borderRadius: BorderRadius.only(
@@ -105,9 +113,6 @@ class _TabWidgetStyle extends StatelessWidget { // خليناه StatelessWidget
                       ),
                     ),
                   ),
-                ),
-              );
-            },
           ),
         ],
       ),

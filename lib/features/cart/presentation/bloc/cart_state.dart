@@ -13,35 +13,35 @@ class CartState extends Equatable {
   final num cartTotalPrice;
   final num deliveryFee;
   const CartState({
+    this.cartProducts,
     this.updateQuantityState,
     this.getCartState,
     this.addToCartState,
     this.removeFromCartState,
     this.clearCartState,
     this.activeCartItemId,
-    this.cartProducts,
     this.deliveryFee = 20,
     this.cartTotalPrice = 0,
   });
 
   CartState copyWith({
+    List<ProductEntity>? cartProducts,
     BaseState? getCartState,
     BaseState? addToCartState,
     BaseState? removeFromCartState,
     BaseState? clearCartState,
     BaseState? updateQuantityState,
-    List<ProductEntity>? cartProducts,
     String? activeCartItemId,
     num? deliveryFee,
     num? cartTotalPrice,
   }) {
     return CartState(
+      cartProducts: cartProducts ?? this.cartProducts,
       getCartState: getCartState ?? this.getCartState,
       addToCartState: addToCartState ?? this.addToCartState,
       removeFromCartState: removeFromCartState ?? this.removeFromCartState,
       clearCartState: clearCartState ?? this.clearCartState,
       updateQuantityState: updateQuantityState ?? this.updateQuantityState,
-      cartProducts: cartProducts ?? this.cartProducts,
       activeCartItemId: activeCartItemId,
       deliveryFee: deliveryFee ?? this.deliveryFee,
       cartTotalPrice: cartTotalPrice ?? this.cartTotalPrice,

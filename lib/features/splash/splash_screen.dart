@@ -1,9 +1,6 @@
-// features/splash/splash_screen.dart
-import 'dart:async';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
-import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,8 +9,7 @@ import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../nav/presentation/pages/nav_bar.dart';
+import '../nav/presentation/pages/navbar_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

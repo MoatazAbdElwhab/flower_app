@@ -7,10 +7,10 @@ import 'package:flower_app/core/logger/app_logger.dart';
 import 'package:flower_app/core/services/location_service.dart';
 import 'package:flower_app/features/home/domain/entities/home_entity.dart';
 import 'package:flower_app/features/home/domain/use_case/home_use_case.dart';
-import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/entities/category_occasion_entity.dart';
 
 part 'home_state.dart';
 
@@ -34,28 +34,31 @@ class HomeCubit extends Cubit<HomeState> {
         ));
 
 //-----------------------------------------------------home
-Future<void> getHomeData({bool forceRefresh = false}) async {
-  final navCubit = getIt<NavCubit>();
+  Future<void> getHomeData() async {
+    emit(state.copyWith(homeDataState: BaseLoadingState()));
 
-  emit(state.copyWith(homeDataState: BaseLoadingState()));
+    final response = await getHomeDataUseCase.call();
 
-  final response = await getHomeDataUseCase.call();
+    response.fold(
+      (error) {
+        Log.e('Get Home Data Error: $error');
+        emit(state.copyWith(homeDataState: BaseErrorState(error.toString())));
+      },
+      (data) {
+        _homeData = data;
+        if (!getIt.isRegistered<List<CategoryOccasionEntity>>()) {
+          getIt.registerSingleton<List<CategoryOccasionEntity>>(
+              data.categories ?? []);
+        } else {
+          getIt.unregister<List<CategoryOccasionEntity>>();
+          getIt.registerSingleton<List<CategoryOccasionEntity>>(
+              data.categories ?? []);
+        }
 
-  response.fold(
-    (error) {
-      Log.e('Get Home Data Error: $error');
-      emit(state.copyWith(homeDataState: BaseErrorState(error.toString())));
-    },
-    (data) {
-      _homeData = data;
-
-      navCubit.getCategories(data.categories?? []);
-
-      emit(state.copyWith(homeDataState: BaseSuccessState()));
-    },
-  );
-}
-
+        emit(state.copyWith(homeDataState: BaseSuccessState()));
+      },
+    );
+  }
 
   // -----------------------------------------------------location
   Future<void> getUserLocation() async {

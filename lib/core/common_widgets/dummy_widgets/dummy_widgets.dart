@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../features/cart/presentation/widgets/cart_product/cart_product.dart';
+import '../../../features/checkout/presentation/widgets/delivery_option_item.dart';
 import '../../../features/home/domain/entities/product_entity.dart';
 
 class AppDummyWidgets {
@@ -67,7 +68,17 @@ class AppDummyWidgets {
                 ],
                 description: 'asd asdasd'))
       ];
-      
+  get dummyGetProfileAddresses => [
+    DeliveryOptionItem(type: 'type',
+      address: 'address',
+      isSelected: true,
+      onTap:() {
+
+      }, onEdit: () {
+
+      },)
+      ];
+
   static Widget buildProductsGridSkeleton({int itemCount = 4}) {
     return Skeletonizer(
       enabled: true,

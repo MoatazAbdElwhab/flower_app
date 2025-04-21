@@ -1,5 +1,4 @@
 // features/home/presentation/pages/home_screen.dart
-import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
 import '../../../../core/base/base_state.dart';
+import '../../../nav/presentation/pages/navbar_page.dart';
 import '../../domain/entities/home_entity.dart';
 import '../widget/best_seller_section.dart';
 import '../widget/categories_section.dart';
@@ -34,12 +34,21 @@ class _HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<_HomePage> {
+  bool _isFirstLoad = true;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeCubit>().getHomeData();
-    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isFirstLoad) {
+      _isFirstLoad = false;
+      Future.microtask(
+          () async => await context.read<HomeCubit>().getHomeData());
+    }
   }
 
   @override
@@ -60,10 +69,8 @@ class _HomePageState extends State<_HomePage> {
             },
             builder: (context, state) {
               if (state.homeDataState is BaseLoadingState) {
-                return  const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                  ),
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
 
@@ -71,10 +78,13 @@ class _HomePageState extends State<_HomePage> {
               final homeData = cubit.homeData;
 
               if (state.homeDataState is BaseSuccessState && homeData != null) {
+                //final navBarState = NavbarPage.of(context);
                 return _buildHomeContent(context, homeData);
               }
 
-              return const Text("No Data Available, Please Try Again Later");
+              return const Center(
+                child: Text('No data available. Pull to refresh.'),
+              );
             },
           ),
         ),
@@ -85,37 +95,37 @@ class _HomePageState extends State<_HomePage> {
   Widget _buildHomeContent(BuildContext context, HomeEntity homeData) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: RefreshIndicator(
-        color: AppColors.primary,
-        backgroundColor: AppColors.white,
-        // add refresh method to avoid calling api to much
-        onRefresh: () async {
-          await context.read<HomeCubit>().getHomeData(forceRefresh: true);
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10.h),
-              const HomeHeader(),
-              SizedBox(height: 12.h),
-              const LocationBar(),
-              SizedBox(height: 15.h),
-              CategoriesSection(
-                categories: homeData.categories ?? [],
-              ),
-              SizedBox(height: 15.h),
-              BestSellerSection(
-                bestSellers: homeData.bestSeller ?? [],
-              ),
-              SizedBox(height: 15.h),
-              OccasionSection(
-                occasions: homeData.occasions ?? [],
-              ),
-              SizedBox(height: 15.h),
-            ],
-          ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //---------------------------flowery logo && search
+            SizedBox(height: 10.h),
+            const HomeHeader(),
+            SizedBox(height: 12.h),
+
+            //---------------------------location bar
+            const LocationBar(),
+            SizedBox(height: 15.h),
+
+            //---------------------------categories section
+            CategoriesSection(
+              categories: homeData.categories ?? [],
+            ),
+            SizedBox(height: 15.h),
+
+            //---------------------------best seller section
+            BestSellerSection(
+              bestSellers: homeData.bestSeller ?? [],
+            ),
+            SizedBox(height: 15.h),
+
+            //---------------------------occasion section
+            OccasionSection(
+              occasions: homeData.occasions ?? [],
+            ),
+            SizedBox(height: 15.h),
+          ],
         ),
       ),
     );

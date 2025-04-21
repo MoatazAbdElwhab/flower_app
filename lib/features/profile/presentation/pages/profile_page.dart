@@ -34,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
     gender: 'male',
     phone: '1234567890',
     photo: 'https://via.placeholder.com/150',
+    addresses: []
   );
 
   @override
@@ -91,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ).then((_) {
                                 if(context.mounted){
-                                  context.read<NavCubit>().changeTab(3);
+                                  // context.read<NavCubit>().changeTab(3);
                                   context.read<ProfileCubit>().getUserData();
                                 }
                               });

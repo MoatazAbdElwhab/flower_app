@@ -3,7 +3,6 @@ import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/categories/presentation/widgets/categories_bottom_sheat.dart';
 import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/occasion/presentation/widgets/product_grid.dart';
@@ -43,7 +42,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
 
   final List<ProductEntity> dummyProducts = List.generate(
     15,
-    (index) => ProductEntity(
+        (index) => ProductEntity(
       id: index.toString(),
       title: 'Flower Bouquet ${index + 1}',
       imgCover: 'https://via.placeholder.com/150',
@@ -90,7 +89,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
 
     _scrollControllers = List.generate(
       widget.categories.length,
-      (_) => ScrollController()..addListener(_onScroll),
+          (_) => ScrollController()..addListener(_onScroll),
     );
 
     if (widget.categories.isNotEmpty &&
@@ -309,44 +308,39 @@ class CategoriesScreenState extends State<CategoriesScreen>
                                                         []
                                                     : []);
 
-                                        if (products.isEmpty && !isLoading) {
-                                          return Center(
-                                            child: Text(
-                                              'No products available',
-                                              style: getMediumStyle(
-                                                  color: AppColors.black,
-                                                  fontSize: 20.sp),
-                                            ),
-                                          );
-                                        }
-                                        if (state.categoryState
-                                            is BaseErrorState) {
-                                          return Center(
-                                            child: Text(
-                                              (state.categoryState
-                                                      as BaseErrorState)
-                                                  .errorMessage,
-                                            ),
-                                          );
-                                        }
+                                  if (products.isEmpty && !isLoading) {
+                                    return Center(
+                                      child: Text(
+                                        'No products available',
+                                        style: getMediumStyle(
+                                            color: AppColors.black, fontSize: 20.sp),
+                                      ),
+                                    );
+                                  }
+                                  if (state.categoryState is BaseErrorState) {
+                                    return Center(
+                                      child: Text(
+                                        (state.categoryState as BaseErrorState).errorMessage,
+                                      ),
+                                    );
+                                  }
 
-                                        return Skeletonizer(
-                                          enabled: isLoading,
-                                          child: ProductGrid(
-                                            items: products,
-                                            controller:
-                                                _scrollControllers[index],
-                                          ),
-                                        );
-                                      },
+                                  return Skeletonizer(
+                                    enabled: isLoading,
+                                    child: ProductGrid(
+                                      items: products,
+                                      controller: _scrollControllers[index],
                                     ),
                                   );
                                 },
-                              ).toList(),
-                            ),
-                          ),
-                        ],
+                              ),
+                            );
+                          },
+                        ).toList(),
                       ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

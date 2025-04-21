@@ -1,3 +1,4 @@
+import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/profile/data/models/profile_data_response/user_data_model.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/response/profile_reset_password_response.dart';
@@ -11,5 +12,9 @@ abstract class ProfileRemoteDataSource {
 
   Future<ProfileResetPasswordResponse> profileResetPassword(
       ProfileResetPasswordRequest request);
+
+  Future<void> deleteAddress(String id);
+
+  Future<List<Address>> updateAddress(Address address);
 
 }

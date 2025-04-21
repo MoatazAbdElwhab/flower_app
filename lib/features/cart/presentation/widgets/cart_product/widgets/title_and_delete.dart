@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/di/injectable.dart';
+import 'package:flower_app/core/resources/app_icon.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
@@ -86,7 +87,7 @@ class CartProductTitleAndRemoveIcon extends StatelessWidget {
                                 child: const LinearProgressIndicator(),
                               )
                               : SvgPicture.asset(
-                                  'assets/icons/delete_icon.svg'),
+                                  AppIcon.delete),
                     ),
             )),
       ],

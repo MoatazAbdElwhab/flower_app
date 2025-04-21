@@ -59,6 +59,8 @@ flutter:
     - assets/translations/
     - assets/icons/
     - assets/about_us.json
+    - assets/common_locations/area.json
+    - assets/common_locations/cities.json
 
   fonts:
     - family: Inter

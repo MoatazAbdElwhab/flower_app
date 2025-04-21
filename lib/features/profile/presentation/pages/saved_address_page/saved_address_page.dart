@@ -32,9 +32,9 @@ class SavedAddressPage extends StatelessWidget {
                 builder: (context, state) => state.userData == null ||
                         state.userData!.addresses == null ||
                         state.userData!.addresses!.isEmpty
-                    ? Column(
+                    ? const Column(
                         children: [
-                          const Center(
+                          Center(
                             child: Text('No address available'),
                           ),
                         ],
@@ -68,8 +68,14 @@ class SavedAddressPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     )),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(Routes.addAddress),
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.addAddress).then((_) {
+                    if (context.mounted) {
+                      context.read<ProfileCubit>().getUserData();
+                    }
+                  });
+                }
+                    ,
                 child: const Text('Add new address'))
           ],
         ),

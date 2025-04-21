@@ -2,9 +2,10 @@
 part of 'profile_cubit.dart';
 
 class ProfileState extends Equatable {
-
-  const ProfileState({
-    this.getUserDataState, 
+  const ProfileState( {
+    this.updateAddressState,
+    this.deleteAddressState,
+    this.getUserDataState,
     this.editProfileState,
     this.logoutState,
     this.resetPasswordState,
@@ -14,15 +15,18 @@ class ProfileState extends Equatable {
 
   final BaseState? getUserDataState;
   final BaseState? editProfileState;
-    final UserData? userData;
+  final BaseState? updateAddressState;
+  final BaseState? deleteAddressState;
+  final UserData? userData;
   final BaseState? logoutState;
   final BaseState? resetPasswordState;
   final bool isResetPasswordFormValid;
 
-
   ProfileState copyWith({
     BaseState? getUserDataState,
     BaseState? editProfileState,
+    BaseState? updateAddressState,
+    BaseState? deleteAddressState,
     BaseState? logoutState,
     BaseState? resetPasswordState,
     UserData? userData,
@@ -31,6 +35,8 @@ class ProfileState extends Equatable {
     return ProfileState(
       getUserDataState: getUserDataState ?? this.getUserDataState,
       editProfileState: editProfileState ?? this.editProfileState,
+      updateAddressState: updateAddressState ?? this.updateAddressState,
+      deleteAddressState: deleteAddressState ?? this.deleteAddressState,
       logoutState: logoutState ?? this.logoutState,
       resetPasswordState: resetPasswordState ?? this.resetPasswordState,
       isResetPasswordFormValid:
@@ -47,5 +53,7 @@ class ProfileState extends Equatable {
         resetPasswordState,
         isResetPasswordFormValid,
         userData,
+        updateAddressState,
+        deleteAddressState,
       ];
 }

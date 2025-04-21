@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:either_dart/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';
+import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/profile/data/datasources/local/profile_local_data_source.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
@@ -61,6 +62,16 @@ class ProfileRepositoryImpl extends ProfileRepository {
     } catch (e) {
       return Left(ApiException(message: e.toString()));
     }
+  }
+
+  @override
+  Future<void> deleteAddress(String id) async {
+    await _profileRemoteDataSource.deleteAddress(id);
+  }
+
+  @override
+  Future<List<Address>> updateAddress(Address address) async {
+   return await _profileRemoteDataSource.updateAddress(address);
   }
 
 }

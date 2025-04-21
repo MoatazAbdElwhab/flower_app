@@ -1,20 +1,29 @@
 // features/profile/presentation/cubit/profile_cubit.dart
 
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flower_app/core/app_data/api/api_client.dart';
+import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
+import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
+import 'package:flower_app/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/logout_use_case.dart';
+import 'package:flower_app/features/profile/domain/usecases/update_address_usecase.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/app_data/api/api_constants.dart';
 import '../../data/models/update_profile_data/update_profile_request.dart';
 import '../../domain/entities/user_data.dart';
 part 'profile_state.dart';
@@ -26,7 +35,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   final LogoutUseCase _logoutUseCase;
   final ResetPasswordUseCase _resetPasswordUseCase;
   final AuthLocalDataSourceContract _authLocalDataSource;
-
+  final UpdateAddressUsecase _updateAddressUsecase;
+  final DeleteAddressUsecase _deleteAddressUsecase;
 
   ProfileCubit(
     this._getUserDataUseCase,
@@ -34,6 +44,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     this._logoutUseCase,
     this._resetPasswordUseCase,
     this._authLocalDataSource,
+    this._updateAddressUsecase,
+    this._deleteAddressUsecase,
   ) : super(const ProfileState()) {
     getUserData();
   }
@@ -46,7 +58,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
- 
   // form keys
   final GlobalKey<FormState> editProfileFormKey = GlobalKey<FormState>();
 
@@ -228,7 +239,29 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.copyWith(isResetPasswordFormValid: formValid));
   }
 
-  //  ----------------------get user location form map ----------------------
-  // add Address Section
+  Future<void> onDeleteAddress(String id) async {
 
+    emit(state.copyWith(deleteAddressState: BaseLoadingState()));
+    try {
+      await _deleteAddressUsecase(id);
+      final updatedUserData = state.userData;
+      updatedUserData!.addresses!.removeWhere((address) => address.id == id);
+      emit(state.copyWith(
+          deleteAddressState: BaseSuccessState(), userData: updatedUserData));
+    } catch (e) {
+      emit(state.copyWith(deleteAddressState: BaseErrorState(e.toString())));
+    }
+  }
+
+  Future<void> onUpdateAddress(Address address) async {
+    emit(state.copyWith(updateAddressState: BaseLoadingState()));
+    try {
+      final newAddresses = await _updateAddressUsecase(address);
+      emit(state.copyWith(
+          updateAddressState: BaseSuccessState(),
+          userData: state.userData!.copyWith(addresses: newAddresses)));
+    } catch (e) {
+      emit(state.copyWith(updateAddressState: BaseErrorState(e.toString())));
+    }
+  }
 }

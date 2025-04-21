@@ -18,4 +18,23 @@ class UserData {
     required this.photo,
     required this.addresses,
   });
+  UserData copyWith({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? gender,
+    String? phone,
+    String? photo,
+    List<Address>? addresses,
+  }) {
+    return UserData(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      gender: gender ?? this.gender,
+      phone: phone ?? this.phone,
+      photo: photo ?? this.photo,
+      addresses: addresses ?? this.addresses,
+    );
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:flower_app/core/app_data/api/api_client.dart';
-import 'package:flower_app/features/categories/data/remote/models/category_products_model.dart';
 import 'package:flower_app/features/occasion/data/models/occasion_response/occasion_response.dart';
 import 'package:injectable/injectable.dart';
 

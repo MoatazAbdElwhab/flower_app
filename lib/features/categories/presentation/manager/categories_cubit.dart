@@ -7,6 +7,7 @@ import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import '../../domain/use_cases/get_sorted_products_use_case.dart';
 import 'categories_states.dart';
 
 @injectable

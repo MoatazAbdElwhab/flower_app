@@ -84,8 +84,6 @@ import 'package:flower_app/features/categories/domain/repositories/categories_re
     as _i1;
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart'
     as _i298;
-import 'package:flower_app/features/categories/domain/use_cases/get_sorted_products_use_case.dart'
-    as _i44;
 import 'package:flower_app/features/categories/presentation/manager/categories_cubit.dart'
     as _i659;
 import 'package:flower_app/features/checkout/data/datasources/remote/checkout_api_remote_data_source.dart'
@@ -106,8 +104,6 @@ import 'package:flower_app/features/home/data/datasource/home_data_source_impl.d
     as _i399;
 import 'package:flower_app/features/home/data/repo/home_repository_impl.dart'
     as _i779;
-import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart'
-    as _i1025;
 import 'package:flower_app/features/home/domain/repo/home_repository_contract.dart'
     as _i453;
 import 'package:flower_app/features/home/domain/use_case/home_use_case.dart'
@@ -236,13 +232,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i779.HomeRepositoryImpl(gh<_i286.HomeDataSourceContract>()));
     gh.factory<_i298.GetCategoriesUseCase>(
         () => _i298.GetCategoriesUseCase(gh<_i1.CategoriesRepo>()));
-    gh.factory<_i44.GetSortedProductsUseCase>(
-        () => _i44.GetSortedProductsUseCase(gh<_i1.CategoriesRepo>()));
-    gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
-          gh<_i298.GetCategoriesUseCase>(),
-          gh<_i44.GetSortedProductsUseCase>(),
-          gh<List<_i1025.CategoryOccasionEntity>>(),
-        ));
     gh.factory<_i806.ProfileRepository>(() => _i866.ProfileRepositoryImpl(
           gh<_i445.ProfileRemoteDataSource>(),
           gh<_i941.ProfileLocalDataSource>(),
@@ -295,6 +284,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i902.SearchProductsUseCase>(
         () => _i902.SearchProductsUseCase(gh<_i347.SearchRepository>()));
+    gh.factory<_i659.CategoriesCubit>(
+        () => _i659.CategoriesCubit(gh<_i298.GetCategoriesUseCase>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
     gh.factory<_i389.GetUserDataUseCase>(

@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'add_adress_request.g.dart';
 
 @JsonSerializable()
-class AddAdressRequest {
+class AddAndEditAddressRequest {
   final String street;
   final String phone;
   final String city;
@@ -16,7 +16,7 @@ class AddAdressRequest {
 
   final String username;
 
-  AddAdressRequest({
+  AddAndEditAddressRequest({
     required this.street,
     required this.phone,
     required this.city,
@@ -25,8 +25,8 @@ class AddAdressRequest {
     required this.username,
   });
 
-  factory AddAdressRequest.fromJson(Map<String, dynamic> json) =>
-      _$AddAdressRequestFromJson(json);
+  factory AddAndEditAddressRequest.fromJson(Map<String, dynamic> json) =>
+      _$AddAndEditAddressRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AddAdressRequestToJson(this);
+  Map<String, dynamic> toJson() => _$AddAndEditAddressRequestToJson(this);
 }

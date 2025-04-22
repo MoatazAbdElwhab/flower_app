@@ -12,7 +12,7 @@ class AddAddressRepoImpl implements AddAddressRepo{
 
   AddAddressRepoImpl(this._addAddressRemoteDataSource);
   @override
-  Future<Either<ApiException, void>> addAddress(AddAdressRequest addAdressRequest) async{
+  Future<Either<ApiException, void>> addAddress(AddAndEditAddressRequest addAdressRequest) async{
     try {
       await _addAddressRemoteDataSource.addAddress(addAdressRequest);
       return const Right(null);

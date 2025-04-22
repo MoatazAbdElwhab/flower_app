@@ -1,11 +1,11 @@
 import 'package:flower_app/core/di/injectable.dart';
-// core/routes/app_router.dart
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_page.dart';
+import 'package:flower_app/features/checkout/domain/entities/checkout_edit_address_arguments.dart';
 import 'package:flower_app/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
@@ -22,8 +22,9 @@ import 'package:flower_app/core/common_widgets/product_details_page/product_deta
 import 'package:flower_app/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../features/add_address/presentation/manager/add_address_cubit.dart';
-import '../../features/add_address/presentation/pages/add_adress_screen.dart';
+import '../../features/add_edit_address/domain/arguments/edit_address_arguments.dart';
+import '../../features/add_edit_address/presentation/manager/add_address_cubit.dart';
+import '../../features/add_edit_address/presentation/pages/add_edit_adress_screen.dart';
 import '../../features/nav/presentation/pages/navbar_page.dart';
 import '../../features/profile/domain/entities/user_data.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
@@ -120,12 +121,27 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => const ProfileResetPassword(),
       );
-      case Routes.addAddress:
+
+    case Routes.addAndEditAddress:
+      final args = settings.arguments;
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => BlocProvider(
-          create: (context) => getIt<AddAddressCubit>(),
-          child: const AddAddressScreen()),
+        builder: (_) => args is ProfileEditAddressArgs
+            ? MultiBlocProvider(providers: [
+                BlocProvider(create: (_) => getIt<AddAddressCubit>()),
+                BlocProvider.value(value: args.profileCubit)
+              ], child: AddOrEditAddressScreen(profileEditPageArguments: args))
+            : args is CheckoutEditAddressArgs
+                ? MultiBlocProvider(
+                    providers: [
+                        BlocProvider(create: (_) => getIt<AddAddressCubit>()),
+                        BlocProvider.value(value: args.checkoutCubit)
+                      ],
+                    child:
+                        AddOrEditAddressScreen(checkoutEditAddressArgs: args))
+                : BlocProvider(
+                    create: (_) => getIt<AddAddressCubit>(),
+                    child: const AddOrEditAddressScreen()),
       );
 
     case Routes.searchResults:
@@ -161,9 +177,8 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       final cubit = settings.arguments as ProfileCubit;
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) =>  BlocProvider.value(
-            value: cubit,
-            child: SavedAddressPage()),
+        builder: (_) =>
+            BlocProvider.value(value: cubit, child: const SavedAddressPage()),
       );
 
     default:

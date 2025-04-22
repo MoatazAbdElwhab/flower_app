@@ -1,13 +1,6 @@
-// features/profile/presentation/cubit/profile_cubit.dart
-
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flower_app/core/app_data/api/api_client.dart';
-import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
 import 'package:flower_app/core/base/base_state.dart';
-import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
@@ -22,8 +15,6 @@ import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../../core/app_data/api/api_constants.dart';
 import '../../data/models/update_profile_data/update_profile_request.dart';
 import '../../domain/entities/user_data.dart';
 part 'profile_state.dart';
@@ -73,11 +64,11 @@ class ProfileCubit extends Cubit<ProfileState> {
         ),
       ),
       (data) => emit(
-        state.copyWith(
-          getUserDataState: BaseSuccessState(data: data),
-          userData: data,
+          state.copyWith(
+            getUserDataState: BaseSuccessState(data: data),
+            userData: data,
+          ),
         ),
-      ),
     );
   }
 
@@ -240,8 +231,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> onDeleteAddress(String id) async {
-
-    emit(state.copyWith(deleteAddressState: BaseLoadingState()));
+    emit(state.copyWith(deleteAddressState: BaseLoadingState(),activeAddressId: id));
     try {
       await _deleteAddressUsecase(id);
       final updatedUserData = state.userData;
@@ -260,6 +250,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(state.copyWith(
           updateAddressState: BaseSuccessState(),
           userData: state.userData!.copyWith(addresses: newAddresses)));
+      await getUserData();
     } catch (e) {
       emit(state.copyWith(updateAddressState: BaseErrorState(e.toString())));
     }

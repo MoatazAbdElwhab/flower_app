@@ -1,7 +1,7 @@
-import 'dart:developer';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/resources/app_icon.dart';
-import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
+import 'package:flower_app/features/add_edit_address/domain/arguments/edit_address_arguments.dart';
+import 'package:flower_app/features/checkout/domain/entities/checkout_edit_address_arguments.dart';
 import 'package:flower_app/features/profile/domain/entities/address_widget_location_enum.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import '../../../features/checkout/presentation/cubit/checkout_cubit.dart';
 import '../../routes/routes.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_styles.dart';
@@ -16,7 +17,7 @@ import '../../../features/checkout/domain/entities/address.dart';
 
 class AddressWidget extends StatelessWidget {
   final Address address;
-  final Function? shippingOnChooseAddress;
+  final ValueChanged<bool?>? shippingOnChooseAddress;
   final bool? shippingIsSelected;
   final AddressWidgetLocation addressWidgetLocation;
   const AddressWidget(
@@ -32,7 +33,6 @@ class AddressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const widgetElementSpacing = 8.0;
-    final cubit = context.read<ProfileCubit>();
     return Container(
       margin: const EdgeInsets.symmetric(vertical: widgetElementSpacing),
       padding: const EdgeInsets.all(widgetElementSpacing),
@@ -40,7 +40,7 @@ class AddressWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: AppColors.grey.withOpacity(0.25),
+            color: AppColors.grey.withValues(alpha: 0.25),
             blurRadius: 4,
             blurStyle: BlurStyle.outer,
           ),
@@ -63,9 +63,7 @@ class AddressWidget extends StatelessWidget {
                             ? Radio(
                                 value: true,
                                 groupValue: shippingIsSelected,
-                                onChanged: (_) => () {
-
-                                },
+                                onChanged: shippingOnChooseAddress!,
                                 activeColor: AppColors.primary,
                                 fillColor:
                                     WidgetStateProperty.all(AppColors.primary),
@@ -94,14 +92,18 @@ class AddressWidget extends StatelessWidget {
                                   previous.deleteAddressState !=
                                   current.deleteAddressState,
                               builder: (context, state) =>
-                                  state.deleteAddressState is BaseLoadingState
+                                  state.deleteAddressState
+                                              is BaseLoadingState &&
+                                          state.activeAddressid == address.id
                                       ? const SizedBox(
                                           height: 8,
                                           width: 20,
                                           child: LinearProgressIndicator())
                                       : InkWell(
                                           onTap: () {
-                                            cubit.onDeleteAddress(address.id);
+                                            context
+                                                .read<ProfileCubit>()
+                                                .onDeleteAddress(address.id);
                                           },
                                           child: SvgPicture.asset(
                                             AppIcon.delete,
@@ -112,8 +114,12 @@ class AddressWidget extends StatelessWidget {
                           ),
                           InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context, Routes.addAddress);
-                                cubit.onUpdateAddress(address);
+                                Navigator.pushNamed(
+                                    context, Routes.addAndEditAddress,
+                                    arguments: ProfileEditAddressArgs(
+                                        profileCubit:
+                                            context.read<ProfileCubit>(),
+                                        editedAddress: address));
                               },
                               child: SvgPicture.asset(
                                 AppIcon.edit,
@@ -141,6 +147,13 @@ class AddressWidget extends StatelessWidget {
           ),
           if (addressWidgetLocation == AddressWidgetLocation.inShippingDetails)
             InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(Routes.addAndEditAddress,
+                    arguments: CheckoutEditAddressArgs(
+                  checkoutCubit: context.read<CheckoutCubit>(),
+                  editedAddress: address
+                ));
+              },
               child: SizedBox(
                   height: 24,
                   width: 24,

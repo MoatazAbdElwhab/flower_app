@@ -2,16 +2,16 @@
 part of 'profile_cubit.dart';
 
 class ProfileState extends Equatable {
-  const ProfileState( {
-    this.updateAddressState,
-    this.deleteAddressState,
-    this.getUserDataState,
-    this.editProfileState,
-    this.logoutState,
-    this.resetPasswordState,
-    this.userData,
-    this.isResetPasswordFormValid = false,
-  });
+  const ProfileState(
+      {this.updateAddressState,
+      this.deleteAddressState,
+      this.getUserDataState,
+      this.editProfileState,
+      this.logoutState,
+      this.resetPasswordState,
+      this.userData,
+      this.isResetPasswordFormValid = false,
+      this.activeAddressid});
 
   final BaseState? getUserDataState;
   final BaseState? editProfileState;
@@ -21,28 +21,29 @@ class ProfileState extends Equatable {
   final BaseState? logoutState;
   final BaseState? resetPasswordState;
   final bool isResetPasswordFormValid;
+  final String? activeAddressid;
 
-  ProfileState copyWith({
-    BaseState? getUserDataState,
-    BaseState? editProfileState,
-    BaseState? updateAddressState,
-    BaseState? deleteAddressState,
-    BaseState? logoutState,
-    BaseState? resetPasswordState,
-    UserData? userData,
-    bool? isResetPasswordFormValid,
-  }) {
+  ProfileState copyWith(
+      {BaseState? getUserDataState,
+      BaseState? editProfileState,
+      BaseState? updateAddressState,
+      BaseState? deleteAddressState,
+      BaseState? logoutState,
+      BaseState? resetPasswordState,
+      UserData? userData,
+      bool? isResetPasswordFormValid,
+      String? activeAddressId}) {
     return ProfileState(
-      getUserDataState: getUserDataState ?? this.getUserDataState,
-      editProfileState: editProfileState ?? this.editProfileState,
-      updateAddressState: updateAddressState ?? this.updateAddressState,
-      deleteAddressState: deleteAddressState ?? this.deleteAddressState,
-      logoutState: logoutState ?? this.logoutState,
-      resetPasswordState: resetPasswordState ?? this.resetPasswordState,
-      isResetPasswordFormValid:
-          isResetPasswordFormValid ?? this.isResetPasswordFormValid,
-      userData: userData ?? this.userData,
-    );
+        getUserDataState: getUserDataState ?? this.getUserDataState,
+        editProfileState: editProfileState ?? this.editProfileState,
+        updateAddressState: updateAddressState ?? this.updateAddressState,
+        deleteAddressState: deleteAddressState ?? this.deleteAddressState,
+        logoutState: logoutState ?? this.logoutState,
+        resetPasswordState: resetPasswordState ?? this.resetPasswordState,
+        isResetPasswordFormValid:
+            isResetPasswordFormValid ?? this.isResetPasswordFormValid,
+        userData: userData ?? this.userData,
+        activeAddressid: activeAddressId);
   }
 
   @override
@@ -55,5 +56,6 @@ class ProfileState extends Equatable {
         userData,
         updateAddressState,
         deleteAddressState,
+        activeAddressid
       ];
 }

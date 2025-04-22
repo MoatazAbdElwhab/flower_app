@@ -1,3 +1,4 @@
+
 class Address {
   final String id;
   final String street;
@@ -39,4 +40,33 @@ class Address {
       'username': username,
     };
   }
+  @override
+  String toString() {
+    return 'Address(id: $id, street: $street, phone: $phone, city: $city, lat: $lat, long: $long, username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      super == other &&
+          other is Address &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          street == other.street &&
+          phone == other.phone &&
+          city == other.city &&
+          lat == other.lat &&
+          long == other.long &&
+          username == other.username;
+
+  @override
+  int get hashCode =>
+      super.hashCode ^
+      id.hashCode ^
+      street.hashCode ^
+      phone.hashCode ^
+      city.hashCode ^
+      lat.hashCode ^
+      long.hashCode ^
+      username.hashCode;
 }

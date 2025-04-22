@@ -10,7 +10,7 @@ class AddAddressRemoteDataSourceImpl implements AddAddressRemoteDataSource{
 
   AddAddressRemoteDataSourceImpl(this._apiClient);
   @override
-  Future<void> addAddress(AddAdressRequest addAdressRequest) async {
+  Future<void> addAddress(AddAndEditAddressRequest addAdressRequest) async {
     await _apiClient.patch(
       ApiConstants.addressesEndPoint,
       data: addAdressRequest.toJson(),

@@ -14,10 +14,8 @@ import 'package:flower_app/features/profile/presentation/widgets/settings_sectio
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../nav/presentation/cubit/nav_cubit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -33,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
     email: 'john.doe@example.com',
     gender: 'male',
     phone: '1234567890',
-    photo: 'https://via.placeholder.com/150',
+    photo: '',
     addresses: []
   );
 

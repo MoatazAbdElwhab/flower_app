@@ -269,5 +269,20 @@ abstract class  LocaleKeys {
   static const terms_thank_you = 'terms.thank_you';
   static const terms_copyright = 'terms.copyright';
   static const terms = 'terms';
+  static const filter_sortBy = 'filter.sortBy';
+  static const filter_lowestPrice = 'filter.lowestPrice';
+  static const filter_highestPrice = 'filter.highestPrice';
+  static const filter_new = 'filter.new';
+  static const filter_old = 'filter.old';
+  static const filter_discount = 'filter.discount';
+  static const filter_price = 'filter.price';
+  static const filter_filterButton = 'filter.filterButton';
+  static const filter = 'filter';
+  static const addresses_addNewAddress = 'addresses.addNewAddress';
+  static const addresses_savedAddresses = 'addresses.savedAddresses';
+  static const addresses_noAddressAvailable = 'addresses.noAddressAvailable';
+  static const addresses_editAddress = 'addresses.editAddress';
+  static const addresses = 'addresses';
+  static const defaultErrorMsg = 'defaultErrorMsg';
 
 }

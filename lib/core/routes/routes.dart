@@ -16,7 +16,7 @@ class Routes {
   static const String bestSeller = '/bestSeller';
   static const String editProfilePage = '/editProfilePage';
   static const String cart = '/cart';
-  static const String addAddress = '/addAddress';
+  static const String addAndEditAddress = '/addAddress';
   static const String searchResults = '/searchResults';
   static const String checkout = '/checkout';
   static const String termsAndConditions = '/termsAndConditions';

@@ -1,4 +1,5 @@
 // core/services/location_service.dart
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:injectable/injectable.dart';
@@ -50,7 +51,7 @@ Future<Map<String, String>> getAddressDetailsFromCoordinates(double lat, double 
                   : (place.administrativeArea ?? ''),
     };
   } else {
-    throw Exception('No address found');
+    throw Exception(LocaleKeys.addresses_noAddressAvailable);
   }
 }
 }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/app_bloc_observer.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/app_router.dart';
+import 'package:flower_app/core/routes/navigator_observer.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
@@ -19,9 +20,11 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
 
   Bloc.observer = AppBlocObserver();
-  await configureDependencies().then((_) async {
-   isUserLoggedInAutomatically = await getIt<AuthCubit>().isUserLoggedIn();
-  },);
+  await configureDependencies().then(
+    (_) async {
+      isUserLoggedInAutomatically = await getIt<AuthCubit>().isUserLoggedIn();
+    },
+  );
 
   runApp(
     EasyLocalization(
@@ -51,12 +54,15 @@ class MyApp extends StatelessWidget {
           BlocProvider<CartBloc>(
             create: (BuildContext context) => getIt<CartBloc>(),
           ),
-          BlocProvider<NavCubit>(create:(context) {
-            return getIt<NavCubit>();
-          }, )
+          BlocProvider<NavCubit>(
+            create: (context) {
+              return getIt<NavCubit>();
+            },
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          navigatorObservers: [getIt<AppNavigatorObserver>()],
           //initialRoute: Routes.login,
           initialRoute: Routes.splash,
           onGenerateRoute: generateRoute,

@@ -4,6 +4,7 @@ import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/checkout/domain/usecases/get_adresses_use_case.dart';
 import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
+import 'package:flower_app/features/profile/domain/usecases/update_address_usecase.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,9 @@ part 'checkout_state.dart';
 @injectable
 class CheckoutCubit extends Cubit<CheckoutState> {
   final GetAddressesUseCase getAddressesUseCase;
-  CheckoutCubit(this.getAddressesUseCase) : super(const CheckoutState()) {
+  final UpdateAddressUsecase updateAddressUsecase;
+  CheckoutCubit(this.getAddressesUseCase, this.updateAddressUsecase)
+      : super(const CheckoutState()) {
     getAddresses();
   }
 
@@ -58,5 +61,17 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         ),
       ),
     );
+  }
+
+  Future<void> onUpdateAddress(Address address) async {
+    emit(state.copyWith(addressesState: BaseLoadingState()));
+    try {
+      final newAddresses = await updateAddressUsecase(address);
+      emit(state.copyWith(
+          addressesState: BaseSuccessState(), addresses: newAddresses));
+      await getAddresses();
+    } catch (e) {
+      emit(state.copyWith(addressesState: BaseErrorState(e.toString())));
+    }
   }
 }

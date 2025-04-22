@@ -321,7 +321,14 @@
     "discount": "خصم",
     "price": "السعر",
     "filterButton": "تصفية"
-  }
+  },
+  "addresses": {
+    "addNewAddress": "اضافه عنوان جديد",
+    "savedAddresses": "العناوين المسجله",
+    "noAddressAvailable": "لا يوجد عناوين",
+    "editAddress": "تعديل العنوان"
+  },
+  "defaultErrorMsg": "حدث خطأ ما حاول لاحقا"
 }
 
 

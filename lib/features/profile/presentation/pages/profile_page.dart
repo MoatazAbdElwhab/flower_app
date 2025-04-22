@@ -57,8 +57,6 @@ class _ProfilePageState extends State<ProfilePage> {
             buildWhen: (previous, current) =>
                 previous.getUserDataState != current.getUserDataState,
             builder: (context, state) {
-              // Getting ProfileCubit here to send it to LogoutDialog,
-              // because Dialog can't see ProfileCubit on its own.
               final cubit = context.read<ProfileCubit>();
               return Skeletonizer(
                 enabled: state.getUserDataState is! BaseSuccessState,
@@ -66,60 +64,62 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     const AppBarSection(),
                     const SizedBox(height: 16),
-                    SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: [
-                          ProfileSection(
-                            userData: state.getUserDataState is BaseSuccessState
-                                ? (state.getUserDataState as BaseSuccessState)
-                                    .data as UserData
-                                : dummyUserData,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => EditProfilePage(
-                                    userData: state.getUserDataState
-                                            is BaseSuccessState
-                                        ? (state.getUserDataState
-                                                as BaseSuccessState)
-                                            .data as UserData
-                                        : dummyUserData,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            ProfileSection(
+                              userData: state.getUserDataState is BaseSuccessState
+                                  ? (state.getUserDataState as BaseSuccessState)
+                                      .data as UserData
+                                  : dummyUserData,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => EditProfilePage(
+                                      userData: state.getUserDataState
+                                              is BaseSuccessState
+                                          ? (state.getUserDataState
+                                                  as BaseSuccessState)
+                                              .data as UserData
+                                          : dummyUserData,
+                                    ),
                                   ),
-                                ),
-                              ).then((_) {
-                                if(context.mounted){
-                                  // context.read<NavCubit>().changeTab(3);
-                                  context.read<ProfileCubit>().getUserData();
-                                }
-                              });
-                            },
-                          ),
-                          const SizedBox(height: 32),
-                          const SettingsSection(),
-                          const SizedBox(height: 16),
-                          CustomRowItem(
-                            leftWidget: const Icon(
-                              Icons.logout_outlined,
-                              size: 18,
+                                ).then((_) async {
+                                  if(context.mounted){
+                                    // context.read<NavCubit>().changeTab(3);
+                                   await context.read<ProfileCubit>().getUserData();
+                                  }
+                                });
+                              },
                             ),
-                            rightWidget: const Icon(
-                              Icons.logout_outlined,
-                              color: AppColors.grey,
-                              size: 24,
+                            const SizedBox(height: 32),
+                            const SettingsSection(),
+                            const SizedBox(height: 16),
+                            CustomRowItem(
+                              leftWidget: const Icon(
+                                Icons.logout_outlined,
+                                size: 18,
+                              ),
+                              rightWidget: const Icon(
+                                Icons.logout_outlined,
+                                color: AppColors.grey,
+                                size: 24,
+                              ),
+                              title: LocaleKeys.profile_logout.tr(),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => LogoutDialog(
+                                    cubit: cubit,
+                                  ),
+                                );
+                              },
                             ),
-                            title: LocaleKeys.profile_logout.tr(),
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => LogoutDialog(
-                                  cubit: cubit,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

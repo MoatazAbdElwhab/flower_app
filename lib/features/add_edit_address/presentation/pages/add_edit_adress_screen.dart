@@ -464,24 +464,25 @@ class _AddOrEditAddressScreenState extends State<AddOrEditAddressScreen> {
 
   _buildSaveAddressButton(AddAddressCubit cubit, AddOrEditAddressState state) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         final addressRequest = AddAndEditAddressRequest(
           street: addressController.text,
           phone: phoneNumberController.text,
           city: cityController.text,
           latValue: state.selectedLocation?.latitude.toString() ??
               widget.profileEditPageArguments?.editedAddress.lat ??
-              widget.checkoutEditAddressArgs?.editedAddress.lat ?? '',
+              widget.checkoutEditAddressArgs?.editedAddress.lat ??
+              '',
           longValue: state.selectedLocation?.longitude.toString() ??
               widget.profileEditPageArguments?.editedAddress.long ??
-              widget.checkoutEditAddressArgs?.editedAddress.long??
+              widget.checkoutEditAddressArgs?.editedAddress.long ??
               '',
           username: recipientNameController.text,
         );
         isEditingAddress
             ? (widget.profileEditPageArguments != null
-                ? widget.profileEditPageArguments!.profileCubit.onUpdateAddress(
-                    Address(
+                ? await widget.profileEditPageArguments!.profileCubit
+                    .onUpdateAddress(Address(
                         id: widget.profileEditPageArguments!.editedAddress.id,
                         street: addressRequest.street,
                         phone: addressRequest.phone,
@@ -489,8 +490,8 @@ class _AddOrEditAddressScreenState extends State<AddOrEditAddressScreen> {
                         lat: addressRequest.latValue,
                         long: addressRequest.longValue,
                         username: addressRequest.username))
-                : widget.checkoutEditAddressArgs!.checkoutCubit.onUpdateAddress(
-                    Address(
+                : await widget.checkoutEditAddressArgs!.checkoutCubit
+                    .onUpdateAddress(Address(
                         id: widget.profileEditPageArguments?.editedAddress.id ??
                             widget.checkoutEditAddressArgs!.editedAddress.id,
                         street: addressRequest.street,
@@ -499,7 +500,16 @@ class _AddOrEditAddressScreenState extends State<AddOrEditAddressScreen> {
                         lat: addressRequest.latValue,
                         long: addressRequest.longValue,
                         username: addressRequest.username)))
-            : cubit.saveUserAddAddress(addressRequest);
+            : await cubit.saveUserAddAddress(addressRequest).then((_) async {
+                if (widget.checkoutEditAddressArgs != null) {
+                  await widget.checkoutEditAddressArgs!.checkoutCubit
+                      .getAddresses();
+                }
+                if (widget.profileEditPageArguments != null) {
+                  await widget.profileEditPageArguments!.profileCubit
+                      .getUserData();
+                }
+              });
       },
       child: Text(
         LocaleKeys.addAddress_save_address_button.tr(),

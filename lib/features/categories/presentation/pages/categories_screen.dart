@@ -18,6 +18,7 @@ import '../manager/categories_cubit.dart';
 import '../manager/categories_states.dart';
 import '../widgets/categories_bottom_sheat.dart';
 import '../widgets/custom_tab_bar.dart';
+import 'package:flower_app/core/routes/routes.dart';
 
 class CategoriesScreen extends StatefulWidget {
   final int selectedCategoryIndex;
@@ -211,6 +212,19 @@ class CategoriesScreenState extends State<CategoriesScreen>
                       children: [
                         Expanded(
                           child: TextFormField(
+                            readOnly: true,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.searchResults,
+                                arguments: {
+                                  'initialQuery': '',
+                                  'categoryId': widget.categories.isNotEmpty && 
+                                      _cubit.state.selectedCategoryIndex != null ? 
+                                      widget.categories[_cubit.state.selectedCategoryIndex!].id : null
+                                }
+                              );
+                            },
                             decoration: InputDecoration(
                               prefixIcon: const Icon(Icons.search),
                               border: OutlineInputBorder(
@@ -240,6 +254,16 @@ class CategoriesScreenState extends State<CategoriesScreen>
                         ),
                         SizedBox(width: 8.w),
                         GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => CategoriesBottomSheet(
+                                cubit: _cubit, 
+                                categoryId: widget.categories[_tabController?.index ?? 0].id,
+                              ),
+                            );
+                          },
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 12.h),

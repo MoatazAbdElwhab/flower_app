@@ -16,7 +16,7 @@ class DeliveryAddressSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CheckoutCubit>()..getAddresses();
+    final cubit = context.read<CheckoutCubit>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Column(
@@ -45,12 +45,13 @@ class DeliveryAddressSection extends StatelessWidget {
                   valueListenable: cubit.selectedAddressIndex,
                   builder: (context, value, child) {
                     return AddressWidget(
-                        address: cubit.state.addresses![index],
-                        addressWidgetLocation:
-                            AddressWidgetLocation.inShippingDetails,
-                        shippingOnChooseAddress: (_) =>
-                            cubit.setSelectedAddressIndex(index),
-                        shippingIsSelected: value == index);
+                      address: cubit.state.addresses![index],
+                      addressWidgetLocation:
+                          AddressWidgetLocation.inShippingDetails,
+                      shippingOnChooseAddress: (_) =>
+                          cubit.setSelectedAddressIndex(index),
+                      shippingIsSelected: value == index,
+                    );
                     // return DeliveryOptionItem(
                     //   type: cubit.state.addresses![index].city,
                     //   address: cubit.state.addresses![index].street,

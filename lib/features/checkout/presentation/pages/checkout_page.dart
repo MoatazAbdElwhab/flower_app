@@ -16,7 +16,8 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({super.key});
+  final List<num> arguments;
+  const CheckoutPage({super.key, required this.arguments});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class CheckoutPage extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$100',
+                '${arguments[0] - arguments[1]} ${LocaleKeys.cart_pound.tr()}',
                 style: getRegularStyle(
                   color: AppColors.grey,
                   fontSize: 16.sp,
@@ -125,7 +126,7 @@ class CheckoutPage extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$10',
+                '${arguments[1]} ${LocaleKeys.cart_pound.tr()}',
                 style: getRegularStyle(
                   color: AppColors.grey,
                   fontSize: 16.sp,
@@ -150,7 +151,7 @@ class CheckoutPage extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$110',
+                '${arguments[0]} ${LocaleKeys.cart_pound.tr()}',
                 style: getMediumStyle(
                   color: AppColors.black,
                   fontSize: 18.sp,

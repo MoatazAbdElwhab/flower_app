@@ -158,7 +158,8 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
     case Routes.checkout:
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => const CheckoutPage(),
+        builder: (_) =>
+            CheckoutPage(arguments: settings.arguments as List<num>),
       );
 
     case Routes.termsAndConditions:

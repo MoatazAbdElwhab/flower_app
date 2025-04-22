@@ -40,7 +40,7 @@ class AddressWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: AppColors.grey.withValues(alpha: 0.25),
+            color: AppColors.grey.withOpacity(0.25),
             blurRadius: 4,
             blurStyle: BlurStyle.outer,
           ),
@@ -150,9 +150,8 @@ class AddressWidget extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushNamed(Routes.addAndEditAddress,
                     arguments: CheckoutEditAddressArgs(
-                  checkoutCubit: context.read<CheckoutCubit>(),
-                  editedAddress: address
-                ));
+                        checkoutCubit: context.read<CheckoutCubit>(),
+                        editedAddress: address));
               },
               child: SizedBox(
                   height: 24,

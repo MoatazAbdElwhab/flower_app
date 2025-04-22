@@ -91,7 +91,10 @@ class CartPriceAndCheckoutWidget extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.checkout);
+                  Navigator.pushNamed(context, Routes.checkout, arguments: [
+                    state.cartTotalPrice,
+                    state.deliveryFee,
+                  ]);
                 },
                 child: FittedBox(child: Text(LocaleKeys.cart_checkout.tr())),
               ),

@@ -17,24 +17,30 @@ class ProfileSection extends StatefulWidget {
   @override
   State<ProfileSection> createState() => _ProfileSectionState();
 }
+
 class _ProfileSectionState extends State<ProfileSection> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColors.primary.withValues(alpha: 0.1),
+      color: AppColors.primary.withOpacity(0.1),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: widget.onTap,
           child: Column(
             children: [
-              widget.userData.photo.isNotEmpty? AppNetworkImage(
-                networkImage: widget.userData.photo,
-                width: 81,
-                height: 81,
-                borderRadius: BorderRadius.circular(100),
-                fit: BoxFit.cover,
-              ): const SizedBox(height: 81,width: 81,),
+              widget.userData.photo.isNotEmpty
+                  ? AppNetworkImage(
+                      networkImage: widget.userData.photo,
+                      width: 81,
+                      height: 81,
+                      borderRadius: BorderRadius.circular(100),
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(
+                      height: 81,
+                      width: 81,
+                    ),
               const SizedBox(height: 16),
               Text(
                 '${widget.userData.firstName} ${widget.userData.lastName}',

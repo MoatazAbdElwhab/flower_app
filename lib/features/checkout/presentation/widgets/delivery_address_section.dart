@@ -70,7 +70,11 @@ class DeliveryAddressSection extends StatelessWidget {
             height: 36.h,
             child: OutlinedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.addAndEditAddress);
+                Navigator.of(context).pushNamed(Routes.addAndEditAddress).then(
+                  (value) {
+                    cubit.getAddresses();
+                  },
+                );
               },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: AppColors.white[70]!),

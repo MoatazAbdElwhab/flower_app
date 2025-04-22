@@ -1,4 +1,3 @@
-
 class Address {
   final String id;
   final String street;
@@ -40,6 +39,7 @@ class Address {
       'username': username,
     };
   }
+
   @override
   String toString() {
     return 'Address(id: $id, street: $street, phone: $phone, city: $city, lat: $lat, long: $long, username: $username)';

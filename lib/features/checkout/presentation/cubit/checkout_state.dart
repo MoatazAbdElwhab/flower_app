@@ -12,7 +12,6 @@ class CheckoutState extends Equatable {
   CheckoutState copyWith({
     List<Address>? addresses,
     BaseState? addressesState,
-    ValueNotifier<bool>? checkoutState,
   }) {
     return CheckoutState(
       addresses: addresses ?? this.addresses,

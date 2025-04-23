@@ -54,7 +54,6 @@ class CheckoutPage extends StatelessWidget {
                     const DeliveryAddressSection(),
                     _buildSpacer(),
                     const PaymentMethodSection(),
-                    _buildSpacer(),
                     ValueListenableBuilder(
                       valueListenable: cubit.selectedPaymentMethodIndex,
                       builder: (context, value, child) {
@@ -64,8 +63,13 @@ class CheckoutPage extends StatelessWidget {
                           alignment: Alignment.topCenter,
                           child: cubit.paymentMethods[value].paymentType ==
                                   PaymentMethodsType.card
-                              // ignore: prefer_const_constructors
-                              ? GiftSection()
+                              ? Column(
+                                  children: [
+                                    _buildSpacer(),
+                                    // ignore: prefer_const_constructors
+                                    GiftSection(),
+                                  ],
+                                )
                               : const SizedBox.shrink(),
                         );
                       },

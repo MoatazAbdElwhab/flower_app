@@ -66,6 +66,7 @@ class ProductDetailsPage extends StatelessWidget {
                           // Price
                           Text(
                             "EGP ${productArgument.priceAfterDiscount.toStringAsFixed(2)}",
+
                             style: getBoldStyle(
                                 color: Colors.black, fontSize: 20.sp),
                           ),

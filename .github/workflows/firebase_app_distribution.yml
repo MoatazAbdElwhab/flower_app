@@ -1,12 +1,8 @@
-# This workflow handles deployment to Firebase App Distribution
-name: Deploy to Firebase App Distribution
+name: Firebase App Distribution
 
 on:
-  # Original trigger for labeled PRs
   pull_request:
     types: [labeled]
-  
-  # Added manual trigger with simple release notes
   workflow_dispatch:
     inputs:
       releaseNotes:
@@ -15,67 +11,40 @@ on:
         default: 'Manual build triggered from GitHub Actions'
 
 jobs:
-  build-and-deploy:
-    name: Build and Deploy to Firebase
-    # Run when ReadyForTesting label is added OR when manually triggered
-    if: ${{ github.event.label.name == 'ReadyForTesting' || github.event_name == 'workflow_dispatch' }}
-    # running machine
+  distribute:
+    if: github.event.label.name == 'ReadyForTesting' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
-      
-      #Android builds require Java. The Zulu distribution is recommended for Android development
-      - name: Set up Java
+
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '11'
-      
-      # Setting up Flutter with the latest stable version
-      - name: Set up Flutter
+          java-version: '17'
+
+      # Use latest stable Flutter without specifying exact version
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.3'
           channel: 'stable'
-      
-      # Verify Flutter and Dart versions to ensure we're using the right SDK
-      - name: Verify Flutter and Dart versions
-        run: |
-          flutter --version
-          dart --version
-      
-      # Check current SDK constraints in pubspec.yaml
-      - name: Check pubspec constraints
-        run: |
-          echo "Pubspec SDK constraints:"
-          grep -A 5 "environment:" pubspec.yaml
-      
-      # Update SDK constraints if needed
-      - name: Update SDK constraints if needed
-        run: |
-          # Get current Dart version
-          DART_VERSION=$(dart --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-          echo "Current Dart version: $DART_VERSION"
-          
-          # Update the SDK constraint in pubspec.yaml if needed
-          sed -i "s/sdk: *.*\$/sdk: '>=2.19.0 <4.0.0'/" pubspec.yaml
-          
-          echo "Updated pubspec SDK constraints:"
-          grep -A 5 "environment:" pubspec.yaml
-      
-      - name: Install dependencies
+
+      # Check Flutter version being used
+      - name: Display Flutter version
+        run: flutter --version
+        
+      - name: Get dependencies
         run: flutter pub get
-      
+
       - name: Build APK
         run: flutter build apk --release
-      
-      # Using the admin-provided secret named "shimaa"
-      - name: Prepare Firebase credentials
-        run: echo "${{ secrets.shimaa }}" > firebase-credentials.json
-      
-      # Uploads the APK to Firebase App Distribution
+
+      - name: Create Firebase credentials file
+        run: echo "$FIREBASE_CREDENTIALS" > firebase-credentials.json
+        env:
+          FIREBASE_CREDENTIALS: ${{ secrets.shimaa }}
+
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -83,5 +52,4 @@ jobs:
           serviceCredentialsFile: firebase-credentials.json
           groups: testers
           file: build/app/outputs/flutter-apk/app-release.apk
-          releaseNotes: |
-            ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || format('PR #{0} - {1} {2}', github.event.pull_request.number, github.event.pull_request.title, github.event.pull_request.html_url) }}
+          releaseNotes: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}

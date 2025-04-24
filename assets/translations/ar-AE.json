@@ -328,7 +328,11 @@
     "noAddressAvailable": "لا يوجد عناوين",
     "editAddress": "تعديل العنوان"
   },
-  "defaultErrorMsg": "حدث خطأ ما حاول لاحقا"
+  "defaultErrorMsg": "حدث خطأ ما حاول لاحقا",
+  "payment": {
+    "success": "تم الدفع بنجاح",
+    "error": "فشل الدفع"
+  }
 }
 
 

@@ -20,5 +20,8 @@ class CheckoutState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [addresses, addressesState];
+  List<Object?> get props => [
+        addresses,
+        addressesState,
+      ];
 }

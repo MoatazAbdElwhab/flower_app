@@ -6,12 +6,9 @@ on:
   pull_request:
     types: [labeled]
   
-  # Added manual trigger with credentials input
+  # Added manual trigger with simple release notes
   workflow_dispatch:
     inputs:
-      credentials:
-        description: 'Base64 encoded Firebase credentials (cat service-account.json | base64)'
-        required: true
       releaseNotes:
         description: 'Release notes for this build'
         required: false
@@ -48,14 +45,9 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
       
-      # Prepare service credentials from manual input or from secrets
+      # Using the admin-provided secret named "shimaa"
       - name: Prepare Firebase credentials
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "${{ github.event.inputs.credentials }}" | base64 -d > firebase-credentials.json
-          else
-            echo "${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}" > firebase-credentials.json
-          fi
+        run: echo "${{ secrets.shimaa }}" > firebase-credentials.json
       
       # Uploads the APK to Firebase App Distribution
       - name: Upload to Firebase App Distribution

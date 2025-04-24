@@ -1,0 +1,68 @@
+name: Deploy to Firebase App Distribution
+
+on:
+  # Original trigger for labeled PRs
+  pull_request:
+    types: [labeled]
+  
+  # Added manual trigger with credentials input
+  workflow_dispatch:
+    inputs:
+      credentials:
+        description: 'Base64 encoded Firebase credentials (cat service-account.json | base64)'
+        required: true
+      releaseNotes:
+        description: 'Release notes for this build'
+        required: false
+        default: 'Manual build triggered from GitHub Actions'
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to Firebase
+    # Run when ReadyForTesting label is added OR when manually triggered
+    if: ${{ github.event.label.name == 'ReadyForTesting' || github.event_name == 'workflow_dispatch' }}
+    # running machine
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      #Android builds require Java. The Zulu distribution is recommended for Android development
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.0'
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Build APK
+        run: flutter build apk --release
+      
+      # Prepare service credentials from manual input or from secrets
+      - name: Prepare Firebase credentials
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "${{ github.event.inputs.credentials }}" | base64 -d > firebase-credentials.json
+          else
+            echo "${{ secrets.FIREBASE_SERVICE_CREDENTIALS }}" > firebase-credentials.json
+          fi
+      
+      # Uploads the APK to Firebase App Distribution
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: '1:998190875190:android:872fced85dc8ff28ecce97'
+          serviceCredentialsFile: firebase-credentials.json
+          groups: testers
+          file: build/app/outputs/flutter-apk/app-release.apk
+          releaseNotes: |
+            ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || format('PR #{0} - {1} {2}', github.event.pull_request.number, github.event.pull_request.title, github.event.pull_request.html_url) }}

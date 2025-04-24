@@ -1,3 +1,4 @@
+# This workflow handles deployment to Firebase App Distribution
 name: Deploy to Firebase App Distribution
 
 on:

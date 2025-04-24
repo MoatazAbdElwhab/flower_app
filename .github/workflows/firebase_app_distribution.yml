@@ -24,12 +24,18 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # Use specific Flutter version 3.1.0
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.1.0'
           channel: 'stable'
+
+      - name: Update SDK constraints
+        run: |
+          echo "Updating SDK constraints in pubspec.yaml"
+          sed -i 's/sdk:.*$/sdk: ">=2.17.0 <3.3.0"/' pubspec.yaml
+          echo "Current pubspec SDK constraint:"
+          grep "sdk:" pubspec.yaml
 
       - name: Get dependencies
         run: flutter pub get

@@ -33,11 +33,37 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
       
+      # Setting up Flutter with the latest stable version
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.3'
           channel: 'stable'
+      
+      # Verify Flutter and Dart versions to ensure we're using the right SDK
+      - name: Verify Flutter and Dart versions
+        run: |
+          flutter --version
+          dart --version
+      
+      # Check current SDK constraints in pubspec.yaml
+      - name: Check pubspec constraints
+        run: |
+          echo "Pubspec SDK constraints:"
+          grep -A 5 "environment:" pubspec.yaml
+      
+      # Update SDK constraints if needed
+      - name: Update SDK constraints if needed
+        run: |
+          # Get current Dart version
+          DART_VERSION=$(dart --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          echo "Current Dart version: $DART_VERSION"
+          
+          # Update the SDK constraint in pubspec.yaml if needed
+          sed -i "s/sdk: *.*\$/sdk: '>=2.19.0 <4.0.0'/" pubspec.yaml
+          
+          echo "Updated pubspec SDK constraints:"
+          grep -A 5 "environment:" pubspec.yaml
       
       - name: Install dependencies
         run: flutter pub get

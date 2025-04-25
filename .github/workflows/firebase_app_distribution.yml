@@ -28,7 +28,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.3'
+          flutter-version: '3.28.0'
           channel: stable
 
       - name: Display versions
@@ -50,3 +50,5 @@ jobs:
           app_file: build/app/outputs/flutter-apk/app-debug.apk
           tester_groups: testers
           release_notes: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}
+          debug: true
+          no_notify: true

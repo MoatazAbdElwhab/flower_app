@@ -39,18 +39,13 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug  # Using debug build for faster compilation
-
-      - name: Create Firebase credentials file
-        run: echo "$FIREBASE_CREDENTIALS" > firebase-credentials.json
-        env:
-          FIREBASE_CREDENTIALS: ${{ secrets.shimaa }}
+        run: flutter build apk --debug  
 
       - name: Upload to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: hasretsariyer/firebase-app-distribution-github-action@v1
         with:
-          appId: '1:998190875190:android:872fced85dc8ff28ecce97'
-          serviceCredentialsFile: firebase-credentials.json
-          groups: testers
-          file: build/app/outputs/flutter-apk/app-debug.apk
-          releaseNotes: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}
+          app_id: '1:998190875190:android:872fced85dc8ff28ecce97'
+          firebase_token: ${{ secrets.shimaa }}
+          app_file: build/app/outputs/flutter-apk/app-debug.apk
+          tester_groups: testers
+          release_notes: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}

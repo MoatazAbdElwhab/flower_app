@@ -29,6 +29,7 @@ jobs:
         with:
           flutter-version: '3.5.3' 
           channel: 'stable'
+          dart-sdk: '2.19.0'
 
       - name: Get dependencies
         run: flutter pub get

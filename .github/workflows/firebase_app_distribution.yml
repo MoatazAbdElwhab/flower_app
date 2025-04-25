@@ -30,7 +30,8 @@ jobs:
         with:
           flutter-version: '3.19.0'
           channel: stable
-          cache: true
+          architecture: x64
+          cache: false
 
       - name: Clear dependency cache
         run: |

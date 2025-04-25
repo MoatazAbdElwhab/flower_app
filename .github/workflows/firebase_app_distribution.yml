@@ -25,24 +25,24 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.0'
-          dart-sdk: '3.5.3'
-          cache: false
-
-      - name: Display versions
+      - name: Download Flutter
+        run: |
+          wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.5-stable.tar.xz
+          tar xf flutter_linux_3.16.5-stable.tar.xz
+          export PATH="$PATH:`pwd`/flutter/bin"
+          echo "$PATH" >> $GITHUB_PATH
+          
+      - name: Check Flutter and Dart version
         run: |
           flutter --version
           dart --version
-
-      - name: Update dependencies
+          
+      - name: Install dependencies
         run: flutter pub get
-
+          
       - name: Build APK
-        run: flutter build apk --debug  
-
+        run: flutter build apk --debug
+          
       - name: Upload to Firebase App Distribution
         uses: hasretsariyer/firebase-app-distribution-github-action@v1
         with:

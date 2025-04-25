@@ -28,8 +28,15 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'
+          flutter-version: '3.19.0'
           channel: stable
+          cache: true
+
+      - name: Clear dependency cache
+        run: |
+          rm -rf .dart_tool/
+          rm -rf build/
+          flutter clean
 
       - name: Check Flutter & Dart version
         run: |

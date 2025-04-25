@@ -14,7 +14,7 @@ jobs:
   distribute:
     if: github.event.label.name == 'ReadyForTesting' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,22 +30,16 @@ jobs:
         with:
           channel: stable
 
-      - name: Clear dependency cache
-        run: |
-          rm -rf .dart_tool/
-          rm -rf build/
-          flutter clean
-
-      - name: Check Flutter & Dart version
+      - name: Display versions
         run: |
           flutter --version
           dart --version
 
-      - name: Install dependencies
+      - name: Update dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --debug  # Using debug build for faster compilation
 
       - name: Create Firebase credentials file
         run: echo "$FIREBASE_CREDENTIALS" > firebase-credentials.json
@@ -58,5 +52,5 @@ jobs:
           appId: '1:998190875190:android:872fced85dc8ff28ecce97'
           serviceCredentialsFile: firebase-credentials.json
           groups: testers
-          file: build/app/outputs/flutter-apk/app-release.apk
+          file: build/app/outputs/flutter-apk/app-debug.apk
           releaseNotes: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}

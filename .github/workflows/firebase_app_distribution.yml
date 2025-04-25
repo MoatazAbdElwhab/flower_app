@@ -28,8 +28,9 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.28.0'
-          channel: stable
+          flutter-version: '3.19.0'
+          dart-sdk: '3.5.3'
+          cache: false
 
       - name: Display versions
         run: |

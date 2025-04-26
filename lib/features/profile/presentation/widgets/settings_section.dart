@@ -5,6 +5,7 @@ import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:flower_app/features/profile/presentation/pages/user_orders_page/user_orders_screen.dart';
 import 'package:flower_app/features/profile/presentation/widgets/custom_row_item.dart';
 import 'package:flower_app/features/profile/presentation/widgets/language_bottom_sheet.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
@@ -30,7 +31,13 @@ class SettingsSection extends StatelessWidget {
             height: 20,
           ),
           title: LocaleKeys.profile_myOrders.tr(),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.userOrdersScreen,
+              arguments: cubit,
+            );
+          },
         ),
         CustomRowItem(
           leftWidget: SvgPicture.asset(

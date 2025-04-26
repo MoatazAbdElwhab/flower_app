@@ -6,6 +6,7 @@ import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/profile/data/models/reset_password/request/profile_reset_password_request.dart';
 import 'package:flower_app/features/profile/domain/usecases/delete_address_usecase.dart';
+import 'package:flower_app/features/profile/domain/usecases/get_user_oders_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart';
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart';
@@ -28,6 +29,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final AuthLocalDataSourceContract _authLocalDataSource;
   final UpdateAddressUsecase _updateAddressUsecase;
   final DeleteAddressUsecase _deleteAddressUsecase;
+  final GetUserOdersUseCase _getUserOdersUseCase;
 
   ProfileCubit(
     this._getUserDataUseCase,
@@ -37,6 +39,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     this._authLocalDataSource,
     this._updateAddressUsecase,
     this._deleteAddressUsecase,
+    this._getUserOdersUseCase,
   ) : super(const ProfileState()) {
     getUserData();
   }
@@ -255,4 +258,22 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(state.copyWith(updateAddressState: BaseErrorState(e.toString())));
     }
   }
+
+//  ----------------------User Orders ----------------------
+Future<void> getUserOrders() async {
+  emit(state.copyWith(getUserOrdersState: BaseLoadingState()));
+  var result = await _getUserOdersUseCase();
+  result.fold(
+    (error) => emit(
+      state.copyWith(
+        getUserOrdersState: BaseErrorState(error.toString()),
+      ),
+    ),
+    (data) => emit(
+        state.copyWith(
+          getUserOrdersState: BaseSuccessState(data: data),
+        ),
+      ),
+  );
+}
 }

@@ -328,6 +328,16 @@
     "noAddressAvailable": "لا يوجد عناوين",
     "editAddress": "تعديل العنوان"
   },
+  "myOrders": {
+    "title": "طلباتي",
+    "noOrders": "لا توجد طلبات",
+    "activeTab": "نشطة",
+    "completedTab": "مكتملة",
+    "TrackOrder": "تتبع الطلب",
+    "orderNum": "رقم الطلب",
+    "Curnncy": "ج.م",
+    "reOrder": "إعادة الطلب"
+  },
   "defaultErrorMsg": "حدث خطأ ما حاول لاحقا",
   "payment": {
     "success": "تم الدفع بنجاح",

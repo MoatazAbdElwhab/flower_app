@@ -9,6 +9,7 @@ import 'package:flower_app/features/profile/data/models/reset_password/request/p
 import 'package:flower_app/features/profile/data/models/reset_password/response/profile_reset_password_response.dart';
 import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
+import 'package:flower_app/features/profile/domain/entities/user_orders/user_orders_entitiy.dart';
 import 'package:flower_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -71,7 +72,17 @@ class ProfileRepositoryImpl extends ProfileRepository {
 
   @override
   Future<List<Address>> updateAddress(Address address) async {
-   return await _profileRemoteDataSource.updateAddress(address);
+    return await _profileRemoteDataSource.updateAddress(address);
   }
 
+  @override
+  Future<Either<ApiException, List<UserOrdersEntitiy>>> getUserOrders() async {
+    try {
+      var response = await _profileRemoteDataSource.getUserOrders();
+      final orders = toEntity(response);
+      return Right(orders);
+    } catch (e) {
+      return Left(ApiException(message: e.toString()));
+    }
+  }
 }

@@ -22,5 +22,6 @@ class Routes {
   static const String termsAndConditions = '/termsAndConditions';
   static const String aboutUs = '/aboutUs';
   static const String savedAddresses = '/savedAddresses';
+  static const String userOrdersScreen = '/userOrdersScreen';
   static const String webViewPage = '/webViewPage';
 }

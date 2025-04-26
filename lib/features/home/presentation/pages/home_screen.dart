@@ -60,7 +60,7 @@ class _HomePageState extends State<_HomePage> {
             },
             builder: (context, state) {
               if (state.homeDataState is BaseLoadingState) {
-                return  const Center(
+                return const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primary,
                   ),
@@ -73,8 +73,28 @@ class _HomePageState extends State<_HomePage> {
               if (state.homeDataState is BaseSuccessState && homeData != null) {
                 return _buildHomeContent(context, homeData);
               }
-
-              return const Text("No Data Available, Please Try Again Later");
+             // add refresh here in Case is there is no internet connection to get data When the user comes back Online
+              return RefreshIndicator(
+                color: AppColors.primary,
+                backgroundColor: AppColors.white,
+                onRefresh: () async {
+                  await context
+                      .read<HomeCubit>()
+                      .getHomeData(forceRefresh: true);
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: const Center(
+                      child: Text(
+                        "No Data Available, Check Your Connection And Try Again",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+              );
             },
           ),
         ),

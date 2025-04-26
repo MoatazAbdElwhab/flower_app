@@ -5,8 +5,10 @@ import 'package:flower_app/features/auth/presentation/pages/forget_password_page
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flower_app/features/best_seller/presentation/pages/best_seller_page.dart';
+import 'package:flower_app/features/checkout/domain/entities/check_out_session_detailes.dart';
 import 'package:flower_app/features/checkout/domain/entities/checkout_edit_address_arguments.dart';
 import 'package:flower_app/features/checkout/presentation/pages/checkout_page.dart';
+import 'package:flower_app/features/checkout/presentation/pages/web_view_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
@@ -186,6 +188,15 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: settings,
         builder: (_) => UserOrdersScreen(cubit: settings.arguments as ProfileCubit,),
+      );
+
+    case Routes.webViewPage:
+      final arguments = settings.arguments as OnlinePaymentDetails;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => WebViewPage(
+          onlinePaymentDetails: arguments,
+        ),
       );
 
     default:

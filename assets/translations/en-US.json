@@ -320,6 +320,10 @@
     "Curnncy": "EGP",
     "reOrder": "Reorder"
   },
-  "defaultErrorMsg": "something went wrong, please try again later"
+  "defaultErrorMsg": "something went wrong, please try again later",
+  "payment": {
+    "success": "Payment successful",
+    "error": "Payment failed"
+  }
 
 }

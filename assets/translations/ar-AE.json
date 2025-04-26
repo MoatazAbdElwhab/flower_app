@@ -338,7 +338,11 @@
     "Curnncy": "ج.م",
     "reOrder": "إعادة الطلب"
   },
-  "defaultErrorMsg": "حدث خطأ ما حاول لاحقا"
+  "defaultErrorMsg": "حدث خطأ ما حاول لاحقا",
+  "payment": {
+    "success": "تم الدفع بنجاح",
+    "error": "فشل الدفع"
+  }
 }
 
 

@@ -1,4 +1,8 @@
+import 'dart:isolate';
+import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flower_app/core/app_bloc_observer.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/app_router.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/theme/theme_data/theme_data_light.dart';
+import 'firebase_options.dart';
 
 // global variable
 bool? isUserLoggedInAutomatically;
@@ -18,13 +23,13 @@ bool? isUserLoggedInAutomatically;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
-  Bloc.observer = AppBlocObserver();
+  await _configureFirebase();
   await configureDependencies().then(
     (_) async {
       isUserLoggedInAutomatically = await getIt<AuthCubit>().isUserLoggedIn();
     },
   );
+  Bloc.observer = AppBlocObserver();
 
   runApp(
     EasyLocalization(
@@ -76,4 +81,26 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _configureFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: false);
+    return true;
+  };
+  // to catch errors that happen outside of flutter context
+  Isolate.current.addErrorListener(RawReceivePort((pair) async {
+    final List<dynamic> errorAndStacktrace = pair;
+    await FirebaseCrashlytics.instance.recordError(
+      errorAndStacktrace.first,
+      errorAndStacktrace.last,
+      fatal: true,
+    );
+  }).sendPort);
 }

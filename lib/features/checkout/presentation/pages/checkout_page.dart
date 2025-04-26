@@ -54,7 +54,6 @@ class CheckoutPage extends StatelessWidget {
                     const DeliveryAddressSection(),
                     _buildSpacer(),
                     const PaymentMethodSection(),
-                    _buildSpacer(),
                     ValueListenableBuilder(
                       valueListenable: cubit.selectedPaymentMethodIndex,
                       builder: (context, value, child) {
@@ -64,14 +63,19 @@ class CheckoutPage extends StatelessWidget {
                           alignment: Alignment.topCenter,
                           child: cubit.paymentMethods[value].paymentType ==
                                   PaymentMethodsType.card
-                              // ignore: prefer_const_constructors
-                              ? GiftSection()
+                              ? Column(
+                                  children: [
+                                    _buildSpacer(),
+                                    // ignore: prefer_const_constructors
+                                    GiftSection(),
+                                  ],
+                                )
                               : const SizedBox.shrink(),
                         );
                       },
                     ),
                     _buildSpacer(),
-                    _buildPlaceOrderButton(),
+                    _buildPlaceOrderButton(cubit, context),
                   ],
                 ),
               ),
@@ -90,7 +94,7 @@ class CheckoutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPlaceOrderButton() {
+  Widget _buildPlaceOrderButton(CheckoutCubit cubit, BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Column(
@@ -160,15 +164,26 @@ class CheckoutPage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 48),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text(
-              LocaleKeys.checkout_place_order.tr(),
-              style: getMediumStyle(
-                color: AppColors.white,
-                fontSize: 16.sp,
-              ),
-            ),
+          ValueListenableBuilder(
+            valueListenable: cubit.checkoutState,
+            builder: (context, value, child) {
+              return ElevatedButton(
+                onPressed: value
+                    ? null
+                    : () {
+                        cubit.createCheckoutSession(context);
+                      },
+                child: value
+                    ? const CircularProgressIndicator()
+                    : Text(
+                        LocaleKeys.checkout_place_order.tr(),
+                        style: getMediumStyle(
+                          color: AppColors.white,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+              );
+            },
           ),
         ],
       ),

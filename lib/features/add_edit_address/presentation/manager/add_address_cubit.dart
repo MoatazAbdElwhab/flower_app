@@ -55,7 +55,6 @@ class AddAddressCubit extends Cubit<AddOrEditAddressState> {
 
   Future<void> updateLocationAndAddress(
       LatLng latLng, BitmapDescriptor? icon) async {
-    emit(state.copyWith(getUserLocationOnMap: BaseLoadingState()));
 
     try {
       final details = await locationService.getAddressDetailsFromCoordinates(
@@ -91,9 +90,10 @@ class AddAddressCubit extends Cubit<AddOrEditAddressState> {
     emit(state.copyWith(getUserLocationOnMap: BaseLoadingState()));
 
     try {
+      // 10 is too short for location service
       // timeout for location service
       await Future.delayed(
-        const Duration(seconds: 10),
+        const Duration(seconds: 20),
         () {
           if (state.getUserLocationOnMap is BaseLoadingState) {
             emit(state.copyWith(getUserLocationOnMap: null));

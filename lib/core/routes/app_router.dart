@@ -15,6 +15,7 @@ import 'package:flower_app/features/profile/presentation/pages/profile_reset_pas
 import 'package:flower_app/features/profile/presentation/pages/saved_address_page/saved_address_page.dart';
 import 'package:flower_app/features/profile/presentation/pages/terms_and_conditions.dart';
 import 'package:flower_app/features/profile/presentation/pages/about_us_page.dart';
+import 'package:flower_app/features/profile/presentation/pages/user_orders_page/user_orders_screen.dart';
 import 'package:flower_app/features/search/presentation/pages/search_results_page.dart';
 import 'package:flower_app/features/splash/splash_screen.dart';
 import 'package:flower_app/core/common_widgets/product_details_page/product_details_page.dart';
@@ -180,6 +181,11 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) =>
             BlocProvider.value(value: cubit, child: const SavedAddressPage()),
+      );
+    case Routes.userOrdersScreen:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => UserOrdersScreen(cubit: settings.arguments as ProfileCubit,),
       );
 
     default:

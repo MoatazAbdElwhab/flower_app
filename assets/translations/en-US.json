@@ -310,7 +310,16 @@
     "noAddressAvailable": "No address available",
     "editAddress": "Edit address"
   },
+  "myOrders": {
+    "title": "My Orders",
+    "noOrders": "No orders available",
+    "activeTab": "Active",
+    "completedTab": "Completed",
+    "TrackOrder": "Track Order",
+    "orderNum": "Order Number",
+    "Curnncy": "EGP",
+    "reOrder": "Reorder"
+  },
   "defaultErrorMsg": "something went wrong, please try again later"
-
 
 }

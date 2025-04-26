@@ -5,6 +5,7 @@ import 'package:flower_app/features/profile/data/models/reset_password/request/p
 import 'package:flower_app/features/profile/data/models/reset_password/response/profile_reset_password_response.dart';
 import 'package:flower_app/features/profile/data/models/update_profile_data/update_profile_request.dart';
 import 'package:flower_app/features/profile/domain/entities/user_data.dart';
+import 'package:flower_app/features/profile/domain/entities/user_orders/user_orders_entitiy.dart';
 
 
 abstract class ProfileRepository {
@@ -23,5 +24,5 @@ abstract class ProfileRepository {
 
   Future<void> deleteAddress(String id);
 
-
+  Future<Either<ApiException, List<UserOrdersEntitiy>>> getUserOrders();
 }

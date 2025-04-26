@@ -7,7 +7,8 @@ import 'package:flower_app/core/routes/navigator_observer.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/core/utils/validator.dart';
+import 'package:flower_app/features/add_edit_address/presentation/widgets/add_edit_adress_form.dart';
+import 'package:flower_app/features/add_edit_address/presentation/widgets/custom_map_widget.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
@@ -18,14 +19,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../core/widget/dialog_utils.dart';
 import '../../../checkout/domain/entities/checkout_edit_address_arguments.dart';
 import '../../data/models/add_adress_model/add_adress_request.dart';
 import '../../domain/arguments/edit_address_arguments.dart';
 import '../manager/add_address_cubit.dart';
 import '../manager/add_address_state.dart';
-import '../widgets/map_widget.dart';
 
 class AddOrEditAddressScreen extends StatefulWidget {
   final ProfileEditAddressArgs? profileEditPageArguments;
@@ -174,9 +173,21 @@ class _AddOrEditAddressScreenState extends State<AddOrEditAddressScreen> {
             padding: EdgeInsets.all(16.r),
             child: Column(
               children: [
-                _buildMap(state),
+                CustomMapWidget(
+                  state: state,
+                  customMarkerIcon: customMarkerIcon,
+                  mapController: mapController,
+                ),
                 SizedBox(height: 24.h),
-                _buildAddressForm(state, cubit),
+                AddEditAdressForm(
+                  addressController: addressController,
+                  cityController: cityController,
+                  areaController: areaController,
+                  phoneNumberController: phoneNumberController,
+                  recipientNameController: recipientNameController,
+                  cubit: cubit,
+                  state: state,
+                ),
                 SizedBox(height: 48.h),
                 isEditingAddress == false
                     ? _buildSaveAddressButton(cubit, state)
@@ -245,193 +256,6 @@ class _AddOrEditAddressScreenState extends State<AddOrEditAddressScreen> {
     );
   }
 
-  Widget _buildMap(AddOrEditAddressState state) {
-    return Container(
-      height: 145.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      child: state.getUserLocationOnMap is BaseLoadingState
-          ? _buildMapShimmer()
-          : state.getUserLocationOnMap is BaseErrorState
-              ? Center(
-                  child: Text(
-                    LocaleKeys.addAddress_map_error_message.tr(),
-                    textAlign: TextAlign.center,
-                    style: getBoldStyle(color: AppColors.black, fontSize: 18),
-                  ),
-                )
-              : Stack(
-                  children: [
-                    MapWidget(
-                      selectedLocation: state.selectedLocation,
-                      markers: state.markers,
-                      onMapCreated: (controller) {
-                        if (!mapController.isCompleted) {
-                          mapController.complete(controller);
-                        }
-                      },
-                      onTap: (latLng) {
-                        context
-                            .read<AddAddressCubit>()
-                            .updateLocationAndAddress(
-                              latLng,
-                              customMarkerIcon,
-                            );
-                      },
-                    ),
-                    Positioned(
-                      bottom: 8,
-                      right: 8,
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.primary,
-                        child: IconButton(
-                          icon: const Icon(Icons.my_location,
-                              color: AppColors.white),
-                          onPressed: () {
-                            context
-                                .read<AddAddressCubit>()
-                                .centerToUserLocation(
-                                  customMarkerIcon,
-                                );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-    );
-  }
-
-  Widget _buildAddressForm(AddOrEditAddressState state, AddAddressCubit cubit) {
-    return Form(
-      key: cubit.saveAdressFormKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: addressController,
-            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => Validator.addressValidation(value),
-            decoration: InputDecoration(
-              labelText: LocaleKeys.addAddress_address_label.tr(),
-              hintText: LocaleKeys.addAddress_address_hint.tr(),
-            ),
-          ),
-          SizedBox(height: 17.h),
-          TextFormField(
-            controller: phoneNumberController,
-            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-            keyboardType: TextInputType.phone,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) => Validator.phoneNumberValidation(value),
-            decoration: InputDecoration(
-              labelText: LocaleKeys.addAddress_phone_label.tr(),
-              hintText: LocaleKeys.addAddress_phone_hint.tr(),
-            ),
-          ),
-          SizedBox(height: 17.h),
-          TextFormField(
-            controller: recipientNameController,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-            validator: (value) => Validator.recipientNameValidation(value),
-            decoration: InputDecoration(
-              labelText: LocaleKeys.addAddress_recipient_name_label.tr(),
-              hintText: LocaleKeys.addAddress_recipient_name_hint.tr(),
-            ),
-          ),
-          SizedBox(height: 17.h),
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: cityController,
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => Validator.cityValidation(value),
-                  decoration: InputDecoration(
-                    labelText: LocaleKeys.addAddress_city_label.tr(),
-                    hintText: LocaleKeys.addAddress_city_hint.tr(),
-                    suffixIcon: PopupMenuButton<String>(
-                      color: AppColors.white,
-                      constraints: BoxConstraints(
-                        maxHeight: 250.h,
-                      ),
-                      icon: const Icon(Icons.arrow_drop_down),
-                      onSelected: (val) {
-                        cityController.text = val;
-                        cubit.cityChanged(val);
-                      },
-                      itemBuilder: (_) => state.localCities
-                          .map((city) => PopupMenuItem(
-                                value: city,
-                                child: Text(city),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                  onChanged: (val) {
-                    cityController.text = val;
-                    cubit.cityChanged(val);
-                  },
-                ),
-              ),
-              SizedBox(width: 17.w),
-              Expanded(
-                child: TextFormField(
-                  controller: areaController,
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => Validator.areaValidation(value),
-                  decoration: InputDecoration(
-                    labelText: LocaleKeys.addAddress_area_label.tr(),
-                    hintText: LocaleKeys.addAddress_area_hint.tr(),
-                    suffixIcon: PopupMenuButton<String>(
-                      color: AppColors.white,
-                      constraints: BoxConstraints(
-                        maxHeight: 250.h,
-                      ),
-                      icon: const Icon(Icons.arrow_drop_down),
-                      onSelected: (val) {
-                        areaController.text = val;
-                        cubit.areaChanged(val);
-                      },
-                      itemBuilder: (_) => state.localAreas
-                          .map((area) => PopupMenuItem(
-                                value: area,
-                                child: Text(area),
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                  onChanged: (val) {
-                    areaController.text = val;
-                    cubit.areaChanged(val);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMapShimmer() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        height: 145.h,
-        width: double.infinity,
-        color: Colors.grey[300],
-      ),
-    );
-  }
 
   void _showDoneDialog(BuildContext context, bool isPushedByEditAddressPage) {
     showDialog(

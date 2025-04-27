@@ -19,4 +19,5 @@ class ApiConstants {
   static const String ordersEndPoint = 'orders';
   static const String checkoutSessionEndPoint = 'orders/checkout';
   static const String checkoutSessionCashEndPoint = 'orders';
+  static const String notificationsEndPoint = 'notifications?sort=-createdAt';
 }

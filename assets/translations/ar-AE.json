@@ -1,4 +1,8 @@
 {
+  "notification": {
+    "title": "الإشعارات",
+    "empty": "لا يوجد إشعارات"
+  },
   "signUp": "إنشاء حساب",
   "back": "رجوع",
   "firstName": {

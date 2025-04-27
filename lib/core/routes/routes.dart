@@ -24,4 +24,5 @@ class Routes {
   static const String savedAddresses = '/savedAddresses';
   static const String userOrdersScreen = '/userOrdersScreen';
   static const String webViewPage = '/webViewPage';
+  static const String notificationPage = '/notificationPage';
 }

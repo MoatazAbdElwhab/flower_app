@@ -1,4 +1,5 @@
 import 'package:flower_app/core/resources/app_icon.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -18,7 +19,9 @@ class AppBarSection extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.notificationPage);
+          },
           icon: SvgPicture.asset(
             AppIcon.notification,
             width: 24,

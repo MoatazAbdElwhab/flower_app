@@ -1,3 +1,4 @@
+// features/categories/presentation/pages/categories_screen.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/di/injectable.dart';
@@ -5,7 +6,7 @@ import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
-import 'package:flower_app/features/occasion/presentation/widgets/product_grid.dart';
+import 'package:flower_app/core/common_widgets/grid_view_widget/product_grid.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,8 +18,9 @@ import '../../../nav/presentation/cubit/nav_state.dart';
 import '../manager/categories_cubit.dart';
 import '../manager/categories_states.dart';
 import '../widgets/categories_bottom_sheat.dart';
-import '../widgets/custom_tab_bar.dart';
+//import '../widgets/custom_tab_bar.dart';
 import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/core/common_widgets/tab_bar_widget/sources_tabs.dart';
 
 class CategoriesScreen extends StatefulWidget {
   final int selectedCategoryIndex;
@@ -280,13 +282,21 @@ class CategoriesScreenState extends State<CategoriesScreen>
                       ],
                     ),
                     SizedBox(height: 16.h),
-                    CustomTabBar(
-                      tabController: _tabController!,
-                      tabsTitles: widget.categories
-                          .map((e) => e.name ?? '')
-                          .toList(),
-                      changeTabIndex: (index) {
-                        _tabController!.animateTo(index);
+
+                    //tab bar
+                    BlocBuilder<CategoriesCubit, CategoriesStates>(
+                      bloc: _cubit,
+                      buildWhen: (previous, current) => 
+                          previous.selectedCategoryIndex != current.selectedCategoryIndex,
+                      builder: (context, state) {
+                        return SourcesTabs(
+                          categories: widget.categories,
+                          onTabChanged: (index) {
+                            _tabController!.animateTo(index);
+                          },
+                          controller: _tabController,
+                          selectedIndex: state.selectedCategoryIndex ?? 0,
+                        );
                       },
                     ),
                     SizedBox(height: 16.h),

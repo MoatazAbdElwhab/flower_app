@@ -1,8 +1,9 @@
+// lib/core/common_widgets/tab_bar_widget/sources_tabs.dart
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
 import 'package:flower_app/features/home/domain/entities/category_occasion_entity.dart';
 import 'package:flower_app/features/occasion/presentation/cubit/occasion_cubit.dart';
-import 'package:flower_app/features/occasion/presentation/widgets/tab_item.dart';
+import 'package:flower_app/core/common_widgets/tab_bar_widget/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,10 +11,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SourcesTabs extends StatefulWidget {
   final List<CategoryOccasionEntity> categories;
   final Function(int) onTabChanged;
+  final TabController? controller;
+  final int? selectedIndex;
+
   const SourcesTabs({
     super.key,
     required this.categories,
     required this.onTabChanged,
+    this.controller,
+    this.selectedIndex,
   });
 
   @override
@@ -26,6 +32,7 @@ class _SourcesTabsState extends State<SourcesTabs> {
     return Column(
       children: [
         TabBar(
+          controller: widget.controller,
           isScrollable: true,
           indicatorColor: Colors.transparent,
           dividerColor: Colors.transparent,
@@ -40,10 +47,13 @@ class _SourcesTabsState extends State<SourcesTabs> {
           onTap: widget.onTabChanged,
           tabs: widget.categories.map(
             (category) {
+              final currentIndex = widget.selectedIndex != null 
+                ? widget.selectedIndex 
+                : context.read<OccasionCubit>().selectedCategoryIndex.value;
+                
               return TabItem(
                 title: category.name ?? '',
-                isSelected: widget.categories.indexOf(category) ==
-                    context.read<OccasionCubit>().selectedCategoryIndex.value,
+                isSelected: widget.categories.indexOf(category) == currentIndex,
               );
             },
           ).toList(),

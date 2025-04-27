@@ -106,18 +106,16 @@ class ItemCard extends StatelessWidget {
               ),
             ),
             if (showPrice)
-              Expanded(
-                child: Text(
-                  product!.priceAfterDiscount != 0
-                      ? '${product!.priceAfterDiscount} ${'common.currency'.tr()}'
-                      : '${product!.price} ${'common.currency'.tr()}',
-                  style: getRegularStyle(
-                    color: AppColors.black,
-                    fontSize: 11.sp,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              Text(
+                product!.priceAfterDiscount != 0
+                    ? '${product!.priceAfterDiscount} ${'common.currency'.tr()}'
+                    : '${product!.price} ${'common.currency'.tr()}',
+                style: getRegularStyle(
+                  color: AppColors.black,
+                  fontSize: 11.sp,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
           ],
         ),

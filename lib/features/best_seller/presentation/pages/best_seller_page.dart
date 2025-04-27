@@ -1,4 +1,6 @@
+// features/best_seller/presentation/pages/best_seller_page.dart
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/core/common_widgets/grid_view_widget/product_grid.dart';
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -40,20 +42,8 @@ class BestSellerPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),
-          child: GridView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: productEntityList.length,
-            padding: const EdgeInsets.only(
-              top: 16,
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              crossAxisCount: 2,
-              childAspectRatio: .8,
-            ),
-            itemBuilder: (context, index) =>
-                ProductCard(product: productEntityList[index]),
+          child: ProductGrid(
+            items: productEntityList,
           ),
         ),
       ),

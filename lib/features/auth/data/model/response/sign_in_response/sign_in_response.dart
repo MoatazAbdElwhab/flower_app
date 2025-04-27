@@ -5,8 +5,9 @@ class SignInResponse {
   String? message;
   User? user;
   String? token;
+  bool? isGuest;
 
-  SignInResponse({this.message, this.user, this.token});
+  SignInResponse({this.message, this.user, this.token, this.isGuest});
 
   factory SignInResponse.fromJson(Map<String, dynamic> json) {
     return SignInResponse(
@@ -15,6 +16,7 @@ class SignInResponse {
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
       token: json['token'] as String?,
+      isGuest: json['isGuest'] as bool?,
     );
   }
 
@@ -22,5 +24,6 @@ class SignInResponse {
         'message': message,
         'user': user?.toJson(),
         'token': token,
+        'isGuest': isGuest,
       };
 }

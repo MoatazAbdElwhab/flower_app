@@ -11,6 +11,7 @@ import '../../model/signup_response_model.dart';
 abstract class AuthRemoteDataSourceContract {
   Future<Either<ApiException, SignInResponse>> signIn(
       String email, String password);
+  Future<Either<ApiException, SignInResponse>> signInAsGuest();
   Future<SignUpResponseModel> signup(SignUpRequestModel request);
   Future<void> forgetPassword(String email);
   Future<void> verifyResetCode(String resetCode);

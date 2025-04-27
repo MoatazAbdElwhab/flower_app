@@ -7,11 +7,13 @@ class AuthResponseEntity {
   final String? message;
   final UserEntity? user;
   final String? token;
+  final bool isGuest;
 
   const AuthResponseEntity({
     this.message,
     this.user,
     this.token,
+    this.isGuest = false,
   });
 
   static AuthResponseEntity toEntity(SignInResponse model) {
@@ -19,6 +21,7 @@ class AuthResponseEntity {
       message: model.message,
       user: model.user != null ? UserEntity.toEntity(model.user!) : null,
       token: model.token,
+      isGuest: model.isGuest ?? false,
     );
   }
 
@@ -27,6 +30,7 @@ class AuthResponseEntity {
       message: entity.message,
       user: entity.user != null ? UserEntity.fromEntity(entity.user!) : null,
       token: entity.token,
+      isGuest: entity.isGuest,
     );
   }
 }

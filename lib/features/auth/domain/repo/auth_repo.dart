@@ -8,6 +8,7 @@ abstract class AuthRepo {
   //-----------------------------signIn-----------------------------------
   Future<Either<Exception, AuthResponseEntity>> signIn(
       String email, String password, bool rememberMe);
+  Future<Either<Exception, AuthResponseEntity>> signInAsGuest();
   Future<Either<ApiException, void>> signup(SignUpRequestModel request);
   Future<Either<ApiException, void>> forgetPassword(String email);
   Future<Either<ApiException, void>> verifyResetCode(String resetCode);

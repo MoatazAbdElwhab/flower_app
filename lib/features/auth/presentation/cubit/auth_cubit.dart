@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/model/signup_request_model.dart';
 import '../../domain/ues_case/sign_in_use_case.dart';
+import '../../domain/ues_case/sign_in_as_guest_use_case.dart';
 import '../../domain/ues_case/signup_use_case.dart';
 import '../../domain/ues_case/forget_password_use_case.dart';
 import '../../domain/ues_case/verify_reset_code_use_case.dart';
@@ -26,6 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
     this.signInUseCase,
     this.localStorageClient,
     this._resendOtpUseCase,
+    this._signInAsGuestUseCase,
   ) : super(
           AuthState(
             forgetPasswordState: BaseInitialState(),
@@ -49,6 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
   final SignInUseCase signInUseCase;
   final LocalStorageClient localStorageClient;
   final ResendOtpUseCase _resendOtpUseCase;
+  final SignInAsGuestUseCase _signInAsGuestUseCase;
 
   bool _rememberMe = false;
 
@@ -113,15 +116,34 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void signInAsGuest() {
-    emit(AuthState(
-      signInState: BaseSuccessState(),
-      authResponse: const AuthResponseEntity(
-        message: 'Signed in as guest',
-        token: null,
-        user: null,
-      ),
-    ));
+  Future<void> signInAsGuest() async {
+    try {
+      emit(AuthState(signInState: BaseLoadingState()));
+
+      final response = await _signInAsGuestUseCase.call();
+
+      if (response.isLeft) {
+        emit(AuthState(signInState: BaseErrorState(response.left.toString())));
+        return;
+      }
+
+      // Create an instance of AuthLocalDataSourceImpl for token handling
+      final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
+      
+      // Always save guest token, even if remember me is off
+      if (response.right.token != null) {
+        await authLocalDataSource.cacheToken(response.right.token!);
+        await authLocalDataSource.cacheIsGuest(true);
+      }
+
+      emit(AuthState(
+        signInState: BaseSuccessState(),
+        authResponse: response.right,
+      ));
+    } catch (e) {
+      Log.e('Guest sign in error: ${e.toString()}');
+      emit(AuthState(signInState: BaseErrorState(e.toString())));
+    }
   }
 
   Future<bool> isUserLoggedIn() async {
@@ -133,9 +155,15 @@ class AuthCubit extends Cubit<AuthState> {
 
       final token = await authLocalDataSource.checkSavedToken();
       if (token != null) {
+        // Check if user is guest
+        final isGuest = await authLocalDataSource.getIsGuest();
+        
         emit(AuthState(
           signInState: BaseSuccessState(),
-          authResponse: AuthResponseEntity(token: token),
+          authResponse: AuthResponseEntity(
+            token: token,
+            isGuest: isGuest,
+          ),
         ));
         return true;
       } else {

@@ -1,0 +1,134 @@
+# Authentication types and operations
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+# Type definitions
+type Query {
+  me: User
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): AuthResponse
+  signup(signupInput: SignUpInput!): AuthResponse
+  guestLogin: AuthResponse
+  logout: LogoutResponse
+}
+
+# User type definition
+type User {
+  _id: ID!
+  name: String!
+  email: String!
+  phone: String
+  gender: String
+  profileImg: String
+  role: String
+  wishlist: [ID]
+  addresses: [Address]
+  createdAt: String
+  updatedAt: String
+}
+
+# Address type
+type Address {
+  _id: ID!
+  street: String!
+  city: String!
+  phone: String!
+  lat: String
+  long: String
+}
+
+# Authentication response
+type AuthResponse {
+  message: String
+  token: String
+  user: User
+}
+
+# Logout response
+type LogoutResponse {
+  message: String
+}
+
+# Login input
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+# Sign up input
+input SignUpInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  rePassword: String!
+  phone: String
+  gender: String
+}
+
+# Authentication queries and mutations
+query GetCurrentUser {
+  me {
+    _id
+    name
+    email
+    phone
+    gender
+    profileImg
+    role
+    wishlist
+    addresses {
+      _id
+      street
+      city
+      phone
+      lat
+      long
+    }
+  }
+}
+
+mutation SignIn($email: String!, $password: String!) {
+  login(loginInput: { email: $email, password: $password }) {
+    message
+    token
+    user {
+      _id
+      name
+      email
+      phone
+      gender
+      profileImg
+    }
+  }
+}
+
+mutation SignUp($input: SignUpInput!) {
+  signup(signupInput: $input) {
+    message
+    token
+    user {
+      _id
+      name
+      email
+    }
+  }
+}
+
+mutation GuestLogin {
+  guestLogin {
+    message
+    token
+  }
+}
+
+mutation Logout {
+  logout {
+    message
+  }
+}

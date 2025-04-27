@@ -10,4 +10,8 @@ abstract class AuthLocalDataSourceContract {
   Future<void> cacheRememberMe(bool rememberMe);
   bool getRememberMe();
   Future<void> deleteRememberMe();
+  //-----------------------------Guest Account-----------------------------------
+  Future<void> cacheIsGuest(bool isGuest);
+  Future<bool> getIsGuest();
+  Future<void> deleteIsGuest();
 }

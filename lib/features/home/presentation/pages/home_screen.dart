@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/base/base_state.dart';
+import '../../../../core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import '../../domain/entities/home_entity.dart';
 import '../widget/best_seller_section.dart';
 import '../widget/categories_section.dart';
@@ -59,42 +61,23 @@ class _HomePageState extends State<_HomePage> {
               }
             },
             builder: (context, state) {
-              if (state.homeDataState is BaseLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primary,
-                  ),
-                );
-              }
-
               final HomeCubit cubit = context.read<HomeCubit>();
               final homeData = cubit.homeData;
 
               if (state.homeDataState is BaseSuccessState && homeData != null) {
                 return _buildHomeContent(context, homeData);
+              } else {
+                return RefreshIndicator(
+                  color: AppColors.primary,
+                  backgroundColor: AppColors.white,
+                  onRefresh: () async {
+                    await context
+                        .read<HomeCubit>()
+                        .getHomeData(forceRefresh: true);
+                  },
+                  child: AppDummyWidgets().homeScreenContent,
+                );
               }
-             // add refresh here in Case is there is no internet connection to get data When the user comes back Online
-              return RefreshIndicator(
-                color: AppColors.primary,
-                backgroundColor: AppColors.white,
-                onRefresh: () async {
-                  await context
-                      .read<HomeCubit>()
-                      .getHomeData(forceRefresh: true);
-                },
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: const Center(
-                      child: Text(
-                        "No Data Available, Check Your Connection And Try Again",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              );
             },
           ),
         ),

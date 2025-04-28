@@ -69,14 +69,13 @@ class AppDummyWidgets {
                 description: 'asd asdasd'))
       ];
   get dummyGetProfileAddresses => [
-    DeliveryOptionItem(type: 'type',
-      address: 'address',
-      isSelected: true,
-      onTap:() {
-
-      }, onEdit: () {
-
-      },)
+        DeliveryOptionItem(
+          type: 'type',
+          address: 'address',
+          isSelected: true,
+          onTap: () {},
+          onEdit: () {},
+        )
       ];
 
   static Widget buildProductsGridSkeleton({int itemCount = 4}) {
@@ -107,4 +106,221 @@ class AppDummyWidgets {
       ),
     );
   }
+
+  get homeScreenContent => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10.h),
+              Row(
+                children: [
+                  Skeletonizer(
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 30.w,
+                          height: 30.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.pink[100],
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        Container(
+                          width: 70.w,
+                          height: 20.h,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: Skeletonizer(
+                      child: Container(
+                        height: 40.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.r),
+                          color: Colors.grey[300],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 15.h),
+
+              // Location
+              Skeletonizer(
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on_outlined),
+                    SizedBox(width: 5.w),
+                    Container(
+                      width: 130.w,
+                      height: 16.h,
+                      color: Colors.grey,
+                    ),
+                    Icon(Icons.keyboard_arrow_down),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 25.h),
+
+              // Categories
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Skeletonizer(
+                    child: Container(
+                      width: 60.w,
+                      height: 20.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Skeletonizer(
+                    child: Container(
+                      width: 50.w,
+                      height: 15.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 15.h),
+
+              // Categories items
+              SizedBox(
+                height: 80.h,
+                child: Skeletonizer(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(
+                      5,
+                      (index) => Column(
+                        children: [
+                          Container(
+                            width: (280 / 5).w,
+                            height: (280 / 5).w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFEE6EF),
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          SizedBox(height: 5.h),
+                          Container(
+                            width: 16.w,
+                            height: 12.h,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25.h),
+
+              // Best seller
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Skeletonizer(
+                    child: Container(
+                      width: 70.w,
+                      height: 20.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Skeletonizer(
+                    child: Container(
+                      width: 40.w,
+                      height: 15.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 15.h),
+
+              // Best seller items
+              SizedBox(
+                height: 170.h,
+                child: Skeletonizer(
+                  child: Row(
+                    children: List.generate(
+                      3,
+                      (index) => Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: index < 2 ? 10.w : 0),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25.h),
+
+              // Occasion
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Skeletonizer(
+                    child: Container(
+                      width: 60.w,
+                      height: 20.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Skeletonizer(
+                    child: Container(
+                      width: 40.w,
+                      height: 15.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 20.h),
+
+              // Occasion items
+              SizedBox(
+                height: 160.h,
+                child: Skeletonizer(
+                  child: Row(
+                    children: List.generate(
+                      3,
+                      (index) => Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: index < 2 ? 10.w : 0),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 20.h),
+            ],
+          ),
+        ),
+      );
 }

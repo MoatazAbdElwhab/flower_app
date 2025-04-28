@@ -19,17 +19,16 @@ class UserOrdersEntitiy {
 
 List<UserOrdersEntitiy> toEntity(UserOrdersResponse response) {
   return response.orders?.map((order) {
+    // check if orderItems is not empty
+    final firstItem = order.orderItems?.isNotEmpty == true ? order.orderItems![0] : null;
     return UserOrdersEntitiy(
-      id: order.orderNumber ?? '', 
+      id: order.orderNumber ?? '',
       orderItem: OrderItemsEntity(
         product: UserProductsEntity(
-          title:
-               (order.orderItems?[0].product?.title ?? '')
-              ,
-          imgCover:(order.orderItems?[0].product?.imgCover ?? '')
-              ,
+          title: firstItem?.product?.title ?? '',
+          imgCover: firstItem?.product?.imgCover ?? '',
         ),
-        price: (order.orderItems?[0].price ?? 0),
+        price: firstItem?.price ?? 0,
       ),
       totalPrice: order.totalPrice ?? 0,
       state: order.state ?? 'unknown',

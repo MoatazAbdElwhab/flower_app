@@ -1,3 +1,4 @@
+// core/app_data/api/dio_client.dart
 import 'package:dio/dio.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,9 @@ class DioApiClient implements ApiClient {
   final LocalStorageClient localStorage;
   final DioErrorHandler errorHandler;
   final GlobalKey<NavigatorState> _appNavigator;
+
+  String? _cachedToken;
+  bool _isRetrievingToken = false;
 
   DioApiClient(this.localStorage, this.errorHandler, this._appNavigator)
       : _dio = Dio(BaseOptions(
@@ -118,15 +122,38 @@ class DioApiClient implements ApiClient {
   Future<void> checkToken(bool requiresToken) async {
     Log.i('requires token : $requiresToken');
     if (!requiresToken) return;
+
     try {
+      if (_cachedToken != null) {
+        _dio.options.headers.addAll({'Authorization': 'Bearer $_cachedToken'});
+        return;
+      }
+      if (_isRetrievingToken) {
+        while (_isRetrievingToken) {
+          await Future.delayed(const Duration(milliseconds: 50));
+        }
+        if (_cachedToken != null) {
+          _dio.options.headers
+              .addAll({'Authorization': 'Bearer $_cachedToken'});
+          return;
+        }
+      }
+
+      _isRetrievingToken = true;
       final token = await localStorage.getSecuredData('token');
+
+      _isRetrievingToken = false;
+
       if (token != null) {
+        _cachedToken = token;
         _dio.options.headers.addAll({'Authorization': 'Bearer $token'});
       } else {
         Log.e('throwing ApiException(message: User token is null)');
         throw ApiException(message: 'User token is null');
       }
     } catch (e) {
+      _isRetrievingToken = false;
+
       Log.e(
           'throwing ApiException(message: Failed to retrieve token: ${e.toString()}');
       if (appCurrentRoute != Routes.login && appCurrentRoute != Routes.signup) {
@@ -136,5 +163,10 @@ class DioApiClient implements ApiClient {
       }
       throw ApiException(message: 'Failed to retrieve token: ${e.toString()}');
     }
+  }
+
+  void clearTokenCache() {
+    _cachedToken = null;
+    _dio.options.headers.remove('Authorization');
   }
 }

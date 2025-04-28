@@ -25,12 +25,12 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Download Flutter
-        run: |
-          wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.19.3-stable.tar.xz
-          tar xf flutter_linux_3.19.3-stable.tar.xz
-          export PATH="$PATH:`pwd`/flutter/bin"
-          echo "$PATH" >> $GITHUB_PATH
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.5'
+          channel: 'stable'
+          cache: true
           
       - name: Check Flutter and Dart version
         run: |
@@ -42,14 +42,19 @@ jobs:
           
       - name: Build APK
         run: flutter build apk --debug
-          
-      - name: Upload to Firebase App Distribution
-        uses: hasretsariyer/firebase-app-distribution-github-action@v1
-        with:
-          app_id: '1:998190875190:android:872fced85dc8ff28ecce97'
-          firebase_token: ${{ secrets.shimaa }}
-          app_file: build/app/outputs/flutter-apk/app-debug.apk
-          tester_groups: testers
-          release_notes: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}
-          debug: true
-          no_notify: true
+      
+      - name: Setup Firebase CLI
+        run: npm install -g firebase-tools
+        
+      - name: Deploy to Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.shimaa }} 
+          APP_ID: '1:998190875190:android:872fced85dc8ff28ecce97'
+          RELEASE_NOTES: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}
+        run: |
+          # Using environment variables for cleaner script and to avoid token exposure in logs
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-debug.apk \
+            --app "$APP_ID" \
+            --token "$FIREBASE_TOKEN" \
+            --release-notes "$RELEASE_NOTES" \
+            --groups "testers"

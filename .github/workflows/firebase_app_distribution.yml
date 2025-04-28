@@ -1,0 +1,60 @@
+name: Firebase App Distribution
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      releaseNotes:
+        description: 'Release notes for this build'
+        required: false
+        default: 'Manual build triggered from GitHub Actions'
+
+jobs:
+  distribute:
+    if: github.event.label.name == 'ReadyForTesting' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.5'
+          channel: 'stable'
+          cache: true
+          
+      - name: Check Flutter and Dart version
+        run: |
+          flutter --version
+          dart --version
+          
+      - name: Install dependencies
+        run: flutter pub get
+          
+      - name: Build APK
+        run: flutter build apk --debug
+      
+      - name: Setup Firebase CLI
+        run: npm install -g firebase-tools
+        
+      - name: Deploy to Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.shimaa }} 
+          APP_ID: '1:998190875190:android:872fced85dc8ff28ecce97'
+          RELEASE_NOTES: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.releaseNotes || 'PR Deployment' }}
+        run: |
+          # Using environment variables for cleaner script and to avoid token exposure in logs
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-debug.apk \
+            --app "$APP_ID" \
+            --token "$FIREBASE_TOKEN" \
+            --release-notes "$RELEASE_NOTES" \
+            --groups "testers"

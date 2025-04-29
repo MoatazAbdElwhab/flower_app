@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
@@ -25,15 +26,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final UserData dummyUserData = UserData(
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    gender: 'male',
-    phone: '1234567890',
-    photo: '',
-    addresses: []
-  );
+  final UserData dummyUserData = AppDummyWidgets().dummyUserData;
 
   @override
   Widget build(BuildContext context) {

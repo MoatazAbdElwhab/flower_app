@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -91,7 +93,9 @@ class _CardAddAndRemoveButtonState extends State<CardAddAndRemoveButton> {
                             width: 6.w,
                           ),
                           Text(
-                            isInCart ? 'Remove from cart' : 'Add to cart',
+                            isInCart
+                                ? LocaleKeys.cart_removeFromCart.tr()
+                                : LocaleKeys.cart_addToCart.tr(),
                             style: getMediumStyle(
                                 color: AppColors.white, fontSize: 13.sp),
                           )

@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,14 +22,14 @@ class CardPriceRow extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 4.w),
       child: priceAfterDiscount == null
           ? Text(
-              'EGP ${originalPrice == null ? 'error' : originalPrice!.toStringAsFixed(2)}',
+              '${LocaleKeys.cart_pound.tr()} ${originalPrice == null ? 'error' : originalPrice!.toStringAsFixed(2)}',
               overflow: TextOverflow.ellipsis,
               style: getMediumStyle(color: AppColors.black, fontSize: 14.sp))
           : FittedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('EGP $priceAfterDiscount  ',
+                  Text('${LocaleKeys.cart_pound.tr()} $priceAfterDiscount  ',
                       overflow: TextOverflow.ellipsis,
                       style: getMediumStyle(
                           color: AppColors.black, fontSize: 14.sp)),

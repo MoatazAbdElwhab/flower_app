@@ -120,56 +120,6 @@
       "invalid": "Egyptian numbers only"
     }
   },
-  "terms": {
-    "prefix": "Creating an account, you agree to our",
-    "conditions": "Terms & Conditions"
-  },
-  "dialogs": {
-    "error": {
-      "title": "Error",
-      "ok": "OK"
-    },
-    "success": {
-      "title": "Created Successfully",
-      "message": "Account created successfully \n Click OK to login.",
-      "ok": "OK"
-    }
-  },
-  "loginPrompt": {
-    "prefix": "Already have an account? ",
-    "action": "Login"
-  },
-  "success": {
-    "title": "Created Successfully",
-    "message": "Account created successfully \n Click OK to login.",
-    "ok": "OK"
-  },
-  "forgetPassword": {
-    "title": "Forget Password",
-    "description": "Please enter your email associated to your account",
-    "continueButton": "Continue"
-  },
-  "pinCode": {
-    "title": "Email Verification",
-    "description": "Please enter your code that send to your email address",
-    "ErrorMessage": "Invalid Code",
-    "ReadyMessage": "Didn't receive code?",
-    "ResendMessage": "Resend"
-  },
-  "resetPassword": {
-    "title": "Reset Password",
-    "description": "Password must not be empty and must contain 6 characters with upper case letter and one number at least",
-    "resetButton": "Reset"
-  },
-  "occasionPage": {
-    "title": "Occasions",
-    "description": "Bloom with our exquisite best sellers"
-  },
-  "bestSeller": {
-    "title": "Best seller",
-    "description": "Bloom with our exquisite best sellers"
-  },
-
   "profile": {
     "myOrders": "My orders",
     "savedAddress": "Saved address",
@@ -212,24 +162,45 @@
     "confirmLogout":"Confirm logout !!",
     "cancel": "Cancel"
   },
-  "reset_password": {
-    "title": "Reset Password",
-    "current_password": "Current Password",
-    "current_password_hint": "Current Password",
-    "new_password": "New Password",
-    "new_password_hint": "New Password",
-    "confirm_password": "Confirm Password",
-    "confirm_password_hint": "Confirm Password",
-    "update_button": "Update",
-    "success_message": "Password updated successfully",
-    "error_message": "Failed to update password. Please try again.",
+  "dialogs": {
     "error": {
-      "confirm_password_required": "Please confirm your password",
-      "passwords_not_match": "Passwords do not match",
-      "same_password": "New password must be different from current password",
-      "incorrect_password": "Current password is not correct"
+      "title": "Error",
+      "ok": "OK"
+    },
+    "success": {
+      "title": "Created Successfully",
+      "message": "Account created successfully \n Click OK to login.",
+      "ok": "OK"
     }
-
+  },
+  "loginPrompt": {
+    "prefix": "Already have an account? ",
+    "action": "Login"
+  },
+  "success": {
+    "title": "Created Successfully",
+    "message": "Account created successfully \n Click OK to login.",
+    "ok": "OK"
+  },
+  "forgetPassword": {
+    "title": "Forget Password",
+    "description": "Please enter your email associated to your account",
+    "continueButton": "Continue"
+  },
+  "pinCode": {
+    "title": "Email Verification",
+    "description": "Please enter your code that send to your email address",
+    "ErrorMessage": "Invalid Code",
+    "ReadyMessage": "Didn't receive code?",
+    "ResendMessage": "Resend"
+  },
+  "occasionPage": {
+    "title": "Occasions",
+    "description": "Bloom with our exquisite best sellers"
+  },
+  "bestSeller": {
+    "title": "Best seller",
+    "description": "Bloom with our exquisite best sellers"
   },
   "cart": {
     "cart": "Cart",
@@ -249,7 +220,28 @@
     "quantityUpdatedTo": "quantity is updated to",
     "successfullyRemoved": "product successfully removed",
     "failedToRemove": "failed to remove product",
-    "updateProfileSuccess": "Updated"
+    "updateProfileSuccess": "Updated",
+    "addToCart": "Add to cart",
+    "removeFromCart": "Remove from cart"
+  },
+  "reset_password": {
+    "title": "Reset Password",
+    "current_password": "Current Password",
+    "current_password_hint": "Current Password",
+    "new_password": "New Password",
+    "new_password_hint": "New Password",
+    "confirm_password": "Confirm Password",
+    "confirm_password_hint": "Confirm Password",
+    "update_button": "Update",
+    "success_message": "Password updated successfully",
+    "error_message": "Failed to update password. Please try again.",
+    "error": {
+      "confirm_password_required": "Please confirm your password",
+      "passwords_not_match": "Passwords do not match",
+      "same_password": "New password must be different from current password",
+      "incorrect_password": "Current password is not correct"
+    }
+
   },
   "filter":{
     "sortBy":"Sort by",
@@ -261,7 +253,6 @@
     "price":"Price",
     "filterButton":"Filter"
   },
-
   "checkout": {
     "title": "Checkout",
     "delivery_time": "Delivery time",
@@ -325,5 +316,4 @@
     "success": "Payment successful",
     "error": "Payment failed"
   }
-
 }

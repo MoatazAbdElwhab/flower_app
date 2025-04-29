@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
@@ -25,29 +24,25 @@ class _State extends State<CartProductPriceAndQuantitySection> {
 
   @override
   void didChangeDependencies() {
-    currentProductQuantity = widget.productEntity.cartQuantity ?? 0;
+    currentProductQuantity = widget.productEntity.cartQuantity ?? 1;
     super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(CartProductPriceAndQuantitySection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.productEntity.cartQuantity !=
+        oldWidget.productEntity.cartQuantity) {
+      setState(() {
+        currentProductQuantity = widget.productEntity.cartQuantity ?? 1;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CartBloc, CartState>(
-      // listenWhen: (previous, current) {
-      // final currentStateQuantity = current.cartProducts
-      //         ?.firstWhere(
-      //           (element) => element.id == widget.productEntity.id,
-      //         )
-      //         .cartQuantity ??
-      //     0;
-      // final previousStateQuantity = previous.cartProducts
-      //         ?.firstWhere(
-      //           (element) => element.id == widget.productEntity.id,
-      //         )
-      //         .cartQuantity ??
-      //     0;
-      // return currentStateQuantity != previousStateQuantity ||
-      //     previous.updateQuantityState != current.updateQuantityState;
-      // },
+      listenWhen: (p, c) => p.updateQuantityState != c.updateQuantityState,
       listener: (context, state) {
         final utils = getIt<DialogUtils>();
         if (state.updateQuantityState is BaseErrorState) {
@@ -77,6 +72,7 @@ class _State extends State<CartProductPriceAndQuantitySection> {
           }
         }
       },
+      buildWhen: (p, c) => p.updateQuantityState != c.updateQuantityState,
       builder: (context, state) {
         if (state.updateQuantityState is BaseErrorState) {
           final stateProduct = state.cartProducts
@@ -134,7 +130,6 @@ class _State extends State<CartProductPriceAndQuantitySection> {
 
   void _resetQuantity(ProductEntity? stateProduct) {
     if (stateProduct == null || stateProduct.cartQuantity == null) {
-      log('error : null state product or null quantity');
       return;
     }
     if (stateProduct.cartQuantity != currentProductQuantity) {

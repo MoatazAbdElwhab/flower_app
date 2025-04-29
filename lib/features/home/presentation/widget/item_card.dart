@@ -57,67 +57,63 @@ class ItemCard extends StatelessWidget {
               );
             }
           },
-      child: Container(
+      child: SizedBox(
         width: 120.w,
-        margin: EdgeInsets.only(right: 10.w),
-        height: 160.h,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 120.w,
-              height: 130.w,
-              decoration: BoxDecoration(
-                color: AppColors.grey,
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: imageUrl != null && imageUrl.isNotEmpty
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: AppNetworkImage(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 8,
+                child: imageUrl != null && imageUrl.isNotEmpty
+                    ? AppNetworkImage(
                         networkImage: imageUrl,
                         fit: BoxFit.cover,
-                      ),
-                    )
-                  : Container(
-                      color: AppColors.grey,
-                      child: Center(
-                        child: SvgPicture.asset(
-                          AppIcons.flower,
-                          width: 30.w,
-                          height: 30.w,
-                          fit: BoxFit.contain,
+                      )
+                    : Container(
+                        color: AppColors.grey,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            AppIcons.flower,
+                            width: 30.w,
+                            height: 30.w,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
+              ),
+              SizedBox(height: 4.h),
+              Expanded(
+                flex: 1,
+                child: Text(
+                  title ?? 'home.items.unknown'.tr(),
+                  style: getMediumStyle(
+                    color: AppColors.black,
+                    fontSize: 12.sp,
+                  ),
+                  textAlign: TextAlign.start,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (showPrice)
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    product!.priceAfterDiscount != 0
+                        ? '${product!.priceAfterDiscount} ${'common.currency'.tr()}'
+                        : '${product!.price} ${'common.currency'.tr()}',
+                    style: getRegularStyle(
+                      color: AppColors.black,
+                      fontSize: 11.sp,
                     ),
-            ),
-            SizedBox(height: 4.h),
-            Expanded(
-              child: Text(
-                title ?? 'home.items.unknown'.tr(),
-                style: getMediumStyle(
-                  color: AppColors.black,
-                  fontSize: 12.sp,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                textAlign: TextAlign.start,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            if (showPrice)
-              Text(
-                product!.priceAfterDiscount != 0
-                    ? '${product!.priceAfterDiscount} ${'common.currency'.tr()}'
-                    : '${product!.price} ${'common.currency'.tr()}',
-                style: getRegularStyle(
-                  color: AppColors.black,
-                  fontSize: 11.sp,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

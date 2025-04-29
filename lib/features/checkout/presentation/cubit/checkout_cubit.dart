@@ -4,6 +4,8 @@ import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
+import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:flower_app/features/cart/presentation/bloc/event.dart';
 import 'package:flower_app/features/checkout/data/models/check_out_requset.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/checkout/domain/entities/check_out_session_detailes.dart';
@@ -135,6 +137,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
               message: LocaleKeys.payment_success.tr(),
               textColor: AppColors.success,
             );
+            context.read<CartBloc>().add(const CartClearEvent());
             Navigator.pushNamedAndRemoveUntil(
               context,
               Routes.navbar,

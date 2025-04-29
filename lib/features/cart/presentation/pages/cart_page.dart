@@ -10,7 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../bloc/cart_state.dart';
-import '../bloc/event.dart';
 import '../widgets/cart_app_bar.dart';
 import '../widgets/cart_price_and_checkout.dart';
 

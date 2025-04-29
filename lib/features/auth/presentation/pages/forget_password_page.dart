@@ -60,7 +60,7 @@ class ForgetPasswordPage extends StatelessWidget {
                           context.read<AuthCubit>().forgetEmailController,
                       validator: Validator.emailValidate,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         //labelText: LocaleKeys.email_label.tr(),
                         //hintText: LocaleKeys.email_hint.tr(),
                         labelText: 'Email',

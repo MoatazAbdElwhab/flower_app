@@ -1,6 +1,6 @@
 // core/common_widgets/dummy_widgets/dummy_widgets.dart
 import 'package:flower_app/core/common_widgets/product_card/product_card_view.dart';
-import 'package:flower_app/core/theme/app_styles.dart';
+import 'package:flower_app/features/profile/domain/entities/user_data.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +10,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../features/cart/presentation/widgets/cart_product/cart_product.dart';
 import '../../../features/checkout/presentation/widgets/delivery_option_item.dart';
 import '../../../features/home/domain/entities/product_entity.dart';
+import '../../../features/notification/domain/entities/notification_data.dart';
 
 class AppDummyWidgets {
   get dummyCartProductsList => [
@@ -49,7 +50,7 @@ class AppDummyWidgets {
                 imgCover: 'https://i.imgur.com/RRUe0Mo.png',
                 price: 222,
                 priceAfterDiscount: 2222,
-                images: [
+                images: const [
                   'cc63221c-acd9-4eeb-a2b3-b9ff9c28e2ba-flower_image.png',
                   'cc63221c-acd9-4eeb-a2b3-b9ff9c28e2ba-flower_image.png'
                 ],
@@ -165,7 +166,7 @@ class AppDummyWidgets {
                       height: 16.h,
                       color: Colors.grey,
                     ),
-                    Icon(Icons.keyboard_arrow_down),
+                    const Icon(Icons.keyboard_arrow_down),
                   ],
                 ),
               ),
@@ -324,28 +325,47 @@ class AppDummyWidgets {
         ),
       );
   get dummyCategoryProducts => List.generate(
-    15,
+        15,
         (index) => ProductEntity(
-      id: index.toString(),
-      title: 'Flower Bouquet ${index + 1}',
-      imgCover: 'https://via.placeholder.com/150',
-      price: 100,
-      priceAfterDiscount: 80,
-      images: const [],
-      description: '',
-    ),
-  );
+          id: index.toString(),
+          title: 'Flower Bouquet ${index + 1}',
+          imgCover: 'https://via.placeholder.com/150',
+          price: 100,
+          priceAfterDiscount: 80,
+          images: const [],
+          description: '',
+        ),
+      );
 
   List<ProductEntity> get categoryItems => List.generate(
-    15,
+        15,
         (index) => ProductEntity(
-      id: index.toString(),
-      title: 'Flower Bouquet ${index + 1}',
-      imgCover: 'https://via.placeholder.com/150',
-      price: 100,
-      priceAfterDiscount: 80,
-      images: const [],
-      description: '',
-    ),
-  );
+          id: index.toString(),
+          title: 'Flower Bouquet ${index + 1}',
+          imgCover: 'https://via.placeholder.com/150',
+          price: 100,
+          priceAfterDiscount: 80,
+          images: const [],
+          description: '',
+        ),
+      );
+
+  UserData get dummyUserData => UserData(
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      gender: 'male',
+      phone: '1234567890',
+      photo: '',
+      addresses: []);
+
+  get dummyNotifications => List.generate(
+        8,
+        (index) => NotificationData(
+          id: index.toString(),
+          title: 'New offer',
+          body:
+              'Lorem ipsum dolor sit amet consectetur. Tristique et mauris sem congue in felis id nec. Amet sed morbi bibendum vestibulum.',
+        ),
+      );
 }

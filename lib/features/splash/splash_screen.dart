@@ -191,7 +191,7 @@ class _SplashScreenState extends State<SplashScreen>
                             color: AppColors.primary,
                             minHeight: 4.h,
                             borderRadius: BorderRadius.circular(2.r),
-                            valueColor: AlwaysStoppedAnimation<Color>(
+                            valueColor: const AlwaysStoppedAnimation<Color>(
                               AppColors.primary,
                             ),
                           ),

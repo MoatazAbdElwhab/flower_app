@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../../../core/base/base_state.dart';
-import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_styles.dart';
 import '../../../bloc/cart_state.dart';
 import '../../../bloc/event.dart';

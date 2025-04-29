@@ -16,12 +16,8 @@ class CategoriesRepoImpl implements CategoriesRepo {
       String categoryId) async {
     try {
       var response = await _categoriesData.getCategories(categoryId);
-      if (response != null) {
-        return Right(response.map((e) => e.toEntity()).toList());
-      } else {
-        return Left(ApiException(message: 'No Product found'));
-      }
-    } catch (e) {
+      return Right(response.map((e) => e.toEntity()).toList());
+        } catch (e) {
       return Left(ApiException(message: e.toString()));
     }
   }
@@ -32,12 +28,8 @@ class CategoriesRepoImpl implements CategoriesRepo {
     try {
       var response =
           await _categoriesData.getSortedProducts(categoryId, sortOption);
-      if (response != null) {
-        return Right(response.map((e) => e.toEntity()).toList());
-      } else {
-        return Left(ApiException(message: 'No Product found'));
-      }
-    } catch (e) {
+      return Right(response.map((e) => e.toEntity()).toList());
+        } catch (e) {
       return Left(ApiException(message: e.toString()));
     }
   }

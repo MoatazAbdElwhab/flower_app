@@ -4,7 +4,6 @@ import 'package:flower_app/features/occasion/data/datasources/remote/occasion_re
 import 'package:flower_app/features/occasion/data/models/occasion_response/occasion_response.dart';
 import 'package:flower_app/features/occasion/data/models/occasion_response/product_model.dart';
 import 'package:injectable/injectable.dart';
-import 'package:either_dart/either.dart';
 
 @Injectable(as: OccasionRemoteDataSource)
 class OccasionApiRemoteDataSource extends OccasionRemoteDataSource {

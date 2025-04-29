@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:either_dart/either.dart';
 import 'package:flower_app/core/error_handling/exceptions/api_exception.dart';

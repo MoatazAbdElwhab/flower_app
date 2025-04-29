@@ -5,7 +5,6 @@ import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/search/presentation/pages/search_results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -75,6 +75,6 @@ final prod = ProductEntity(
     imgCover: 'imgCover',
     price: 22,
     priceAfterDiscount: 22,
-    images: [],
+    images: const [],
     description: '',
     cartQuantity: 2);

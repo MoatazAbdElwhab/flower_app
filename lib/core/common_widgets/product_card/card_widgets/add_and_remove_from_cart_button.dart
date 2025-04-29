@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';

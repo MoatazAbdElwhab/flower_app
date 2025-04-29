@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/notification/domain/entities/notification_data.dart';
 import 'package:flower_app/features/notification/presentation/cubit/notification_cubit.dart';
@@ -12,18 +13,10 @@ import 'package:skeletonizer/skeletonizer.dart';
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 
-  List<NotificationData> get dummyNotifications => List.generate(
-        8,
-        (index) => NotificationData(
-          id: index.toString(),
-          title: 'New offer',
-          body:
-              'Lorem ipsum dolor sit amet consectetur. Tristique et mauris sem congue in felis id nec. Amet sed morbi bibendum vestibulum.',
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
+    final dummyNotifications = AppDummyWidgets().dummyNotifications;
+
     return BlocProvider(
       create: (context) => getIt<NotificationCubit>(),
       child: Scaffold(

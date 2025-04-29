@@ -10,7 +10,6 @@ import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/base/base_state.dart';
-import '../../../../main.dart';
 import '../../domain/use_cases/update_product_quantity_use_case.dart';
 import 'cart_state.dart';
 import 'event.dart';

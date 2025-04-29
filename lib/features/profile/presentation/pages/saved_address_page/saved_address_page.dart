@@ -6,7 +6,6 @@ import 'package:flower_app/core/common_widgets/address_widget/address_widget.dar
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../../core/routes/routes.dart';
 
 class SavedAddressPage extends StatelessWidget {

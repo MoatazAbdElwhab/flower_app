@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/base/base_state.dart';
 import '../../../../core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import '../../domain/entities/home_entity.dart';

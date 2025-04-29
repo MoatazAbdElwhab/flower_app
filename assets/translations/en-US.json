@@ -1,4 +1,8 @@
 {
+  "notification": {
+    "title": "Notifications",
+    "empty": "No notifications"
+  },
   "signUp": "Sign Up",
   "back": "Back",
   "firstName": {

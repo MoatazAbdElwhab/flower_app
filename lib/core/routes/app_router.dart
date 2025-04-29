@@ -11,6 +11,7 @@ import 'package:flower_app/features/checkout/presentation/pages/checkout_page.da
 import 'package:flower_app/features/checkout/presentation/pages/web_view_page.dart';
 import 'package:flower_app/features/home/domain/entities/product_entity.dart';
 import 'package:flower_app/features/home/presentation/pages/home_screen.dart';
+import 'package:flower_app/features/notification/presentation/pages/notification_page.dart';
 import 'package:flower_app/features/occasion/presentation/pages/occasion_page.dart';
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flower_app/features/profile/presentation/pages/profile_reset_password.dart';
@@ -187,7 +188,9 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
     case Routes.userOrdersScreen:
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => UserOrdersScreen(cubit: settings.arguments as ProfileCubit,),
+        builder: (_) => UserOrdersScreen(
+          cubit: settings.arguments as ProfileCubit,
+        ),
       );
 
     case Routes.webViewPage:
@@ -197,6 +200,12 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         builder: (_) => WebViewPage(
           onlinePaymentDetails: arguments,
         ),
+      );
+
+    case Routes.notificationPage:
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) => const NotificationPage(),
       );
 
     default:

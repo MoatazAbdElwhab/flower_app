@@ -1,6 +1,7 @@
 // features/occasion/presentation/pages/occasion_page.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -33,18 +34,7 @@ class _OccasionPageState extends State<OccasionPage> {
   void initState() {
     super.initState();
     // Create dummy items for each category
-    categoryItems = List.generate(
-      15,
-      (index) => ProductEntity(
-        id: index.toString(),
-        title: 'Flower Bouquet ${index + 1}',
-        imgCover: 'https://via.placeholder.com/150',
-        price: 100,
-        priceAfterDiscount: 80,
-        images: const [],
-        description: '',
-      ),
-    );
+    categoryItems = AppDummyWidgets().categoryItems;
 
     cubit = getIt<OccasionCubit>();
   }

@@ -1,6 +1,7 @@
 // features/categories/presentation/pages/categories_screen.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/common_widgets/dummy_widgets/dummy_widgets.dart';
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
@@ -44,19 +45,6 @@ class CategoriesScreenState extends State<CategoriesScreen>
   late Animation<Offset> _fabAnimation;
   TabController? _tabController;
 
-  final List<ProductEntity> dummyProducts = List.generate(
-    15,
-        (index) => ProductEntity(
-      id: index.toString(),
-      title: 'Flower Bouquet ${index + 1}',
-      imgCover: 'https://via.placeholder.com/150',
-      price: 100,
-      priceAfterDiscount: 80,
-      images: const [],
-      description: '',
-    ),
-  );
-
   @override
   bool get wantKeepAlive => true;
 
@@ -93,7 +81,7 @@ class CategoriesScreenState extends State<CategoriesScreen>
 
     _scrollControllers = List.generate(
       widget.categories.length,
-          (_) => ScrollController()..addListener(_onScroll),
+      (_) => ScrollController()..addListener(_onScroll),
     );
 
     if (widget.categories.isNotEmpty &&
@@ -159,205 +147,223 @@ class CategoriesScreenState extends State<CategoriesScreen>
           if (state.selectedCategoryIndex != null &&
               state.selectedCategoryIndex! < widget.categories.length &&
               state.selectedCategoryIndex != _tabController?.index) {
-            _tabController?.animateTo(state.selectedCategoryIndex!,curve:Curves.linear, duration: const Duration(milliseconds: 300));
+            _tabController?.animateTo(state.selectedCategoryIndex!,
+                curve: Curves.linear,
+                duration: const Duration(milliseconds: 300));
           }
         },
         child: PopScope(
           canPop: false,
           child: Scaffold(
-            floatingActionButton: widget.categories.isNotEmpty
-                ? SlideTransition(
-              position: _fabAnimation,
-              child: FloatingActionButton.extended(
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(1000.r),
-                ),
-                onPressed: () {
-                  showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => CategoriesBottomSheet(cubit: _cubit, categoryId: widget.categories[_tabController?.index ?? 0].id,),
-                        );
-                },
-                label: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.tune_rounded, color: AppColors.white),
-                    SizedBox(width: 12.w),
-                    Text(
-                      "Filter",
-                      style: getRegularStyle(color: AppColors.white),
-                    ),
-                  ],
-                ),
-              ),
-            )
-                : null,
-            floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                child: widget.categories.isEmpty
-                    ? Center(
-                  child: Text(
-                    "No categories found \nplease try again later",
-                    textAlign: TextAlign.center,
-                    style:
-                    getBoldStyle(color: AppColors.black, fontSize: 16),
-                  ),
-                )
-                    : Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            readOnly: true,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                Routes.searchResults,
-                                arguments: {
-                                  'initialQuery': '',
-                                  'categoryId': widget.categories.isNotEmpty && 
-                                      _cubit.state.selectedCategoryIndex != null ? 
-                                      widget.categories[_cubit.state.selectedCategoryIndex!].id : null
-                                }
-                              );
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                                borderSide: BorderSide(
-                                    color: AppColors.white[70]!,
-                                    width: 1.w),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                                borderSide: BorderSide(
-                                    color: AppColors.white[70]!,
-                                    width: 1.w),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                                borderSide: BorderSide(
-                                    color: AppColors.white[70]!,
-                                    width: 1.w),
-                              ),
-                              hintText:
-                              LocaleKeys.home_sections_search.tr(),
-                              hintStyle:
-                              getMediumStyle(color: AppColors.grey),
-                            ),
-                          ),
+              floatingActionButton: widget.categories.isNotEmpty
+                  ? SlideTransition(
+                      position: _fabAnimation,
+                      child: FloatingActionButton.extended(
+                        backgroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(1000.r),
                         ),
-                        SizedBox(width: 8.w),
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (context) => CategoriesBottomSheet(
-                                cubit: _cubit, 
-                                categoryId: widget.categories[_tabController?.index ?? 0].id,
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20.w, vertical: 12.h),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.white[70]!,
-                                  width: 1.w),
-                              borderRadius: BorderRadius.circular(12.r),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => CategoriesBottomSheet(
+                              cubit: _cubit,
+                              categoryId: widget
+                                  .categories[_tabController?.index ?? 0].id,
                             ),
-                            child: const Icon(Icons.filter_list_outlined,
-                                size: 24),
-                          ),
+                          );
+                        },
+                        label: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.tune_rounded,
+                                color: AppColors.white),
+                            SizedBox(width: 12.w),
+                            Text(
+                              "Filter",
+                              style: getRegularStyle(color: AppColors.white),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-
-                    //tab bar
-                    BlocBuilder<CategoriesCubit, CategoriesStates>(
-                      bloc: _cubit,
-                      buildWhen: (previous, current) => 
-                          previous.selectedCategoryIndex != current.selectedCategoryIndex,
-                      builder: (context, state) {
-                        return SourcesTabs(
-                          categories: widget.categories,
-                          onTabChanged: (index) {
-                            _tabController!.animateTo(index);
-                          },
-                          controller: _tabController,
-                          selectedIndex: state.selectedCategoryIndex ?? 0,
-                        );
-                      },
-                    ),
-                    SizedBox(height: 16.h),
-                    Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: widget.categories.asMap().entries.map(
-                              (entry) {
-                            final index = entry.key;
-                            return KeyedSubtree(
-                              key: ValueKey(widget.categories[index].id),
-                              child: BlocBuilder<CategoriesCubit, CategoriesStates>(
-                                buildWhen: (previous, current) =>
-                                previous.categoryState != current.categoryState &&
-                                    current.selectedCategoryIndex == index,
-                                builder: (context, state) {
-                                  final bool isLoading = (state.categoryState is BaseLoadingState ||
-                                      state.categoryState is BaseInitialState);
-                                  final List<ProductEntity> products = isLoading
-                                      ? dummyProducts
-                                      : (state.categoryState is BaseSuccessState
-                                      ? (state.categoryState as BaseSuccessState).data ?? []
-                                      : []);
-
-                                  if (products.isEmpty && !isLoading) {
-                                    return Center(
-                                      child: Text(
-                                        'No products available',
-                                        style: getMediumStyle(
-                                            color: AppColors.black, fontSize: 20.sp),
-                                      ),
-                                    );
-                                  }
-                                  if (state.categoryState is BaseErrorState) {
-                                    return Center(
-                                      child: Text(
-                                        (state.categoryState as BaseErrorState).errorMessage,
-                                      ),
-                                    );
-                                  }
-
-                                  return Skeletonizer(
-                                    enabled: isLoading,
-                                    child: ProductGrid(
-                                      items: products,
-                                      scrollController: _scrollControllers[index],
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        ).toList(),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                    )
+                  : null,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+              body: widget.categories.isNotEmpty
+                  ? SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.searchResults,
+                                          arguments: {
+                                            'initialQuery': '',
+                                            'categoryId': widget.categories
+                                                        .isNotEmpty &&
+                                                    _cubit.state
+                                                            .selectedCategoryIndex !=
+                                                        null
+                                                ? widget
+                                                    .categories[_cubit.state
+                                                        .selectedCategoryIndex!]
+                                                    .id
+                                                : null
+                                          });
+                                    },
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(Icons.search),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                        borderSide: BorderSide(
+                                            color: AppColors.white[70]!,
+                                            width: 1.w),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                        borderSide: BorderSide(
+                                            color: AppColors.white[70]!,
+                                            width: 1.w),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                        borderSide: BorderSide(
+                                            color: AppColors.white[70]!,
+                                            width: 1.w),
+                                      ),
+                                      hintText:
+                                          LocaleKeys.home_sections_search.tr(),
+                                      hintStyle:
+                                          getMediumStyle(color: AppColors.grey),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 8.w),
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) =>
+                                          CategoriesBottomSheet(
+                                        cubit: _cubit,
+                                        categoryId: widget
+                                            .categories[
+                                                _tabController?.index ?? 0]
+                                            .id,
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20.w, vertical: 12.h),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppColors.white[70]!,
+                                          width: 1.w),
+                                      borderRadius: BorderRadius.circular(12.r),
+                                    ),
+                                    child: const Icon(
+                                        Icons.filter_list_outlined,
+                                        size: 24),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16.h),
+
+                            //tab bar
+                            BlocBuilder<CategoriesCubit, CategoriesStates>(
+                              bloc: _cubit,
+                              buildWhen: (previous, current) =>
+                                  previous.selectedCategoryIndex !=
+                                  current.selectedCategoryIndex,
+                              builder: (context, state) {
+                                return SourcesTabs(
+                                  categories: widget.categories,
+                                  onTabChanged: (index) {
+                                    _tabController!.animateTo(index);
+                                  },
+                                  controller: _tabController,
+                                  selectedIndex:
+                                      state.selectedCategoryIndex ?? 0,
+                                );
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+                            Expanded(
+                              child: TabBarView(
+                                controller: _tabController,
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: widget.categories.asMap().entries.map(
+                                  (entry) {
+                                    final index = entry.key;
+                                    return KeyedSubtree(
+                                      key:
+                                          ValueKey(widget.categories[index].id),
+                                      child: BlocBuilder<CategoriesCubit,
+                                          CategoriesStates>(
+                                        buildWhen: (previous, current) =>
+                                            previous.categoryState !=
+                                                current.categoryState &&
+                                            current.selectedCategoryIndex ==
+                                                index,
+                                        builder: (context, state) {
+                                          final bool isLoading =
+                                              (state.categoryState
+                                                      is BaseLoadingState ||
+                                                  state.categoryState
+                                                      is BaseInitialState);
+                                          final List<ProductEntity> products =
+                                              isLoading
+                                                  ? AppDummyWidgets()
+                                                      .dummyCategoryProducts
+                                                  : (state.categoryState
+                                                          is BaseSuccessState
+                                                      ? (state.categoryState
+                                                                  as BaseSuccessState)
+                                                              .data ??
+                                                          []
+                                                      : []);
+
+                                          return Skeletonizer(
+                                            enabled: isLoading,
+                                            child: ProductGrid(
+                                              items: products,
+                                              scrollController:
+                                                  _scrollControllers[index],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Skeletonizer(
+                      enabled: true,
+                      child: Column(
+                        children: [
+                          ...AppDummyWidgets().categoryItems as List<Widget>,
+                        ]
+                      ))),
         ),
       ),
     );

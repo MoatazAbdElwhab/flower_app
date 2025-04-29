@@ -23,7 +23,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
@@ -60,7 +59,10 @@ class _CartPageState extends State<CartPage> {
                           itemCount: state.cartProducts!.length,
                           itemBuilder: (context, index) {
                             final product = state.cartProducts![index];
-                            return CartProductWidget(productEntity: product);
+                            return CartProductWidget(
+                              productEntity: product,
+                              key: ValueKey(state.cartProducts![index].id),
+                            );
                           },
                         ),
                       )

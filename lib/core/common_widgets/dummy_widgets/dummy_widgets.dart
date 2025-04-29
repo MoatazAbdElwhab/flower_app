@@ -323,4 +323,29 @@ class AppDummyWidgets {
           ),
         ),
       );
+  get dummyCategoryProducts => List.generate(
+    15,
+        (index) => ProductEntity(
+      id: index.toString(),
+      title: 'Flower Bouquet ${index + 1}',
+      imgCover: 'https://via.placeholder.com/150',
+      price: 100,
+      priceAfterDiscount: 80,
+      images: const [],
+      description: '',
+    ),
+  );
+
+  List<ProductEntity> get categoryItems => List.generate(
+    15,
+        (index) => ProductEntity(
+      id: index.toString(),
+      title: 'Flower Bouquet ${index + 1}',
+      imgCover: 'https://via.placeholder.com/150',
+      price: 100,
+      priceAfterDiscount: 80,
+      images: const [],
+      description: '',
+    ),
+  );
 }

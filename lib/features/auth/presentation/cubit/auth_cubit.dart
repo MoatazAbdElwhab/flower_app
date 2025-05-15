@@ -35,11 +35,11 @@ class AuthCubit extends Cubit<AuthState> {
             signInState: BaseInitialState(), // Add initial state for sign in
           ),
         ) {
-    _rememberMe =
-        localStorageClient.getData('rememberMe')?.toLowerCase() == 'true';
-    if (_rememberMe) {
-      isUserLoggedIn();
-    }
+    // _rememberMe =
+    //     localStorageClient.getData('rememberMe')?.toLowerCase() == 'true';
+    // if (_rememberMe) {
+    //   isUserLoggedIn();
+    // }
   }
 
   final SignupUseCase _signupUseCase;
@@ -124,30 +124,30 @@ class AuthCubit extends Cubit<AuthState> {
     ));
   }
 
-  Future<bool> isUserLoggedIn() async {
-    try {
-      emit(AuthState(signInState: BaseLoadingState()));
+  // Future<bool> isUserLoggedIn() async {
+  //   try {
+  //     emit(AuthState(signInState: BaseLoadingState()));
 
-      // Create an instance of AuthLocalDataSourceImpl
-      final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
+  //     // Create an instance of AuthLocalDataSourceImpl
+  //     final authLocalDataSource = AuthLocalDataSourceImpl(localStorageClient);
 
-      final token = await authLocalDataSource.checkSavedToken();
-      if (token != null) {
-        emit(AuthState(
-          signInState: BaseSuccessState(),
-          authResponse: AuthResponseEntity(token: token),
-        ));
-        return true;
-      } else {
-        emit(AuthState(signInState: BaseInitialState()));
-        return false;
-      }
-    } catch (e) {
-      Log.e('Token check error: ${e.toString()}');
-      emit(AuthState(signInState: BaseErrorState(e.toString())));
-      return false;
-    }
-  }
+  //     final token = await authLocalDataSource.checkSavedToken();
+  //     if (token != null) {
+  //       emit(AuthState(
+  //         signInState: BaseSuccessState(),
+  //         authResponse: AuthResponseEntity(token: token),
+  //       ));
+  //       return true;
+  //     } else {
+  //       emit(AuthState(signInState: BaseInitialState()));
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     Log.e('Token check error: ${e.toString()}');
+  //     emit(AuthState(signInState: BaseErrorState(e.toString())));
+  //     return false;
+  //   }
+  // }
 
   Future<void> signup() async {
     if (selectedGenderNotifier.value.isEmpty) {

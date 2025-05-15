@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
 import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/utils/validator.dart';
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
@@ -139,9 +141,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     final result = await _logoutUseCase();
     result.fold(
       (error) {
+       
         emit(state.copyWith(logoutState: BaseErrorState(error.toString())));
       },
       (success) {
+        LocalStorageClient localStorageClient = getIt<LocalStorageClient>();
+        localStorageClient.deleteSecuredData('token');
+        localStorageClient.deleteData('rememberMe');
         emit(state.copyWith(logoutState: BaseSuccessState()));
       },
     );

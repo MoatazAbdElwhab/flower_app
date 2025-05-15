@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_styles.dart';
-import 'package:flower_app/features/profile/domain/entities/user_orders/user_orders_entitiy.dart';
+import 'package:flower_app/features/profile/data/models/get_user_oreders_response/user_orders_response.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class UserOrdersWidget extends StatelessWidget {
   final String? imageUrl;
   final String title;
-  final UserOrdersEntitiy order;
+  final Orders order;
   final String orderStatus;
+  final int index;
+  final void Function()? onPressed;
 
   const UserOrdersWidget({
     super.key,
@@ -18,6 +20,8 @@ class UserOrdersWidget extends StatelessWidget {
     required this.title,
     required this.order,
     required this.orderStatus,
+    required this.index,
+    this.onPressed,
   });
 
   @override
@@ -76,7 +80,7 @@ class UserOrdersWidget extends StatelessWidget {
                   ),
                   // Price
                   Text(
-                    '${LocaleKeys.myOrders_Curnncy.tr()} ${order.orderItem.price}',
+                    '${LocaleKeys.myOrders_Curnncy.tr()} ${order.orderItems != null && order.orderItems!.isNotEmpty ? (order.orderItems?[0].price?.toStringAsFixed(2) ?? '0.00') : '0.00'}',
                     style: getBoldStyle(
                       fontSize: 14.sp,
                       color: AppColors.black,
@@ -87,7 +91,7 @@ class UserOrdersWidget extends StatelessWidget {
                   ),
                   // Order Number
                   Text(
-                    '${LocaleKeys.myOrders_orderNum.tr()} ${order.id ?? 'N/A'}',
+                    '${LocaleKeys.myOrders_orderNum.tr()} ${order.orderNumber ?? 'N/A'}',
                     style: getRegularStyle(
                       fontSize: 12.sp,
                       color: AppColors.grey,
@@ -101,7 +105,7 @@ class UserOrdersWidget extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: onPressed,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         minimumSize: Size(double.infinity, 36.h),

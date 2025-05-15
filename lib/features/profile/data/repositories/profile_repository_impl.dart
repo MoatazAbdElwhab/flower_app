@@ -75,7 +75,7 @@ class ProfileRepositoryImpl extends ProfileRepository {
   }
 
   @override
-  Future<Either<ApiException, List<UserOrdersEntitiy>>> getUserOrders() async {
+  Future<Either<ApiException, UserOrdersEntitiy>> getUserOrders() async {
     try {
       var response = await _profileRemoteDataSource.getUserOrders();
       final orders = toEntity(response);

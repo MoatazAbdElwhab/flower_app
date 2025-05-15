@@ -10,7 +10,7 @@ class GetUserOdersUseCase {
 
   GetUserOdersUseCase(this._profileRepository);
 
-  Future<Either<ApiException,List<UserOrdersEntitiy>>> call() async {
+  Future<Either<ApiException,UserOrdersEntitiy>> call() async {
     return await _profileRepository.getUserOrders();
   }
 }

@@ -109,7 +109,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(state.copyWith(clearCartState: BaseLoadingState()));
       await _clearCartUseCase();
       emit(state.copyWith(
-          clearCartState: BaseSuccessState(), cartTotalPrice: 0));
+        clearCartState: BaseSuccessState(),
+        cartTotalPrice: 0,
+        cartProducts: [],
+        deliveryFee: 0,
+      ));
     } catch (e) {
       emit(state.copyWith(clearCartState: BaseErrorState(e.toString())));
     }

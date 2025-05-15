@@ -24,5 +24,5 @@ abstract class ProfileRepository {
 
   Future<void> deleteAddress(String id);
 
-  Future<Either<ApiException, List<UserOrdersEntitiy>>> getUserOrders();
+  Future<Either<ApiException, UserOrdersEntitiy>> getUserOrders();
 }

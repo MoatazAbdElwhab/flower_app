@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+
 import 'package:flower_app/core/base/base_state.dart';
 import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/core/sharedModels/fire_base_order_model.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
+import 'package:flower_app/core/utils/extentions.dart';
 import 'package:flower_app/core/widget/dialog_utils.dart';
 import 'package:flower_app/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:flower_app/features/cart/presentation/bloc/event.dart';
@@ -12,11 +15,14 @@ import 'package:flower_app/features/checkout/domain/entities/check_out_session_d
 import 'package:flower_app/features/checkout/domain/usecases/create_checkout_session_use_case.dart';
 import 'package:flower_app/features/checkout/domain/usecases/get_adresses_use_case.dart';
 import 'package:flower_app/features/checkout/payment_type/payment_types.dart';
+import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart';
 import 'package:flower_app/features/profile/domain/usecases/update_address_usecase.dart';
 import 'package:flower_app/generated/locale_keys.g.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../../core/sharedModels/location_data.dart';
 part 'checkout_state.dart';
 
 @injectable
@@ -25,6 +31,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   final UpdateAddressUsecase updateAddressUsecase;
   final CreateCheckoutSessionUseCase createCheckoutSessionUseCase;
   final DialogUtils dialogUtils;
+
   CheckoutCubit(
     this.getAddressesUseCase,
     this.updateAddressUsecase,
@@ -94,6 +101,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     if (state.addresses == null || state.addresses?.isEmpty == true) return;
     checkoutState.value = true;
     final address = state.addresses![selectedAddressIndex.value];
+    bool isSuccess = false;
     final result = await createCheckoutSessionUseCase(
       CheckOutRequest(
         paymentMethod:
@@ -116,6 +124,21 @@ class CheckoutCubit extends Cubit<CheckoutState> {
         checkoutState.value = false;
       },
       (response) {
+        isSuccess = true;
+        if (isSuccess) {
+          context.read<NavCubit>().getUserdataAfterCheckOut(
+                UserDataModel(
+                    name: address.username,
+                    userId: address.id,
+                    city: address.city,
+                    street: address.street,
+                    locationData:
+                        LocationData(lat: address.lat, lng: address.long),
+                    phone: address.phone),
+              );
+
+          context.read<NavCubit>().syncUserOrdersToFirebase();
+        }
         checkoutState.value = false;
         _navigateToPaymentPage(context, response);
       },
@@ -129,7 +152,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     switch (response) {
       case OnlinePaymentDetails():
         Navigator.pushNamed(context, Routes.webViewPage, arguments: response)
-            .then((value) {
+            .then((value) async {
           if (!context.mounted) return;
           if (value == true) {
             dialogUtils.showSnackBar(
@@ -138,11 +161,11 @@ class CheckoutCubit extends Cubit<CheckoutState> {
               textColor: AppColors.success,
             );
             context.read<CartBloc>().add(const CartClearEvent());
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.navbar,
-              (route) => false,
-            );
+            await Future.delayed(const Duration(milliseconds: 300));
+            if (context.mounted) {
+              context.pop();
+              context.read<NavCubit>().changeTab(0);
+            }
           } else {
             dialogUtils.showErrorDialog(
               context,
@@ -152,11 +175,12 @@ class CheckoutCubit extends Cubit<CheckoutState> {
           }
         });
       case CashPaymentDetails():
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          Routes.navbar,
-          (route) => false,
-        );
+        context.read<CartBloc>().add(const CartClearEvent());
+        await Future.delayed(const Duration(milliseconds: 300));
+        if (context.mounted) {
+          context.pop();
+          context.read<NavCubit>().changeTab(0);
+        }
     }
   }
 }

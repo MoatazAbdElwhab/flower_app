@@ -1,5 +1,6 @@
 import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/core/routes/routes.dart';
+import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flower_app/features/auth/presentation/pages/pin_code_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
@@ -43,7 +44,9 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
     case Routes.login:
       return MaterialPageRoute(
         settings: settings,
-        builder: (_) => const LoginPage(),
+        builder: (_) => BlocProvider(
+          create: (_) => getIt<AuthCubit>(),
+          child: const LoginPage()),
       );
     case Routes.signup:
       return MaterialPageRoute(
@@ -207,7 +210,11 @@ Route<dynamic>? generateRoute(RouteSettings settings) {
         settings: settings,
         builder: (_) => const NotificationPage(),
       );
-
+    // case Routes.trackOrderScreen:
+    //   return MaterialPageRoute(
+    //     settings: settings,
+    //     builder: (_) => const TrackOrderScreen(),
+    //   );
     default:
       return MaterialPageRoute(
         settings: settings,

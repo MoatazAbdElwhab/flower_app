@@ -18,17 +18,18 @@ import 'core/theme/theme_data/theme_data_light.dart';
 import 'firebase_options.dart';
 
 // global variable
-bool? isUserLoggedInAutomatically;
+// bool? isUserLoggedInAutomatically;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await _configureFirebase();
-  await configureDependencies().then(
-    (_) async {
-      isUserLoggedInAutomatically = await getIt<AuthCubit>().isUserLoggedIn();
-    },
-  );
+  // await configureDependencies().then(
+  //   (_) async {
+  //     isUserLoggedInAutomatically = await getIt<AuthCubit>().isUserLoggedIn();
+  //   },
+  // );
+  await configureDependencies();
   Bloc.observer = AppBlocObserver();
 
   runApp(
@@ -53,9 +54,9 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) => MultiBlocProvider(
         providers: [
-          BlocProvider<AuthCubit>(
-            create: (BuildContext context) => getIt<AuthCubit>(),
-          ),
+          // BlocProvider<AuthCubit>(
+          //   create: (BuildContext context) => getIt<AuthCubit>(),
+          // ),
           BlocProvider<CartBloc>(
             create: (BuildContext context) => getIt<CartBloc>(),
           ),
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
           //initialRoute: Routes.login,
           initialRoute: Routes.splash,
           onGenerateRoute: generateRoute,
+          // home: Onboarding(),
           theme: getLightTheme(),
           darkTheme: ThemeData(),
           themeMode: ThemeMode.light,

@@ -1,14 +1,17 @@
+import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart';
+import 'package:flower_app/core/base/base_state.dart';
+import 'package:flower_app/core/di/injectable.dart';
+import 'package:flower_app/core/routes/routes.dart';
 import 'package:flower_app/core/theme/app_colors.dart';
 import 'package:flower_app/core/theme/app_icons.dart';
+import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flower_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flower_app/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:flower_app/core/routes/routes.dart';
-import 'package:flower_app/features/auth/presentation/cubit/auth_state.dart';
-import 'package:flower_app/core/base/base_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import '../nav/presentation/pages/navbar_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
-
   late Animation<double> _2opacityAnimation;
   late AnimationController _2controller;
 
@@ -59,11 +61,13 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
     _2controller.forward();
-    _animationController.forward().then(
-      (_) {
-        context.read<AuthCubit>().isUserLoggedIn();
-      },
-    );
+    _animationController.forward().then((_) async {
+      final isLoggedIn = await _isUserLoggedIn();
+
+      if (mounted) {
+        _animateTo(context, toLogin: !isLoggedIn);
+      }
+    });
   }
 
   @override
@@ -74,136 +78,122 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state.signInState is BaseSuccessState) {
-          _animateTo(context, toLogin: false);
-        } else if (state.signInState is BaseErrorState) {
-          _animateTo(context, toLogin: true);
-
-          Navigator.pushReplacementNamed(context, Routes.login);
-        } else if (state.signInState is BaseInitialState) {
-          _animateTo(context, toLogin: true);
-        }
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            // Background circles
-            Positioned(
-              top: -50.h,
-              right: -50.w,
-              child: Container(
-                height: 180.h,
-                width: 180.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.05),
-                  shape: BoxShape.circle,
-                ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          // Background circles
+          Positioned(
+            top: -50.h,
+            right: -50.w,
+            child: Container(
+              height: 180.h,
+              width: 180.w,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.05),
+                shape: BoxShape.circle,
               ),
             ),
-            Positioned(
-              bottom: -60.h,
-              left: -30.w,
-              child: Container(
-                height: 200.h,
-                width: 200.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.07),
-                  shape: BoxShape.circle,
-                ),
+          ),
+          Positioned(
+            bottom: -60.h,
+            left: -30.w,
+            child: Container(
+              height: 200.h,
+              width: 200.w,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.07),
+                shape: BoxShape.circle,
               ),
             ),
+          ),
 
-            // Splash screen content
-            Center(
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Logo
-                      Transform.scale(
-                        scale: _scaleAnimation.value,
-                        child: AnimatedOpacity(
-                          duration: const Duration(milliseconds: 1000),
-                          opacity: _2opacityAnimation.value,
-                          child: Container(
-                            padding: EdgeInsets.all(20.r),
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primary.withOpacity(0.15),
-                                  blurRadius: 30,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: SvgPicture.asset(
-                              AppIcons.flower,
-                              height: 100.h,
-                              width: 100.w,
-                              color: AppColors.primary,
-                            ),
+          // Splash screen content
+          Center(
+            child: AnimatedBuilder(
+              animation: _animationController,
+              builder: (context, child) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Logo
+                    Transform.scale(
+                      scale: _scaleAnimation.value,
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 1000),
+                        opacity: _2opacityAnimation.value,
+                        child: Container(
+                          padding: EdgeInsets.all(20.r),
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withOpacity(0.15),
+                                blurRadius: 30,
+                                spreadRadius: 5,
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 25.h),
-
-                      FadeTransition(
-                        opacity: _opacityAnimation,
-                        child: Text(
-                          'Flowery',
-                          style: TextStyle(
+                          child: SvgPicture.asset(
+                            AppIcons.flower,
+                            height: 100.h,
+                            width: 100.w,
                             color: AppColors.primary,
-                            fontSize: 32.sp,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.2,
                           ),
                         ),
                       ),
-                      SizedBox(height: 8.h),
+                    ),
+                    SizedBox(height: 25.h),
 
-                      FadeTransition(
-                        opacity: _opacityAnimation,
-                        child: Text(
-                          'Beautiful flowers for every occasion',
-                          style: TextStyle(
-                            color: AppColors.grey,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                    FadeTransition(
+                      opacity: _opacityAnimation,
+                      child: Text(
+                        'Flowery',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 32.sp,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+
+                    FadeTransition(
+                      opacity: _opacityAnimation,
+                      child: Text(
+                        'Beautiful flowers for every occasion',
+                        style: TextStyle(
+                          color: AppColors.grey,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+                    // Progress indicator
+                    FadeTransition(
+                      opacity: _opacityAnimation,
+                      child: SizedBox(
+                        width: 120.w,
+                        child: LinearProgressIndicator(
+                          backgroundColor: AppColors.primary.withOpacity(0.15),
+                          color: AppColors.primary,
+                          minHeight: 4.h,
+                          borderRadius: BorderRadius.circular(2.r),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            AppColors.primary,
                           ),
                         ),
                       ),
-                      SizedBox(height: 30.h),
-                      // Progress indicator
-                      FadeTransition(
-                        opacity: _opacityAnimation,
-                        child: SizedBox(
-                          width: 120.w,
-                          child: LinearProgressIndicator(
-                            backgroundColor:
-                                AppColors.primary.withOpacity(0.15),
-                            color: AppColors.primary,
-                            minHeight: 4.h,
-                            borderRadius: BorderRadius.circular(2.r),
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              AppColors.primary,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -213,7 +203,11 @@ class _SplashScreenState extends State<SplashScreen>
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
           // Return the appropriate widget based on routeName
-          return toLogin ? const LoginPage() : const NavbarPage();
+          return toLogin
+              ? BlocProvider(
+                  create: (context) => getIt<AuthCubit>(),
+                  child: const LoginPage())
+              : const NavbarPage();
         },
         transitionDuration: const Duration(milliseconds: 1500),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -236,5 +230,18 @@ class _SplashScreenState extends State<SplashScreen>
         },
       ),
     );
+  }
+
+  Future<bool> _isUserLoggedIn() async {
+    try {
+      LocalStorageClient localStorageClient = getIt<LocalStorageClient>();
+      final token = await localStorageClient.getSecuredData('token');
+      final rememberMe =
+          localStorageClient.getData('rememberMe')?.toLowerCase() == 'true';
+      final result = token != null && token.isNotEmpty && rememberMe;
+      return result;
+    } catch (e) {
+      return false;
+    }
   }
 }

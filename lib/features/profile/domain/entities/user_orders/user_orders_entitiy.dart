@@ -4,34 +4,11 @@ import 'package:flower_app/features/profile/domain/entities/user_orders/order_it
 import 'package:flower_app/features/profile/domain/entities/user_orders/user_products_entity.dart';
 
 class UserOrdersEntitiy {
-  final String? id; 
-  final OrderItemsEntity orderItem;
-  final int? totalPrice;
-  final String? state; 
+  final List<Orders> orders;
 
-  UserOrdersEntitiy({
-    required this.id,
-    required this.orderItem,
-    required this.totalPrice,
-    required this.state,
-  });
+  UserOrdersEntitiy({required this.orders});
 }
 
-List<UserOrdersEntitiy> toEntity(UserOrdersResponse response) {
-  return response.orders?.map((order) {
-    // check if orderItems is not empty
-    final firstItem = order.orderItems?.isNotEmpty == true ? order.orderItems![0] : null;
-    return UserOrdersEntitiy(
-      id: order.orderNumber ?? '',
-      orderItem: OrderItemsEntity(
-        product: UserProductsEntity(
-          title: firstItem?.product?.title ?? '',
-          imgCover: firstItem?.product?.imgCover ?? '',
-        ),
-        price: firstItem?.price ?? 0,
-      ),
-      totalPrice: order.totalPrice ?? 0,
-      state: order.state ?? 'unknown',
-    );
-  }).toList() ?? [];
+UserOrdersEntitiy toEntity(UserOrdersResponse response) {
+  return UserOrdersEntitiy(orders: response.orders ?? []);
 }

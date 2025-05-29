@@ -10,6 +10,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flower_app/core/app_data/api/api_client.dart' as _i570;
 import 'package:flower_app/core/app_data/api/dio_client.dart' as _i199;
+import 'package:flower_app/core/app_data/firebase/firebase_services.dart'
+    as _i998;
 import 'package:flower_app/core/app_data/local_storage/local_storage_client.dart'
     as _i666;
 import 'package:flower_app/core/di/modules.dart' as _i39;
@@ -17,18 +19,18 @@ import 'package:flower_app/core/error_handling/dio_error_handler.dart' as _i343;
 import 'package:flower_app/core/routes/navigator_observer.dart' as _i210;
 import 'package:flower_app/core/services/location_service.dart' as _i754;
 import 'package:flower_app/core/widget/dialog_utils.dart' as _i271;
-import 'package:flower_app/features/add_address/data/data_sources/add_address_remote_data_source.dart'
-    as _i306;
-import 'package:flower_app/features/add_address/data/data_sources/add_address_remote_data_source_impl.dart'
-    as _i647;
-import 'package:flower_app/features/add_address/data/repositories/add_address_repo_impl.dart'
-    as _i398;
-import 'package:flower_app/features/add_address/domain/repositories/add_address_repo.dart'
-    as _i718;
-import 'package:flower_app/features/add_address/domain/use_cases/add_adress_use_case.dart'
-    as _i742;
-import 'package:flower_app/features/add_address/presentation/manager/add_address_cubit.dart'
-    as _i723;
+import 'package:flower_app/features/add_edit_address/data/data_sources/add_address_remote_data_source.dart'
+    as _i517;
+import 'package:flower_app/features/add_edit_address/data/data_sources/add_address_remote_data_source_impl.dart'
+    as _i570;
+import 'package:flower_app/features/add_edit_address/data/repositories/add_address_repo_impl.dart'
+    as _i944;
+import 'package:flower_app/features/add_edit_address/domain/repositories/add_address_repo.dart'
+    as _i646;
+import 'package:flower_app/features/add_edit_address/domain/use_cases/add_adress_use_case.dart'
+    as _i23;
+import 'package:flower_app/features/add_edit_address/presentation/manager/add_address_cubit.dart'
+    as _i637;
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_contract.dart'
     as _i1053;
 import 'package:flower_app/features/auth/data/datasource/local_data_source/auth_local_data_source_impl.dart'
@@ -84,6 +86,8 @@ import 'package:flower_app/features/categories/domain/repositories/categories_re
     as _i1;
 import 'package:flower_app/features/categories/domain/use_cases/get_categories_use_case.dart'
     as _i298;
+import 'package:flower_app/features/categories/domain/use_cases/get_sorted_products_use_case.dart'
+    as _i44;
 import 'package:flower_app/features/categories/presentation/manager/categories_cubit.dart'
     as _i659;
 import 'package:flower_app/features/checkout/data/datasources/remote/checkout_api_remote_data_source.dart'
@@ -94,6 +98,8 @@ import 'package:flower_app/features/checkout/data/repositories/checkout_reposito
     as _i486;
 import 'package:flower_app/features/checkout/domain/repositories/checkout_repository.dart'
     as _i46;
+import 'package:flower_app/features/checkout/domain/usecases/create_checkout_session_use_case.dart'
+    as _i803;
 import 'package:flower_app/features/checkout/domain/usecases/get_adresses_use_case.dart'
     as _i147;
 import 'package:flower_app/features/checkout/presentation/cubit/checkout_cubit.dart'
@@ -110,6 +116,20 @@ import 'package:flower_app/features/home/domain/use_case/home_use_case.dart'
     as _i169;
 import 'package:flower_app/features/home/presentation/cubit/home_cubit.dart'
     as _i260;
+import 'package:flower_app/features/nav/presentation/cubit/nav_cubit.dart'
+    as _i674;
+import 'package:flower_app/features/notification/data/datasources/remote/notification_api_reomte_data_source.dart'
+    as _i834;
+import 'package:flower_app/features/notification/data/datasources/remote/notification_reomte_data_source.dart'
+    as _i165;
+import 'package:flower_app/features/notification/data/repositories/notification_repository_impl.dart'
+    as _i596;
+import 'package:flower_app/features/notification/domain/repositories/notification_repository.dart'
+    as _i944;
+import 'package:flower_app/features/notification/domain/usecases/get_notifications_use_case.dart'
+    as _i350;
+import 'package:flower_app/features/notification/presentation/cubit/notification_cubit.dart'
+    as _i460;
 import 'package:flower_app/features/occasion/data/datasources/remote/occasion_api_remote_data_source.dart'
     as _i540;
 import 'package:flower_app/features/occasion/data/datasources/remote/occasion_remote_data_source.dart'
@@ -134,14 +154,20 @@ import 'package:flower_app/features/profile/data/repositories/profile_repository
     as _i866;
 import 'package:flower_app/features/profile/domain/repositories/profile_repository.dart'
     as _i806;
+import 'package:flower_app/features/profile/domain/usecases/delete_address_usecase.dart'
+    as _i513;
 import 'package:flower_app/features/profile/domain/usecases/edit_profile_use_case.dart'
     as _i732;
 import 'package:flower_app/features/profile/domain/usecases/get_user_data_use_case.dart'
     as _i389;
+import 'package:flower_app/features/profile/domain/usecases/get_user_oders_use_case.dart'
+    as _i82;
 import 'package:flower_app/features/profile/domain/usecases/logout_use_case.dart'
     as _i307;
 import 'package:flower_app/features/profile/domain/usecases/reset_password_use_case.dart'
     as _i850;
+import 'package:flower_app/features/profile/domain/usecases/update_address_usecase.dart'
+    as _i401;
 import 'package:flower_app/features/profile/presentation/cubit/profile_cubit.dart'
     as _i928;
 import 'package:flower_app/features/search/data/datasources/search_remote_ds_impl.dart'
@@ -156,6 +182,8 @@ import 'package:flower_app/features/search/domain/usecases/search_products_use_c
     as _i902;
 import 'package:flower_app/features/search/presentation/bloc/search_bloc.dart'
     as _i690;
+import 'package:flower_app/features/track_order/presentation/cubit/track_order_cubit.dart'
+    as _i385;
 import 'package:flutter/cupertino.dart' as _i719;
 import 'package:flutter/material.dart' as _i409;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -178,6 +206,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final getItRegisterModule = _$GetItRegisterModule();
     gh.factory<_i754.LocationService>(() => _i754.LocationService());
+    gh.factory<_i385.TrackOrderCubit>(() => _i385.TrackOrderCubit());
     gh.singleton<_i409.GlobalKey<_i409.NavigatorState>>(
         () => getItRegisterModule.navigatorKey);
     gh.singleton<_i973.InternetConnectionChecker>(
@@ -188,9 +217,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i558.FlutterSecureStorage>(
         () => getItRegisterModule.secureStorage);
-    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
     gh.singleton<_i210.AppNavigatorObserver>(
         () => _i210.AppNavigatorObserver());
+    gh.singleton<_i271.DialogUtils>(() => _i271.DialogUtils());
+    gh.lazySingleton<_i998.FirebaseService>(() => _i998.FirebaseService());
     gh.singleton<_i666.LocalStorageClient>(() => _i666.LocalStorageClient(
           gh<_i460.SharedPreferences>(),
           gh<_i558.FlutterSecureStorage>(),
@@ -216,10 +246,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i374.AuthRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i766.CheckoutRemoteDataSource>(
         () => _i526.CheckoutApiRemoteDataSource(gh<_i570.ApiClient>()));
-    gh.factory<_i306.AddAddressRemoteDataSource>(
-        () => _i647.AddAddressRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i861.CartRemoteDsInterface>(
         () => _i845.CartRemoteDsImpl(gh<_i570.ApiClient>()));
+    gh.factory<_i517.AddAddressRemoteDataSource>(
+        () => _i570.AddAddressRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i634.CategoriesRemoteDataSourceContract>(
         () => _i161.CategoriesRemoteDataSourceImpl(gh<_i570.ApiClient>()));
     gh.factory<_i445.ProfileRemoteDataSource>(
@@ -230,74 +260,93 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i634.CategoriesRemoteDataSourceContract>()));
     gh.factory<_i453.HomeRepositoryContract>(
         () => _i779.HomeRepositoryImpl(gh<_i286.HomeDataSourceContract>()));
+    gh.factory<_i165.NotificationRemoteDataSource>(() =>
+        _i834.NotificationApiRemoteDataSource(
+            apiClient: gh<_i570.ApiClient>()));
     gh.factory<_i298.GetCategoriesUseCase>(
         () => _i298.GetCategoriesUseCase(gh<_i1.CategoriesRepo>()));
+    gh.factory<_i44.GetSortedProductsUseCase>(
+        () => _i44.GetSortedProductsUseCase(gh<_i1.CategoriesRepo>()));
+    gh.factory<_i646.AddAddressRepo>(
+        () => _i944.AddAddressRepoImpl(gh<_i517.AddAddressRemoteDataSource>()));
     gh.factory<_i806.ProfileRepository>(() => _i866.ProfileRepositoryImpl(
           gh<_i445.ProfileRemoteDataSource>(),
           gh<_i941.ProfileLocalDataSource>(),
         ));
     gh.factory<_i429.OccasionRepository>(() =>
         _i547.OccasionRepositoryImpl(gh<_i224.OccasionRemoteDataSource>()));
+    gh.factory<_i944.NotificationRepository>(() =>
+        _i596.NotificationRepositoryImpl(
+            remoteDataSource: gh<_i165.NotificationRemoteDataSource>()));
     gh.factory<_i347.SearchRepository>(
         () => _i823.SearchRepositoryImpl(gh<_i717.SearchRemoteDsInterface>()));
-    gh.factory<_i718.AddAddressRepo>(
-        () => _i398.AddAddressRepoImpl(gh<_i306.AddAddressRemoteDataSource>()));
+    gh.factory<_i23.AddAddressUseCase>(
+        () => _i23.AddAddressUseCase(gh<_i646.AddAddressRepo>()));
     gh.factory<_i46.CheckoutRepository>(() =>
         _i486.CheckoutRepositoryImpl(gh<_i766.CheckoutRemoteDataSource>()));
     gh.factory<_i241.CartRepoInterface>(
         () => _i355.CartRepoImpl(gh<_i861.CartRemoteDsInterface>()));
     gh.factory<_i147.GetAddressesUseCase>(
         () => _i147.GetAddressesUseCase(gh<_i46.CheckoutRepository>()));
+    gh.factory<_i350.GetNotificationsUseCase>(() =>
+        _i350.GetNotificationsUseCase(
+            repository: gh<_i944.NotificationRepository>()));
     gh.factory<_i514.AuthRepo>(() => _i1012.AuthRepoImpl(
           gh<_i1053.AuthLocalDataSourceContract>(),
           gh<_i851.AuthRemoteDataSourceContract>(),
         ));
-    gh.factory<_i703.CartUpdateProductQuantityUseCase>(() =>
-        _i703.CartUpdateProductQuantityUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i589.CartAddProductUseCase>(
+        () => _i589.CartAddProductUseCase(gh<_i241.CartRepoInterface>()));
+    gh.factory<_i379.CartLoadUseCase>(
+        () => _i379.CartLoadUseCase(gh<_i241.CartRepoInterface>()));
     gh.factory<_i325.CartRemoveProductUseCase>(
         () => _i325.CartRemoveProductUseCase(gh<_i241.CartRepoInterface>()));
     gh.factory<_i264.ClearCartUseCase>(
         () => _i264.ClearCartUseCase(gh<_i241.CartRepoInterface>()));
-    gh.factory<_i379.CartLoadUseCase>(
-        () => _i379.CartLoadUseCase(gh<_i241.CartRepoInterface>()));
-    gh.factory<_i589.CartAddProductUseCase>(
-        () => _i589.CartAddProductUseCase(gh<_i241.CartRepoInterface>()));
-    gh.factory<_i742.AddAddressUseCase>(
-        () => _i742.AddAddressUseCase(gh<_i718.AddAddressRepo>()));
-    gh.factory<_i723.AddAddressCubit>(() => _i723.AddAddressCubit(
-          gh<_i754.LocationService>(),
-          gh<_i742.AddAddressUseCase>(),
-        ));
-    gh.factory<_i122.CheckoutCubit>(
-        () => _i122.CheckoutCubit(gh<_i147.GetAddressesUseCase>()));
-    gh.factory<_i242.VerifyResetCodeUseCase>(
-        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i621.SignInUseCase>(
-        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i703.CartUpdateProductQuantityUseCase>(() =>
+        _i703.CartUpdateProductQuantityUseCase(gh<_i241.CartRepoInterface>()));
     gh.factory<_i235.ForgetPasswordUseCase>(
         () => _i235.ForgetPasswordUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i366.SignupUseCase>(
-        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
-    gh.factory<_i696.ResetPasswordUseCase>(
-        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i419.ResendOtpUseCase>(
         () => _i419.ResendOtpUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i696.ResetPasswordUseCase>(
+        () => _i696.ResetPasswordUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i366.SignupUseCase>(
+        () => _i366.SignupUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i621.SignInUseCase>(
+        () => _i621.SignInUseCase(gh<_i514.AuthRepo>()));
+    gh.factory<_i242.VerifyResetCodeUseCase>(
+        () => _i242.VerifyResetCodeUseCase(gh<_i514.AuthRepo>()));
     gh.factory<_i902.SearchProductsUseCase>(
         () => _i902.SearchProductsUseCase(gh<_i347.SearchRepository>()));
-    gh.factory<_i659.CategoriesCubit>(
-        () => _i659.CategoriesCubit(gh<_i298.GetCategoriesUseCase>()));
     gh.factory<_i169.GetHomeDataUseCase>(
         () => _i169.GetHomeDataUseCase(gh<_i453.HomeRepositoryContract>()));
-    gh.factory<_i389.GetUserDataUseCase>(
-        () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
-    gh.factory<_i307.LogoutUseCase>(
-        () => _i307.LogoutUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i513.DeleteAddressUsecase>(
+        () => _i513.DeleteAddressUsecase(gh<_i806.ProfileRepository>()));
     gh.factory<_i732.EditProfileUseCase>(
         () => _i732.EditProfileUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i389.GetUserDataUseCase>(
+        () => _i389.GetUserDataUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i82.GetUserOdersUseCase>(
+        () => _i82.GetUserOdersUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i307.LogoutUseCase>(
+        () => _i307.LogoutUseCase(gh<_i806.ProfileRepository>()));
     gh.factory<_i850.ResetPasswordUseCase>(
         () => _i850.ResetPasswordUseCase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i401.UpdateAddressUsecase>(
+        () => _i401.UpdateAddressUsecase(gh<_i806.ProfileRepository>()));
+    gh.factory<_i637.AddAddressCubit>(() => _i637.AddAddressCubit(
+          gh<_i754.LocationService>(),
+          gh<_i23.AddAddressUseCase>(),
+        ));
     gh.factory<_i859.GetOccasionsByIdUseCase>(
         () => _i859.GetOccasionsByIdUseCase(gh<_i429.OccasionRepository>()));
+    gh.factory<_i803.CreateCheckoutSessionUseCase>(() =>
+        _i803.CreateCheckoutSessionUseCase(gh<_i46.CheckoutRepository>()));
+    gh.factory<_i659.CategoriesCubit>(() => _i659.CategoriesCubit(
+          gh<_i298.GetCategoriesUseCase>(),
+          gh<_i44.GetSortedProductsUseCase>(),
+        ));
     gh.factory<_i315.AuthCubit>(() => _i315.AuthCubit(
           gh<_i366.SignupUseCase>(),
           gh<_i235.ForgetPasswordUseCase>(),
@@ -306,6 +355,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i621.SignInUseCase>(),
           gh<_i666.LocalStorageClient>(),
           gh<_i419.ResendOtpUseCase>(),
+        ));
+    gh.factory<_i122.CheckoutCubit>(() => _i122.CheckoutCubit(
+          gh<_i147.GetAddressesUseCase>(),
+          gh<_i401.UpdateAddressUsecase>(),
+          gh<_i803.CreateCheckoutSessionUseCase>(),
+          gh<_i271.DialogUtils>(),
         ));
     gh.singleton<_i534.CartBloc>(() => _i534.CartBloc(
           gh<_i264.ClearCartUseCase>(),
@@ -320,11 +375,18 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i307.LogoutUseCase>(),
           gh<_i850.ResetPasswordUseCase>(),
           gh<_i1053.AuthLocalDataSourceContract>(),
+          gh<_i401.UpdateAddressUsecase>(),
+          gh<_i513.DeleteAddressUsecase>(),
+          gh<_i82.GetUserOdersUseCase>(),
         ));
+    gh.lazySingleton<_i674.NavCubit>(
+        () => _i674.NavCubit(gh<_i82.GetUserOdersUseCase>()));
     gh.singleton<_i690.SearchBloc>(
         () => _i690.SearchBloc(gh<_i902.SearchProductsUseCase>()));
     gh.factory<_i814.OccasionCubit>(
         () => _i814.OccasionCubit(gh<_i859.GetOccasionsByIdUseCase>()));
+    gh.factory<_i460.NotificationCubit>(() => _i460.NotificationCubit(
+        getNotificationsUseCase: gh<_i350.GetNotificationsUseCase>()));
     gh.factory<_i260.HomeCubit>(() => _i260.HomeCubit(
           getHomeDataUseCase: gh<_i169.GetHomeDataUseCase>(),
           locationService: gh<_i754.LocationService>(),

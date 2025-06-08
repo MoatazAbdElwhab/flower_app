@@ -1,5 +1,8 @@
+// features/profile/data/datasources/remote/profile_api_remote_data_source.dart
 import 'package:flower_app/core/app_data/api/api_client.dart';
 import 'package:flower_app/core/app_data/api/api_constants.dart';
+import 'package:flower_app/core/app_data/api/dio_client.dart';
+import 'package:flower_app/core/di/injectable.dart';
 import 'package:flower_app/features/checkout/domain/entities/address.dart';
 import 'package:flower_app/features/profile/data/datasources/remote/profile_remote_data_source.dart';
 import 'package:flower_app/features/profile/data/models/get_user_oreders_response/user_orders_response.dart';
@@ -38,11 +41,22 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
 
   @override
   Future<void> logout() async {
-    final response = await _apiClient.get(
-      ApiConstants.logOutEndPoint,
-      requiresToken: true,
-    );
-    return response;
+    try {
+      final response = await _apiClient.get(
+        ApiConstants.logOutEndPoint,
+        requiresToken: true,
+      );
+      final dioClient = getIt<DioApiClient>();
+      dioClient.clearTokenCache();
+
+      return response;
+    } catch (e) {
+      try {
+        final dioClient = getIt<DioApiClient>();
+        dioClient.clearTokenCache();
+      } catch (_) {}
+      rethrow;
+    }
   }
 
   @override
@@ -77,10 +91,11 @@ class ProfileApiRemoteDataSource extends ProfileRemoteDataSource {
   }
 
   @override
-  Future<UserOrdersResponse> getUserOrders() async{
-   final response = await _apiClient.get(
+  Future<UserOrdersResponse> getUserOrders() async {
+    final response = await _apiClient.get(
       ApiConstants.ordersEndPoint,
-      requiresToken: true,);
+      requiresToken: true,
+    );
 
     return UserOrdersResponse.fromJson(response);
   }
